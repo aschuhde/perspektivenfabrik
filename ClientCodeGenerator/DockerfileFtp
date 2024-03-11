@@ -1,0 +1,19 @@
+﻿## -*- docker-image-name: "mauler/simple-ftp-server" -*-
+
+FROM python:slim
+
+ENV FTP_ROOT /server
+ENV FTP_USER ftp
+ENV FTP_PASS ftp
+ENV FTP_PORT 21
+ENV FTP_MAX_CONNECTIONS 256
+ENV FTP_MAX_CONNECTIONS_PER_IP 50
+
+VOLUME /server
+
+RUN pip install pyftpdlib && \
+    mkdir -pv $FTP_ROOT
+
+EXPOSE $FTP_PORT
+
+ENTRYPOINT /bin/simple-ftp-server

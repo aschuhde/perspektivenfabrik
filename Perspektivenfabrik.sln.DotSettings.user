@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=570e530c_002Deae6_002D4fef_002D9870_002Da9e8d12fc927/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShouldHashPassword" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5EC0D97E-3FE4-4C6E-8E57-D0D178E3BEF2::net8.0::Application.UnitTests.Example.PasswordHashTests.ShouldHashPassword&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::16485A04-2E20-4A1A-AA57-C0B1FD1D1BEB::net8.0::Application.FunctionalTests.Example.GetExampleTests.ShouldReturnSomeExampleWhenCalledGetExample&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5EC0D97E-3FE4-4C6E-8E57-D0D178E3BEF2::net8.0::Application.UnitTests.Example.PasswordHashTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

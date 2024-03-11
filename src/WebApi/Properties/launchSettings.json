@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT-KEY": "replace this key. it should be long enough to have ASCII 512 bits. replace this key. it should be long enough to have ASCII 512 bits",
+        "POSTGRES_PORT": "5432",
+        "POSTGRES_PASSWORD": "password_to_replace",
+        "POSTGRES_USER": "user_to_replace",
+        "POSTGRES_DB": "postgres",
+        "POSTGRES_HOST": "192.168.56.20"
+      }
+    }
+  }
+}

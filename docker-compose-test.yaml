@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:  
+  domain-unit-tests:
+    build: 
+      context: ./
+      dockerfile: tests/Domain.UnitTests/Dockerfile
+  application-unit-tests:
+    build:
+      context: ./
+      dockerfile: tests/Application.UnitTests/Dockerfile
+  application-functional-tests:
+    build:
+      context: ./
+      dockerfile: tests/Application.FunctionalTests/Dockerfile
+    env_file:
+      - db-connection.env
+      - ports.env
+      - api.env
+      - jwt.env
+    environment:      
+      - POSTGRES_HOST=postgres-test
+  postgres-test:
+    image: postgres
+    volumes:
+      - postgres_db_test:/var/lib/postgresql/data
+    env_file:
+      - ports.env
+      - db-connection.env
+volumes:
+  postgres_db_test:
+    driver: local

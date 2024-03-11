@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:  
+  proxy:
+    build: 
+      context: ./
+      dockerfile: src/Proxy/Dockerfile
+      args:
+        - CERT_LOCAL_PATH=./certs/certificate.user.pfx
+        - CERT_REMOTE_PATH=/var/ssl/certificate.user.pfx
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    env_file:
+      - ports.env
+      - proxy.env
+      - https-server.env      
+  nginx:
+    build: 
+      context: src/NginxFrontendProxy
+      dockerfile: ./Dockerfile
+      args:
+        - NGINX_PORT=8002
+        - ANGULAR_NAME=angular
+        - ANGULAR_PORT=8003
+    env_file:
+      - ports.env
+  angular:
+    build:
+      context: src/Frontend
+      dockerfile: ./Dockerfile
+    env_file:
+      - ports.env
+  api:
+    build:
+      context: ./
+      dockerfile: src/WebApi/Dockerfile
+    env_file:
+      - db-connection.env      
+      - ports.env
+      - api.env
+      - jwt.env
+    environment:
+      - CONFIG_Serilog__MinimumLevel__Default = Debug          
+  postgres:    
+    image: postgres
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    env_file:
+      - ports.env
+      - db-connection.env
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_db:
+    driver: local
