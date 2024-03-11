@@ -41,7 +41,7 @@ services:
       - api.env
       - jwt.env
     environment:
-      - CONFIG_Serilog__MinimumLevel__Default = Debug          
+      - CONFIG_Serilog__MinimumLevel__Default=Debug          
   postgres:    
     image: postgres
     volumes:
