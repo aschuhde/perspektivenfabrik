@@ -5,12 +5,14 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+    
 jobs:
-
   build:
-
     runs-on: self-hosted
+    environment: production
+    env:
+      PROXY_CERTIFICATE: ${{ secrets.PROXY_CERTIFICATE }}
+      PROXY_CERTIFICATE_PASSWORD: ${{ secrets.PROXY_CERTIFICATE_PASSWORD }}
     steps:
     - uses: actions/checkout@v3    
     - name: Build the Docker image
