@@ -18,7 +18,7 @@ FROM build as publish
 RUN dotnet publish "Proxy.csproj" -c Release -o /app/publish
 
 FROM alpine as ssl
-RUN base64 -d $PROXY_CERTIFICATE -d /ssl/cert.pfx
+RUN echo "$PROXY_CERTIFICATE" | base64 --decode > /ssl/cert.pfx
 
 FROM base as final
 WORKDIR /app
