@@ -43,7 +43,8 @@ services:
       - api.env
       - jwt.env
     environment:
-      - CONFIG_Serilog__MinimumLevel__Default=Debug          
+      - CONFIG_Serilog__MinimumLevel__Default=Debug
+      - GLOBAL_ACCESS_TOKEN=${GLOBAL_ACCESS_TOKEN}
   postgres:    
     image: postgres
     volumes:

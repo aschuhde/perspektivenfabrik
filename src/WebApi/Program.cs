@@ -7,6 +7,7 @@ using Serilog;
 using WebApi;
 using WebApi.Common;
 using WebApi.Constants;
+using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 {
     app.UseSerilogRequestLogging();
     await app.InitializeDatabaseAsync();
+    app.UseGlobalAccessMiddlewareIfEnabled(app.Configuration);
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseHealthChecks("/health");

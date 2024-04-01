@@ -10,15 +10,29 @@ public static class ThrowIf
             throw new ArgumentNullException(parameterName, message?.ToString());
         return parameter;
     }
-    public static T NullOrEmpty<T>(T? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
+    public static string NullOrEmpty(string? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
     {
-        if (string.IsNullOrEmpty(parameter?.ToString()))
+        if (string.IsNullOrEmpty(parameter))
             throw new ArgumentNullException(parameterName, message?.ToString());
         return parameter;
     }
-    public static T NullOrWhitespace<T>(T? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
+    public static IEnumerable<T> NullOrEmpty<T>(IEnumerable<T>? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
     {
-        if (string.IsNullOrWhiteSpace(parameter?.ToString()))
+        // ReSharper disable PossibleMultipleEnumeration
+        if (parameter == null || parameter.Any())
+            throw new ArgumentNullException(parameterName, message?.ToString());
+        return parameter;
+        // ReSharper restore PossibleMultipleEnumeration
+    }
+    public static T[] NullOrEmpty<T>(T[]? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
+    {
+        if (parameter is not { Length: 0 })
+            throw new ArgumentNullException(parameterName, message?.ToString());
+        return parameter;
+    }
+    public static string NullOrWhitespace(string? parameter, Message? message = null, [CallerArgumentExpression("parameter")] string? parameterName = null)
+    {
+        if (string.IsNullOrWhiteSpace(parameter))
             throw new ArgumentNullException(parameterName, message?.ToString());
         return parameter;
     }

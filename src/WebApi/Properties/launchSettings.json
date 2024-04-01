@@ -11,7 +11,8 @@
         "POSTGRES_PASSWORD": "password_to_replace",
         "POSTGRES_USER": "user_to_replace",
         "POSTGRES_DB": "postgres",
-        "POSTGRES_HOST": "192.168.56.20"
+        "POSTGRES_HOST": "192.168.56.20",
+        "GLOBAL_ACCESS_TOKEN": "test1234"
       }
     }
   }

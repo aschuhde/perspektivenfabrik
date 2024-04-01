@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+      <PackageReference Include="FastEndpoints.Attributes" />
       <PackageReference Include="FastEndpoints.Messaging.Core"/>
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />

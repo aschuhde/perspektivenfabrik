@@ -21,6 +21,7 @@ public static class ConfigureServices
         services.AddScoped<IUserDataService, UserDataService>();
         services.AddScoped<IAccessPolicyDataService, AccessPolicyDataService>();
         services.AddScoped<IRefreshTokenRepositoryService, RefreshTokenRepositoryService>();
+        services.AddScoped<IGlobalAccessCookieService, GlobalAccessCookieService>();
         services.AddDbContext<ApplicationDbContext>((_, builder) =>
         {
             builder.UseNpgsql(connectionString);
