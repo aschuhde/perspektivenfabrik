@@ -5,9 +5,11 @@ services:
     build: 
       context: ./
       dockerfile: src/Proxy/Dockerfile
+      args:
+        - PROXY_CERTIFICATE=${PROXY_CERTIFICATE} 
     ports:
       - "9000:9000"
-      - "9443:9443"
+      - "9443:9443"    
     environment:
       - PROXY_CERTIFICATE=${PROXY_CERTIFICATE}
       - PROXY_CERTIFICATE_PASSWORD=${PROXY_CERTIFICATE_PASSWORD}
