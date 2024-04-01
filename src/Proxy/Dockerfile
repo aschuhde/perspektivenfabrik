@@ -24,7 +24,6 @@ FROM base as final
 WORKDIR /app
 COPY --from=ssl cert.pfx /var/ssl/certificate.user.pfx
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path /var/ssl/certificate.user.pfx
-ENV ASPNETCORE_Kestrel__Certificates__Default__Password $PROXY_CERTIFICATE_PASSWORD
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Proxy.dll"]
