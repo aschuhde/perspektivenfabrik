@@ -13,8 +13,7 @@ services:
       - PROXY_CERTIFICATE_PASSWORD=${PROXY_CERTIFICATE_PASSWORD}
     env_file:
       - ports.env
-      - proxy.env
-      - https-server.env      
+      - proxy.env            
   nginx:
     build: 
       context: src/NginxFrontendProxy
