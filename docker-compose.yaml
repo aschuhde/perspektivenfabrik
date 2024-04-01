@@ -5,12 +5,12 @@ services:
     build: 
       context: ./
       dockerfile: src/Proxy/Dockerfile
-      args:
-        - CERT_LOCAL_PATH=./certs/certificate.user.pfx
-        - CERT_REMOTE_PATH=/var/ssl/certificate.user.pfx
     ports:
       - "9000:9000"
       - "9443:9443"
+    environment:
+      - PROXY_CERTIFICATE=${PROXY_CERTIFICATE}
+      - PROXY_CERTIFICATE_PASSWORD=${PROXY_CERTIFICATE_PASSWORD}
     env_file:
       - ports.env
       - proxy.env

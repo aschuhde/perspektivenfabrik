@@ -17,12 +17,14 @@ RUN dotnet build "Proxy.csproj" -c Release -o /app/build
 FROM build as publish
 RUN dotnet publish "Proxy.csproj" -c Release -o /app/publish
 
+FROM alpine as ssl
+RUN base64 -d $PROXY_CERTIFICATE -d /ssl/cert.pfx
+
 FROM base as final
 WORKDIR /app
-ARG CERT_LOCAL_PATH
-ARG CERT_REMOTE_PATH
-COPY $CERT_LOCAL_PATH $CERT_REMOTE_PATH
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path $CERT_REMOTE_PATH
+COPY --from=ssl /ssl/cert.pfx /var/ssl/certificate.user.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path /var/ssl/certificate.user.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password=$PROXY_CERTIFICATE_PASSWORD
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Proxy.dll"]
