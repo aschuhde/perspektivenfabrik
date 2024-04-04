@@ -14,6 +14,7 @@ services:
       - PROXY_CERTIFICATE=${PROXY_CERTIFICATE}
       - PROXY_CERTIFICATE_PASSWORD=${PROXY_CERTIFICATE_PASSWORD}
       - ASPNETCORE_Kestrel__Certificates__Default__Password=${PROXY_CERTIFICATE_PASSWORD}
+      - GLOBAL_ACCESS_TOKEN=${GLOBAL_ACCESS_TOKEN}
     env_file:
       - ports.env
       - proxy.env            
@@ -43,8 +44,7 @@ services:
       - api.env
       - jwt.env
     environment:
-      - CONFIG_Serilog__MinimumLevel__Default=Debug
-      - GLOBAL_ACCESS_TOKEN=${GLOBAL_ACCESS_TOKEN}
+      - CONFIG_Serilog__MinimumLevel__Default=Debug      
   postgres:    
     image: postgres
     volumes:

@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -13,11 +14,18 @@ public partial class Testing
     private static IServiceScopeFactory _scopeFactory = null!;
 
     public static HttpClient CreateClient() => _factory.CreateClient();
+    public static IServiceProvider Services => _factory.Services;
+    public static IConfiguration Configuration => _factory.Services.GetRequiredService<IConfiguration>();
+
+    protected virtual CustomWebApplicationFactory GetWebApplicationFactory()
+    {
+        return new CustomWebApplicationFactory();
+    }
     
     [OneTimeSetUp]
     public Task RunBeforeAnyTests()
     {
-        _factory = new CustomWebApplicationFactory();
+        _factory = GetWebApplicationFactory();
 
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
         

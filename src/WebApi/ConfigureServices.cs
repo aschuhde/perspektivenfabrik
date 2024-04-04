@@ -22,7 +22,6 @@ public static class ConfigureServices
         services.AddJWTBearerAuth(JwtAuthenticationDataService.LoadSigninKey(configuration));
         services.AddAuthorization();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<ICookieService, CookieService>();
         services.AddCors(options =>
         {
             options.AddPolicy(CorsPolicies.AllowAll, builder =>

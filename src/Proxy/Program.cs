@@ -1,6 +1,7 @@
 using System.Threading.RateLimiting;
 using Common;
 using Proxy.Common;
+using Proxy.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 });
 builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("Proxy"));
 var app = builder.Build();
+app.UseGlobalAccessMiddlewareIfEnabled(app.Configuration);
 app.MapReverseProxy();
 app.UseHttpsRedirection();
 if (!app.Environment.IsDevelopment())

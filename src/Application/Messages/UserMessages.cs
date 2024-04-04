@@ -23,10 +23,4 @@ public static class UserMessages
     
     public static Message UserRefreshTokenExpired() => new($"The refresh token expired. Please log-in again!",
         nameof(UserRefreshTokenMissing));
-    
-    public static Message GlobalAccessCookieResponseInvalidToken() => new($"The provided global access cookie is not valid!",
-        nameof(GlobalAccessCookieResponseInvalidToken));
-    
-    public static Message GlobalAccessCookieResponseEmptyToken() => new($"The provided global access cookie is not provided via the query parameter token!",
-        nameof(GlobalAccessCookieResponseEmptyToken));
 }
