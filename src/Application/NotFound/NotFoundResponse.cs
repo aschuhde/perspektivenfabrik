@@ -4,7 +4,7 @@ using Application.Messages;
 
 namespace Application.NotFound;
 
-public class NotFoundResponse : JsonResponse
+public sealed class NotFoundResponse : JsonResponse
 {
     public NotFoundResponse()
     {

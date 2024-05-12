@@ -2,7 +2,7 @@ using Application.Common;
 
 namespace Application.NotFound;
 
-public class NotFoundRequest : BaseRequest<NotFoundResponse>
+public sealed class NotFoundRequest : BaseRequest<NotFoundResponse>
 {
     
 }

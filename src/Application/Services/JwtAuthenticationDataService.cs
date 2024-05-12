@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
 
-public class JwtAuthenticationDataService(IConfiguration configuration)
+public sealed class JwtAuthenticationDataService(IConfiguration configuration)
 {
     private const int ExpirationMinutes = 5;
     public SigningCredentials SigningKey { get; } = new(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(LoadSigninKey(configuration))),

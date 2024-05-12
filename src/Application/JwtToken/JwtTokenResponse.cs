@@ -11,12 +11,12 @@ public class JwtTokenResponse : JsonResponse
     public DateTimeOffset? ExpiresUtc { get; init; }
 }
 
-public class JwtTokenSuccessResponse : JwtTokenResponse
+public sealed class JwtTokenSuccessResponse : JwtTokenResponse
 {
     
 }
 
-public class JwtTokenUserNotFoundResponse : JwtTokenResponse
+public sealed class JwtTokenUserNotFoundResponse : JwtTokenResponse
 {
     public JwtTokenUserNotFoundResponse(string email)
     {
@@ -25,7 +25,7 @@ public class JwtTokenUserNotFoundResponse : JwtTokenResponse
     }
 }
 
-public class JwtTokenWrongPasswordResponse : JwtTokenResponse
+public sealed class JwtTokenWrongPasswordResponse : JwtTokenResponse
 {
     public JwtTokenWrongPasswordResponse()
     {

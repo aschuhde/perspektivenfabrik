@@ -5,7 +5,7 @@ using Common;
 
 namespace Application.Common.Response;
 
-public class ErrorResponseData
+public sealed class ErrorResponseData
 {
     public required Message Message { get; init; }
     public Guid ErrorId { get; init; } = Guid.NewGuid();
@@ -24,7 +24,7 @@ public static class ErrorResponseIdentifier
 {
     public const string Empty = "";
 }
-public class ErrorResponse
+public sealed class ErrorResponse
 {
     public required ErrorResponseData Error { get; init; }
     
@@ -42,4 +42,4 @@ public class ErrorResponse
     }
 }
 
-public class ErrorResponseException(string message, Exception? exception) : Exception(message, exception);
+public sealed class ErrorResponseException(string message, Exception? exception) : Exception(message, exception);

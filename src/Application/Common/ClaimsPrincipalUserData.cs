@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Application.Common;
 
-public class ClaimsPrincipalUserData
+public sealed class ClaimsPrincipalUserData
 {
     public const string AuthenticationType = "jwt";
      public required Guid UserId { get; init; }

@@ -2,7 +2,7 @@ using Application.Common;
 
 namespace Application.ExampleAnonymous.GetExampleAnonymous;
 
-public class GetExampleAnonymousHandler(IServiceProvider serviceProvider) : BaseHandler<GetExampleAnonymousRequest, GetExampleAnonymousResponse>(serviceProvider)
+public sealed class GetExampleAnonymousHandler(IServiceProvider serviceProvider) : BaseHandler<GetExampleAnonymousRequest, GetExampleAnonymousResponse>(serviceProvider)
 {
     public override Task<GetExampleAnonymousResponse> ExecuteAsync(GetExampleAnonymousRequest command, CancellationToken ct)
     {

@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.JwtRefreshToken.JwtRefreshToken;
 
-public class JwtRefreshTokenHandler(IServiceProvider serviceProvider, JwtAuthenticationDataService jwtAuthenticationDataService, IRefreshTokenRepositoryService refreshTokenRepositoryService, IUserDataService userDataService) : BaseHandler<JwtRefreshTokenRequest, JwtRefreshTokenResponse>(serviceProvider)
+public sealed class JwtRefreshTokenHandler(IServiceProvider serviceProvider, JwtAuthenticationDataService jwtAuthenticationDataService, IRefreshTokenRepositoryService refreshTokenRepositoryService, IUserDataService userDataService) : BaseHandler<JwtRefreshTokenRequest, JwtRefreshTokenResponse>(serviceProvider)
 {
     public override async Task<JwtRefreshTokenResponse> ExecuteAsync(JwtRefreshTokenRequest command, CancellationToken ct)
     {

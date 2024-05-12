@@ -11,11 +11,11 @@ public class JwtRefreshTokenResponse : JsonResponse
     public DateTimeOffset? ExpiresUtc { get; init; }
 }
 
-public class JwtRefreshTokenSuccessResponse : JwtRefreshTokenResponse
+public sealed class JwtRefreshTokenSuccessResponse : JwtRefreshTokenResponse
 {
     
 }
-public class JwtRefreshTokenInvalidTokenResponse : JwtRefreshTokenResponse
+public sealed class JwtRefreshTokenInvalidTokenResponse : JwtRefreshTokenResponse
 {
     public JwtRefreshTokenInvalidTokenResponse()
     {
@@ -24,7 +24,7 @@ public class JwtRefreshTokenInvalidTokenResponse : JwtRefreshTokenResponse
     }
 }
 
-public class JwtRefreshTokenMissingResponse : JwtRefreshTokenResponse
+public sealed class JwtRefreshTokenMissingResponse : JwtRefreshTokenResponse
 {
     public JwtRefreshTokenMissingResponse()
     {
@@ -33,7 +33,7 @@ public class JwtRefreshTokenMissingResponse : JwtRefreshTokenResponse
     }
 }
 
-public class JwtRefreshTokenExpiredResponse : JwtRefreshTokenResponse
+public sealed class JwtRefreshTokenExpiredResponse : JwtRefreshTokenResponse
 {
     public JwtRefreshTokenExpiredResponse()
     {
@@ -42,7 +42,7 @@ public class JwtRefreshTokenExpiredResponse : JwtRefreshTokenResponse
     }
 }
 
-public class JwtRefreshTokenInvalidRefreshTokenResponse : JwtRefreshTokenResponse
+public sealed class JwtRefreshTokenInvalidRefreshTokenResponse : JwtRefreshTokenResponse
 {
     public JwtRefreshTokenInvalidRefreshTokenResponse()
     {

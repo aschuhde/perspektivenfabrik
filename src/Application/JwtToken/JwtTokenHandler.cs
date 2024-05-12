@@ -3,7 +3,7 @@ using Application.Services;
 
 namespace Application.JwtToken;
 
-public class JwtTokenHandler(JwtAuthenticationDataService jwtAuthenticationDataService, IServiceProvider serviceProvider, IRefreshTokenRepositoryService refreshTokenRepositoryService) : BaseHandler<JwtTokenRequest, JwtTokenResponse>(serviceProvider)
+public sealed class JwtTokenHandler(JwtAuthenticationDataService jwtAuthenticationDataService, IServiceProvider serviceProvider, IRefreshTokenRepositoryService refreshTokenRepositoryService) : BaseHandler<JwtTokenRequest, JwtTokenResponse>(serviceProvider)
 {
     public override async Task<JwtTokenResponse> ExecuteAsync(JwtTokenRequest command, CancellationToken ct)
     {
