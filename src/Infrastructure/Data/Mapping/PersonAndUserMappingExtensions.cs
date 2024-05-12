@@ -17,7 +17,7 @@ public static partial class MappingExtensions
         person switch
         {
             User u => u.ToDbUser(),
-            _ => person.ToDbPerson()
+            _ => person.ToDbPersonInner()
         };
 
     [UserMapping(Default = true)]
