@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enums;
 using Infrastructure.Data.DbDataTypes;
 using Riok.Mapperly.Abstractions;
@@ -20,6 +21,7 @@ public sealed class DbProject : DbEntity
         Array.Empty<DbRequirementSpecificationProjectConnection>();
     public DbContactSpecificationProjectConnection[] ContactSpecifications { get; set; } =
         Array.Empty<DbContactSpecificationProjectConnection>();
+    [MaxLength(Constants.StringLengths.Medium)]
     public required string ProjectName { get; init; }
     public DbProjectTagConnection[] ProjectTags { get; set; } =
         Array.Empty<DbProjectTagConnection>();

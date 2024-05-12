@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class ProjectMappingExtensions
+
+public static partial class MappingExtensions
 {
     [MapperIgnoreTarget(nameof(DbProject.LocationSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.TimeSpecifications))]

@@ -2,5 +2,5 @@
 
 public sealed class OrganizationPosition
 {
-    
+    public required string PositionName { get; init; }
 }

@@ -13,8 +13,8 @@ public sealed class DbQuantitySpecificationRequirementConnection : DbEntityWithI
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
-    public required DbRequirementSpecification? RequirementSpecification { get; init; }
+    public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(QuantitySpecification))]
     public required Guid QuantitySpecificationId { get; init; }
-    public required DbQuantitySpecification? QuantitySpecification { get; init; }
+    public DbQuantitySpecification? QuantitySpecification { get; init; }
 }

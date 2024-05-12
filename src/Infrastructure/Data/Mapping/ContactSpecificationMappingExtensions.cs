@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class ContactSpecificationMappingExtensions
+
+public static partial class MappingExtensions
 {
     // From DB
     public static partial ContactSpecification ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);

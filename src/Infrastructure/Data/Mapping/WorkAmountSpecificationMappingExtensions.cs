@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class WorkAmountSpecificationMappingExtensions
+
+public static partial class MappingExtensions
 {
     public static partial WorkAmountSpecification ToWorkAmountSpecification(this DbWorkAmountSpecification dbWorkAmountSpecification);
     

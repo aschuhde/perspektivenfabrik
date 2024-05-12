@@ -2,5 +2,5 @@
 
 public sealed class GraphicsContent
 {
-    
+    public required byte[] Content { get; init; }
 }

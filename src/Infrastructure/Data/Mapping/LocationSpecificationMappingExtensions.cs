@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class LocationSpecificationMappingExtensions
+
+public static partial class MappingExtensions
 {
     internal static partial LocationSpecification ToLocationSpecificationInner(this DbLocationSpecification dbLocationSpecification);
     public static partial LocationSpecificationRemote ToLocationSpecificationRemote(this DbLocationSpecificationRemote dbLocationSpecificationRemote);

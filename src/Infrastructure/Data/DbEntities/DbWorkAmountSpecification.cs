@@ -13,8 +13,8 @@ public sealed class DbWorkAmountSpecificationRequirementConnection : DbEntityWit
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
-    public required DbRequirementSpecification? RequirementSpecification { get; init; }
+    public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(WorkAmountSpecification))]
     public required Guid WorkAmountSpecificationId { get; init; }
-    public required DbWorkAmountSpecification? WorkAmountSpecification { get; init; }
+    public DbWorkAmountSpecification? WorkAmountSpecification { get; init; }
 }

@@ -4,9 +4,12 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class ConnectionMappingExtensions
+
+public static partial class MappingExtensions
 {
+    public static Organization DbOrganizationProjectConnectionToOrganization(
+        this DbOrganizationProjectConnection dbOrganizationProjectConnection) =>
+        dbOrganizationProjectConnection.Organization!.ToOrganization();
     public static TimeSpecification DbTimeSpecificationProjectConnectionToTimeSpecification(
         this DbTimeSpecificationProjectConnection dbTimeSpecificationProjectConnection) =>
         dbTimeSpecificationProjectConnection.TimeSpecification!.ToTimeSpecification();

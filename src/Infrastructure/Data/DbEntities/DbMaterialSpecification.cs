@@ -13,8 +13,8 @@ public sealed class DbMaterialSpecificationRequirementConnection : DbEntityWithI
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
-    public required DbRequirementSpecification? RequirementSpecification { get; init; }
+    public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(MaterialSpecification))]
     public required Guid MaterialSpecificationId { get; init; }
-    public required DbMaterialSpecification? MaterialSpecification { get; init; }
+    public DbMaterialSpecification? MaterialSpecification { get; init; }
 }

@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class OrganizationMappingExtensions
+
+public static partial class MappingExtensions
 {
     public static partial Organization ToOrganization(this DbOrganization dbOrganization);
     public static partial DbOrganization ToDbOrganization(this Organization organization);

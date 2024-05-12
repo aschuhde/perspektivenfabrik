@@ -11,8 +11,8 @@ public class DbTimeSpecification : DbEntity
 
 public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 {
-    public required DbTimeSpecificationMomentPeriodConnection Start { get; init; }
-    public required DbTimeSpecificationMomentPeriodConnection End { get; init; }
+    public DbTimeSpecificationMomentPeriodConnection? Start { get; set; }
+    public DbTimeSpecificationMomentPeriodConnection? End { get; set; }
 }
 
 public class DbTimeSpecificationMoment : DbTimeSpecification
@@ -51,10 +51,10 @@ public sealed class DbTimeSpecificationMomentPeriodConnection : DbEntityWithId
 {
     [ForeignKey(nameof(TimeSpecificationPeriod))]
     public required Guid TimeSpecificationPeriodId { get; init; }
-    public required DbTimeSpecificationPeriod? TimeSpecificationPeriod { get; init; }
+    public DbTimeSpecificationPeriod? TimeSpecificationPeriod { get; init; }
     [ForeignKey(nameof(TimeSpecificationMoment))]
     public required Guid TimeSpecificationMomentId { get; init; }
-    public required DbTimeSpecificationMoment? TimeSpecificationMoment { get; init; }
+    public DbTimeSpecificationMoment? TimeSpecificationMoment { get; init; }
 }
 
 [Table("TimeSpecificationRequirementConnections")]
@@ -62,8 +62,8 @@ public sealed class DbTimeSpecificationRequirementConnection : DbEntityWithId
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
-    public required DbRequirementSpecification? RequirementSpecification { get; init; }
+    public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(TimeSpecification))]
     public required Guid TimeSpecificationId { get; init; }
-    public required DbTimeSpecification? TimeSpecification { get; init; }
+    public DbTimeSpecification? TimeSpecification { get; init; }
 }

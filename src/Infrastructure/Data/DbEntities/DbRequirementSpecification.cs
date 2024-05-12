@@ -6,24 +6,31 @@ namespace Infrastructure.Data.DbEntities;
 public class DbRequirementSpecification : DbEntity
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
-    public required DbTimeSpecificationRequirementConnection[] TimeSpecifications { get; init; }
-    public required DbQuantitySpecificationRequirementConnection QuantitySpecification { get; init; }
+
+    public DbTimeSpecificationRequirementConnection[] TimeSpecifications { get; set; } =
+        Array.Empty<DbTimeSpecificationRequirementConnection>();
+    public DbQuantitySpecificationRequirementConnection? QuantitySpecification { get; set; }
 }
 
 public sealed class DbRequirementSpecificationPerson : DbRequirementSpecification
 {
-    public required DbSkillSpecificationRequirementConnection[] SkillSpecifications { get; init; }
-    public required DbWorkAmountSpecificationRequirementConnection[] WorkAmountSpecifications { get; init; }
+    public DbSkillSpecificationRequirementConnection[] SkillSpecifications { get; set; } =
+        Array.Empty<DbSkillSpecificationRequirementConnection>();
+
+    public DbWorkAmountSpecificationRequirementConnection[] WorkAmountSpecifications { get; set; } =
+        Array.Empty<DbWorkAmountSpecificationRequirementConnection>();
 }
 
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
-    public required DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; init; }
+    public DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; set; } =
+        Array.Empty<DbMaterialSpecificationRequirementConnection>();
 }
 
 public sealed class DbRequirementSpecificationMoney : DbRequirementSpecification
 {
-    public required DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; init; }
+    public DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; set; } =
+        Array.Empty<DbMaterialSpecificationRequirementConnection>();
 }
 
 [Table("RequirementSpecificationConnections")]

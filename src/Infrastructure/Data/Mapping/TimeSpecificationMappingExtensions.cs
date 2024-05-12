@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class TimeSpecificationMappingExtensions
+
+public static partial class MappingExtensions
 {
     //From DB
     internal static partial TimeSpecification ToTimeSpecificationInner(this DbTimeSpecification dbTimeSpecification);
@@ -40,7 +40,29 @@ public static partial class TimeSpecificationMappingExtensions
     // To DB
     internal static partial DbTimeSpecification ToDbTimeSpecificationInner(this TimeSpecification timeSpecification);
     internal static partial DbTimeSpecificationMoment ToDbTimeSpecificationMomentInner(this TimeSpecificationMoment timeSpecificationMoment);
-    public static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(this TimeSpecificationPeriod timeSpecificationPeriod);
+    
+    [MapperIgnoreTarget(nameof(DbTimeSpecificationPeriod.End))]
+    [MapperIgnoreTarget(nameof(DbTimeSpecificationPeriod.Start))]
+    internal static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriodInner(this TimeSpecificationPeriod timeSpecificationPeriod);
+
+    [UserMapping(Default = true)]
+    public static DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(
+        this TimeSpecificationPeriod timeSpecificationPeriod)
+    {
+        var r = timeSpecificationPeriod.ToDbTimeSpecificationPeriodInner();
+        r.Start = new DbTimeSpecificationMomentPeriodConnection()
+        {
+            TimeSpecificationMomentId = r.EntityId,
+            TimeSpecificationPeriodId = timeSpecificationPeriod.Start.EntityId
+        };
+        r.End = new DbTimeSpecificationMomentPeriodConnection()
+        {
+            TimeSpecificationMomentId = r.EntityId,
+            TimeSpecificationPeriodId = timeSpecificationPeriod.End.EntityId
+        };
+        return r;
+    }
+    
     public static partial DbTimeSpecificationDate ToDbTimeSpecificationDate(this TimeSpecificationDate timeSpecificationDate);
     public static partial DbTimeSpecificationDateTime ToDbTimeSpecificationDateTime(this TimeSpecificationDateTime timeSpecificationDateTime);
     public static partial DbTimeSpecificationMonth ToDbTimeSpecificationMonth(this TimeSpecificationMonth timeSpecificationMonth);

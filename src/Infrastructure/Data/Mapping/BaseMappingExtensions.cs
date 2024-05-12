@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Data.Mapping;
 
 [Mapper]
-public static partial class BaseMappingExtensions
+public static partial class MappingExtensions
 {
     public static partial BaseEntity ToBaseEntity(this DbEntity dbEntity);
     public static partial DbEntity ToDbBaseEntity(this BaseEntity entity);

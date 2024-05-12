@@ -4,8 +4,7 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper(UseReferenceHandling = true)]
-public static partial class PersonAndUserMappingExtensions
+public static partial class MappingExtensions
 {
     public static partial User ToUser(this DbUser dbUser);
     public static partial DbUser ToDbUser(this User user);

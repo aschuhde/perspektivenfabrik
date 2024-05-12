@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entities;
 
 namespace Infrastructure.Data.DbEntities;
@@ -6,6 +7,7 @@ namespace Infrastructure.Data.DbEntities;
 [Table("Organizations")]
 public sealed class DbOrganization : DbEntity
 {
+    [MaxLength(Constants.StringLengths.Medium)]
     public required string Name { get; init; }
 }
 

@@ -4,8 +4,8 @@ using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
-[Mapper]
-public static partial class DescriptionTypeMappingExtensions
+
+public static partial class MappingExtensions
 {
     public static partial DescriptionType ToDescriptionType(this DbDescriptionType dbDescriptionType);
     public static partial DbDescriptionType ToDbDescriptionType(this DescriptionType descriptionType);
