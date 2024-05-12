@@ -21,7 +21,7 @@ public static class InitializerExtensions
     }
 }
 
-public class ApplicationDbContextInitializer(
+public sealed class ApplicationDbContextInitializer(
     ILogger<ApplicationDbContextInitializer> logger,
     ApplicationDbContext context)
 {
@@ -57,16 +57,14 @@ public class ApplicationDbContextInitializer(
         await using var transaction = await context.Database.BeginTransactionAsync();
         try
         {
-            var baseAccessPolicy = new DbAccessPolicy();
-            context.AccessPolicies.Add(baseAccessPolicy);
             await context.SaveChangesAsync();
             context.Users.Add(new DbUser()
             {
                 Email = "root@test.test",
                 Firstname = "root",
                 Lastname = "test",
-                PasswordHash = PasswordHasher.HashPassword("blabla123456"),
-                AccessPolicyId = baseAccessPolicy.EntityId
+                PasswordHash = "test",
+                History = null
             });
             await context.SaveChangesAsync();
             await transaction.CommitAsync();

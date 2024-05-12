@@ -2,11 +2,12 @@ using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
+using Infrastructure.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
-public class UserDataService(ApplicationDbContext dbContext) : IUserDataService
+public sealed class UserDataService(ApplicationDbContext dbContext) : IUserDataService
 {
     public async Task<User[]> GetAllActiveUsers(CancellationToken cancellationToken = default)
     {
@@ -27,9 +28,21 @@ public class UserDataService(ApplicationDbContext dbContext) : IUserDataService
 
     private static IQueryable<User> ToUsers(IQueryable<DbUser> query)
     {
-        return query.Select(x => new User()
+        return query.Select(x => new User
         {
-            Email = x.Email, Firstname = x.Firstname, Lastname = x.Lastname, PasswordHash = x.PasswordHash, EntityId = x.EntityId
-        });
+            EntityId = default,
+            CreatedOn = default,
+            CreatedBy = null,
+            LastModifiedOn = default,
+            LastModifiedBy = null,
+            History = null,
+            Firstname = "null",
+            Lastname = "null",
+            Email = "null",
+            ConnectedOrganizations = new OrganizationConnection[]
+            {
+            },
+            PasswordHash = "null"
+        }); //x.ToUser());
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("DbUserRefreshTokens")]
-public class DbUserRefreshTokens : DbBaseEntity
+public sealed class DbUserRefreshTokens : DbEntity
 {
     [ForeignKey(nameof(DbUser))]
     public required Guid UserId { get; init; }

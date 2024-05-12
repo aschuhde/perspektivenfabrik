@@ -19,7 +19,6 @@ public static class ConfigureServices
         
         services.AddScoped<ApplicationDbContextInitializer>();
         services.AddScoped<IUserDataService, UserDataService>();
-        services.AddScoped<IAccessPolicyDataService, AccessPolicyDataService>();
         services.AddScoped<IRefreshTokenRepositoryService, RefreshTokenRepositoryService>();
         services.AddDbContext<ApplicationDbContext>((_, builder) =>
         {

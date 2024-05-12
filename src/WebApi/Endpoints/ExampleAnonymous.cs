@@ -7,4 +7,4 @@ namespace WebApi.Endpoints;
 
 [HttpGet(Constants.Routes.GetExampleAnonymous)]
 [Allow(AuthorizationObject.Anonymous)]
-public class GetExampleAnonymous : JsonResponseEndpoint<GetExampleAnonymousRequest, GetExampleAnonymousResponse>;
+public sealed class GetExampleAnonymous : JsonResponseEndpoint<GetExampleAnonymousRequest, GetExampleAnonymousResponse>;

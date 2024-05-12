@@ -4,7 +4,7 @@ using Common;
 
 namespace WebApi.Services;
 
-public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
+public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {
     private readonly ClaimsPrincipalUserData _currentUser = ThrowIf.Null(httpContextAccessor.HttpContext?.User, $"HttpContext could not be resolved in {nameof(CurrentUserService)}").ToUserData();
 

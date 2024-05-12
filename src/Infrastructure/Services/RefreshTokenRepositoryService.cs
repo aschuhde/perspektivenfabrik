@@ -1,5 +1,6 @@
 ﻿using Application.Services;
 using Application.Tools;
+using Domain.DataTypes;
 using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
@@ -7,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
-public class RefreshTokenRepositoryService(ApplicationDbContext dbContext) : IRefreshTokenRepositoryService
+public sealed class RefreshTokenRepositoryService(ApplicationDbContext dbContext) : IRefreshTokenRepositoryService
 {
     private const double ExpirationHours = 24 * 30;
     private async Task AddUserRefreshTokens(Guid userId, string refreshToken, CancellationToken cancellationToken = default)
     {
-        dbContext.UserRefreshTokens.Add(new DbUserRefreshTokens()
+        dbContext.UserRefreshTokens.Add(new DbUserRefreshTokens
         {
             RefreshToken = refreshToken,
             UserId = userId,
-            AbsoluteExpirationUtc = DateTimeOffset.UtcNow.AddHours(ExpirationHours)
+            AbsoluteExpirationUtc = DateTimeOffset.UtcNow.AddHours(ExpirationHours),
         });
         await dbContext.SaveChangesAsync(cancellationToken);
     }

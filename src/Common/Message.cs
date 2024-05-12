@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Common;
 
-public class Message
+public sealed class Message
 {
     public string Content { get; init; }
     [JsonIgnore]

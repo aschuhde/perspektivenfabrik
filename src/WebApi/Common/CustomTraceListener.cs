@@ -3,7 +3,7 @@ using System.Text;
 
 namespace WebApi.Common;
 
-public class CustomTraceListener : TraceListener
+public sealed class CustomTraceListener : TraceListener
 {
     private readonly ILogger _iLogger;
     private readonly StringBuilder _stringBuilder = new();

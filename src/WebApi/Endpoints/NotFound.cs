@@ -19,17 +19,17 @@ public class NotFound<TRequest, TResponse>: JsonResponseEndpoint<TRequest, TResp
 }
 
 [HttpGet(Constants.Routes.NotFound)]
-public class GetNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
+public sealed class GetNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
 
 [HttpPost(Constants.Routes.NotFound)]
-public class PostNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
+public sealed class PostNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
 
 [HttpPut(Constants.Routes.NotFound)]
-public class PutNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
+public sealed class PutNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
 
 [HttpPatch(Constants.Routes.NotFound)]
-public class PatchNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
+public sealed class PatchNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
 
 [HttpDelete(Constants.Routes.NotFound)]
-public class DeleteNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
+public sealed class DeleteNotFound : NotFound<NotFoundRequest, NotFoundResponse>;
 

@@ -141,7 +141,7 @@ var responseType = endpointType.ToLower() switch
 
 var endpointContent = File.ReadAllText(endpointClassFile);
 
-if (!endpointContent.Contains($"public class {endpointName}"))
+if (!endpointContent.Contains($"public sealed class {endpointName}"))
 {
     Console.WriteLine($"Adding class {endpointName} in {endpointClass}.cs");
     using var writer = File.CreateText(endpointClassFile);
@@ -150,7 +150,7 @@ if (!endpointContent.Contains($"public class {endpointName}"))
                   {endpointContent}
 
                   [Http{httpVerbPascal}(Constants.Routes.{endpointName})]
-                  public class {endpointName} : {responseEndpointType}<{endpointName}Request, {endpointName}Response>;
+                  public sealed class {endpointName} : {responseEndpointType}<{endpointName}Request, {endpointName}Response>;
                   """);
 }
 else
@@ -198,7 +198,7 @@ using (var writer = File.CreateText(handlerPath))
 
                    namespace Application.{{endpointClass}}.{{endpointName}};
 
-                   public class {{endpointName}}Handler(IServiceProvider serviceProvider) : BaseHandler<{{endpointName}}Request, {{endpointName}}Response>(serviceProvider)
+                   public sealed class {{endpointName}}Handler(IServiceProvider serviceProvider) : BaseHandler<{{endpointName}}Request, {{endpointName}}Response>(serviceProvider)
                    {
                        public override Task<{{endpointName}}Response> ExecuteAsync({{endpointName}}Request command, CancellationToken ct)
                        {
@@ -218,7 +218,7 @@ using (var writer = File.CreateText(requestPath))
 
                    namespace Application.{{endpointClass}}.{{endpointName}};
 
-                   public class {{endpointName}}Request : BaseRequest<{{endpointName}}Response>
+                   public sealed class {{endpointName}}Request : BaseRequest<{{endpointName}}Response>
                    {
                        
                    }
@@ -236,7 +236,7 @@ using (var writer = File.CreateText(responsePath))
 
                    namespace Application.{{endpointClass}}.{{endpointName}};
 
-                   public class {{endpointName}}Response : {{responseType}}
+                   public sealed class {{endpointName}}Response : {{responseType}}
                    {
                        
                    }

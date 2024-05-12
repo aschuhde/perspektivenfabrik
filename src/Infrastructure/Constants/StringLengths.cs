@@ -1,6 +1,6 @@
 namespace Infrastructure.Constants;
 
-public class StringLengths
+public sealed class StringLengths
 {
     public const int Small = 20;
     public const int Medium = 500;

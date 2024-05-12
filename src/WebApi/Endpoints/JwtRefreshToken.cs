@@ -7,4 +7,4 @@ namespace WebApi.Endpoints;
 
 [HttpPost(Constants.Routes.JwtRefreshToken)]
 [Allow(AuthorizationObject.Anonymous)]
-public class JwtRefreshToken : JsonResponseEndpoint<JwtRefreshTokenRequest, JwtRefreshTokenResponse>;
+public sealed class JwtRefreshToken : JsonResponseEndpoint<JwtRefreshTokenRequest, JwtRefreshTokenResponse>;

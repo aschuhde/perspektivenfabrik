@@ -1,6 +1,6 @@
 ﻿namespace Proxy.Common;
 
-public class TokenBucketRateLimitingOptions
+public sealed class TokenBucketRateLimitingOptions
 {
     public const string ConfigurationKey = "RateLimiting";
     

@@ -1,6 +1,6 @@
 namespace WebApi.Attributes;
 
-public class ShouldNeverFailAttribute : Attribute
+public sealed class ShouldNeverFailAttribute : Attribute
 {
     
 }

@@ -3,7 +3,7 @@ using Proxy.Common;
 
 namespace Proxy.Middlewares;
 
-public class GlobalAccessMiddleware(RequestDelegate next)
+public sealed class GlobalAccessMiddleware(RequestDelegate next)
 {
     private const string ConfigurationSection = "GlobalAccessSecurity";
     private const string CookieName = "global-access-cookie";
