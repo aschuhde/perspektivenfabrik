@@ -5,6 +5,7 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure;
 
@@ -12,7 +13,7 @@ public static class ConfigureServices
 {
     public static string? GetDefaultConnectionString(this IConfiguration configuration) =>
         configuration.GetConnectionString("default");
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         var connectionString = ThrowIf.NullOrWhitespace(configuration.GetDefaultConnectionString(),
             "No connection string is configured");
@@ -23,6 +24,8 @@ public static class ConfigureServices
         services.AddDbContext<ApplicationDbContext>((_, builder) =>
         {
             builder.UseNpgsql(connectionString);
+            if (environment.IsDevelopment())
+                builder.EnableSensitiveDataLogging();
         });
     }
 }

@@ -9,5 +9,5 @@ public sealed class DbOrganizationConnection : DbEntityWithId
     [ForeignKey(nameof(Organization))]
     public required Guid OrganizationId { get; init; }
     public required DbOrganization? Organization { get; init; }
-    public required DbOrganizationPositionConnection[] OrganizationPositions { get; init; }
+    public required List<DbOrganizationPositionConnection> OrganizationPositions { get; init; }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Data.DbEntities;
 
-[Table("DbUserRefreshTokens")]
+[Table("UserRefreshTokens")]
 public sealed class DbUserRefreshTokens : DbEntity
 {
     [ForeignKey(nameof(DbUser))]

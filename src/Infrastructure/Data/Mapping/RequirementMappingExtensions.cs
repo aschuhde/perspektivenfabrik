@@ -39,7 +39,7 @@ public static partial class MappingExtensions
     private static void SetTimeAndQuantitySpecification(DbRequirementSpecification dbRequirementSpecification,
         RequirementSpecification requirementSpecification)
     {
-        dbRequirementSpecification.TimeSpecifications = MappingTools.MapArray(requirementSpecification.TimeSpecifications, x =>
+        dbRequirementSpecification.TimeSpecifications = MappingTools.MapArrayToList(requirementSpecification.TimeSpecifications, x =>
             new DbTimeSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = dbRequirementSpecification.EntityId,
@@ -75,13 +75,13 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationPerson.ToDbRequirementSpecificationPersonInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationPerson);
-        r.SkillSpecifications = MappingTools.MapArray(requirementSpecificationPerson.TimeSpecifications, x =>
+        r.SkillSpecifications = MappingTools.MapArrayToList(requirementSpecificationPerson.TimeSpecifications, x =>
             new DbSkillSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,
                 SkillSpecificationId = x.EntityId
             });
-        r.WorkAmountSpecifications = MappingTools.MapArray(requirementSpecificationPerson.WorkAmountSpecifications, x =>
+        r.WorkAmountSpecifications = MappingTools.MapArrayToList(requirementSpecificationPerson.WorkAmountSpecifications, x =>
             new DbWorkAmountSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,
@@ -101,7 +101,7 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationMaterial.ToDbRequirementSpecificationMaterialInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationMaterial);
-        r.MaterialSpecifications = MappingTools.MapArray(requirementSpecificationMaterial.TimeSpecifications, x =>
+        r.MaterialSpecifications = MappingTools.MapArrayToList(requirementSpecificationMaterial.TimeSpecifications, x =>
             new DbMaterialSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,
@@ -121,7 +121,7 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationMoney.ToDbRequirementSpecificationMoneyInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationMoney);
-        r.MaterialSpecifications = MappingTools.MapArray(requirementSpecificationMoney.TimeSpecifications, x =>
+        r.MaterialSpecifications = MappingTools.MapArrayToList(requirementSpecificationMoney.TimeSpecifications, x =>
             new DbMaterialSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,

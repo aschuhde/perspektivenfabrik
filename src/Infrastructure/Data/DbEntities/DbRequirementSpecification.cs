@@ -7,30 +7,25 @@ public class DbRequirementSpecification : DbEntity
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
 
-    public DbTimeSpecificationRequirementConnection[] TimeSpecifications { get; set; } =
-        Array.Empty<DbTimeSpecificationRequirementConnection>();
+    public List<DbTimeSpecificationRequirementConnection>? TimeSpecifications { get; set; }
     public DbQuantitySpecificationRequirementConnection? QuantitySpecification { get; set; }
 }
 
 public sealed class DbRequirementSpecificationPerson : DbRequirementSpecification
 {
-    public DbSkillSpecificationRequirementConnection[] SkillSpecifications { get; set; } =
-        Array.Empty<DbSkillSpecificationRequirementConnection>();
+    public List<DbSkillSpecificationRequirementConnection>? SkillSpecifications { get; set; }
 
-    public DbWorkAmountSpecificationRequirementConnection[] WorkAmountSpecifications { get; set; } =
-        Array.Empty<DbWorkAmountSpecificationRequirementConnection>();
+    public List<DbWorkAmountSpecificationRequirementConnection>? WorkAmountSpecifications { get; set; }
 }
 
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
-    public DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; set; } =
-        Array.Empty<DbMaterialSpecificationRequirementConnection>();
+    public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
 }
 
 public sealed class DbRequirementSpecificationMoney : DbRequirementSpecification
 {
-    public DbMaterialSpecificationRequirementConnection[] MaterialSpecifications { get; set; } =
-        Array.Empty<DbMaterialSpecificationRequirementConnection>();
+    public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
 }
 
 [Table("RequirementSpecificationConnections")]

@@ -6,14 +6,15 @@ namespace WebApi;
 
 public static class Configuration
 {
-
+    public const string EnvironmentConfigurationPrefix = "CONFIG_"; 
+    public const string EnvironmentConfigurationOverridePrefix = "CONFIG_OVERRIDE_"; 
     public static void AddConfiguration(this ConfigurationManager configurationManager,
         IHostEnvironment hostEnvironment)
     {
         configurationManager.AddJsonFile("appsettings.json", optional: true);
         configurationManager.AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", optional: true);
 
-        configurationManager.AddEnvironmentVariables(prefix: "CONFIG_");
+        configurationManager.AddEnvironmentVariables(prefix: EnvironmentConfigurationPrefix);
         
         const string connectionStringKeyName = "ConnectionStrings:";
         var connectionString = "";
@@ -26,7 +27,7 @@ public static class Configuration
 
         // there can be the need for some environment variables to override the sql configuration.
         // for example: two instances running with the same database want to have different log levels
-        configurationManager.AddEnvironmentVariables(prefix: "CONFIG_OVERRIDE_");
+        configurationManager.AddEnvironmentVariables(prefix: EnvironmentConfigurationOverridePrefix);
 
         // set the connection string to the previous value for the case that the sql server updates the connection string 
         configurationManager[connectionStringKeyName] = connectionString;

@@ -2,12 +2,12 @@
 
 public static class MappingTools
 {
-    public static T[] MapArray<T, T2>(T2[] source, Func<T2, T> map)
+    public static List<T> MapArrayToList<T, T2>(T2[] source, Func<T2, T> map)
     {
-        var result = new T[source.Length];
-        for (int i = 0; i < source.Length; i++)
+        var result = new List<T>(source.Length);
+        for (var i = 0; i < source.Length; i++)
         {
-            result[i] = map(source[i]);
+            result.Add(map(source[i]));
         }
         return result;
     }

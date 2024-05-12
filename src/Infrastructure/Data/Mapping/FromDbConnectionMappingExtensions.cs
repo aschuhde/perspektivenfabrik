@@ -14,10 +14,6 @@ public static partial class MappingExtensions
         this DbTimeSpecificationProjectConnection dbTimeSpecificationProjectConnection) =>
         dbTimeSpecificationProjectConnection.TimeSpecification!.ToTimeSpecification();
     
-    public static TimeSpecificationMoment DbTimeSpecificationMomentPeriodConnectionToTimeSpecificationMoment(
-        this DbTimeSpecificationMomentPeriodConnection dbTimeSpecificationMomentPeriodConnection) =>
-        dbTimeSpecificationMomentPeriodConnection.TimeSpecificationMoment!.ToTimeSpecificationMoment();
-    
     public static TimeSpecification DbTimeSpecificationRequirementConnectionToTimeSpecification(
         this DbTimeSpecificationRequirementConnection dbTimeSpecificationRequirementConnection) =>
         dbTimeSpecificationRequirementConnection.TimeSpecification!.ToTimeSpecification();

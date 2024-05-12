@@ -24,78 +24,58 @@ public static partial class MappingExtensions
     public static DbProject ToDbProject(this Project project)
     {
         var r = project.ToDbProjectInner();
-        r.LocationSpecifications = MappingTools.MapArray(project.LocationSpecifications, x => new DbLocationSpecificationProjectConnection()
+        r.LocationSpecifications = MappingTools.MapArrayToList(project.LocationSpecifications, x => new DbLocationSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // LocationSpecification = x.ToDbLocationSpecification(),
             LocationSpecificationId = x.EntityId
         });
-        r.TimeSpecifications = MappingTools.MapArray(project.TimeSpecifications, x => new DbTimeSpecificationProjectConnection()
+        r.TimeSpecifications = MappingTools.MapArrayToList(project.TimeSpecifications, x => new DbTimeSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // TimeSpecification = x.ToDbTimeSpecification(),
             TimeSpecificationId = x.EntityId
         });
-        r.RequirementSpecifications = MappingTools.MapArray(project.RequirementSpecifications, x => new DbRequirementSpecificationProjectConnection()
+        r.RequirementSpecifications = MappingTools.MapArrayToList(project.RequirementSpecifications, x => new DbRequirementSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // RequirementSpecification = x.ToDbRequirementSpecification(),
             RequirementSpecificationId = x.EntityId
         });
-        r.ContactSpecifications = MappingTools.MapArray(project.ContactSpecifications, x => new DbContactSpecificationProjectConnection()
+        r.ContactSpecifications = MappingTools.MapArrayToList(project.ContactSpecifications, x => new DbContactSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // ContactSpecification = x.ToDbContactSpecification(),
             ContactSpecificationId = x.EntityId
         });
-        r.ProjectTags = MappingTools.MapArray(project.ProjectTags, x => new DbProjectTagConnection()
+        r.ProjectTags = MappingTools.MapArrayToList(project.ProjectTags, x => new DbProjectTagConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // ProjectTag = x.ToDbProjectTag(),
             ProjectTagId = x.EntityId
         });
-        r.DescriptionSpecifications = MappingTools.MapArray(project.DescriptionSpecifications, x => new DbDescriptionSpecificationProjectConnection()
+        r.DescriptionSpecifications = MappingTools.MapArrayToList(project.DescriptionSpecifications, x => new DbDescriptionSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // DescriptionSpecification = x.ToDbDescriptionSpecification(),
             DescriptionSpecificationId = x.EntityId
         });
-        r.GraphicsSpecifications = MappingTools.MapArray(project.GraphicsSpecifications, x => new DbGraphicsSpecificationProjectConnection()
+        r.GraphicsSpecifications = MappingTools.MapArrayToList(project.GraphicsSpecifications, x => new DbGraphicsSpecificationProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // GraphicsSpecification = x.ToDbGraphicsSpecification(),
             GraphicsSpecificationId = x.EntityId
         });
         r.Owner = new DbPersonProjectOwnerConnection()
         {
-            // Person = project.Owner.ToDbPerson(),
-            // Project = r,
             PersonId = project.Owner.EntityId,
             ProjectId = r.EntityId
         };
-        r.Contributors = MappingTools.MapArray(project.Contributors, x => new DbPersonProjectContributorConnection()
+        r.Contributors = MappingTools.MapArrayToList(project.Contributors, x => new DbPersonProjectContributorConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            // Person = x.ToDbPerson(),
             PersonId = x.EntityId
         });
-        r.RelatedProjects = MappingTools.MapArray(project.RelatedProjects, x => new DbProjectConnection()
+        r.RelatedProjects = MappingTools.MapArrayToList(project.RelatedProjects, x => new DbProjectConnection()
         {
-            // Project = r,
             ProjectId = r.EntityId,
-            RelatedProject = x.Project.ToDbProject(),
             RelatedProjectId = x.EntityId,
             Type = x.Type,
         });
-        r.ConnectedOrganizations = MappingTools.MapArray(project.ConnectedOrganizations, x => new DbOrganizationProjectConnection()
+        r.ConnectedOrganizations = MappingTools.MapArrayToList(project.ConnectedOrganizations, x => new DbOrganizationProjectConnection()
         {
             OrganizationId = x.EntityId,
             ProjectId = r.EntityId

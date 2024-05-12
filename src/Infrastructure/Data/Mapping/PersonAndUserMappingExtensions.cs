@@ -27,4 +27,16 @@ public static partial class MappingExtensions
             DbUser u => u.ToUser(),
             _ => dbPerson.ToPersonInner()
         };
+
+    internal static DbEntityPersonCreatedByConnection ToDbEntityPersonCreatedByConnection(this Person p) => new DbEntityPersonCreatedByConnection()
+    {
+        PersonId = p.EntityId
+    };
+    internal static Person ToPerson(this DbEntityPersonCreatedByConnection p) => p.Person!.ToPerson();
+    
+    internal static DbEntityPersonLastModifiedByConnection ToDbEntityPersonLastModifiedByConnection(this Person p) => new DbEntityPersonLastModifiedByConnection()
+    {
+        PersonId = p.EntityId
+    };
+    internal static Person ToPerson(this DbEntityPersonLastModifiedByConnection p) => p.Person!.ToPerson();
 }

@@ -40,28 +40,21 @@ public static partial class MappingExtensions
     // To DB
     internal static partial DbTimeSpecification ToDbTimeSpecificationInner(this TimeSpecification timeSpecification);
     internal static partial DbTimeSpecificationMoment ToDbTimeSpecificationMomentInner(this TimeSpecificationMoment timeSpecificationMoment);
-    
-    [MapperIgnoreTarget(nameof(DbTimeSpecificationPeriod.End))]
-    [MapperIgnoreTarget(nameof(DbTimeSpecificationPeriod.Start))]
-    internal static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriodInner(this TimeSpecificationPeriod timeSpecificationPeriod);
 
-    [UserMapping(Default = true)]
-    public static DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(
-        this TimeSpecificationPeriod timeSpecificationPeriod)
+    public static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(this TimeSpecificationPeriod timeSpecificationPeriod);
+    
+    internal static DbTimeSpecificationPeriodStartConnection ToDbTimeSpecificationPeriodStartConnection(this TimeSpecificationMoment moment) => new()
     {
-        var r = timeSpecificationPeriod.ToDbTimeSpecificationPeriodInner();
-        r.Start = new DbTimeSpecificationMomentPeriodConnection()
-        {
-            TimeSpecificationMomentId = r.EntityId,
-            TimeSpecificationPeriodId = timeSpecificationPeriod.Start.EntityId
-        };
-        r.End = new DbTimeSpecificationMomentPeriodConnection()
-        {
-            TimeSpecificationMomentId = r.EntityId,
-            TimeSpecificationPeriodId = timeSpecificationPeriod.End.EntityId
-        };
-        return r;
-    }
+        MomentId = moment.EntityId
+    };
+    internal static TimeSpecificationMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodStartConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
+    
+    internal static DbTimeSpecificationPeriodEndConnection ToDbTimeSpecificationPeriodEndConnection(this TimeSpecificationMoment moment) => new()
+    {
+        MomentId = moment.EntityId
+    };
+    internal static TimeSpecificationMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodEndConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
+
     
     public static partial DbTimeSpecificationDate ToDbTimeSpecificationDate(this TimeSpecificationDate timeSpecificationDate);
     public static partial DbTimeSpecificationDateTime ToDbTimeSpecificationDateTime(this TimeSpecificationDateTime timeSpecificationDateTime);

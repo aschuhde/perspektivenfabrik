@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Data.DbEntities;
 
-[Table("ProjectTag")]
+[Table("ProjectTags")]
 public sealed class DbProjectTag : DbEntity
 {
     

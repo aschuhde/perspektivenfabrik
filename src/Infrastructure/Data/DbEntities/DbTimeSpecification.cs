@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Domain.DataTypes;
+using Infrastructure.Data.DbDataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -11,8 +12,24 @@ public class DbTimeSpecification : DbEntity
 
 public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 {
-    public DbTimeSpecificationMomentPeriodConnection? Start { get; set; }
-    public DbTimeSpecificationMomentPeriodConnection? End { get; set; }
+    public required DbTimeSpecificationPeriodStartConnection Start { get; init; }
+    public required DbTimeSpecificationPeriodEndConnection End { get; init; }
+}
+
+[Owned]
+public sealed class DbTimeSpecificationPeriodStartConnection
+{
+    public DbTimeSpecificationMoment? Moment { get; set; }
+    [ForeignKey(nameof(Moment))]
+    public Guid MomentId { get; set; }
+}
+
+[Owned]
+public sealed class DbTimeSpecificationPeriodEndConnection
+{
+    public DbTimeSpecificationMoment? Moment { get; set; }
+    [ForeignKey(nameof(Moment))]
+    public Guid MomentId { get; set; }
 }
 
 public class DbTimeSpecificationMoment : DbTimeSpecification
@@ -32,7 +49,7 @@ public sealed class DbTimeSpecificationDateTime : DbTimeSpecificationMoment
 
 public sealed class DbTimeSpecificationMonth : DbTimeSpecificationMoment
 {
-    public required Month Month { get; init; }
+    public required DbMonth Month { get; init; }
 }
 
 [Table("TimeSpecificationProjectConnections")]
@@ -44,17 +61,6 @@ public sealed class DbTimeSpecificationProjectConnection : DbEntityWithId
     [ForeignKey(nameof(TimeSpecification))]
     public required Guid TimeSpecificationId { get; init; }
     public DbTimeSpecification? TimeSpecification { get; init; }
-}
-
-[Table("TimeSpecificationMomentPeriodConnections")]
-public sealed class DbTimeSpecificationMomentPeriodConnection : DbEntityWithId
-{
-    [ForeignKey(nameof(TimeSpecificationPeriod))]
-    public required Guid TimeSpecificationPeriodId { get; init; }
-    public DbTimeSpecificationPeriod? TimeSpecificationPeriod { get; init; }
-    [ForeignKey(nameof(TimeSpecificationMoment))]
-    public required Guid TimeSpecificationMomentId { get; init; }
-    public DbTimeSpecificationMoment? TimeSpecificationMoment { get; init; }
 }
 
 [Table("TimeSpecificationRequirementConnections")]

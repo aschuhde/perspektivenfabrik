@@ -16,7 +16,7 @@ builder.AddLogging();
 if (!builder.Configuration.IsInCodeGenerationMode())
 {
     builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
 }
 builder.Services.AddWebApi(builder.Configuration);
 

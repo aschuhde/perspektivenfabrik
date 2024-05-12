@@ -13,30 +13,20 @@ public sealed class DbProject : DbEntity
     public required ProjectType Type { get; init; }
     public required ProjectVisibility Visibility  { get; init; }
     
-    public DbLocationSpecificationProjectConnection[] LocationSpecifications { get; set; } =
-        Array.Empty<DbLocationSpecificationProjectConnection>();
-    public DbTimeSpecificationProjectConnection[] TimeSpecifications { get; set; } =
-        Array.Empty<DbTimeSpecificationProjectConnection>();
-    public DbRequirementSpecificationProjectConnection[] RequirementSpecifications { get; set; } =
-        Array.Empty<DbRequirementSpecificationProjectConnection>();
-    public DbContactSpecificationProjectConnection[] ContactSpecifications { get; set; } =
-        Array.Empty<DbContactSpecificationProjectConnection>();
+    public List<DbLocationSpecificationProjectConnection>? LocationSpecifications { get; set; }
+    public List<DbTimeSpecificationProjectConnection>? TimeSpecifications { get; set; }
+    public List<DbRequirementSpecificationProjectConnection>? RequirementSpecifications { get; set; }
+    public List<DbContactSpecificationProjectConnection>? ContactSpecifications { get; set; }
     [MaxLength(Constants.StringLengths.Medium)]
     public required string ProjectName { get; init; }
-    public DbProjectTagConnection[] ProjectTags { get; set; } =
-        Array.Empty<DbProjectTagConnection>();
+    public List<DbProjectTagConnection>? ProjectTags { get; set; }
     public required DbFormattedTitle ProjectTitle { get; init; }
-    public DbDescriptionSpecificationProjectConnection[] DescriptionSpecifications { get; set; } =
-        Array.Empty<DbDescriptionSpecificationProjectConnection>();
-    public DbGraphicsSpecificationProjectConnection[] GraphicsSpecifications { get; set; } =
-        Array.Empty<DbGraphicsSpecificationProjectConnection>();
+    public List<DbDescriptionSpecificationProjectConnection>? DescriptionSpecifications { get; set; }
+    public List<DbGraphicsSpecificationProjectConnection>? GraphicsSpecifications { get; set; }
     public required bool ConnectedOrganizationsSameAsOwner { get; init; }
-    public DbOrganizationProjectConnection[] ConnectedOrganizations { get; set; } =
-        Array.Empty<DbOrganizationProjectConnection>();
+    public List<DbOrganizationProjectConnection>? ConnectedOrganizations { get; set; }
     public DbPersonProjectOwnerConnection? Owner { get; set; }
-    public DbPersonProjectContributorConnection[] Contributors { get; set; } =
-        Array.Empty<DbPersonProjectContributorConnection>();
+    public List<DbPersonProjectContributorConnection>? Contributors { get; set; }
     [InverseProperty(nameof(DbProjectConnection.Project))]
-    public DbProjectConnection[] RelatedProjects { get; set; } =
-        Array.Empty<DbProjectConnection>();
+    public List<DbProjectConnection>? RelatedProjects { get; set; }
 }
