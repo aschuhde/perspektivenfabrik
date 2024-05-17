@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Application.UnitTests.Example;
 
-public class PasswordHashTests
+public sealed class PasswordHashTests
 {
     [TestCase("test-password")]
     public void ShouldHashPassword(string password)

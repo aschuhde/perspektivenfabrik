@@ -2,7 +2,7 @@
 
 namespace Domain.UnitTests;
 
-public class DefaultTest
+public sealed class DefaultTest
 {
     [TestCase]
     public void DefaultTestThatAlwaysSucceeds()
