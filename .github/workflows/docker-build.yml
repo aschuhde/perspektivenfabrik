@@ -9,12 +9,44 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    environment: production
-    env:
-      PROXY_CERTIFICATE: ${{ secrets.PROXY_CERTIFICATE }}
-      PROXY_CERTIFICATE_PASSWORD: ${{ secrets.PROXY_CERTIFICATE_PASSWORD }}
-      GLOBAL_ACCESS_TOKEN: ${{ secrets.GLOBAL_ACCESS_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./src/Proxy/Dockerfile
+            image: ghcr.io/aschuhde/perspektivenfabrik-proxy
+            context: ./
+          - dockerfile: ./src/NginxFrontendProxy/Dockerfile            
+            image: ghcr.io/aschuhde/perspektivenfabrik-frontend
+            context: ./src/NginxFrontendProxy
+          - dockerfile: ./src/WebApi/Dockerfile
+            image: ghcr.io/aschuhde/perspektivenfabrik-api
+            context: ./
+    permissions:
+      contents: read
+      packages: write
     steps:
-    - uses: actions/checkout@v3    
-    - name: Build the Docker image
-      run: docker-compose -f docker-compose.yaml up -d --build
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Log in to the container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ matrix.image }}
+          
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

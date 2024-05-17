@@ -17,16 +17,12 @@ RUN dotnet build "Proxy.csproj" -c Release -o /app/build
 FROM build as publish
 RUN dotnet publish "Proxy.csproj" -c Release -o /app/publish
 
-FROM alpine as ssl
-ARG PROXY_CERTIFICATE
-RUN echo $PROXY_CERTIFICATE > cert.txt; base64 -d cert.txt > cert.pfx
-
 FROM base as final
 WORKDIR /app
-COPY --from=ssl cert.pfx /var/ssl/certificate.user.pfx
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path /var/ssl/certificate.user.pfx
-
+COPY ./src/Proxy/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Proxy.dll"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
 EXPOSE $PROXY_PORT_HTTPS
 EXPOSE $PROXY_PORT_HTTP

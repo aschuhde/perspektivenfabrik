@@ -53,3 +53,5 @@ appsettings.override.json
 *.user.json
 /src/PerspektivenfabrikDotNetHelperTool/nupkg
 .angular/
+cert.env
+global-access-token.env

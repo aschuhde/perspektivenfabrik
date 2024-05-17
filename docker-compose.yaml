@@ -4,18 +4,13 @@ services:
   proxy:
     build: 
       context: ./
-      dockerfile: src/Proxy/Dockerfile
-      args:
-        - PROXY_CERTIFICATE=${PROXY_CERTIFICATE} 
+      dockerfile: src/Proxy/Dockerfile       
     ports:
       - "9000:9000"
-      - "9443:9443"    
-    environment:
-      - PROXY_CERTIFICATE=${PROXY_CERTIFICATE}
-      - PROXY_CERTIFICATE_PASSWORD=${PROXY_CERTIFICATE_PASSWORD}
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${PROXY_CERTIFICATE_PASSWORD}
-      - GLOBAL_ACCESS_TOKEN=${GLOBAL_ACCESS_TOKEN}
+      - "9443:9443"        
     env_file:
+      - global-access-token.env
+      - cert.env
       - ports.env
       - proxy.env            
   nginx:
