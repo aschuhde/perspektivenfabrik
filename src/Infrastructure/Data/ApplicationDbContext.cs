@@ -37,9 +37,24 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<DbPerson>().HasDiscriminator<string>($"{nameof(DbPerson)}{DiscriminatorPostfix}")
-            .HasValue<DbPerson>(nameof(DbPerson))
-            .HasValue<DbUser>(nameof(DbUser));
+        modelBuilder.Entity<DbPerson>().OwnsOne(x => x.LastModifiedBy, y =>
+            {
+                y.WithOwner();
+                y.HasOne(e => e.Person)
+                .WithOne()
+                .HasForeignKey<DbEntityPersonLastModifiedByConnection>(e => e.PersonId)
+                .IsRequired(false);
+        }).OwnsOne(x => x.CreatedBy, y =>
+            {
+                y.WithOwner();
+                y.HasOne(e => e.Person)
+                .WithOne()
+                .HasForeignKey<DbEntityPersonCreatedByConnection>(e => e.PersonId)
+                .IsRequired(false);
+            }).HasDiscriminator<string>($"{nameof(DbPerson)}{DiscriminatorPostfix}")
+        .HasValue<DbPerson>(nameof(DbPerson))
+        .HasValue<DbUser>(nameof(DbUser));
+            
         
         modelBuilder.Entity<DbRequirementSpecification>().HasDiscriminator<string>($"{nameof(DbRequirementSpecification)}{DiscriminatorPostfix}")
             .HasValue<DbRequirementSpecification>(nameof(DbRequirementSpecification))

@@ -46,9 +46,18 @@ public static partial class MappingExtensions
         this DbContactSpecificationProjectConnection dbContactSpecificationProjectConnection) =>
         dbContactSpecificationProjectConnection.ContactSpecification!.ToContactSpecification();
     
-    public static ProjectTag DbProjectTagConnectionToContactSpecification(
+    public static ProjectTag DbProjectTagConnectionToProjectTag(
         this DbProjectTagConnection dbProjectTagConnection) =>
         dbProjectTagConnection.ProjectTag!.ToProjectTag();
+    
+    public static ProjectConnection DbProjectConnectionToProjectConnection(
+        this DbProjectConnection dbProjectConnection) =>
+        new()
+        {
+            Project = dbProjectConnection.RelatedProject!.ToProject(),
+            Type = dbProjectConnection.Type,
+            EntityId = dbProjectConnection.EntityId
+        };
     
     public static DescriptionSpecification DbDescriptionSpecificationProjectConnectionToDescriptionSpecification(
         this DbDescriptionSpecificationProjectConnection dbDescriptionSpecificationProjectConnection) =>

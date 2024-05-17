@@ -75,7 +75,7 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationPerson.ToDbRequirementSpecificationPersonInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationPerson);
-        r.SkillSpecifications = MappingTools.MapArrayToList(requirementSpecificationPerson.TimeSpecifications, x =>
+        r.SkillSpecifications = MappingTools.MapArrayToList(requirementSpecificationPerson.SkillSpecifications, x =>
             new DbSkillSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,
@@ -101,7 +101,7 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationMaterial.ToDbRequirementSpecificationMaterialInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationMaterial);
-        r.MaterialSpecifications = MappingTools.MapArrayToList(requirementSpecificationMaterial.TimeSpecifications, x =>
+        r.MaterialSpecifications = MappingTools.MapArrayToList(requirementSpecificationMaterial.MaterialSpecifications, x =>
             new DbMaterialSpecificationRequirementConnection()
             {
                 RequirementSpecificationId = r.EntityId,

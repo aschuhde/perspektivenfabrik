@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Mapping;
 public static partial class MappingExtensions
 {
     // From DB
-    public static partial ContactSpecification ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
+    internal static partial ContactSpecification ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
     public static partial ContactSpecificationPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
     public static partial ContactSpecificationMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
     public static partial ContactSpecificationPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
@@ -28,7 +28,7 @@ public static partial class MappingExtensions
         };
 
     // To DB
-    public static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecification contactSpecification);
+    internal static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecification contactSpecification);
     public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationPhoneNumber contactSpecificationPhoneNumber);
     public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationMailAddress contactSpecificationMailAddress);
     public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationPostalAddress contactSpecificationPostalAddress);

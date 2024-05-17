@@ -71,8 +71,9 @@ public static partial class MappingExtensions
         });
         r.RelatedProjects = MappingTools.MapArrayToList(project.RelatedProjects, x => new DbProjectConnection()
         {
+            EntityId = x.EntityId,
             ProjectId = r.EntityId,
-            RelatedProjectId = x.EntityId,
+            RelatedProjectId = x.Project.EntityId,
             Type = x.Type,
         });
         r.ConnectedOrganizations = MappingTools.MapArrayToList(project.ConnectedOrganizations, x => new DbOrganizationProjectConnection()
@@ -83,5 +84,5 @@ public static partial class MappingExtensions
         return r;
     }
     
-    internal static partial Project ToProjectInner(this DbProject dbProject);
+    public static partial Project ToProject(this DbProject dbProject);
 }

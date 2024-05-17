@@ -9,7 +9,7 @@ public class DbEntity : DbEntityWithId
     public DateTimeOffset CreatedOn { get; init; } = DateTimeOffset.UtcNow;
     public DbEntityPersonCreatedByConnection? CreatedBy { get; init; }
     public DateTimeOffset LastModifiedOn { get; init; } = DateTimeOffset.UtcNow;
-     public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; init; }
+    public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; init; }
     public bool Active { get; init; } = true;
     public DbModificationHistoryConnection? History { get; init; }
 
