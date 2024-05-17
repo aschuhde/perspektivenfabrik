@@ -19,7 +19,10 @@ public static class ConfigureServices
         {
             o.EndpointFilter = ep => ep.EndpointTags?.Contains(KnownTags.SwaggerIgnore) is not true;
         });
-        services.AddJWTBearerAuth(JwtAuthenticationDataService.LoadSigninKey(configuration));
+        services.AddAuthenticationJwtBearer(options =>
+        {
+            options.SigningKey = JwtAuthenticationDataService.LoadSigninKey(configuration);
+        });
         services.AddAuthorization();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddCors(options =>
