@@ -7,9 +7,10 @@ using WebApi;
 
 namespace Application.FunctionalTests;
 
-public class CustomWebApplicationFactory : WebApplicationFactory<IAssemblyMarker>
+public sealed class CustomWebApplicationFactory : WebApplicationFactory<IAssemblyMarker>
 {
-
+    private string ExecutionDirectory => Directory.GetCurrentDirectory();
+    private string GetConfigurationPath(string filename) => Path.Combine(ExecutionDirectory, filename);
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(services =>
@@ -21,19 +22,39 @@ public class CustomWebApplicationFactory : WebApplicationFactory<IAssemblyMarker
             
         });
     }
-    
-    // protected override IHost CreateHost(IHostBuilder builder)
-    // {
-    //     builder.ConfigureHostConfiguration(configurationBuilder =>
-    //     {
-    //         if (configurationBuilder is not IConfiguration configuration)
-    //             throw new Exception("configurationBuilder needs to implement IConfiguration");
-    //         
-    //         configurationBuilder.AddJsonFile(GetConfigurationPath("appsettings.tests.common.json"));
-    //         ConfigurationUpdated(configuration, connectionString);
-    //     });
-    //     return base.CreateHost(builder);
-    // }
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        builder.ConfigureHostConfiguration(configurationBuilder =>
+        {
+            if (configurationBuilder is not IConfiguration configuration)
+                throw new Exception("configurationBuilder needs to implement IConfiguration");
+            
+            configurationBuilder.AddJsonFile(GetConfigurationPath("appsettings.test.user.json"), optional:true);
+            ConfigurationUpdated(configuration);
+        });
+        return base.CreateHost(builder);
+    }
+    private void ConfigurationUpdated(IConfiguration configurationManager)
+    {
+        foreach (var keyValuePair in configurationManager.GetSection("EnvironmentVariables").GetChildren())
+        {
+            if (keyValuePair.Value == null)
+                continue;
+            Environment.SetEnvironmentVariable(keyValuePair.Key, keyValuePair.Value);
+        }
+        foreach (var keyValuePair in configurationManager.GetSection("Configuration").AsEnumerable())
+        {
+            if (keyValuePair.Value == null)
+                continue;
+            Environment.SetEnvironmentVariable($"{Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
+        }
+        foreach (var keyValuePair in configurationManager.GetSection("ConfigurationOverrides").AsEnumerable())
+        {
+            if (keyValuePair.Value == null)
+                continue;
+            Environment.SetEnvironmentVariable($"{Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
+        }
+    }
     //
     // private void ConfigurationUpdated(IConfiguration configurationManager)
     // {
