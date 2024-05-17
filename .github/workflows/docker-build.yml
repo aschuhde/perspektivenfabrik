@@ -8,7 +8,7 @@ on:
     
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -16,8 +16,11 @@ jobs:
           - dockerfile: ./src/Proxy/Dockerfile
             image: ghcr.io/aschuhde/perspektivenfabrik-proxy
             context: ./
-          - dockerfile: ./src/NginxFrontendProxy/Dockerfile            
+          - dockerfile: ./src/Frontend/Dockerfile
             image: ghcr.io/aschuhde/perspektivenfabrik-frontend
+            context: ./src/Frontend
+          - dockerfile: ./src/NginxFrontendProxy/Dockerfile            
+            image: ghcr.io/aschuhde/perspektivenfabrik-frontend-container
             context: ./src/NginxFrontendProxy
           - dockerfile: ./src/WebApi/Dockerfile
             image: ghcr.io/aschuhde/perspektivenfabrik-api

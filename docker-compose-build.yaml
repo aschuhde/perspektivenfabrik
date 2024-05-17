@@ -14,15 +14,21 @@ services:
       - ports.env
       - proxy.env            
   nginx:
-    image: ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main 
+    build: 
+      context: src/NginxFrontendProxy
+      dockerfile: ./Dockerfile
     env_file:
       - ports.env
   angular:
-    build: ghcr.io/aschuhde/perspektivenfabrik-frontend:main
+    build:
+      context: src/Frontend
+      dockerfile: ./Dockerfile
     env_file:
       - ports.env
   api:
-    image: ghcr.io/aschuhde/perspektivenfabrik-api:main
+    build:
+      context: ./
+      dockerfile: src/WebApi/Dockerfile
     env_file:
       - db-connection.env      
       - ports.env
