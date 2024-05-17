@@ -50,5 +50,6 @@ appsettings.override.json
 *.user.pfx
 *.user.ps1
 *.user.sh
+*.user.json
 /src/PerspektivenfabrikDotNetHelperTool/nupkg
 .angular/
