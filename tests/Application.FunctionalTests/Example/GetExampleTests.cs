@@ -8,7 +8,7 @@ namespace Application.FunctionalTests.Example;
 
 using static Testing;
 
-public class GetExampleTests : BaseTestFixture
+public sealed class GetExampleTests : BaseTestFixture
 {
     [Test]
     public async Task ShouldReturnSomeExampleWhenCalledGetExample()
