@@ -2,9 +2,7 @@ version: '3.9'
 
 services:  
   proxy:
-    build: 
-      context: ./
-      dockerfile: src/Proxy/Dockerfile       
+    image: "ghcr.io/aschuhde/perspektivenfabrik-proxy:main"
     ports:
       - "9000:9000"
       - "9443:9443"        
@@ -14,15 +12,15 @@ services:
       - ports.env
       - proxy.env            
   nginx:
-    image: ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main 
+    image: "ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main"
     env_file:
       - ports.env
   angular:
-    build: ghcr.io/aschuhde/perspektivenfabrik-frontend:main
+    image: "ghcr.io/aschuhde/perspektivenfabrik-frontend:main"
     env_file:
       - ports.env
   api:
-    image: ghcr.io/aschuhde/perspektivenfabrik-api:main
+    image: "ghcr.io/aschuhde/perspektivenfabrik-api:main"
     env_file:
       - db-connection.env      
       - ports.env
