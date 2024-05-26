@@ -7,6 +7,6 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial QuantitySpecification ToQuantitySpecification(this DbQuantitySpecification dbQuantitySpecification);
-    public static partial DbQuantitySpecification ToDbQuantitySpecification(this QuantitySpecification quantitySpecification);
+    public static partial QuantitySpecificationDto ToQuantitySpecification(this DbQuantitySpecification dbQuantitySpecification);
+    public static partial DbQuantitySpecification ToDbQuantitySpecification(this QuantitySpecificationDto quantitySpecificationDto);
 }

@@ -8,4 +8,5 @@ public static class Routes
     public const string NotFound = $"{ApiRoute}/{{**catchall}}";
     public const string GetExampleAnonymous = $"{ApiRoute}/example-anonymous";
     public const string JwtRefreshToken = $"{ApiRoute}/refresh-token";
+    public const string GetProjects = $"{ApiRoute}/projects";
 }

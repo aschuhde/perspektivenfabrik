@@ -8,13 +8,13 @@ namespace Infrastructure.Data.Mapping;
 public static partial class MappingExtensions
 {
     // From DB
-    internal static partial ContactSpecification ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
-    public static partial ContactSpecificationPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
-    public static partial ContactSpecificationMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
-    public static partial ContactSpecificationPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
+    internal static partial ContactSpecificationDto ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
+    public static partial ContactSpecificationDtoPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
+    public static partial ContactSpecificationDtoMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
+    public static partial ContactSpecificationDtoPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
 
     [UserMapping(Default = true)]
-    public static ContactSpecification ToContactSpecification(
+    public static ContactSpecificationDto ToContactSpecification(
         this DbContactSpecification dbContactSpecification) =>
         dbContactSpecification switch
         {
@@ -28,22 +28,22 @@ public static partial class MappingExtensions
         };
 
     // To DB
-    internal static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecification contactSpecification);
-    public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationPhoneNumber contactSpecificationPhoneNumber);
-    public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationMailAddress contactSpecificationMailAddress);
-    public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationPostalAddress contactSpecificationPostalAddress);
+    internal static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecificationDto contactSpecificationDto);
+    public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationDtoPhoneNumber contactSpecificationDtoPhoneNumber);
+    public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationDtoMailAddress contactSpecificationDtoMailAddress);
+    public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationDtoPostalAddress contactSpecificationDtoPostalAddress);
 
     [UserMapping(Default = true)]
     public static DbContactSpecification ToDbContactSpecification(
-        this ContactSpecification contactSpecification) =>
-        contactSpecification switch
+        this ContactSpecificationDto contactSpecificationDto) =>
+        contactSpecificationDto switch
         {
-            ContactSpecificationPhoneNumber contactSpecificationPhoneNumber => contactSpecificationPhoneNumber
+            ContactSpecificationDtoPhoneNumber contactSpecificationPhoneNumber => contactSpecificationPhoneNumber
                 .ToDbContactSpecificationPhoneNumber(),
-            ContactSpecificationMailAddress contactSpecificationMailAddress => contactSpecificationMailAddress
+            ContactSpecificationDtoMailAddress contactSpecificationMailAddress => contactSpecificationMailAddress
                 .ToDbContactSpecificationMailAddress(),
-            ContactSpecificationPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress
+            ContactSpecificationDtoPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress
                 .ToDbContactSpecificationPostalAddress(),
-            _ => contactSpecification.ToDbContactSpecificationInner()
+            _ => contactSpecificationDto.ToDbContactSpecificationInner()
         };
 }

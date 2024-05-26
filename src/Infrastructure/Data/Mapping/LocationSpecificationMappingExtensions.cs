@@ -7,14 +7,14 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    internal static partial LocationSpecification ToLocationSpecificationInner(this DbLocationSpecification dbLocationSpecification);
-    public static partial LocationSpecificationRemote ToLocationSpecificationRemote(this DbLocationSpecificationRemote dbLocationSpecificationRemote);
-    public static partial LocationSpecificationRegion ToLocationSpecificationRegion(this DbLocationSpecificationRegion dbLocationSpecificationRegion);
-    public static partial LocationSpecificationCoordinates ToLocationSpecificationCoordinates(this DbLocationSpecificationCoordinates dbLocationSpecificationCoordinates);
-    public static partial LocationSpecificationAddress ToLocationSpecificationAddress(this DbLocationSpecificationAddress dbLocationSpecificationAddress);
+    internal static partial LocationSpecificationDto ToLocationSpecificationInner(this DbLocationSpecification dbLocationSpecification);
+    public static partial LocationSpecificationDtoRemote ToLocationSpecificationRemote(this DbLocationSpecificationRemote dbLocationSpecificationRemote);
+    public static partial LocationSpecificationDtoRegion ToLocationSpecificationRegion(this DbLocationSpecificationRegion dbLocationSpecificationRegion);
+    public static partial LocationSpecificationDtoCoordinates ToLocationSpecificationCoordinates(this DbLocationSpecificationCoordinates dbLocationSpecificationCoordinates);
+    public static partial LocationSpecificationDtoAddress ToLocationSpecificationAddress(this DbLocationSpecificationAddress dbLocationSpecificationAddress);
 
     [UserMapping(Default = true)]
-    public static LocationSpecification ToLocationSpecification(this DbLocationSpecification dbLocationSpecification) =>
+    public static LocationSpecificationDto ToLocationSpecification(this DbLocationSpecification dbLocationSpecification) =>
         dbLocationSpecification switch
         {
             DbLocationSpecificationRemote dbLocationSpecificationRemote => dbLocationSpecificationRemote
@@ -28,23 +28,23 @@ public static partial class MappingExtensions
             _ => dbLocationSpecification.ToLocationSpecificationInner()
         };
 
-    internal static partial DbLocationSpecification ToDbLocationSpecificationInner(this LocationSpecification locationSpecification);
-    public static partial DbLocationSpecificationRemote ToDbLocationSpecificationRemote(this LocationSpecificationRemote locationSpecificationRemote);
-    public static partial DbLocationSpecificationRegion ToDbLocationSpecificationRegion(this LocationSpecificationRegion locationSpecificationRegion);
-    public static partial DbLocationSpecificationCoordinates ToDbLocationSpecificationCoordinates(this LocationSpecificationCoordinates locationSpecificationCoordinates);
-    public static partial DbLocationSpecificationAddress ToDbLocationSpecificationAddress(this LocationSpecificationAddress locationSpecificationAddress);
+    internal static partial DbLocationSpecification ToDbLocationSpecificationInner(this LocationSpecificationDto locationSpecificationDto);
+    public static partial DbLocationSpecificationRemote ToDbLocationSpecificationRemote(this LocationSpecificationDtoRemote locationSpecificationDtoRemote);
+    public static partial DbLocationSpecificationRegion ToDbLocationSpecificationRegion(this LocationSpecificationDtoRegion locationSpecificationDtoRegion);
+    public static partial DbLocationSpecificationCoordinates ToDbLocationSpecificationCoordinates(this LocationSpecificationDtoCoordinates locationSpecificationDtoCoordinates);
+    public static partial DbLocationSpecificationAddress ToDbLocationSpecificationAddress(this LocationSpecificationDtoAddress locationSpecificationDtoAddress);
     [UserMapping(Default = true)]
-    public static DbLocationSpecification ToDbLocationSpecification(this LocationSpecification locationSpecification) =>
-        locationSpecification switch
+    public static DbLocationSpecification ToDbLocationSpecification(this LocationSpecificationDto locationSpecificationDto) =>
+        locationSpecificationDto switch
         {
-            LocationSpecificationRemote locationSpecificationRemote => locationSpecificationRemote
+            LocationSpecificationDtoRemote locationSpecificationRemote => locationSpecificationRemote
                 .ToDbLocationSpecificationRemote(),
-            LocationSpecificationRegion locationSpecificationRegion => locationSpecificationRegion
+            LocationSpecificationDtoRegion locationSpecificationRegion => locationSpecificationRegion
                 .ToDbLocationSpecificationRegion(),
-            LocationSpecificationCoordinates locationSpecificationCoordinates => locationSpecificationCoordinates
+            LocationSpecificationDtoCoordinates locationSpecificationCoordinates => locationSpecificationCoordinates
                 .ToDbLocationSpecificationCoordinates(),
-            LocationSpecificationAddress locationSpecificationAddress => locationSpecificationAddress
+            LocationSpecificationDtoAddress locationSpecificationAddress => locationSpecificationAddress
                 .ToDbLocationSpecificationAddress(),
-            _ => locationSpecification.ToDbLocationSpecificationInner()
+            _ => locationSpecificationDto.ToDbLocationSpecificationInner()
         };
 }

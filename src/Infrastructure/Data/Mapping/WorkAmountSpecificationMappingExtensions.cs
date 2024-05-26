@@ -7,7 +7,7 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial WorkAmountSpecification ToWorkAmountSpecification(this DbWorkAmountSpecification dbWorkAmountSpecification);
+    public static partial WorkAmountSpecificationDto ToWorkAmountSpecification(this DbWorkAmountSpecification dbWorkAmountSpecification);
     
-    public static partial DbWorkAmountSpecification ToDbWorkAmountSpecification(this WorkAmountSpecification workAmountSpecification);
+    public static partial DbWorkAmountSpecification ToDbWorkAmountSpecification(this WorkAmountSpecificationDto workAmountSpecificationDto);
 }

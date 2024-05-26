@@ -6,18 +6,18 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial ModificationHistory ToHistory(this DbModificationHistory dbHistory);
+    public static partial ModificationHistoryDto ToHistory(this DbModificationHistory dbHistory);
     
-    public static partial DbModificationHistory ToDbHistory(this ModificationHistory history);
+    public static partial DbModificationHistory ToDbHistory(this ModificationHistoryDto historyDto);
     
-    internal static DbModificationHistoryConnection ToDbModificationHistoryConnection(this ModificationHistory history)
+    internal static DbModificationHistoryConnection ToDbModificationHistoryConnection(this ModificationHistoryDto historyDto)
     {
         return new DbModificationHistoryConnection()
         {
-            HistoryId = history.EntityId
+            HistoryId = historyDto.EntityId
         };
     }
-    internal static ModificationHistory ToModificationHistory(this DbModificationHistoryConnection history)
+    internal static ModificationHistoryDto ToModificationHistory(this DbModificationHistoryConnection history)
     {
         return history.History!.ToHistory();
     }

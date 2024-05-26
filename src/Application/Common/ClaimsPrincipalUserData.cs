@@ -1,7 +1,6 @@
 using System.Security.Claims;
-using System.Security.Principal;
 using Common;
-using Domain.Entities;
+using User = Domain.Entities.UserDto;
 
 namespace Application.Common;
 

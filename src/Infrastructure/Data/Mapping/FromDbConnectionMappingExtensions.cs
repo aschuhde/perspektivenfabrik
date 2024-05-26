@@ -1,56 +1,55 @@
 ﻿using Domain.Entities;
 using Infrastructure.Data.DbEntities;
-using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
 
 public static partial class MappingExtensions
 {
-    public static Organization DbOrganizationProjectConnectionToOrganization(
+    public static OrganizationDto DbOrganizationProjectConnectionToOrganization(
         this DbOrganizationProjectConnection dbOrganizationProjectConnection) =>
         dbOrganizationProjectConnection.Organization!.ToOrganization();
-    public static TimeSpecification DbTimeSpecificationProjectConnectionToTimeSpecification(
+    public static TimeSpecificationDto DbTimeSpecificationProjectConnectionToTimeSpecification(
         this DbTimeSpecificationProjectConnection dbTimeSpecificationProjectConnection) =>
         dbTimeSpecificationProjectConnection.TimeSpecification!.ToTimeSpecification();
     
-    public static TimeSpecification DbTimeSpecificationRequirementConnectionToTimeSpecification(
+    public static TimeSpecificationDto DbTimeSpecificationRequirementConnectionToTimeSpecification(
         this DbTimeSpecificationRequirementConnection dbTimeSpecificationRequirementConnection) =>
         dbTimeSpecificationRequirementConnection.TimeSpecification!.ToTimeSpecification();
     
-    public static LocationSpecification DbLocationSpecificationProjectConnectionToLocationSpecification(
+    public static LocationSpecificationDto DbLocationSpecificationProjectConnectionToLocationSpecification(
     this DbLocationSpecificationProjectConnection dbLocationSpecificationProjectConnection) =>
     dbLocationSpecificationProjectConnection.LocationSpecification!.ToLocationSpecification();
     
-    public static RequirementSpecification DbRequirementSpecificationProjectConnectionToRequirementSpecification(
+    public static RequirementSpecificationDto DbRequirementSpecificationProjectConnectionToRequirementSpecification(
         this DbRequirementSpecificationProjectConnection dbRequirementSpecificationProjectConnection) =>
         dbRequirementSpecificationProjectConnection.RequirementSpecification!.ToRequirementSpecification();
     
-    public static MaterialSpecification DbMaterialSpecificationRequirementConnectionToMaterialSpecification(
+    public static MaterialSpecificationDto DbMaterialSpecificationRequirementConnectionToMaterialSpecification(
         this DbMaterialSpecificationRequirementConnection dbMaterialSpecificationRequirementConnection) =>
         dbMaterialSpecificationRequirementConnection.MaterialSpecification!.ToMaterialSpecification();
     
-    public static WorkAmountSpecification DbWorkAmountSpecificationRequirementConnectionToWorkAmountSpecification(
+    public static WorkAmountSpecificationDto DbWorkAmountSpecificationRequirementConnectionToWorkAmountSpecification(
         this DbWorkAmountSpecificationRequirementConnection dbWorkAmountSpecificationRequirementConnection) =>
         dbWorkAmountSpecificationRequirementConnection.WorkAmountSpecification!.ToWorkAmountSpecification();
     
-    public static SkillSpecification DbSkillSpecificationRequirementConnectionToSkillSpecification(
+    public static SkillSpecificationDto DbSkillSpecificationRequirementConnectionToSkillSpecification(
         this DbSkillSpecificationRequirementConnection dbSkillSpecificationRequirementConnection) =>
         dbSkillSpecificationRequirementConnection.SkillSpecification!.ToSkillSpecification();
     
-    public static QuantitySpecification DbQuantitySpecificationRequirementConnectionToQuantitySpecification(
+    public static QuantitySpecificationDto DbQuantitySpecificationRequirementConnectionToQuantitySpecification(
         this DbQuantitySpecificationRequirementConnection dbQuantitySpecificationRequirementConnection) =>
         dbQuantitySpecificationRequirementConnection.QuantitySpecification!.ToQuantitySpecification();
     
-    public static ContactSpecification DbContactSpecificationProjectConnectionToContactSpecification(
+    public static ContactSpecificationDto DbContactSpecificationProjectConnectionToContactSpecification(
         this DbContactSpecificationProjectConnection dbContactSpecificationProjectConnection) =>
         dbContactSpecificationProjectConnection.ContactSpecification!.ToContactSpecification();
     
-    public static ProjectTag DbProjectTagConnectionToProjectTag(
+    public static ProjectTagDto DbProjectTagConnectionToProjectTag(
         this DbProjectTagConnection dbProjectTagConnection) =>
         dbProjectTagConnection.ProjectTag!.ToProjectTag();
     
-    public static ProjectConnection DbProjectConnectionToProjectConnection(
+    public static ProjectConnectionDto DbProjectConnectionToProjectConnection(
         this DbProjectConnection dbProjectConnection) =>
         new()
         {
@@ -59,23 +58,23 @@ public static partial class MappingExtensions
             EntityId = dbProjectConnection.EntityId
         };
     
-    public static DescriptionSpecification DbDescriptionSpecificationProjectConnectionToDescriptionSpecification(
+    public static DescriptionSpecificationDto DbDescriptionSpecificationProjectConnectionToDescriptionSpecification(
         this DbDescriptionSpecificationProjectConnection dbDescriptionSpecificationProjectConnection) =>
         dbDescriptionSpecificationProjectConnection.DescriptionSpecification!.ToDescriptionSpecification();
     
-    public static GraphicsSpecification DbGraphicsSpecificationProjectConnectionToGraphicsSpecification(
+    public static GraphicsSpecificationDto DbGraphicsSpecificationProjectConnectionToGraphicsSpecification(
         this DbGraphicsSpecificationProjectConnection dbGraphicsSpecificationProjectConnection) =>
         dbGraphicsSpecificationProjectConnection.GraphicsSpecification!.ToGraphicsSpecification();
     
-    public static Organization DbOrganizationConnectionToOrganization(
+    public static OrganizationDto DbOrganizationConnectionToOrganization(
         this DbOrganizationConnection dbOrganizationConnection) =>
         dbOrganizationConnection.Organization!.ToOrganization();
     
-    public static Person DbPersonProjectOwnerConnectionToOrganization(
+    public static PersonDto DbPersonProjectOwnerConnectionToOrganization(
         this DbPersonProjectOwnerConnection dbPersonProjectOwnerConnection) =>
         dbPersonProjectOwnerConnection.Person!.ToPerson();
     
-    public static Person DbPersonProjectContributorConnectionToOrganization(
+    public static PersonDto DbPersonProjectContributorConnectionToOrganization(
         this DbPersonProjectContributorConnection dbPersonProjectContributorConnection) =>
         dbPersonProjectContributorConnection.Person!.ToPerson();
 }

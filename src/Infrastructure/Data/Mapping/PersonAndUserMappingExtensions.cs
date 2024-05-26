@@ -6,37 +6,37 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial User ToUser(this DbUser dbUser);
-    public static partial DbUser ToDbUser(this User user);
+    public static partial UserDto ToUser(this DbUser dbUser);
+    public static partial DbUser ToDbUser(this UserDto userDto);
     
-    internal static partial Person ToPersonInner(this DbPerson dbPerson);
-    internal static partial DbPerson ToDbPersonInner(this Person person);
+    internal static partial PersonDto ToPersonInner(this DbPerson dbPerson);
+    internal static partial DbPerson ToDbPersonInner(this PersonDto personDto);
 
     [UserMapping(Default = true)]
-    public static DbPerson ToDbPerson(this Person person) =>
-        person switch
+    public static DbPerson ToDbPerson(this PersonDto personDto) =>
+        personDto switch
         {
-            User u => u.ToDbUser(),
-            _ => person.ToDbPersonInner()
+            UserDto u => u.ToDbUser(),
+            _ => personDto.ToDbPersonInner()
         };
 
     [UserMapping(Default = true)]
-    public static Person ToPerson(this DbPerson dbPerson) =>
+    public static PersonDto ToPerson(this DbPerson dbPerson) =>
         dbPerson switch
         {
             DbUser u => u.ToUser(),
             _ => dbPerson.ToPersonInner()
         };
 
-    internal static DbEntityPersonCreatedByConnection ToDbEntityPersonCreatedByConnection(this Person p) => new DbEntityPersonCreatedByConnection()
+    internal static DbEntityPersonCreatedByConnection ToDbEntityPersonCreatedByConnection(this PersonDto p) => new DbEntityPersonCreatedByConnection()
     {
         PersonId = p.EntityId
     };
-    internal static Person ToPerson(this DbEntityPersonCreatedByConnection p) => p.Person!.ToPerson();
+    internal static PersonDto ToPerson(this DbEntityPersonCreatedByConnection p) => p.Person!.ToPerson();
     
-    internal static DbEntityPersonLastModifiedByConnection ToDbEntityPersonLastModifiedByConnection(this Person p) => new DbEntityPersonLastModifiedByConnection()
+    internal static DbEntityPersonLastModifiedByConnection ToDbEntityPersonLastModifiedByConnection(this PersonDto p) => new DbEntityPersonLastModifiedByConnection()
     {
         PersonId = p.EntityId
     };
-    internal static Person ToPerson(this DbEntityPersonLastModifiedByConnection p) => p.Person!.ToPerson();
+    internal static PersonDto ToPerson(this DbEntityPersonLastModifiedByConnection p) => p.Person!.ToPerson();
 }

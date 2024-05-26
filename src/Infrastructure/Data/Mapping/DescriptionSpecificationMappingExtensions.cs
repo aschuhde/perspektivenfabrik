@@ -7,7 +7,7 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial DescriptionSpecification ToDescriptionSpecification(this DbDescriptionSpecification dbDescriptionSpecification);
+    public static partial DescriptionSpecificationDto ToDescriptionSpecification(this DbDescriptionSpecification dbDescriptionSpecification);
     
-    public static partial DbDescriptionSpecification ToDbDescriptionSpecification(this DescriptionSpecification descriptionSpecification);
+    public static partial DbDescriptionSpecification ToDbDescriptionSpecification(this DescriptionSpecificationDto descriptionSpecificationDto);
 }

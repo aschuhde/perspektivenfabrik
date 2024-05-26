@@ -7,6 +7,6 @@ namespace Infrastructure.Data.Mapping;
 
 public static partial class MappingExtensions
 {
-    public static partial SkillSpecification ToSkillSpecification(this DbSkillSpecification dbSkillSpecification);
-    public static partial DbSkillSpecification ToDbSkillSpecification(this SkillSpecification skillSpecification);
+    public static partial SkillSpecificationDto ToSkillSpecification(this DbSkillSpecification dbSkillSpecification);
+    public static partial DbSkillSpecification ToDbSkillSpecification(this SkillSpecificationDto skillSpecificationDto);
 }

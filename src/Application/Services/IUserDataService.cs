@@ -4,6 +4,6 @@ namespace Application.Services;
 
 public interface IUserDataService
 {
-    public Task<User?> GetActiveUserByEMail(string email, CancellationToken cancellationToken = default);
-    public Task<User?> GetActiveUserById(Guid userId, CancellationToken cancellationToken = default);
+    public Task<UserDto?> GetActiveUserByEMail(string email, CancellationToken cancellationToken = default);
+    public Task<UserDto?> GetActiveUserById(Guid userId, CancellationToken cancellationToken = default);
 }
