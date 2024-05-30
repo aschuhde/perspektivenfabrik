@@ -9,4 +9,5 @@ public static class Routes
     public const string GetExampleAnonymous = $"{ApiRoute}/example-anonymous";
     public const string JwtRefreshToken = $"{ApiRoute}/refresh-token";
     public const string GetProjects = $"{ApiRoute}/projects";
+    public const string PostProject = $"{ApiRoute}/projects";
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.ApiModels;
 using Domain.Entities;
 using Riok.Mapperly.Abstractions;
 

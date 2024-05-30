@@ -31,7 +31,6 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 }
 
 app.UseCors(CorsPolicies.AllowAll);
-app.UseDefaultExceptionHandler();
 app.UseFastEndpoints();
 app.UseSwaggerGen();
 app.Run();

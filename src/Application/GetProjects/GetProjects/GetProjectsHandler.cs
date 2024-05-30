@@ -1,11 +1,16 @@
 using Application.Common;
+using Application.Mapping;
+using Application.Services;
 
 namespace Application.GetProjects.GetProjects;
 
-public class GetProjectsHandler(IServiceProvider serviceProvider) : BaseHandler<GetProjectsRequest, GetProjectsResponse>(serviceProvider)
+public class GetProjectsHandler(IServiceProvider serviceProvider, IProjectService projectService) : BaseHandler<GetProjectsRequest, GetProjectsResponse>(serviceProvider)
 {
-    public override Task<GetProjectsResponse> ExecuteAsync(GetProjectsRequest command, CancellationToken ct)
+    public override async Task<GetProjectsResponse> ExecuteAsync(GetProjectsRequest command, CancellationToken ct)
     {
-        return Task.FromResult(new GetProjectsResponse() { });
+        return new GetProjectsResponse()
+        {
+            Projects = (await projectService.GetPublicProjects(command.Filter, command.Selector, ct)).Select(x => x.ToApiProject()).ToArray()
+        };
     }
 }
