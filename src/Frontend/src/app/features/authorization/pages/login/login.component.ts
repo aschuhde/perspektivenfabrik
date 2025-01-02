@@ -4,12 +4,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { AuthorizationService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss', 
-  providers: [AuthorizationService]
+    selector: 'app-login',
+    imports: [ReactiveFormsModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    providers: [AuthorizationService]
 })
 export class LoginComponent implements OnInit{
   loginForm:FormGroup = this.formBuilder.group({
