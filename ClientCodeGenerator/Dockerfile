@@ -2,7 +2,7 @@ FROM openjdk:23-slim-bullseye
 WORKDIR /
 RUN  apt-get update \
   && apt-get install -y wget   
-RUN wget -P ./ -O ./codegen.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.51/swagger-codegen-cli-3.0.51.jar
+RUN wget -P ./ -O ./codegen.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.66/swagger-codegen-cli-3.0.66.jar
 COPY codegen.conf codegen.conf
 EXPOSE 8080
 RUN chmod +x codegen.jar
