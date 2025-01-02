@@ -1,7 +1,5 @@
-﻿using Application.Models;
-using Application.Models.ApiModels;
+﻿using Application.Models.ApiModels;
 using FluentValidation;
-using FluentValidation.Validators;
 
 namespace Application.Validators;
 

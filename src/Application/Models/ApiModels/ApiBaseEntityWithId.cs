@@ -2,5 +2,5 @@
 
 public class ApiBaseEntityWithId
 { 
-    public Guid EntityId { get; init; } = Guid.NewGuid();
+    public Guid? EntityId { get; set; } = null;
 }

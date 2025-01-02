@@ -1,4 +1,5 @@
 using Application.Services;
+using Domain.Entities;
 using FastEndpoints;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,13 +10,21 @@ public abstract class BaseHandler<TCommand, TResponse>(IServiceProvider serviceP
 
     private ICurrentUserService? _currentUserService;
     private IUserDataService? _userDataService;
+    private IUserAccessService? _userAccessService;
     private ICurrentRequestInformationService? _currentRequestInformationService;
+    private Guid? _currentUserId;
 
     public ICurrentUserService CurrentUserService =>
         _currentUserService ??= serviceProvider.GetRequiredService<ICurrentUserService>();
 
+    public Guid CurrentUserId =>
+        _currentUserId ??= CurrentUserService.CurrentUserId;
+    
     public IUserDataService UserDataService =>
         _userDataService ??= serviceProvider.GetRequiredService<IUserDataService>();
+    
+    public IUserAccessService UserAccessService =>
+        _userAccessService ??= serviceProvider.GetRequiredService<IUserAccessService>();
 
     public ICurrentRequestInformationService CurrentRequestInformationService => _currentRequestInformationService ??=
         serviceProvider.GetRequiredService<ICurrentRequestInformationService>();

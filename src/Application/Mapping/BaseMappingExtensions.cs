@@ -11,6 +11,13 @@ public static partial class ApiMappingExtensions
     public static partial BaseEntityDto ToBaseEntity(this ApiBaseEntity apiBaseEntity);
     public static partial ApiBaseEntity ToApiBaseEntity(this BaseEntityDto entityDto);
     
-    public static partial BaseEntityWithIdDto ToBaseEntityWithId(this ApiBaseEntityWithId apiBaseEntity);
+    public static BaseEntityWithIdDto ToBaseEntityWithId(this ApiBaseEntityWithId apiBaseEntity)
+    {
+        return new BaseEntityWithIdDto
+        {
+            EntityId = apiBaseEntity.EntityId ?? Guid.NewGuid(),
+            EntityNeedsToBeCreated = apiBaseEntity.EntityId == null
+        };
+    }
     public static partial ApiBaseEntityWithId ToApiBaseEntityWithId(this BaseEntityWithIdDto entity);
 }

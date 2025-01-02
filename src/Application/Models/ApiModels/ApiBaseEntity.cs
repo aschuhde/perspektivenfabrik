@@ -2,9 +2,9 @@ namespace Application.Models.ApiModels;
 
 public class ApiBaseEntity : ApiBaseEntityWithId
 {
-    public DateTimeOffset CreatedOn { get; init; } = DateTimeOffset.UtcNow;
-    public ApiPerson? CreatedBy { get; init; }
-    public DateTimeOffset LastModifiedOn { get; init; } = DateTimeOffset.UtcNow;
-    public ApiPerson? LastModifiedBy { get; init; }
-    public ApiModificationHistory? History { get; init; }
+    public DateTimeOffset? CreatedOn { get; set; } = null;
+    public ApiPerson? CreatedBy { get; set; }
+    public DateTimeOffset? LastModifiedOn { get; set; } = null;
+    public ApiPerson? LastModifiedBy { get; set; }
+    public ApiModificationHistory? History { get; set; }
 }

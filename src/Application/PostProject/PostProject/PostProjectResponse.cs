@@ -1,9 +1,11 @@
 using System.Net;
 using Application.Common;
 using Application.Common.Response;
+using Application.Messages;
 using Application.Models;
 using Application.Models.ApiModels;
 using Application.Models.ProjectService;
+using Common;
 using FluentValidation.Results;
 
 namespace Application.PostProject.PostProject;
@@ -27,12 +29,26 @@ public class PostProjectValidationFailedResponse : PostProjectResponse
     }
 }
 
+public class PostProjectNotAllowedResponse : PostProjectResponse
+{
+    public PostProjectNotAllowedResponse(Message reason)
+    {
+        StatusCode = HttpStatusCode.Forbidden;
+        Error = new ErrorResponseData() { Message = reason };
+    }
+}
+
+
 public class PostProjectCreationFailedResponse : PostProjectResponse
 {
-    public PostProjectCreationFailedResponse(CreateProjectResult createProjectResult)
+    public PostProjectCreationFailedResponse(CreateorUpdateProjectResult createorUpdateProjectResult)
     {
-        StatusCode = createProjectResult.DesiredStatusCode ?? HttpStatusCode.BadRequest;
-        Error = createProjectResult.ToErrorResponseData();
+        StatusCode = HttpStatusCode.InternalServerError;
+        Error = new ErrorResponseData()
+        {
+            Message = CommonMessages.InternalServerError(),
+            RelatedException = createorUpdateProjectResult.Exception
+        };
     }
 }
 

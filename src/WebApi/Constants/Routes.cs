@@ -10,4 +10,5 @@ public static class Routes
     public const string JwtRefreshToken = $"{ApiRoute}/refresh-token";
     public const string GetProjects = $"{ApiRoute}/projects";
     public const string PostProject = $"{ApiRoute}/projects";
+    public const string PutProject = $"{ApiRoute}/projects";
 }

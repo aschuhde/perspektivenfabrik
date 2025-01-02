@@ -19,7 +19,7 @@ public sealed class ApiProject : ApiBaseEntity
     public required ApiGraphicsSpecification[] GraphicsSpecifications { get; init; }
     public required bool ConnectedOrganizationsSameAsOwner { get; init; }
     public required ApiOrganization[] ConnectedOrganizations { get; init; }
-    public required ApiPerson Owner { get; init; }
+    public ApiPerson? Owner { get; set; }
     public required ApiPerson[] Contributors { get; init; }
     public required ApiProjectConnection[] RelatedProjects { get; init; }
 }

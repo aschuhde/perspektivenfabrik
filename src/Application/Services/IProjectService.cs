@@ -9,5 +9,6 @@ namespace Application.Services;
 public interface IProjectService
 {
     public Task<ProjectDto[]> GetPublicProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct);
-    public Task<CreateProjectResult> CreateProject(ProjectDto project, CancellationToken ct);
+    public Task<ProjectDto?> GetProjectById(Guid entityId, CancellationToken ct);
+    public Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, CancellationToken ct);
 }
