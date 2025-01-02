@@ -12,7 +12,7 @@ public static class LocationSpecificationUpdater
         if(updatingContext.IsCreating)
             UpdateChanges(entity, existingItem!, updatingContext);
 
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
     
     private static void UpdateChanges(this ApiLocationSpecification entity, LocationSpecificationDto existingItem,
@@ -21,17 +21,13 @@ public static class LocationSpecificationUpdater
         if(entity is ApiLocationSpecificationAddress locationSpecificationAddress
            && locationSpecificationAddress.PostalAddress.ToString() != (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString())
             updatingContext.AddChange(nameof(ApiContactSpecificationMailAddress.MailAddress), locationSpecificationAddress.PostalAddress.ToString(), (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString());
-        //continue here        
-        if(entity is ApiLocationSpecificationCoordinates contactSpecificationPhoneNumber
-           && contactSpecificationPhoneNumber.PhoneNumber.PhoneNumberText != (existingItem as ContactSpecificationDtoPhoneNumber)?.PhoneNumber.PhoneNumberText)
-            updatingContext.AddChange(nameof(ApiContactSpecificationPhoneNumber.PhoneNumber), contactSpecificationPhoneNumber.PhoneNumber.PhoneNumberText, (existingItem as ContactSpecificationDtoPhoneNumber)?.PhoneNumber.PhoneNumberText);
+                
+        if(entity is ApiLocationSpecificationCoordinates contactSpecificationCoordinates
+           && contactSpecificationCoordinates.Coordinates.ToString() != (existingItem as LocationSpecificationDtoCoordinates)?.Coordinates.ToString())
+            updatingContext.AddChange(nameof(ApiLocationSpecificationCoordinates.Coordinates), contactSpecificationCoordinates.Coordinates.ToString(), (existingItem as LocationSpecificationDtoCoordinates)?.Coordinates.ToString());
         
-        if(entity is ApiLocationSpecificationRegion contactSpecificationPostalAddress
-           && contactSpecificationPostalAddress.PostalAddress.ToString() != (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString())
-            updatingContext.AddChange(nameof(ApiContactSpecificationPostalAddress.PostalAddress), contactSpecificationPostalAddress.PostalAddress.ToString(), (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString());
-        
-        if(entity is ApiLocationSpecificationRemote contactSpecificationPostalAddress
-           && contactSpecificationPostalAddress.PostalAddress.ToString() != (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString())
-            updatingContext.AddChange(nameof(ApiContactSpecificationPostalAddress.PostalAddress), contactSpecificationPostalAddress.PostalAddress.ToString(), (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString());
+        if(entity is ApiLocationSpecificationRegion contactSpecificationRegion
+           && contactSpecificationRegion.Region.ToString() != (existingItem as LocationSpecificationDtoRegion)?.Region.ToString())
+            updatingContext.AddChange(nameof(ApiLocationSpecificationRegion.Region), contactSpecificationRegion.Region.ToString(), (existingItem as LocationSpecificationDtoRegion)?.Region.ToString());
     }
 }

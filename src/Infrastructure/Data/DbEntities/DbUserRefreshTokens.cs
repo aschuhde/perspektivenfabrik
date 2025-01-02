@@ -13,4 +13,5 @@ public sealed class DbUserRefreshTokens : DbEntity
     public required string RefreshToken { get; init; }
     
     public required DateTimeOffset AbsoluteExpirationUtc { get; init; }
+    public required bool Active { get; init; }
 }

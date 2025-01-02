@@ -17,4 +17,6 @@ public sealed class DbUser : DbPerson
 {
     [MaxLength(Constants.StringLengths.Medium)]
     public required string PasswordHash { get; init; }
+    
+    public required bool Active { get; init; }
 }

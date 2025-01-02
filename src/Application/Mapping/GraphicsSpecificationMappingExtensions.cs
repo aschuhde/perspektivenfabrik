@@ -1,5 +1,4 @@
-﻿using Application.Models;
-using Application.Models.ApiModels;
+﻿using Application.Models.ApiModels;
 using Domain.Entities;
 
 namespace Application.Mapping;

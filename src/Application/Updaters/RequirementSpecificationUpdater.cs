@@ -9,6 +9,6 @@ public static class RequirementSpecificationUpdater
         RequirementSpecificationDto? existingItem,
         EntityUpdatingContext updatingContext)
     {
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
 }

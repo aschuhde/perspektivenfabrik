@@ -10,7 +10,6 @@ public class DbEntity : DbEntityWithId
     public DbEntityPersonCreatedByConnection? CreatedBy { get; init; }
     public DateTimeOffset LastModifiedOn { get; init; } = DateTimeOffset.UtcNow;
     public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; init; }
-    public bool Active { get; init; } = true;
     public DbModificationHistoryConnection? History { get; init; }
 
 }

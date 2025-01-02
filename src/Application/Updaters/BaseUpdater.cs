@@ -1,6 +1,4 @@
-using Application.Messages;
 using Application.Models.ApiModels;
-using Application.PostProject.PostProject;
 using Domain.Entities;
 using Domain.Enums;
 
@@ -8,7 +6,7 @@ namespace Application.Updaters;
 
 public static class BaseUpdater
 {
-    public static void UpdateBaseEntity(this ApiBaseEntity entity, BaseEntityDto? existingItem, EntityUpdatingContext updatingContext)
+    public static void PrepareBaseEntity(this ApiBaseEntity entity, BaseEntityDto? existingItem, EntityUpdatingContext updatingContext)
     {
         var isCreating = updatingContext.IsCreating;
         if(entity.EntityId == null && !isCreating)

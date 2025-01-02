@@ -1,5 +1,4 @@
 using Application.Common.Response;
-using Application.Models;
 using Application.Models.ApiModels;
 
 namespace Application.GetProjects.GetProjects;

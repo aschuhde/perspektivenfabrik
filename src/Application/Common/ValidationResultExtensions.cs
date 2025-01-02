@@ -7,6 +7,10 @@ public static class ValidationResultExtensions
 {
     public static ErrorResponseData ToErrorResponseData(this ValidationResult validationResult)
     {
-        validationResult.Errors.Select(x => x.)
+        //todo
+        return new ErrorResponseData()
+        {
+            Message = ""
+        };
     }
 }

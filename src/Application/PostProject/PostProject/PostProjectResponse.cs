@@ -2,7 +2,6 @@ using System.Net;
 using Application.Common;
 using Application.Common.Response;
 using Application.Messages;
-using Application.Models;
 using Application.Models.ApiModels;
 using Application.Models.ProjectService;
 using Common;

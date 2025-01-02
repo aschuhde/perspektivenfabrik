@@ -3,7 +3,7 @@ using Domain.Enums;
 
 namespace Application.Models.ApiModels;
 
-public sealed class ApiProject : ApiBaseEntity
+public class ApiProjectBody : ApiBaseEntity
 {
     public required ProjectPhase Phase { get; init; }
     public required ProjectType Type { get; init; }
@@ -18,9 +18,8 @@ public sealed class ApiProject : ApiBaseEntity
     public required ApiDescriptionSpecification[] DescriptionSpecifications { get; init; }
     public required ApiGraphicsSpecification[] GraphicsSpecifications { get; init; }
     public required bool ConnectedOrganizationsSameAsOwner { get; init; }
-    public required ApiOrganization[] ConnectedOrganizations { get; init; }
-    public ApiPerson? Owner { get; set; }
-    public required ApiPerson[] Contributors { get; init; }
-    public required ApiProjectConnection[] RelatedProjects { get; init; }
-    
+    public required ApiOrganizationReference[] ConnectedOrganizations { get; init; }
+    public ApiPersonReference? Owner { get; set; }
+    public required ApiPersonReference[] Contributors { get; init; }
+    public required ApiProjectReference[] RelatedProjects { get; init; }
 }

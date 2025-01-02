@@ -1,7 +1,6 @@
 ﻿using Application.PostProject.PostProject;
 using Application.Services;
 using Application.Validators;
-using Domain.Entities;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

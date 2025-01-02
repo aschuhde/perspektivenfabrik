@@ -8,16 +8,27 @@ namespace Infrastructure.Data.Mapping;
 public static partial class MappingExtensions
 {
     [MapperIgnoreTarget(nameof(DbProject.LocationSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.LocationSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.TimeSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.TimeSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.RequirementSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.RequirementSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.ContactSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.ContactSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.ProjectTags))]
+    [MapperIgnoreSource(nameof(ProjectDto.ProjectTags))]
     [MapperIgnoreTarget(nameof(DbProject.DescriptionSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.DescriptionSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.GraphicsSpecifications))]
+    [MapperIgnoreSource(nameof(ProjectDto.GraphicsSpecifications))]
     [MapperIgnoreTarget(nameof(DbProject.Owner))]
+    [MapperIgnoreSource(nameof(ProjectDto.Owner))]
     [MapperIgnoreTarget(nameof(DbProject.Contributors))]
+    [MapperIgnoreSource(nameof(ProjectDto.Contributors))]
     [MapperIgnoreTarget(nameof(DbProject.RelatedProjects))]
+    [MapperIgnoreSource(nameof(ProjectDto.RelatedProjects))]
     [MapperIgnoreTarget(nameof(DbProject.ConnectedOrganizations))]
+    [MapperIgnoreSource(nameof(ProjectDto.ConnectedOrganizations))]
     public static partial DbProject ToDbProjectInner(this ProjectDto projectDto);
     
     [UserMapping(Default = true)]

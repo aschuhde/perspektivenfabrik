@@ -2,5 +2,5 @@
 
 public enum ProjectPhase
 {
-    Idea, Request, Planning, Ongoing, Finished, Cancelled
+    Idea, Request, Planning, Ongoing, Finished, Cancelled, Unkown
 }

@@ -1,5 +1,4 @@
 using Application.PostProject.PostProject;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 
 namespace WebApi.Endpoints;

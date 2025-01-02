@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Infrastructure.Data.DbDataTypes;
 
 namespace Infrastructure.Data.DbEntities;
 

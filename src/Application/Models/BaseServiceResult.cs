@@ -1,7 +1,4 @@
-﻿using System.Net;
-using Application.Common.Response;
-
-namespace Application.Models;
+﻿namespace Application.Models;
 
 public class BaseServiceResult
 {

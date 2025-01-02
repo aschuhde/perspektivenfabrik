@@ -9,7 +9,7 @@ public static class TimeSpecificationUpdater
         TimeSpecificationDto? existingItem,
         EntityUpdatingContext updatingContext)
     {
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
     
 }

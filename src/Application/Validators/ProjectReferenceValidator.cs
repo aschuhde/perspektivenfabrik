@@ -3,6 +3,6 @@ using FluentValidation;
 
 namespace Application.Validators;
 
-public class PersonValidator : AbstractValidator<ApiPerson>
+public class ProjectReferenceValidator : AbstractValidator<ApiProjectReference>
 {
 }

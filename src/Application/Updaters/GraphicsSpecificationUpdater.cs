@@ -13,7 +13,7 @@ public static class GraphicsSpecificationUpdater
         if(updatingContext.IsCreating)
             UpdateChanges(entity, existingItem!, updatingContext);
 
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
     
     private static void UpdateChanges(this ApiGraphicsSpecification entity, GraphicsSpecificationDto existingItem,

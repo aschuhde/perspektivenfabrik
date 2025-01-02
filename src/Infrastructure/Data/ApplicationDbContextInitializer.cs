@@ -1,4 +1,3 @@
-using Application.Tools;
 using Infrastructure.Data.DbEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,7 +63,8 @@ public sealed class ApplicationDbContextInitializer(
                         Firstname = "root",
                         Lastname = "test",
                         PasswordHash = "test",
-                        History = null
+                        History = null,
+                        Active = true
                     });
                     await context.SaveChangesAsync();
                     await transaction.CommitAsync();

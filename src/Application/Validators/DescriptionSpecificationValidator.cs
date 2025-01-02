@@ -1,4 +1,3 @@
-using Application.Models;
 using Application.Models.ApiModels;
 using FluentValidation;
 

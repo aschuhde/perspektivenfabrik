@@ -12,7 +12,7 @@ public static class ContactSpecificationUpdater
         if(updatingContext.IsCreating)
             UpdateChanges(entity, existingItem!, updatingContext);
         
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
 
     private static void UpdateChanges(this ApiContactSpecification entity, ContactSpecificationDto existingItem,

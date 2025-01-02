@@ -3,7 +3,7 @@ using Domain.Enums;
 
 namespace Application.Models.ApiModels;
 
-public class ApiModificationHistoryItem
+public class ApiModificationHistoryItem : ApiBaseEntityWithId
 {
     public DateTimeOffset Timestamp { get; init; } = DateTimeOffset.UtcNow;
     public Message? Message { get; init; }

@@ -5,22 +5,27 @@ namespace Application.Updaters;
 
 public static class ProjectUpdater
 {
-    public static void UpdateProject(this ApiProject entity, ProjectDto existingItem,
+    public static void PrepareEntityForNewProject(this ApiProjectBody entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    
+    public static void PrepareEntityAndCollectChanges(this ApiProjectBody entity, ProjectDto existingItem,
         EntityUpdatingContext updatingContext)
     {
         if (!updatingContext.IsCreating)
         {
-            UpdateChanges(entity, existingItem, updatingContext);
+            CollectChanges(entity, existingItem, updatingContext);
         }
 
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
 
-    private static void UpdateChanges(ApiProject entity, ProjectDto existingItem,
+    private static void CollectChanges(ApiProjectBody entity, ProjectDto existingItem,
         EntityUpdatingContext updatingContext)
     {
-        if(entity.Owner?.EntityId != existingItem.Owner.EntityId)
-            updatingContext.AddChange(nameof(entity.Owner), entity.Owner?.ToString(), existingItem.Owner?.ToString());
+        if(entity.Owner?.PersonEntityId != existingItem.Owner.EntityId)
+            updatingContext.AddChange(nameof(entity.Owner), entity.Owner?.ToString(), existingItem.Owner.ToString());
         
         if(entity.Phase != existingItem.Phase)
             updatingContext.AddChange(nameof(entity.Phase), entity.Phase.ToString(), existingItem.Phase.ToString());
@@ -42,34 +47,34 @@ public static class ProjectUpdater
 
         foreach (var contributor in entity.Contributors)
         {
-            if(existingItem.Contributors.All(x => x.EntityId != contributor.EntityId))
+            if(existingItem.Contributors.All(x => x.EntityId != contributor.PersonEntityId))
                 updatingContext.AddChangeForAddedItemToListProperty(nameof(entity.Contributors), contributor.ToString());
         }
         foreach (var contributor in existingItem.Contributors)
         {
-            if(entity.Contributors.All(x => x.EntityId != contributor.EntityId))
+            if(entity.Contributors.All(x => x.PersonEntityId != contributor.EntityId))
                 updatingContext.AddChangeForDeletedItemFromListProperty(nameof(entity.Contributors), contributor.ToString());
         }
         
         foreach (var organization in entity.ConnectedOrganizations)
         {
-            if(existingItem.ConnectedOrganizations.All(x => x.EntityId != organization.EntityId))
+            if(existingItem.ConnectedOrganizations.All(x => x.EntityId != organization.OrganizationEntityId))
                 updatingContext.AddChangeForAddedItemToListProperty(nameof(entity.ConnectedOrganizations), organization.ToString());
         }
         foreach (var organization in existingItem.ConnectedOrganizations)
         {
-            if(entity.ConnectedOrganizations.All(x => x.EntityId != organization.EntityId))
+            if(entity.ConnectedOrganizations.All(x => x.OrganizationEntityId != organization.EntityId))
                 updatingContext.AddChangeForDeletedItemFromListProperty(nameof(entity.ConnectedOrganizations), organization.ToString());
         }
         
         foreach (var relatedProject in entity.RelatedProjects)
         {
-            if(existingItem.RelatedProjects.All(x => x.EntityId != relatedProject.EntityId))
+            if(existingItem.RelatedProjects.All(x => x.EntityId != relatedProject.ProjectId))
                 updatingContext.AddChangeForAddedItemToListProperty(nameof(entity.RelatedProjects), relatedProject.ToString());
         }
         foreach (var relatedProject in existingItem.RelatedProjects)
         {
-            if(entity.RelatedProjects.All(x => x.EntityId != relatedProject.EntityId))
+            if(entity.RelatedProjects.All(x => x.ProjectId != relatedProject.EntityId))
                 updatingContext.AddChangeForDeletedItemFromListProperty(nameof(entity.RelatedProjects), relatedProject.ToString());
         }
         

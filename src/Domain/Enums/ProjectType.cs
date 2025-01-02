@@ -2,5 +2,5 @@
 
 public enum ProjectType
 {
-    Idea, Inspiration, Project, ProjectRequest
+    Idea, Inspiration, Project, ProjectRequest, Unkown
 }

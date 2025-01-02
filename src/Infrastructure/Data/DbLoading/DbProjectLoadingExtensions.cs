@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Data.DbEntities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Infrastructure.Data.DbLoading;
 

@@ -1,5 +1,4 @@
 using Application.Services;
-using Domain.Entities;
 using FastEndpoints;
 using Microsoft.Extensions.DependencyInjection;
 

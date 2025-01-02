@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Infrastructure.Data.DbEntities;
-using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 

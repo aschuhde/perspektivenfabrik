@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Validators;
 
-public class ProjectValidator : AbstractValidator<ApiProject>
+public class ProjectValidator : AbstractValidator<ApiProjectBody>
 {
     public ProjectValidator()
     {
@@ -27,11 +27,11 @@ public class ProjectValidator : AbstractValidator<ApiProject>
         RuleForEach(model => model.GraphicsSpecifications).SetValidator(new GraphicsSpecificationValidator());
         RuleFor(model => model.ConnectedOrganizationsSameAsOwner).NotNull();
         RuleFor(model => model.ConnectedOrganizations).NotNull();
-        RuleForEach(model => model.ConnectedOrganizations).SetValidator(new OrganizationValidator());
-        RuleFor(model => model.Owner).NotNull().SetValidator(new PersonValidator());
+        RuleForEach(model => model.ConnectedOrganizations).SetValidator(new OrganizationReferenceValidator());
+        RuleFor(model => model.Owner).NotNull().SetValidator(new PersonReferenceValidator());
         RuleFor(model => model.Contributors).NotNull();
-        RuleForEach(model => model.Contributors).SetValidator(new PersonValidator());
+        RuleForEach(model => model.Contributors).SetValidator(new PersonReferenceValidator());
         RuleFor(model => model.RelatedProjects).NotNull();
-        RuleForEach(model => model.RelatedProjects).SetValidator(new ProjectConnectionValidator());
+        RuleForEach(model => model.RelatedProjects).SetValidator(new ProjectReferenceValidator());
     }
 }

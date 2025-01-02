@@ -2,5 +2,5 @@
 
 public enum ProjectVisibility
 {
-    Draft, Internal, Public
+    Draft, Internal, Public, Unkown
 }

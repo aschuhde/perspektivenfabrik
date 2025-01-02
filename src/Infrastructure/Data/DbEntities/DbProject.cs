@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enums;
 using Infrastructure.Data.DbDataTypes;
-using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.DbEntities;
 

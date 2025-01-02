@@ -1,6 +1,5 @@
 ﻿using Domain.DataTypes;
 using Infrastructure.Data.DbDataTypes;
-using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 

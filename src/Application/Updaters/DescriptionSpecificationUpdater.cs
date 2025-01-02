@@ -12,7 +12,7 @@ public static class DescriptionSpecificationUpdater
         if(updatingContext.IsCreating)
             UpdateChanges(entity, existingItem!, updatingContext);
         
-        entity.UpdateBaseEntity(existingItem, updatingContext);
+        entity.PrepareBaseEntity(existingItem, updatingContext);
     }
 
     private static void UpdateChanges(this ApiDescriptionSpecification entity, DescriptionSpecificationDto existingItem,

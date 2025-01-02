@@ -11,7 +11,7 @@ namespace Application.PutProject.PutProject;
 
 public class PutProjectResponse : JsonResponse
 {
-    
+    public string Text = "";
 }
 
 public class PutProjectOkResponse : PutProjectResponse

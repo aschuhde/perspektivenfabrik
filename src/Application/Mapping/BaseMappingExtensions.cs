@@ -1,5 +1,4 @@
-﻿using Application.Models;
-using Application.Models.ApiModels;
+﻿using Application.Models.ApiModels;
 using Domain.Entities;
 using Riok.Mapperly.Abstractions;
 
@@ -15,9 +14,9 @@ public static partial class ApiMappingExtensions
     {
         return new BaseEntityWithIdDto
         {
-            EntityId = apiBaseEntity.EntityId ?? Guid.NewGuid(),
-            EntityNeedsToBeCreated = apiBaseEntity.EntityId == null
+            EntityId = apiBaseEntity.EntityId ?? Guid.NewGuid()
         };
     }
+    
     public static partial ApiBaseEntityWithId ToApiBaseEntityWithId(this BaseEntityWithIdDto entity);
 }

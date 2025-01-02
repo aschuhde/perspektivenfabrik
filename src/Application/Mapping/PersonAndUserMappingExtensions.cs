@@ -1,5 +1,4 @@
-﻿using Application.Models;
-using Application.Models.ApiModels;
+﻿using Application.Models.ApiModels;
 using Domain.Entities;
 using Riok.Mapperly.Abstractions;
 
@@ -28,4 +27,15 @@ public static partial class ApiMappingExtensions
             ApiUser u => u.ToUser(),
             _ => apiPerson.ToPersonInner()
         };
+
+    public static PersonDto ToPerson(this ApiPersonReference personReference)
+    {
+        return new PersonDto()
+        {
+            EntityId = personReference.PersonEntityId,
+            Email = "",
+            Firstname = "",
+            Lastname = ""
+        };
+    }
 }

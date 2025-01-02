@@ -1,7 +1,6 @@
 ﻿using Application.Services;
 using Application.Tools;
 using Domain.DataTypes;
-using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,7 @@ public sealed class RefreshTokenRepositoryService(ApplicationDbContext dbContext
             RefreshToken = refreshToken,
             UserId = userId,
             AbsoluteExpirationUtc = DateTimeOffset.UtcNow.AddHours(ExpirationHours),
+            Active = true
         });
         await dbContext.SaveChangesAsync(cancellationToken);
     }
@@ -38,7 +38,7 @@ public sealed class RefreshTokenRepositoryService(ApplicationDbContext dbContext
         {
             RefreshToken = dbEntry.RefreshToken,
             AbsoluteExpirationUtc = dbEntry.AbsoluteExpirationUtc,
-            ShouldBeRenewed = (dbEntry.AbsoluteExpirationUtc - DateTimeOffset.UtcNow).TotalHours < ExpirationHours / 2 
+            ShouldBeRenewed = (dbEntry.AbsoluteExpirationUtc - DateTimeOffset.UtcNow).TotalHours < ExpirationHours / 2
         };
     }
 

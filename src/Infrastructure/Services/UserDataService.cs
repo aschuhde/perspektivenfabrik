@@ -2,7 +2,6 @@ using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
-using Infrastructure.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
@@ -39,10 +38,11 @@ public sealed class UserDataService(ApplicationDbContext dbContext) : IUserDataS
             Firstname = "null",
             Lastname = "null",
             Email = "null",
-            ConnectedOrganizations = new OrganizationConnectionDto[]
-            {
-            },
-            PasswordHash = "null"
+            // todo: ConnectedOrganizations = new OrganizationConnectionDto[]
+            // {
+            // },
+            PasswordHash = "null",
+            Active = true
         }); //x.ToUser());
     }
 }

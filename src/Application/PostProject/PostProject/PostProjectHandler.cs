@@ -5,7 +5,6 @@ using Application.Messages;
 using Application.Models.ApiModels;
 using Application.Services;
 using Application.Updaters;
-using Domain.Enums;
 using FluentValidation;
 
 namespace Application.PostProject.PostProject;
@@ -32,11 +31,23 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
             if (command.Project.Owner != null)
                 return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.Owner)));
         }
-        command.Project.Owner ??= ApiPerson.WithUserId(CurrentUserId);
-            
+
+        command.Project.Owner ??= new ApiPersonReference()
+        {
+            PersonEntityId = CurrentUserId
+        };
+        var creationContext = new EntityUpdatingContext()
+        {
+            IsCreating = true,
+            Changes = [],
+            CurrentUserId = CurrentUserId,
+            UserCanChangeMetadata = userCanChangeMetadata,
+            HasChanged = false
+        };
+        command.Project.PrepareEntityForNewProject(creationContext);
         var projectDto = command.Project.ToProject();
         
-        var result = await projectService.CreateOrUpdateProject(projectDto, ct);
+        var result = await projectService.CreateOrUpdateProject(projectDto, creationContext, ct);
         if (!result.Success)
             return new PostProjectCreationFailedResponse(result);
         
@@ -49,32 +60,18 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
 
     private PostProjectResponse? CheckIfUserCanChange(ApiBaseEntity entity, bool userCanEditMetadata)
     {
-        if (!userCanEditMetadata)
-        {
-            if (entity.History != null)
-                return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.History)));
-            if (entity.LastModifiedBy != null)
-                return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.LastModifiedBy)));
-            if (entity.LastModifiedOn != null)
-                return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.LastModifiedOn)));
-            if (entity.CreatedBy != null)
-                return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.CreatedBy)));
-            if (entity.CreatedOn != null)
-                return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.CreatedOn)));
-        }
-
-        entity.History ??= new ApiModificationHistory()
-        {
-            HistoryItems = [new ApiModificationHistoryItem()
-            {
-                HistoryEntryType = HistoryEntryType.Created
-            }]
-        };
-        entity.EntityId ??= Guid.NewGuid();
-        entity.CreatedBy ??= ApiPerson.WithUserId(CurrentUserId);
-        entity.LastModifiedBy ??= ApiPerson.WithUserId(CurrentUserId);
-        entity.CreatedOn ??= DateTimeOffset.UtcNow;
-        entity.LastModifiedOn ??= DateTimeOffset.UtcNow;
+        if (userCanEditMetadata) return null;
+        
+        if (entity.History != null)
+            return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.History)));
+        if (entity.LastModifiedBy != null)
+            return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.LastModifiedBy)));
+        if (entity.LastModifiedOn != null)
+            return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.LastModifiedOn)));
+        if (entity.CreatedBy != null)
+            return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.CreatedBy)));
+        if (entity.CreatedOn != null)
+            return new PostProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.CreatedOn)));
 
         return null;
     }

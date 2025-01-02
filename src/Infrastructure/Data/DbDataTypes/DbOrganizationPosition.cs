@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Infrastructure.Data.DbEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbDataTypes;

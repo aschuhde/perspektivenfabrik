@@ -1,9 +1,8 @@
 ﻿using Application.Filter;
-using Application.Mapping;
-using Application.Models.ApiModels;
 using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
+using Application.Updaters;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
@@ -33,6 +32,11 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), ct);
     }
     
+    public async Task<ProjectDto?> GetProjectById(Guid entityId, CancellationToken ct)
+    {
+        return (await dbContext.Projects.Where(x => x.EntityId == entityId).AsNoTracking().FirstOrDefaultAsync(ct))?.ToProject();
+    }
+    
     private void UpdateRelatedEntities<T1, T2>(T1[] entities, T1[]? existingEntities, Func<T1, T2> onGetDbEntity) 
         where T1 : BaseEntityWithIdDto where T2 : class
     {
@@ -59,7 +63,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     }
     
 
-    public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, CancellationToken ct)
+    public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct)
     {
         var existingProject = project.EntityNeedsToBeCreated
             ? null
@@ -67,7 +71,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             .FirstOrDefault();
         var exists = existingProject != null;
         
-        return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (transaction,ctInner) =>
+        return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (_,ctInner) =>
         {
             var dbEntity = project.ToDbProject();
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications ?? []);
@@ -80,6 +84,9 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             var resultProject =
                 (await GetProjects(query => query.Where(x => x.EntityId == dbEntity.EntityId), query => query, ctInner))
                 .FirstOrDefault();
+            
+            // todo: save history from changeContext
+            
             return new CreateorUpdateProjectResult { Success = true, Project = resultProject };
         }, logger, ct)).ToCreateProjectResult();
     }
