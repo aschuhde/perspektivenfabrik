@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideApiService } from './server/configuration';
-import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient } from "@angular/common/http";
 import { BASE_PATH } from './server/variables';
 import { environment } from './environments/environment';
 import { UniversalAppInterceptor } from './core/interceptors/authorization-http.interceptor';
