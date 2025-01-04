@@ -1,0 +1,5 @@
+@use 'vars';
+:host{
+    background-color: vars.$bg-orange;
+    display: block;
+}

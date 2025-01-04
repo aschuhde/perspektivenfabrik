@@ -1,1 +1,3 @@
-﻿<router-outlet></router-outlet>
+﻿<div class="body-container" [class.small-screen]="isSmallScreen"  [class.medium-screen]="isMediumScreen"  [class.large-screen]="isLargeScreen">
+    <router-outlet></router-outlet>
+</div>

@@ -25,10 +25,17 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
+            "assets": [              
+              {
+                  "glob": "**/*",
+                  "input": "public"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/styles"
+              ]
+            },
             "styles": [
               "src/styles.scss"
             ],
@@ -96,10 +103,17 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
+            "assets": [              
+              {
+                  "glob": "**/*",
+                  "input": "public"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/styles"
+              ]
+            },
             "styles": [
               "src/styles.scss"
             ],

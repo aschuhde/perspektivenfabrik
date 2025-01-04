@@ -1,0 +1,20 @@
+@use 'vars';
+
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/fonts/dm sans/DeepMindSans-Medium.woff2') format('woff2');
+}
+
+body{
+    font-family: "Dm Sans";    
+    font-weight: 500;
+    color: vars.$fg-color;
+    font-size: 20px;
+}
+button{
+    font-family: "Dm Sans";    
+    font-weight: 500;
+    font-size: 1rem;
+}

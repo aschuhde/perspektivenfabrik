@@ -1,0 +1,10 @@
+@use 'vars';
+:host {
+    background-color: vars.$bg-orange;
+    display: block;
+}
+#welcome-logo-title {
+    padding: 5rem 1rem 3rem 1rem;
+    color: white;
+    font-size: 4rem;
+}

@@ -1,0 +1,14 @@
+@use 'vars';
+
+button{
+    background-color: vars.$bg-orange;
+    color: white;
+    padding: .6rem .8rem;
+    border-radius: 1.5rem;
+    border: 1px solid white;
+    cursor: pointer;  
+}
+
+button.secondary{
+    background-color: vars.$button-secondary;
+}
