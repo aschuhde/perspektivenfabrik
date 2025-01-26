@@ -1,0 +1,21 @@
+<div>
+    <mat-form-field>
+        <mat-label></mat-label>
+        <mat-select [(value)]="projectTimeType">
+        <mat-option value="unkown">Nicht festgelegt</mat-option>
+        <mat-option value="range">Zeitraum</mat-option>
+        <mat-option value="date">Datum</mat-option>
+        <mat-option value="month">Monat</mat-option>        
+        </mat-select>
+    </mat-form-field>
+    @if (projectTimeType === "range"){
+        <app-date-picker-range [(startDate)]="startDate" [(endDate)]="startDate"></app-date-picker-range>
+    }
+    @if (projectTimeType === "date"){
+        <app-date-picker [(date)]="date" ></app-date-picker>
+    }
+    @if (projectTimeType === "month"){
+        <app-month-picker [(month)]="month"></app-month-picker>
+    }
+    <button mat-button (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Eintrag entfernen</button>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    <p>Wie viel Geld benötigst du? (In EUR)</p>
+    <mat-form-field>
+        <mat-label>Menge in EUR</mat-label>
+        <input type="text"
+               aria-label="Amount of Money"
+               matInput
+               [(ngModel)]="amountOfMoney"/>
+      </mat-form-field>
+
+      <p>Bis wann benötigst du das Geld?</p> 
+      <div>
+        <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+      </div>
+      <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">
+        <button mat-button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+        @for(requirementTime of requirementTimes; track requirementTime){
+            <app-input-project-time [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
+        }        
+      </div>
+      
+    <button mat-button (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Eintrag entfernen</button>
+</div>
+

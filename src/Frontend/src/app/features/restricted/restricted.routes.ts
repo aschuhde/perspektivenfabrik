@@ -1,6 +1,6 @@
 ﻿import {Routes} from "@angular/router";
 import { TestComponent } from "./pages/test/test.component";
-import {AppRouteNames} from "../../app.routes";
+import {AppRouteNames} from "../../app.routes.names";
 
 export class RestrictedRouteNames{
     public static readonly TestName = "test";

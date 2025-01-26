@@ -1,0 +1,150 @@
+<mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step>
+        <ng-template matStepLabel>Um was geht es?</ng-template>
+        <div class="step-question">Was möchtest du hinzufügen? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectType)"></mat-icon></div>        
+        <mat-button-toggle-group [(ngModel)]="projectType" aria-label="Projekt, Idee oder Inspiration">
+            <mat-button-toggle value="project">Projekt</mat-button-toggle>
+            <mat-button-toggle value="idea">Idee</mat-button-toggle>
+            <mat-button-toggle value="inspiration">Inspiration</mat-button-toggle>
+        </mat-button-toggle-group>        
+        <div>
+          <button mat-button matStepperNext>Weiter</button>
+        </div>
+    </mat-step>
+    <mat-step>
+          <ng-template matStepLabel>Name {{ yoursDeclination }} {{ typeName }}?</ng-template>
+          <div class="step-question">Wie soll {{ yourDeclination }} {{ typeName }} heißen?<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTitle)"></mat-icon></div>        
+          <mat-form-field>
+            <mat-label>Projekttitel?</mat-label>
+            <input matInput [(ngModel)]="projectTitle" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Interner Projektname</mat-label>
+            <input matInput disabled [(ngModel)]="projectName" />
+          </mat-form-field>     
+          <div>
+            <button mat-button matStepperNext>Weiter</button>
+          </div>
+    </mat-step>
+    @if (projectType === "project"){
+        <mat-step>
+            <ng-template matStepLabel>Phase {{ yoursDeclination }} {{ typeName }}?</ng-template>
+            <div class="step-question">In welcher Phase befindet sich {{ yourDeclination }} {{ typeName }}?<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectPhase)"></mat-icon></div>        
+            <mat-form-field>
+                <mat-label>Projektphase</mat-label>
+                <mat-select [(value)]="projectPhase">
+                  <mat-option value="unkown">Nicht festgelegt</mat-option>
+                  <mat-option value="planning">In der Planung</mat-option>
+                  <mat-option value="ongoing">Am laufen</mat-option>
+                  <mat-option value="finished">Abgeschlossen</mat-option>
+                  <mat-option value="cancelled">Abgebrochen</mat-option>
+                </mat-select>
+              </mat-form-field>     
+            <div>
+              <button mat-button matStepperNext>Weiter</button>
+            </div>
+      </mat-step>
+    }
+    <mat-step>
+        <ng-template matStepLabel>Projektort?</ng-template>
+        <div class="step-question">Was kannst du über den Ort {{ yoursDeclination }} {{ typeName }} sagen?<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></div>        
+        <button mat-button aria-label="Add another location" (click)="addLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+        @for(location of locations; track location){
+            <app-input-location [location]="location" (remove)="removeLocation($event)"></app-input-location>
+        }
+        <div>
+          <button mat-button matStepperNext>Weiter</button>
+        </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Projektzeitraum?</ng-template>
+      <div class="step-question">Zu welchem Zeitpunkt oder in welchem Zeitraum findet {{ yoursDeclination }} {{ typeName }} statt?<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTime)"></mat-icon></div>        
+      <button mat-button aria-label="Add project time" (click)="addProjectTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+      @for(projectTime of projectTimes; track projectTime){
+          <app-input-project-time [projectTime]="projectTime" (remove)="removeProjectTime($event)"></app-input-project-time>
+      }
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Unterstützung?</ng-template>
+      <div class="step-question">Was benötigst du um {{ yoursDeclination }} {{ typeName }} umzusetzen?<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpRequirements)"></mat-icon></div>        
+      <button mat-button aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> Helfer*innen hinzufügen</button>
+      @for(requirementPerson of requirementPersons; track requirementPerson){
+        <app-input-requirement-person [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
+      }
+      <button mat-button aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> Material</button>
+      @for(requirementMaterial of requirementMaterials; track requirementMaterial){
+        <app-input-requirement-material [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
+      }
+      <button mat-button aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> Finanzielle unterstützung</button>
+      @for(requirementMoney of requirementsMoney; track requirementMoney){
+        <app-input-requirement-money [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
+      }
+      
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Deine Kontaktdaten</ng-template>
+      <div class="step-question">Wie kann man dich Kontaktieren? Gib eine E-Mail Adresse und/oder Telefonnummer an<mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpContact)"></mat-icon></div>        
+      <div>
+        <mat-form-field>
+          <mat-label>E-Mail</mat-label>
+          <input type="text"
+                aria-label="Contact E-Mail"
+                matInput
+                [(ngModel)]="contactMail"/>
+        </mat-form-field>
+        <span> und/oder </span>
+        <mat-form-field>
+          <mat-label>Telefonnummer</mat-label>
+          <input type="text"
+                aria-label="Contact Phone Number"
+                matInput
+                [(ngModel)]="contactPhone"/>
+        </mat-form-field>
+      </div>      
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Beschreibung {{ yoursDeclination }} {{ typeName }}</ng-template>
+      <div class="step-question">Wie würdest du {{ yoursDeclination }} {{ typeName }} beschreiben? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></div>        
+      <div>
+        <angular-editor [placeholder]="'Beschreibung'" [(ngModel)]="description"></angular-editor>
+      </div>      
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Bilder</ng-template>
+      <div class="step-question">Möchtest du ein Hintergrundbild und noch weitere Bilder hochladen? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpImageUpload)"></mat-icon></div>        
+      <div>
+        <input multiple accept="image/*" class="hidden" #fileUpload type="file" (change)="onFileUpload($event)">
+        <button mat-button (click)="onUploadButtonClicked()">Bilder hochladen</button>
+      </div>
+      <div>
+        @for(image of uploadedImages; track image){
+          
+          <img src="{{ image.src }}" style="max-width: 10rem;" />
+        }
+      </div>  
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Sichtbarkeit</ng-template>
+      <div class="step-question">Wer darf dein Projekt sehen? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectVisibility)"></mat-icon></div>        
+      <mat-button-toggle-group [(ngModel)]="projectVisibility" aria-label="Sichtbarkeit">
+          <mat-button-toggle value="draft">Entwurf (nur du)</mat-button-toggle>
+          <mat-button-toggle value="internal">Nur Personen mit Link</mat-button-toggle>
+          <mat-button-toggle value="public">Öffentlich sichtbar</mat-button-toggle>
+      </mat-button-toggle-group>        
+  </mat-step>
+  </mat-vertical-stepper>

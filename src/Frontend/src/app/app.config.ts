@@ -35,5 +35,5 @@ export const appConfig: ApplicationConfig = {
         useFactory: httpLoaderFactory,
         deps: [HttpClient],
       }
-    }), provideAnimationsAsync('noop')]
+    }), provideAnimationsAsync('noop'), provideAnimationsAsync()]
 };
