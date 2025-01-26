@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsProjectVisibility = 0 | 1 | 2 | 3;
+export type DomainEnumsProjectVisibility = 'Draft' | 'Internal' | 'Public' | 'Unkown';
 
 export const DomainEnumsProjectVisibility = {
-    NUMBER_0: 0 as DomainEnumsProjectVisibility,
-    NUMBER_1: 1 as DomainEnumsProjectVisibility,
-    NUMBER_2: 2 as DomainEnumsProjectVisibility,
-    NUMBER_3: 3 as DomainEnumsProjectVisibility
+    Draft: 'Draft' as DomainEnumsProjectVisibility,
+    Internal: 'Internal' as DomainEnumsProjectVisibility,
+    Public: 'Public' as DomainEnumsProjectVisibility,
+    Unkown: 'Unkown' as DomainEnumsProjectVisibility
 };

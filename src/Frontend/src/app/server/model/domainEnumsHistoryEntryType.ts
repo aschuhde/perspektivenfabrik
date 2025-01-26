@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsHistoryEntryType = 0 | 1 | 2 | 3 | 4;
+export type DomainEnumsHistoryEntryType = 'Created' | 'Deleted' | 'Updated' | 'Special' | 'Unknown';
 
 export const DomainEnumsHistoryEntryType = {
-    NUMBER_0: 0 as DomainEnumsHistoryEntryType,
-    NUMBER_1: 1 as DomainEnumsHistoryEntryType,
-    NUMBER_2: 2 as DomainEnumsHistoryEntryType,
-    NUMBER_3: 3 as DomainEnumsHistoryEntryType,
-    NUMBER_4: 4 as DomainEnumsHistoryEntryType
+    Created: 'Created' as DomainEnumsHistoryEntryType,
+    Deleted: 'Deleted' as DomainEnumsHistoryEntryType,
+    Updated: 'Updated' as DomainEnumsHistoryEntryType,
+    Special: 'Special' as DomainEnumsHistoryEntryType,
+    Unknown: 'Unknown' as DomainEnumsHistoryEntryType
 };

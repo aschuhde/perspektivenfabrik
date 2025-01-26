@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsGraphicsType = 0 | 1 | 2;
+export type DomainEnumsGraphicsType = 'Logo' | 'Header' | 'Additional';
 
 export const DomainEnumsGraphicsType = {
-    NUMBER_0: 0 as DomainEnumsGraphicsType,
-    NUMBER_1: 1 as DomainEnumsGraphicsType,
-    NUMBER_2: 2 as DomainEnumsGraphicsType
+    Logo: 'Logo' as DomainEnumsGraphicsType,
+    Header: 'Header' as DomainEnumsGraphicsType,
+    Additional: 'Additional' as DomainEnumsGraphicsType
 };

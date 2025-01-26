@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsProjectPhase = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type DomainEnumsProjectPhase = 'Idea' | 'Request' | 'Planning' | 'Ongoing' | 'Finished' | 'Cancelled' | 'Unkown';
 
 export const DomainEnumsProjectPhase = {
-    NUMBER_0: 0 as DomainEnumsProjectPhase,
-    NUMBER_1: 1 as DomainEnumsProjectPhase,
-    NUMBER_2: 2 as DomainEnumsProjectPhase,
-    NUMBER_3: 3 as DomainEnumsProjectPhase,
-    NUMBER_4: 4 as DomainEnumsProjectPhase,
-    NUMBER_5: 5 as DomainEnumsProjectPhase,
-    NUMBER_6: 6 as DomainEnumsProjectPhase
+    Idea: 'Idea' as DomainEnumsProjectPhase,
+    Request: 'Request' as DomainEnumsProjectPhase,
+    Planning: 'Planning' as DomainEnumsProjectPhase,
+    Ongoing: 'Ongoing' as DomainEnumsProjectPhase,
+    Finished: 'Finished' as DomainEnumsProjectPhase,
+    Cancelled: 'Cancelled' as DomainEnumsProjectPhase,
+    Unkown: 'Unkown' as DomainEnumsProjectPhase
 };

@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsProjectConnectionType = 0 | 1 | 2 | 3 | 4;
+export type DomainEnumsProjectConnectionType = 'Related' | 'SubProject' | 'ParentProject' | 'PredecessorProject' | 'SuccessorProject';
 
 export const DomainEnumsProjectConnectionType = {
-    NUMBER_0: 0 as DomainEnumsProjectConnectionType,
-    NUMBER_1: 1 as DomainEnumsProjectConnectionType,
-    NUMBER_2: 2 as DomainEnumsProjectConnectionType,
-    NUMBER_3: 3 as DomainEnumsProjectConnectionType,
-    NUMBER_4: 4 as DomainEnumsProjectConnectionType
+    Related: 'Related' as DomainEnumsProjectConnectionType,
+    SubProject: 'SubProject' as DomainEnumsProjectConnectionType,
+    ParentProject: 'ParentProject' as DomainEnumsProjectConnectionType,
+    PredecessorProject: 'PredecessorProject' as DomainEnumsProjectConnectionType,
+    SuccessorProject: 'SuccessorProject' as DomainEnumsProjectConnectionType
 };

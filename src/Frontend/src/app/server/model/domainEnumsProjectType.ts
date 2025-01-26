@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-export type DomainEnumsProjectType = 0 | 1 | 2 | 3 | 4;
+export type DomainEnumsProjectType = 'Idea' | 'Inspiration' | 'Project' | 'ProjectRequest' | 'Unkown';
 
 export const DomainEnumsProjectType = {
-    NUMBER_0: 0 as DomainEnumsProjectType,
-    NUMBER_1: 1 as DomainEnumsProjectType,
-    NUMBER_2: 2 as DomainEnumsProjectType,
-    NUMBER_3: 3 as DomainEnumsProjectType,
-    NUMBER_4: 4 as DomainEnumsProjectType
+    Idea: 'Idea' as DomainEnumsProjectType,
+    Inspiration: 'Inspiration' as DomainEnumsProjectType,
+    Project: 'Project' as DomainEnumsProjectType,
+    ProjectRequest: 'ProjectRequest' as DomainEnumsProjectType,
+    Unkown: 'Unkown' as DomainEnumsProjectType
 };
