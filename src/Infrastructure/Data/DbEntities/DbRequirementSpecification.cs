@@ -16,11 +16,14 @@ public sealed class DbRequirementSpecificationPerson : DbRequirementSpecificatio
     public List<DbSkillSpecificationRequirementConnection>? SkillSpecifications { get; set; }
 
     public List<DbWorkAmountSpecificationRequirementConnection>? WorkAmountSpecifications { get; set; }
+    public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
 }
 
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
     public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
+    
+    public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
 }
 
 public sealed class DbRequirementSpecificationMoney : DbRequirementSpecification

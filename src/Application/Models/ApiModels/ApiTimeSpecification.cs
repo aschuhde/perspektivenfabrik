@@ -1,7 +1,11 @@
-﻿using Domain.DataTypes;
+﻿using System.Text.Json.Serialization;
+using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
+[JsonDerivedType(typeof(ApiTimeSpecification), typeDiscriminator: "base")]
+[JsonDerivedType(typeof(ApiTimeSpecificationPeriod), typeDiscriminator: "period")]
+[JsonDerivedType(typeof(ApiTimeSpecificationMoment), typeDiscriminator: "moment")]
 public class ApiTimeSpecification : ApiBaseEntity
 {
     
@@ -13,6 +17,10 @@ public sealed class ApiTimeSpecificationPeriod : ApiTimeSpecification
     public required ApiTimeSpecificationMoment End { get; init; }
 }
 
+[JsonDerivedType(typeof(ApiTimeSpecificationMoment), typeDiscriminator: "base")]
+[JsonDerivedType(typeof(ApiTimeSpecificationDate), typeDiscriminator: "date")]
+[JsonDerivedType(typeof(ApiTimeSpecificationDateTime), typeDiscriminator: "dateTime")]
+[JsonDerivedType(typeof(ApiTimeSpecificationMonth), typeDiscriminator: "month")]
 public class ApiTimeSpecificationMoment : ApiTimeSpecification
 {
     

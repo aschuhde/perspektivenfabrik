@@ -11,11 +11,13 @@ public sealed class RequirementSpecificationDtoPerson : RequirementSpecification
 {
     public required SkillSpecificationDto[] SkillSpecifications { get; init; }
     public required WorkAmountSpecificationDto[] WorkAmountSpecifications { get; init; }
+    public required LocationSpecificationDto[] LocationSpecifications { get; init; }
 }
 
 public sealed class RequirementSpecificationDtoMaterial : RequirementSpecificationDto
 {
     public required MaterialSpecificationDto[] MaterialSpecifications { get; init; }
+    public required LocationSpecificationDto[] LocationSpecifications { get; init; }
 }
 
 public sealed class RequirementSpecificationDtoMoney : RequirementSpecificationDto

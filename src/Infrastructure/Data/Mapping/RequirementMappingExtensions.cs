@@ -69,6 +69,8 @@ public static partial class MappingExtensions
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.SkillSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.WorkAmountSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.WorkAmountSpecifications))]
+    [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.LocationSpecifications))]
+    [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.LocationSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.TimeSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.TimeSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.QuantitySpecification))]
@@ -93,11 +95,19 @@ public static partial class MappingExtensions
                 RequirementSpecificationId = r.EntityId,
                 WorkAmountSpecificationId = x.EntityId
             });
+        r.LocationSpecifications = MappingTools.MapArrayToList(requirementSpecificationDtoPerson.LocationSpecifications, x =>
+            new DbLocationSpecificationRequirementConnection()
+            {
+                RequirementSpecificationId = r.EntityId,
+                LocationSpecificationId = x.EntityId
+            });
         return r;
     }
     
     [MapperIgnoreTarget(nameof(DbRequirementSpecificationMaterial.MaterialSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoMaterial.MaterialSpecifications))]
+    [MapperIgnoreTarget(nameof(DbRequirementSpecificationMaterial.LocationSpecifications))]
+    [MapperIgnoreSource(nameof(RequirementSpecificationDtoMaterial.LocationSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.TimeSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoMaterial.TimeSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.QuantitySpecification))]
@@ -115,6 +125,12 @@ public static partial class MappingExtensions
             {
                 RequirementSpecificationId = r.EntityId,
                 MaterialSpecificationId = x.EntityId
+            });
+        r.LocationSpecifications = MappingTools.MapArrayToList(requirementSpecificationDtoMaterial.LocationSpecifications, x =>
+            new DbLocationSpecificationRequirementConnection()
+            {
+                RequirementSpecificationId = r.EntityId,
+                LocationSpecificationId = x.EntityId
             });
         return r;
     }

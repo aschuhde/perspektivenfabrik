@@ -1,7 +1,13 @@
-﻿using Domain.DataTypes;
+﻿using System.Text.Json.Serialization;
+using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
+[JsonDerivedType(typeof(ApiLocationSpecification), typeDiscriminator: "base")]
+[JsonDerivedType(typeof(ApiLocationSpecificationRemote), typeDiscriminator: "remote")]
+[JsonDerivedType(typeof(ApiLocationSpecificationRegion), typeDiscriminator: "withRegion")]
+[JsonDerivedType(typeof(ApiLocationSpecificationCoordinates), typeDiscriminator: "withCoordinates")]
+[JsonDerivedType(typeof(ApiLocationSpecificationAddress), typeDiscriminator: "withAddress")]
 public class ApiLocationSpecification : ApiBaseEntity
 {
     

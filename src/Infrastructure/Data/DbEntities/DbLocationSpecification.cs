@@ -39,3 +39,14 @@ public sealed class DbLocationSpecificationProjectConnection : DbEntityWithId
     public required Guid LocationSpecificationId { get; init; }
     public DbLocationSpecification? LocationSpecification { get; init; }
 }
+
+[Table("LocationSpecificationRequirementConnections")]
+public sealed class DbLocationSpecificationRequirementConnection : DbEntityWithId
+{
+    [ForeignKey(nameof(RequirementSpecification))]
+    public required Guid RequirementSpecificationId { get; init; }
+    public DbRequirementSpecification? RequirementSpecification { get; init; }
+    [ForeignKey(nameof(LocationSpecification))]
+    public required Guid LocationSpecificationId { get; init; }
+    public DbLocationSpecification? LocationSpecification { get; init; }
+}

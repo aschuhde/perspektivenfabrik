@@ -33,6 +33,10 @@ public static partial class MappingExtensions
         this DbWorkAmountSpecificationRequirementConnection dbWorkAmountSpecificationRequirementConnection) =>
         dbWorkAmountSpecificationRequirementConnection.WorkAmountSpecification!.ToWorkAmountSpecification();
     
+    public static LocationSpecificationDto DbLocationSpecificationRequirementConnectionToLocationSpecification(
+        this DbLocationSpecificationRequirementConnection dbLocationSpecificationRequirementConnection) =>
+        dbLocationSpecificationRequirementConnection.LocationSpecification!.ToLocationSpecification();
+    
     public static SkillSpecificationDto DbSkillSpecificationRequirementConnectionToSkillSpecification(
         this DbSkillSpecificationRequirementConnection dbSkillSpecificationRequirementConnection) =>
         dbSkillSpecificationRequirementConnection.SkillSpecification!.ToSkillSpecification();

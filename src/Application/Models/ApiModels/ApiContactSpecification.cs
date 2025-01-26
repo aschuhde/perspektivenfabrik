@@ -1,7 +1,12 @@
-﻿using Domain.DataTypes;
+﻿using System.Text.Json.Serialization;
+using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
+[JsonDerivedType(typeof(ApiContactSpecification), typeDiscriminator: "base")]
+[JsonDerivedType(typeof(ApiContactSpecificationPhoneNumber), typeDiscriminator: "withPhoneNumber")]
+[JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: "withMailAddress")]
+[JsonDerivedType(typeof(ApiContactSpecificationPostalAddress), typeDiscriminator: "withPostalAddress")]
 public class ApiContactSpecification : ApiBaseEntity
 {
     

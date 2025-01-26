@@ -103,6 +103,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             if (entity is RequirementSpecificationDtoMaterial requirementSpecificationDtoMaterial)
             {
                 UpdateRelatedEntities(requirementSpecificationDtoMaterial.MaterialSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.MaterialSpecifications, x => x.ToDbMaterialSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoMaterial.LocationSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.LocationSpecifications, x => x.ToDbLocationSpecification());
             }
 
             if (entity is RequirementSpecificationDtoMoney requirementSpecificationDtoMoney)
@@ -114,6 +115,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             {
                 UpdateRelatedEntities(requirementSpecificationDtoPerson.SkillSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.SkillSpecifications, x => x.ToDbSkillSpecification());
                 UpdateRelatedEntities(requirementSpecificationDtoPerson.WorkAmountSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.WorkAmountSpecifications, x => x.ToDbWorkAmountSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoPerson.LocationSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.LocationSpecifications, x => x.ToDbLocationSpecification());
             }
             AddOrUpdate(entity, existingEntity != null);
         }
@@ -128,6 +130,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
                 if (existingEntity is RequirementSpecificationDtoMaterial requirementSpecificationDtoMaterial)
                 {
                     UpdateRelatedEntities([], requirementSpecificationDtoMaterial.MaterialSpecifications, x => x.ToDbMaterialSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoMaterial.LocationSpecifications, x => x.ToDbLocationSpecification());
                 }
 
                 if (existingEntity is RequirementSpecificationDtoMoney requirementSpecificationDtoMoney)
@@ -139,6 +142,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
                 {
                     UpdateRelatedEntities([], requirementSpecificationDtoPerson.SkillSpecifications, x => x.ToDbSkillSpecification());
                     UpdateRelatedEntities([], requirementSpecificationDtoPerson.WorkAmountSpecifications, x => x.ToDbWorkAmountSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoPerson.LocationSpecifications, x => x.ToDbLocationSpecification());
                 }
                 dbContext.Remove(existingEntity);
             }

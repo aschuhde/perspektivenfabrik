@@ -13,6 +13,6 @@ import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiM
 import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
 
-export interface ApplicationModelsApiModelsApiContactSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
-    type: string;
+export interface ApplicationModelsApiModelsApiSkillSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
+    value?: string;
 }

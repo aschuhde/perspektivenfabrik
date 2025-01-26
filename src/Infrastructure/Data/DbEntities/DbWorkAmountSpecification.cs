@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Data.DbEntities;
 
 [Table("WorkAmountSpecifications")]
 public sealed class DbWorkAmountSpecification : DbEntity
 {
-    
+    [MaxLength(Constants.StringLengths.Medium)]
+    public required string Value { get; init; }
 }
 
 [Table("WorkAmountSpecificationRequirementConnections")]

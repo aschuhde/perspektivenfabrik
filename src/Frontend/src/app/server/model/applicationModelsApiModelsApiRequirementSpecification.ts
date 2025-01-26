@@ -19,4 +19,5 @@ export interface ApplicationModelsApiModelsApiRequirementSpecification extends A
     timeSpecificationSameAsProject?: boolean;
     timeSpecifications?: Array<ApplicationModelsApiModelsApiTimeSpecification>;
     quantitySpecification?: ApplicationModelsApiModelsApiQuantitySpecification;
+    type: string;
 }
