@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Infrastructure.Data.DbDataTypes;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -7,7 +8,8 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbSkillSpecification : DbEntity
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Value { get; init; }
+    public required string Name { get; init; }
+    public required DbFormattedContent Title { get; init; }
 }
 
 

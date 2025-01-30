@@ -1,6 +1,9 @@
-﻿namespace Domain.Entities;
+﻿using Domain.DataTypes;
+
+namespace Domain.Entities;
 
 public sealed class SkillSpecificationDto : BaseEntityDto
 {
-    public required string Value { get; init; }
+    public required string Name { get; init; }
+    public required FormattedContent Title { get; init; }
 }

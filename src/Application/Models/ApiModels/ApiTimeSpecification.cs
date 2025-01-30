@@ -3,9 +3,18 @@ using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
-[JsonDerivedType(typeof(ApiTimeSpecification), typeDiscriminator: "base")]
-[JsonDerivedType(typeof(ApiTimeSpecificationPeriod), typeDiscriminator: "period")]
-[JsonDerivedType(typeof(ApiTimeSpecificationMoment), typeDiscriminator: "moment")]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ApiTimeSpecificationTypes
+{
+    Base, Period, Moment, Date, DateTime, Month
+}
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
+[JsonDerivedType(typeof(ApiTimeSpecification), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Base))]
+[JsonDerivedType(typeof(ApiTimeSpecificationPeriod), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Period))]
+[JsonDerivedType(typeof(ApiTimeSpecificationMoment), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Moment))]
+[JsonDerivedType(typeof(ApiTimeSpecificationDate), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Date))]
+[JsonDerivedType(typeof(ApiTimeSpecificationDateTime), typeDiscriminator: nameof(ApiTimeSpecificationTypes.DateTime))]
+[JsonDerivedType(typeof(ApiTimeSpecificationMonth), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Month))]
 public class ApiTimeSpecification : ApiBaseEntity
 {
     
@@ -17,10 +26,6 @@ public sealed class ApiTimeSpecificationPeriod : ApiTimeSpecification
     public required ApiTimeSpecificationMoment End { get; init; }
 }
 
-[JsonDerivedType(typeof(ApiTimeSpecificationMoment), typeDiscriminator: "base")]
-[JsonDerivedType(typeof(ApiTimeSpecificationDate), typeDiscriminator: "date")]
-[JsonDerivedType(typeof(ApiTimeSpecificationDateTime), typeDiscriminator: "dateTime")]
-[JsonDerivedType(typeof(ApiTimeSpecificationMonth), typeDiscriminator: "month")]
 public class ApiTimeSpecificationMoment : ApiTimeSpecification
 {
     

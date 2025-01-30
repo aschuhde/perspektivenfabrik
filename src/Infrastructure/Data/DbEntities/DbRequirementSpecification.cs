@@ -6,21 +6,22 @@ namespace Infrastructure.Data.DbEntities;
 public class DbRequirementSpecification : DbEntity
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
-
     public List<DbTimeSpecificationRequirementConnection>? TimeSpecifications { get; set; }
     public DbQuantitySpecificationRequirementConnection? QuantitySpecification { get; set; }
 }
 
 public sealed class DbRequirementSpecificationPerson : DbRequirementSpecification
 {
+    public required bool LocationSpecificationsSameAsProject { get; init; }
     public List<DbSkillSpecificationRequirementConnection>? SkillSpecifications { get; set; }
 
-    public List<DbWorkAmountSpecificationRequirementConnection>? WorkAmountSpecifications { get; set; }
+    public DbWorkAmountSpecificationRequirementConnection? WorkAmountSpecification { get; set; }
     public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
 }
 
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
+    public required bool LocationSpecificationsSameAsProject { get; init; }
     public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
     
     public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
@@ -28,7 +29,7 @@ public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecificat
 
 public sealed class DbRequirementSpecificationMoney : DbRequirementSpecification
 {
-    public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
+
 }
 
 [Table("RequirementSpecificationConnections")]

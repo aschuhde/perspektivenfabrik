@@ -3,10 +3,17 @@ using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
-[JsonDerivedType(typeof(ApiContactSpecification), typeDiscriminator: "base")]
-[JsonDerivedType(typeof(ApiContactSpecificationPhoneNumber), typeDiscriminator: "withPhoneNumber")]
-[JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: "withMailAddress")]
-[JsonDerivedType(typeof(ApiContactSpecificationPostalAddress), typeDiscriminator: "withPostalAddress")]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ApiContactSpecificationTypes
+{
+    Base, PhoneNumber, MailAddress, PostalAddress,
+}
+
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
+[JsonDerivedType(typeof(ApiContactSpecification), typeDiscriminator: nameof(ApiContactSpecificationTypes.Base))]
+[JsonDerivedType(typeof(ApiContactSpecificationPhoneNumber), typeDiscriminator: nameof(ApiContactSpecificationTypes.PhoneNumber))]
+[JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.MailAddress))]
+[JsonDerivedType(typeof(ApiContactSpecificationPostalAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.PostalAddress))]
 public class ApiContactSpecification : ApiBaseEntity
 {
     

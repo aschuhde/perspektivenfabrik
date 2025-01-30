@@ -67,8 +67,8 @@ public static partial class MappingExtensions
     
     [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.SkillSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.SkillSpecifications))]
-    [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.WorkAmountSpecifications))]
-    [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.WorkAmountSpecifications))]
+    [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.WorkAmountSpecification))]
+    [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.WorkAmountSpecification))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecificationPerson.LocationSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoPerson.LocationSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.TimeSpecifications))]
@@ -89,12 +89,11 @@ public static partial class MappingExtensions
                 RequirementSpecificationId = r.EntityId,
                 SkillSpecificationId = x.EntityId
             });
-        r.WorkAmountSpecifications = MappingTools.MapArrayToList(requirementSpecificationDtoPerson.WorkAmountSpecifications, x =>
-            new DbWorkAmountSpecificationRequirementConnection()
+        r.WorkAmountSpecification = new DbWorkAmountSpecificationRequirementConnection()
             {
-                RequirementSpecificationId = r.EntityId,
-                WorkAmountSpecificationId = x.EntityId
-            });
+                RequirementSpecificationPersonId = r.EntityId,
+                WorkAmountSpecificationId = requirementSpecificationDtoPerson.WorkAmountSpecification.EntityId
+            };
         r.LocationSpecifications = MappingTools.MapArrayToList(requirementSpecificationDtoPerson.LocationSpecifications, x =>
             new DbLocationSpecificationRequirementConnection()
             {
@@ -135,8 +134,6 @@ public static partial class MappingExtensions
         return r;
     }
     
-    [MapperIgnoreTarget(nameof(DbRequirementSpecificationMoney.MaterialSpecifications))]
-    [MapperIgnoreSource(nameof(RequirementSpecificationDtoMoney.MaterialSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.TimeSpecifications))]
     [MapperIgnoreSource(nameof(RequirementSpecificationDtoMoney.TimeSpecifications))]
     [MapperIgnoreTarget(nameof(DbRequirementSpecification.QuantitySpecification))]
@@ -149,12 +146,6 @@ public static partial class MappingExtensions
     {
         var r = requirementSpecificationDtoMoney.ToDbRequirementSpecificationMoneyInner();
         SetTimeAndQuantitySpecification(r, requirementSpecificationDtoMoney);
-        r.MaterialSpecifications = MappingTools.MapArrayToList(requirementSpecificationDtoMoney.MaterialSpecifications, x =>
-            new DbMaterialSpecificationRequirementConnection()
-            {
-                RequirementSpecificationId = r.EntityId,
-                MaterialSpecificationId = x.EntityId
-            });
         return r;
     }
    

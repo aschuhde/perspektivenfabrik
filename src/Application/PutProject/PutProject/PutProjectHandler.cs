@@ -2,6 +2,7 @@ using Application.Common;
 using Application.Messages;
 using Application.Models.ApiModels;
 using Application.Services;
+using Application.Updaters;
 using Domain.Enums;
 using FluentValidation;
 

@@ -2,6 +2,7 @@ using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
+using Infrastructure.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
@@ -29,20 +30,20 @@ public sealed class UserDataService(ApplicationDbContext dbContext) : IUserDataS
     {
         return query.Select(x => new UserDto
         {
-            EntityId = default,
-            CreatedOn = default,
+            EntityId = x.EntityId,
+            CreatedOn = x.CreatedOn,
             CreatedBy = null,
-            LastModifiedOn = default,
+            LastModifiedOn = x.LastModifiedOn,
             LastModifiedBy = null,
             History = null,
-            Firstname = "null",
-            Lastname = "null",
-            Email = "null",
+            Firstname = x.Firstname,
+            Lastname = x.Lastname,
+            Email = x.Email,
             // todo: ConnectedOrganizations = new OrganizationConnectionDto[]
             // {
             // },
-            PasswordHash = "null",
-            Active = true
+            PasswordHash = x.PasswordHash,
+            Active = x.Active
         }); //x.ToUser());
     }
 }

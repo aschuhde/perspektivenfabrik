@@ -8,6 +8,14 @@ public class ApiPerson : ApiBaseEntity
 
     //todo: public ApiOrganizationConnection[] ConnectedOrganizations { get; init; } = Array.Empty<ApiOrganizationConnection>();
 
-    public static ApiPerson WithUserId(Guid userId) => new () { EntityId = userId };
+    public static ApiPerson WithUserId(Guid userId) => new ()
+    {
+        EntityId = userId,
+        Email = "",
+        Firstname = "",
+        Lastname = "",
+        CreatedOn = DateTimeOffset.UtcNow,
+        LastModifiedOn = DateTimeOffset.UtcNow
+    };
     
 }

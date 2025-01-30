@@ -1,6 +1,10 @@
-﻿namespace Application.Models.ApiModels;
+﻿using Domain.DataTypes;
+
+namespace Application.Models.ApiModels;
 
 public sealed class ApiMaterialSpecification : ApiBaseEntity
 {
-    public required string Value { get; init; }
+    public required string Name { get; init; }
+    public required FormattedContent Title  { get; init; }
+    public required FormattedContent Description { get; init; }
 }

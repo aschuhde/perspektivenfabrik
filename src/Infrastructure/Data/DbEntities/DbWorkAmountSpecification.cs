@@ -13,9 +13,9 @@ public sealed class DbWorkAmountSpecification : DbEntity
 [Table("WorkAmountSpecificationRequirementConnections")]
 public sealed class DbWorkAmountSpecificationRequirementConnection : DbEntityWithId
 {
-    [ForeignKey(nameof(RequirementSpecification))]
-    public required Guid RequirementSpecificationId { get; init; }
-    public DbRequirementSpecification? RequirementSpecification { get; init; }
+    [ForeignKey(nameof(RequirementSpecificationPerson))]
+    public required Guid RequirementSpecificationPersonId { get; init; }
+    public DbRequirementSpecificationPerson? RequirementSpecificationPerson { get; init; }
     [ForeignKey(nameof(WorkAmountSpecification))]
     public required Guid WorkAmountSpecificationId { get; init; }
     public DbWorkAmountSpecification? WorkAmountSpecification { get; init; }

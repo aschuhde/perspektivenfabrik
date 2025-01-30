@@ -1,4 +1,5 @@
 ﻿using Application.Models.ApiModels;
+using Domain.Enums;
 using FluentValidation;
 
 namespace Application.Validators;
@@ -7,9 +8,9 @@ public class ProjectValidator : AbstractValidator<ApiProjectBody>
 {
     public ProjectValidator()
     {
-        RuleFor(model => model.Phase).NotEmpty();
-        RuleFor(model => model.Type).NotEmpty();
-        RuleFor(model => model.Visibility).NotEmpty();
+        RuleFor(model => model.Phase).NotEqual(ProjectPhase.Unkown);
+        RuleFor(model => model.Type).NotEqual(ProjectType.Unkown);
+        RuleFor(model => model.Visibility).NotEqual(ProjectVisibility.Unkown);
         RuleFor(model => model.LocationSpecifications).NotNull();
         RuleForEach(model => model.LocationSpecifications).SetValidator(new LocationSpecificationValidator());
         RuleFor(model => model.TimeSpecifications).NotNull();
@@ -28,7 +29,7 @@ public class ProjectValidator : AbstractValidator<ApiProjectBody>
         RuleFor(model => model.ConnectedOrganizationsSameAsOwner).NotNull();
         RuleFor(model => model.ConnectedOrganizations).NotNull();
         RuleForEach(model => model.ConnectedOrganizations).SetValidator(new OrganizationReferenceValidator());
-        RuleFor(model => model.Owner).NotNull().SetValidator(new PersonReferenceValidator());
+        RuleFor(model => model.Owner).Null();
         RuleFor(model => model.Contributors).NotNull();
         RuleForEach(model => model.Contributors).SetValidator(new PersonReferenceValidator());
         RuleFor(model => model.RelatedProjects).NotNull();

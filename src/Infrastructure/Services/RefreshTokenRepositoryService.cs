@@ -22,33 +22,31 @@ public sealed class RefreshTokenRepositoryService(ApplicationDbContext dbContext
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<UserRefreshToken?> GetSavedRefreshToken(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<UserRefreshToken[]> GetSavedRefreshTokens(Guid userId, CancellationToken cancellationToken = default)
     {
-        var dbEntry = await dbContext.UserRefreshTokens
+        var dbEntries = await dbContext.UserRefreshTokens
             .Where(x => x.Active)
             .Select(x => new
             {
                 x.RefreshToken,
                 x.AbsoluteExpirationUtc,
-            }).FirstOrDefaultAsync(cancellationToken: cancellationToken);
-
-        if (dbEntry == null)
-            return null;
-        return new UserRefreshToken()
+            }).ToArrayAsync(cancellationToken: cancellationToken);
+        
+        return dbEntries.Select(dbEntry => new UserRefreshToken()
         {
             RefreshToken = dbEntry.RefreshToken,
             AbsoluteExpirationUtc = dbEntry.AbsoluteExpirationUtc,
             ShouldBeRenewed = (dbEntry.AbsoluteExpirationUtc - DateTimeOffset.UtcNow).TotalHours < ExpirationHours / 2
-        };
+        }).ToArray();
     }
 
     public async Task<string> GetRenewedRefreshTokenStringIfNecessary(Guid userId, CancellationToken cancellationToken = default)
     {
-        var refreshToken = await GetSavedRefreshToken(userId, cancellationToken);
-        if (refreshToken?.RefreshToken == null || refreshToken.ShouldBeRenewed)
+        var refreshTokens = await GetSavedRefreshTokens(userId, cancellationToken);
+        if (refreshTokens.Length == 0 || refreshTokens.All(x => x.ShouldBeRenewed))
             return await GetRenewedRefreshTokenString(userId, cancellationToken);
         
-        return refreshToken.RefreshToken;
+        return refreshTokens.FirstOrDefault(x => !x.ShouldBeRenewed)!.RefreshToken;
     }
     public async Task<string> GetRenewedRefreshTokenString(Guid userId, CancellationToken cancellationToken = default)
     {

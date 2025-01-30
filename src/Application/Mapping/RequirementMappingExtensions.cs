@@ -1,5 +1,6 @@
 ﻿using Application.Models.ApiModels;
 using Domain.Entities;
+using Domain.Enums;
 using Riok.Mapperly.Abstractions;
 
 namespace Application.Mapping;
@@ -44,6 +45,5 @@ public static partial class ApiMappingExtensions
     public static partial ApiRequirementSpecificationMaterial ToApiRequirementSpecificationMaterial(this RequirementSpecificationDtoMaterial requirementSpecificationDtoMaterial);
     
     public static partial ApiRequirementSpecificationMoney ToApiRequirementSpecificationMoney(this RequirementSpecificationDtoMoney requirementSpecificationDtoMoney);
-   
     
 }

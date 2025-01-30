@@ -8,6 +8,107 @@ public static class ProjectUpdater
     public static void PrepareEntityForNewProject(this ApiProjectBody entity, EntityUpdatingContext updatingContext)
     {
         entity.PrepareBaseEntity(null, updatingContext);
+
+        foreach (var x in entity.LocationSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.ContactSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.DescriptionSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.GraphicsSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.ProjectTags)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.TimeSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        foreach (var x in entity.RequirementSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+    }
+    private static void PrepareMetadataForNewEntry(this ApiLocationSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiContactSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiDescriptionSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.Type.PrepareBaseEntity(null, updatingContext);
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiGraphicsSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiProjectTag entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiTimeSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        if (entity is ApiTimeSpecificationPeriod period)
+        {
+            period.Start.PrepareMetadataForNewEntry(updatingContext);
+            period.End.PrepareMetadataForNewEntry(updatingContext);
+        }
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+    private static void PrepareMetadataForNewEntry(this ApiRequirementSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+        foreach (var x in entity.TimeSpecifications)
+        {
+            x.PrepareMetadataForNewEntry(updatingContext);
+        }
+        entity.QuantitySpecification.PrepareBaseEntity(null, updatingContext);
+        if (entity is ApiRequirementSpecificationMaterial specificationMaterial)
+        {
+            foreach (var x in specificationMaterial.LocationSpecifications)
+            {
+                x.PrepareMetadataForNewEntry(updatingContext);
+            }
+            foreach (var x in specificationMaterial.MaterialSpecifications)
+            {
+                x.PrepareMetadataForNewEntry(updatingContext);
+            }
+        }
+        if (entity is ApiRequirementSpecificationPerson specificationPerson)
+        {
+            foreach (var x in specificationPerson.LocationSpecifications)
+            {
+                x.PrepareMetadataForNewEntry(updatingContext);
+            }
+            foreach (var x in specificationPerson.SkillSpecifications)
+            {
+                x.PrepareMetadataForNewEntry(updatingContext);
+            }
+            specificationPerson.WorkAmountSpecification.PrepareBaseEntity(null, updatingContext);
+        }
+    }
+
+    private static void PrepareMetadataForNewEntry(this ApiMaterialSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
+    }
+
+    private static void PrepareMetadataForNewEntry(this ApiSkillSpecification entity, EntityUpdatingContext updatingContext)
+    {
+        entity.PrepareBaseEntity(null, updatingContext);
     }
     
     public static void PrepareEntityAndCollectChanges(this ApiProjectBody entity, ProjectDto existingItem,

@@ -11,7 +11,7 @@ public class DbLocationSpecification : DbEntity
 
 public sealed class DbLocationSpecificationRemote : DbLocationSpecification
 {
-    
+    public required DbUrl Link { get; init; }
 }
 
 public sealed class DbLocationSpecificationRegion : DbLocationSpecification

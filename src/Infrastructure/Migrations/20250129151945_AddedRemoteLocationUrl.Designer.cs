@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250129151945_AddedRemoteLocationUrl")]
+    partial class AddedRemoteLocationUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -875,7 +878,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RequirementSpecificationPersonId")
+                    b.Property<Guid>("RequirementSpecificationId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("WorkAmountSpecificationId")
@@ -883,8 +886,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("EntityId");
 
-                    b.HasIndex("RequirementSpecificationPersonId")
-                        .IsUnique();
+                    b.HasIndex("RequirementSpecificationId");
 
                     b.HasIndex("WorkAmountSpecificationId");
 
@@ -998,6 +1000,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("LocationSpecificationsSameAsProject")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid?>("WorkAmountSpecificationEntityId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("WorkAmountSpecificationEntityId");
 
                     b.ToTable("RequirementSpecifications", t =>
                         {
@@ -3041,9 +3048,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", b =>
                 {
-                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", "RequirementSpecificationPerson")
-                        .WithOne("WorkAmountSpecification")
-                        .HasForeignKey("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", "RequirementSpecificationPersonId")
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
+                        .WithMany()
+                        .HasForeignKey("RequirementSpecificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3053,7 +3060,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RequirementSpecificationPerson");
+                    b.Navigation("RequirementSpecification");
 
                     b.Navigation("WorkAmountSpecification");
                 });
@@ -3276,6 +3283,15 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", b =>
+                {
+                    b.HasOne("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", "WorkAmountSpecification")
+                        .WithMany()
+                        .HasForeignKey("WorkAmountSpecificationEntityId");
+
+                    b.Navigation("WorkAmountSpecification");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecificationPeriod", b =>
                 {
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbTimeSpecificationPeriodEndConnection", "End", b1 =>
@@ -3432,8 +3448,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("LocationSpecifications");
 
                     b.Navigation("SkillSpecifications");
-
-                    b.Navigation("WorkAmountSpecification");
                 });
 #pragma warning restore 612, 618
         }

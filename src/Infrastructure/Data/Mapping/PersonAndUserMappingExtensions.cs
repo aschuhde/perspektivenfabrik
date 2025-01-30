@@ -32,11 +32,11 @@ public static partial class MappingExtensions
     {
         PersonId = p.EntityId
     };
-    internal static PersonDto ToPerson(this DbEntityPersonCreatedByConnection p) => p.Person!.ToPerson();
+    internal static PersonDto ToPerson(this DbEntityPersonCreatedByConnection p) => p.Person?.ToPerson() ?? null!;
     
     internal static DbEntityPersonLastModifiedByConnection ToDbEntityPersonLastModifiedByConnection(this PersonDto p) => new DbEntityPersonLastModifiedByConnection()
     {
         PersonId = p.EntityId
     };
-    internal static PersonDto ToPerson(this DbEntityPersonLastModifiedByConnection p) => p.Person!.ToPerson();
+    internal static PersonDto ToPerson(this DbEntityPersonLastModifiedByConnection p) => p.Person?.ToPerson() ?? null!;
 }

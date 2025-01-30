@@ -11,19 +11,25 @@ public static class BaseUpdater
         var isCreating = updatingContext.IsCreating;
         if(entity.EntityId == null && !isCreating)
             return; // entity id required
-        if(isCreating && entity.EntityId != existingItem!.EntityId)
+        if(!isCreating && entity.EntityId != existingItem!.EntityId)
             return; // entity id cannot be changed
         var hasChanged = updatingContext.HasChanged;
 
         entity.History ??= isCreating ? new ApiModificationHistory()
         {
+            EntityId = Guid.NewGuid(),
             HistoryItems = [new ApiModificationHistoryItem()
             {
-                HistoryEntryType = HistoryEntryType.Created
-            }]
+                HistoryEntryType = HistoryEntryType.Created,
+            }],
         } : new ApiModificationHistory()
         {
-            HistoryItems = updatingContext.Changes.ToArray()
+            EntityId = Guid.NewGuid(),
+            HistoryItems = updatingContext.Changes.Select(x =>
+            {
+                x.EntityId ??= Guid.NewGuid();
+                return x;
+            }).ToArray()
         };
         entity.EntityId ??= Guid.NewGuid();
         entity.CreatedBy ??= isCreating ? ApiPerson.WithUserId(updatingContext.CurrentUserId) : 
@@ -31,6 +37,6 @@ public static class BaseUpdater
         entity.LastModifiedBy ??= hasChanged ? ApiPerson.WithUserId(updatingContext.CurrentUserId) : 
             (existingItem?.LastModifiedBy != null ? ApiPerson.WithUserId(existingItem.LastModifiedBy!.EntityId) : null);
         entity.CreatedOn ??= DateTimeOffset.UtcNow;
-        entity.LastModifiedOn ??= hasChanged ? DateTimeOffset.UtcNow : existingItem?.LastModifiedOn;
+        entity.LastModifiedOn ??= hasChanged ? DateTimeOffset.UtcNow : (existingItem?.LastModifiedOn ?? DateTimeOffset.UtcNow);
     }
 }

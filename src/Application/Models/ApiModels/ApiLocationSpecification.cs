@@ -3,11 +3,17 @@ using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
 
-[JsonDerivedType(typeof(ApiLocationSpecification), typeDiscriminator: "base")]
-[JsonDerivedType(typeof(ApiLocationSpecificationRemote), typeDiscriminator: "remote")]
-[JsonDerivedType(typeof(ApiLocationSpecificationRegion), typeDiscriminator: "withRegion")]
-[JsonDerivedType(typeof(ApiLocationSpecificationCoordinates), typeDiscriminator: "withCoordinates")]
-[JsonDerivedType(typeof(ApiLocationSpecificationAddress), typeDiscriminator: "withAddress")]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ApiLocationSpecificationTypes
+{
+    Base, Remote, Region, Coordinates, Address,
+}
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
+[JsonDerivedType(typeof(ApiLocationSpecification), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Base))]
+[JsonDerivedType(typeof(ApiLocationSpecificationRemote), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Remote))]
+[JsonDerivedType(typeof(ApiLocationSpecificationRegion), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Region))]
+[JsonDerivedType(typeof(ApiLocationSpecificationCoordinates), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Coordinates))]
+[JsonDerivedType(typeof(ApiLocationSpecificationAddress), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Address))]
 public class ApiLocationSpecification : ApiBaseEntity
 {
     
@@ -15,7 +21,7 @@ public class ApiLocationSpecification : ApiBaseEntity
 
 public sealed class ApiLocationSpecificationRemote : ApiLocationSpecification
 {
-    
+    public required Url Link { get; init; }
 }
 
 public sealed class ApiLocationSpecificationRegion : ApiLocationSpecification

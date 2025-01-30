@@ -33,7 +33,7 @@ public static partial class MappingExtensions
     }
     internal static ModificationHistoryDto ToModificationHistory(this DbModificationHistoryConnection history)
     {
-        return history.History!.ToHistory();
+        return history.History?.ToHistory() ?? null!;
     }
 
     [UserMapping(Default = true)]
@@ -50,7 +50,7 @@ public static partial class MappingExtensions
     internal static partial ModificationHistoryItemDto ToHistoryItemInner(this DbModificationHistoryItem dbHistoryItem);
 
 
-    private static DbModificationHistoryItem ToDbHistoryItem(this ModificationHistoryItemDto historyItemDto, ModificationHistoryDto history)
+    public static DbModificationHistoryItem ToDbHistoryItem(this ModificationHistoryItemDto historyItemDto, ModificationHistoryDto history)
     {
         var i = historyItemDto.ToDbHistoryItemInner();
         i.HistoryEntryType = historyItemDto.HistoryEntryType.ToString();

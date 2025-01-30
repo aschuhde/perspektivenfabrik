@@ -12,5 +12,6 @@ public static class ConfigureServices
     {
         services.AddSingleton<JwtAuthenticationDataService>();
         services.AddScoped<IValidator<PostProjectRequest>, PostProjectRequestValidator>();
+        services.AddScoped<IUserAccessService, UserAccessService>();
     }
 }

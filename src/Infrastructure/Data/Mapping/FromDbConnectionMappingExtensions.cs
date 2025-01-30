@@ -76,9 +76,9 @@ public static partial class MappingExtensions
     
     public static PersonDto DbPersonProjectOwnerConnectionToOrganization(
         this DbPersonProjectOwnerConnection dbPersonProjectOwnerConnection) =>
-        dbPersonProjectOwnerConnection.Person!.ToPerson();
+        dbPersonProjectOwnerConnection.Person?.ToPerson() ?? null!;
     
     public static PersonDto DbPersonProjectContributorConnectionToOrganization(
         this DbPersonProjectContributorConnection dbPersonProjectContributorConnection) =>
-        dbPersonProjectContributorConnection.Person!.ToPerson();
+        dbPersonProjectContributorConnection.Person?.ToPerson() ?? null!;
 }

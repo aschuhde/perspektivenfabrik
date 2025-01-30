@@ -25,10 +25,14 @@ public sealed class JwtRefreshTokenHandler(IServiceProvider serviceProvider, Jwt
             return new JwtRefreshTokenInvalidTokenResponse();
         var userData = result.ClaimsIdentity.ToUserData();
 
-        var storedRefreshToken = await refreshTokenRepositoryService.GetSavedRefreshToken(userData.UserId, ct);
-        if (storedRefreshToken == null)
+        var storedRefreshTokens = await refreshTokenRepositoryService.GetSavedRefreshTokens(userData.UserId, ct);
+        if (storedRefreshTokens.Length == 0)
             return new JwtRefreshTokenMissingResponse();
 
+        var storedRefreshToken = storedRefreshTokens.FirstOrDefault(x => x.RefreshToken == command.RefreshToken);
+        if (storedRefreshToken == null)
+            return new JwtRefreshTokenMissingResponse();
+        
         if (storedRefreshToken.RefreshToken != command.RefreshToken)
             return new JwtRefreshTokenInvalidRefreshTokenResponse();
         

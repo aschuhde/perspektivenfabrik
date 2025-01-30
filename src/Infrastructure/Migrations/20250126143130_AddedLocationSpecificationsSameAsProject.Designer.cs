@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126143130_AddedLocationSpecificationsSameAsProject")]
+    partial class AddedLocationSpecificationsSameAsProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,6 +287,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("DbRequirementSpecificationMaterialEntityId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("DbRequirementSpecificationMoneyEntityId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("MaterialSpecificationId")
                         .HasColumnType("uuid");
 
@@ -293,6 +299,9 @@ namespace Infrastructure.Migrations
                     b.HasKey("EntityId");
 
                     b.HasIndex("DbRequirementSpecificationMaterialEntityId");
+
+                    b.HasIndex("DbRequirementSpecificationMoneyEntityId")
+                        .HasDatabaseName("IX_MaterialSpecificationRequirementConnections_DbRequirementS~1");
 
                     b.HasIndex("MaterialSpecificationId");
 
@@ -712,7 +721,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -875,7 +884,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RequirementSpecificationPersonId")
+                    b.Property<Guid?>("DbRequirementSpecificationPersonEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RequirementSpecificationId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("WorkAmountSpecificationId")
@@ -883,8 +895,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("EntityId");
 
-                    b.HasIndex("RequirementSpecificationPersonId")
-                        .IsUnique();
+                    b.HasIndex("DbRequirementSpecificationPersonEntityId");
+
+                    b.HasIndex("RequirementSpecificationId");
 
                     b.HasIndex("WorkAmountSpecificationId");
 
@@ -1796,6 +1809,11 @@ namespace Infrastructure.Migrations
                         .WithMany("MaterialSpecifications")
                         .HasForeignKey("DbRequirementSpecificationMaterialEntityId");
 
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationMoney", null)
+                        .WithMany("MaterialSpecifications")
+                        .HasForeignKey("DbRequirementSpecificationMoneyEntityId")
+                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~1");
+
                     b.HasOne("Infrastructure.Data.DbEntities.DbMaterialSpecification", "MaterialSpecification")
                         .WithMany()
                         .HasForeignKey("MaterialSpecificationId")
@@ -1807,7 +1825,7 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("RequirementSpecificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~1");
+                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~2");
 
                     b.Navigation("MaterialSpecification");
 
@@ -2694,32 +2712,11 @@ namespace Infrastructure.Migrations
                             b1.Navigation("Person");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedContent", "Title", b1 =>
-                        {
-                            b1.Property<Guid>("DbSkillSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("RawContentString")
-                                .IsRequired()
-                                .HasMaxLength(50000)
-                                .HasColumnType("character varying(50000)");
-
-                            b1.HasKey("DbSkillSpecificationEntityId");
-
-                            b1.ToTable("SkillSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbSkillSpecificationEntityId");
-                        });
-
                     b.Navigation("CreatedBy");
 
                     b.Navigation("History");
 
                     b.Navigation("LastModifiedBy");
-
-                    b.Navigation("Title")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbSkillSpecificationRequirementConnection", b =>
@@ -3041,11 +3038,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", b =>
                 {
-                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", "RequirementSpecificationPerson")
-                        .WithOne("WorkAmountSpecification")
-                        .HasForeignKey("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", "RequirementSpecificationPersonId")
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", null)
+                        .WithMany("WorkAmountSpecifications")
+                        .HasForeignKey("DbRequirementSpecificationPersonEntityId");
+
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
+                        .WithMany()
+                        .HasForeignKey("RequirementSpecificationId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_WorkAmountSpecificationRequirementConnections_RequirementS~1");
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbWorkAmountSpecification", "WorkAmountSpecification")
                         .WithMany()
@@ -3053,7 +3055,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RequirementSpecificationPerson");
+                    b.Navigation("RequirementSpecification");
 
                     b.Navigation("WorkAmountSpecification");
                 });
@@ -3252,30 +3254,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationRemote", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbUrl", "Link", b1 =>
-                        {
-                            b1.Property<Guid>("DbLocationSpecificationRemoteEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("RawUrl")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.HasKey("DbLocationSpecificationRemoteEntityId");
-
-                            b1.ToTable("LocationSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbLocationSpecificationRemoteEntityId");
-                        });
-
-                    b.Navigation("Link")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecificationPeriod", b =>
                 {
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbTimeSpecificationPeriodEndConnection", "End", b1 =>
@@ -3427,13 +3405,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("MaterialSpecifications");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationMoney", b =>
+                {
+                    b.Navigation("MaterialSpecifications");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", b =>
                 {
                     b.Navigation("LocationSpecifications");
 
                     b.Navigation("SkillSpecifications");
 
-                    b.Navigation("WorkAmountSpecification");
+                    b.Navigation("WorkAmountSpecifications");
                 });
 #pragma warning restore 612, 618
         }

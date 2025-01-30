@@ -18,6 +18,10 @@ public static class LocationSpecificationUpdater
     private static void UpdateChanges(this ApiLocationSpecification entity, LocationSpecificationDto existingItem,
         EntityUpdatingContext updatingContext)
     {
+        if(entity is ApiLocationSpecificationRemote locationSpecificationRemote
+           && locationSpecificationRemote.Link.ToString() != (existingItem as LocationSpecificationDtoRemote)?.Link.ToString())
+            updatingContext.AddChange(nameof(ApiLocationSpecificationRemote.Link), locationSpecificationRemote.Link.ToString(), (existingItem as LocationSpecificationDtoRemote)?.Link.ToString());
+        
         if(entity is ApiLocationSpecificationAddress locationSpecificationAddress
            && locationSpecificationAddress.PostalAddress.ToString() != (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString())
             updatingContext.AddChange(nameof(ApiContactSpecificationMailAddress.MailAddress), locationSpecificationAddress.PostalAddress.ToString(), (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString());

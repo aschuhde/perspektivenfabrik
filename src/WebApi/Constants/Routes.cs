@@ -11,4 +11,5 @@ public static class Routes
     public const string GetProjects = $"{ApiRoute}/projects";
     public const string PostProject = $"{ApiRoute}/projects";
     public const string PutProject = $"{ApiRoute}/projects/{{EntityId:Guid}}";
+    public const string GetJsonTypeDiscriminatorNames = $"{ApiRoute}/json-type-discriminator-names";
 }

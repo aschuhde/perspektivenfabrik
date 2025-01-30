@@ -9,7 +9,7 @@ public class LocationSpecificationDto : BaseEntityDto
 
 public sealed class LocationSpecificationDtoRemote : LocationSpecificationDto
 {
-    
+    public required Url Link { get; init; }
 }
 
 public sealed class LocationSpecificationDtoRegion : LocationSpecificationDto
