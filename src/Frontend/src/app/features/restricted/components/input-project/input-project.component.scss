@@ -1,0 +1,56 @@
+.step {
+    padding: 1rem .5rem 1rem 1rem;
+    cursor: pointer;
+    border-radius: .5rem;
+    transition: background-color .2s ease;
+}
+
+.step-number {
+    border-radius: 1rem;
+    background-color: #B497E5;
+    display: inline-block;
+    width: 2rem;
+    height: 1.8rem;
+    margin-right: .5rem;
+    text-align: center;
+    padding-top: .2rem;
+    color: white;
+}
+
+.step.active .step-number {
+    background-color: #EA6A31;
+}
+
+.step:hover {
+    background-color: #115e61;
+}
+
+.step.active {background-color: #0d777b;}
+
+.step-list-container{
+    padding-right: 1rem;
+    background-color: #175153;
+    color: white;
+    padding-left: 1rem;
+    height: 100%;
+    padding-top: 1rem;
+}
+
+.step-question{
+    margin: 0 0 1rem -1rem;
+    background-color: #EA6A31;
+    padding: 2rem 1rem;
+    color: white;
+
+    .help-icon{
+        color: #d5c4f3;
+    }
+}
+.btn-next{
+    margin-top: 1rem;
+    width: 10rem;
+}
+.btn-large{
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+}

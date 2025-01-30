@@ -27,9 +27,14 @@ export class InputRequirementMoneyComponent {
   requirementMoney = model.required<RequirementMoneyInput>();
   remove = output<RequirementMoneyInput>();
 
-  requirementTimeIsIdenticalToProjectTime: boolean = true
+  requirementTimeIsIdenticalToProjectTime: boolean = true;
   requirementTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
-  amountOfMoney: string = ""
+  amountOfMoney: string = "";
+  requirementIndex = model.required<number>();
+
+  get requirementNumber(){
+    return this.requirementIndex() + 1;
+  }
 
 
   readonly messageDialogs = {

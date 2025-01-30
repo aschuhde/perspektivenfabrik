@@ -1,24 +1,27 @@
 <div>
-    <p>Wie viel Geld benötigst du? (In EUR)</p>
-    <mat-form-field>
-        <mat-label>Menge in EUR</mat-label>
-        <input type="text"
-               aria-label="Amount of Money"
-               matInput
-               [(ngModel)]="amountOfMoney"/>
-      </mat-form-field>
-
-      <p>Bis wann benötigst du das Geld?</p> 
-      <div>
-        <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
-      </div>
-      <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">
-        <button mat-button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
-        @for(requirementTime of requirementTimes; track requirementTime){
-            <app-input-project-time [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
-        }        
-      </div>
-      
-    <button mat-button (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Eintrag entfernen</button>
+  <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="savings"></mat-icon> Finanzielle Unterstützung {{ requirementNumber }}: </span><span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Eintrag entfernen</button></span></h4>    
+  <div>
+    <div class="d-inline-block" style="vertical-align: top;">
+      <mat-form-field>
+          <mat-label>Menge in EUR</mat-label>
+          <input type="text"
+                aria-label="Amount of Money"
+                matInput
+                [(ngModel)]="amountOfMoney"/>
+        </mat-form-field>
+    </div>
+    <div class="d-inline-block" style="vertical-align: top; padding-left: 1rem;">
+          <p class="mt-0">Bis wann benötigst du das Geld?</p> 
+          <div>
+            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+          </div>          
+    </div>    
+  </div>  
+  <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">    
+    @for(requirementTime of requirementTimes; track requirementTime){
+        <app-input-project-time [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
+    }        
+    <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+  </div>       
 </div>
 

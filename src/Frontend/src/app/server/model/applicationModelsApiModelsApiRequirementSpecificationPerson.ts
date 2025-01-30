@@ -17,7 +17,8 @@ import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationMod
 import { ApplicationModelsApiModelsApiWorkAmountSpecification } from './applicationModelsApiModelsApiWorkAmountSpecification';
 
 export interface ApplicationModelsApiModelsApiRequirementSpecificationPerson extends ApplicationModelsApiModelsApiRequirementSpecification { 
+    locationSpecificationsSameAsProject?: boolean;
     skillSpecifications?: Array<ApplicationModelsApiModelsApiSkillSpecification>;
     locationSpecifications?: Array<ApplicationModelsApiModelsApiLocationSpecification>;
-    workAmountSpecifications?: Array<ApplicationModelsApiModelsApiWorkAmountSpecification>;
+    workAmountSpecification?: ApplicationModelsApiModelsApiWorkAmountSpecification;
 }

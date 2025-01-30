@@ -9,11 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ApplicationModelsApiModelsApiMaterialSpecification } from './applicationModelsApiModelsApiMaterialSpecification';
 import { ApplicationModelsApiModelsApiQuantitySpecification } from './applicationModelsApiModelsApiQuantitySpecification';
 import { ApplicationModelsApiModelsApiRequirementSpecification } from './applicationModelsApiModelsApiRequirementSpecification';
 import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationModelsApiModelsApiTimeSpecification';
 
 export interface ApplicationModelsApiModelsApiRequirementSpecificationMoney extends ApplicationModelsApiModelsApiRequirementSpecification { 
-    materialSpecifications?: Array<ApplicationModelsApiModelsApiMaterialSpecification>;
 }

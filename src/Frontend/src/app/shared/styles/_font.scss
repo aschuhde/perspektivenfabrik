@@ -18,3 +18,10 @@ button{
     font-weight: 500;
     font-size: 1rem;
 }
+
+.mat-mdc-dialog-content{
+    font-family: "Dm Sans" !important;    
+    font-weight: 500 !important;
+    color: vars.$fg-color !important;
+    font-size: 20px !important;
+}

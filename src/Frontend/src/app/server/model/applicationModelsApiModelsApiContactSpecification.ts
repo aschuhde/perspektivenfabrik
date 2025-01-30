@@ -14,5 +14,5 @@ import { ApplicationModelsApiModelsApiModificationHistory } from './applicationM
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
 
 export interface ApplicationModelsApiModelsApiContactSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
-    type: string;
+    classType: string;
 }

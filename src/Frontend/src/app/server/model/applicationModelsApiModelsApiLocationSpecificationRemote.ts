@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 import { ApplicationModelsApiModelsApiLocationSpecification } from './applicationModelsApiModelsApiLocationSpecification';
+import { DomainDataTypesUrl } from './domainDataTypesUrl';
 
 export interface ApplicationModelsApiModelsApiLocationSpecificationRemote extends ApplicationModelsApiModelsApiLocationSpecification { 
+    link?: DomainDataTypesUrl;
 }

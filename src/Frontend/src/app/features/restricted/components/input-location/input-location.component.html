@@ -1,6 +1,7 @@
 <div>
-    <mat-form-field>
-        <mat-label></mat-label>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="location_on"></mat-icon> Ort {{ locationNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Ort entfernen</button></h4>
+    <mat-form-field class="w-100">
+        <mat-label>Ortstyp</mat-label>
         <mat-select [(value)]="locationType">
         <mat-option value="unkown">Nicht festgelegt</mat-option>
         <mat-option value="remote">Remote/Digital</mat-option>
@@ -10,35 +11,40 @@
         </mat-select>
     </mat-form-field>
     @if (locationType === "remote"){
-        <div class="location-explanation">Möchtest du noch einen Link hinterlegen? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationLink)"></mat-icon></div>
-        <mat-form-field>
+        <p class="location-explanation">Möchtest du noch einen Link hinterlegen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationLink)"></mat-icon></p>
+        <mat-form-field class="w-100">
             <mat-label>Link</mat-label>
             <input type="text" matInput [(ngModel)]="locationLink" />
         </mat-form-field>
     }
     @if (locationType === "name"){
-        <div class="location-explanation">Wie heißt der Ort, den du angeben möchtest? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationName)"></mat-icon></div>
-        <mat-form-field>
-            <mat-label>Name des Ortes</mat-label>
-            <input type="text" matInput [(ngModel)]="locationName" />
-        </mat-form-field>
+        <p class="location-explanation">Wie heißt der Ort, den du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationName)"></mat-icon></p>
+        <div class="prefix-suffix-container">
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Name des Ortes</mat-label>
+                <input type="text" matInput [(ngModel)]="locationName" />
+            </mat-form-field>
+            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+        </div>
     }
     @if (locationType === "address"){
-        <div class="location-explanation">Wie ist die Adresse, die du angeben möchtest? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationAddress)"></mat-icon></div>
-        <mat-form-field>
-            <mat-label>Adresse</mat-label>
-            <input type="text" matInput [(ngModel)]="locationAddress" />
-        </mat-form-field>
+        <p class="location-explanation">Wie ist die Adresse, die du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationAddress)"></mat-icon></p>
+        <div class="prefix-suffix-container">
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Adresse</mat-label>
+                <input type="text" matInput [(ngModel)]="locationAddress" />
+            </mat-form-field>
+            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+        </div>
     }
     @if (locationType === "coordinates"){
-        <div class="location-explanation">Wie sind die Koordinaten in "Lat, Lon", die du angeben möchtest? <mat-icon class="with-pointer" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationCoordinates)"></mat-icon></div>
-        <mat-form-field>
-            <mat-label>Lat, Lon</mat-label>
-            <input type="text" matInput [(ngModel)]="locationCoordinates" />
-        </mat-form-field>
-    }
-    @if (useMap){
-        <app-map [lookupMode]="mapLookupMode" (onRetrievedPoint)="mapRetrievedPoint($event)"></app-map>      
-    }
-    <button mat-button (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Ort entfernen</button>
+        <p class="location-explanation">Wie sind die Koordinaten in "Lat, Lon",<br>die du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationCoordinates)"></mat-icon></p>
+        <div class="prefix-suffix-container">
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Lat, Lon</mat-label>
+                <input type="text" matInput [(ngModel)]="locationCoordinates" />            
+            </mat-form-field>
+            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+        </div>
+    }     
 </div>

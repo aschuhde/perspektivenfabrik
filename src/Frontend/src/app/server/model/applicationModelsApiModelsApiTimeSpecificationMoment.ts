@@ -12,5 +12,4 @@
 import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationModelsApiModelsApiTimeSpecification';
 
 export interface ApplicationModelsApiModelsApiTimeSpecificationMoment extends ApplicationModelsApiModelsApiTimeSpecification { 
-    type: string;
 }

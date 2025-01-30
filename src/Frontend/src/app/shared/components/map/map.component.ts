@@ -1,6 +1,7 @@
-import { Component, inject, input, output, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, inject, input, output, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Marker } from 'leaflet';
+import idGenerator from '../../tools/id-generator';
 
 
 @Component({
@@ -14,7 +15,10 @@ export class MapComponent {
   platformId = inject(PLATFORM_ID);
   canUseLeaflet = isPlatformBrowser(this.platformId);
   onRetrievedPoint = output<string>();
-  lookupMode = input<"latLon" | "poi" | "address">("address")
+  lookupMode = input<"latLon" | "poi" | "address">("address");
+  readonly mapId = idGenerator.getId();
+  @ViewChild('map')
+  map!: ElementRef 
   
 
   ngAfterViewInit() {
@@ -23,8 +27,9 @@ export class MapComponent {
 
     import("leaflet").then(L => {
       import("leaflet-control-geocoder").then(C => {
-        L.Icon.Default.imagePath = 'leaflet/';        
-        const map = L.map('map');
+        L.Icon.Default.imagePath = 'leaflet/';
+        this.map.nativeElement.id = this.mapId;              
+        const map = L.map(this.mapId);
         L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);

@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideApiService } from './server/configuration';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from "@angular/common/http";
 import { BASE_PATH } from './server/variables';
 import { environment } from './environments/environment';
 import { UniversalAppInterceptor } from './core/interceptors/authorization-http.interceptor';
@@ -18,8 +18,8 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(),
       { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },    
-      provideApiService(), provideHttpClient(withFetch()),
-    {provide: BASE_PATH, useFactory: () => {
+      provideApiService(), provideHttpClient(withFetch(), withInterceptorsFromDi()),
+      {provide: BASE_PATH, useFactory: () => {
         if(typeof window === 'undefined')
           return;
         if(environment.development){
@@ -35,5 +35,7 @@ export const appConfig: ApplicationConfig = {
         useFactory: httpLoaderFactory,
         deps: [HttpClient],
       }
-    }), provideAnimationsAsync('noop'), provideAnimationsAsync()]
+    }), 
+    provideAnimationsAsync('noop'), 
+    provideAnimationsAsync()]
 };

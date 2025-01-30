@@ -1,5 +1,5 @@
 import { Component, model, output, inject } from '@angular/core';
-import { LocationInput } from '../../models/location-input';
+import { LocationInput, LocationType } from '../../models/location-input';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -9,11 +9,11 @@ import { MessageDialogData } from '../../../../shared/models/message-dialog-data
 import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialog/message-dialog.component';
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MapComponent } from '../../../../shared/components/map/map.component';
+import { MapDialogComponent } from '../../../../shared/dialogs/map-dialog/map-dialog.component';
 
 @Component({
   selector: 'app-input-location',
-  imports: [MatButton, MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, MapComponent],
+  imports: [MatButton, MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule],
   templateUrl: './input-location.component.html',
   styleUrl: './input-location.component.scss'
 })
@@ -21,12 +21,43 @@ export class InputLocationComponent {
   readonly dialog = inject(MatDialog);
 
   location = model.required<LocationInput>();
+  locationIndex = model.required<number>();
   remove = output<LocationInput>();
-  locationType: "unkown" | "remote" | "name" | "address" | "coordinates" = "unkown"
-  locationLink: string = ""
-  locationName: string = ""
-  locationAddress: string = ""
-  locationCoordinates: string = ""
+
+  get locationNumber(){
+    return this.locationIndex() + 1;
+  }
+
+  get locationType(){
+    return this.location().locationType
+  }
+  set locationType(value: LocationType){
+    this.location().locationType = value
+  }
+  get locationLink(){
+    return this.location().locationLink
+  }
+  set locationLink(value: string){
+    this.location().locationLink = value
+  }
+  get locationName(){
+    return this.location().locationName
+  }
+  set locationName(value: string){
+    this.location().locationName = value
+  }
+  get locationAddress(){
+    return this.location().locationAddress
+  }
+  set locationAddress(value: string){
+    this.location().locationAddress = value
+  }
+  get locationCoordinates(){
+    return this.location().locationCoordinates
+  }
+  set locationCoordinates(value: string){
+    this.location().locationCoordinates = value
+  }
 
   get mapLookupMode(){
     if(this.locationType === "coordinates"){
@@ -36,10 +67,6 @@ export class InputLocationComponent {
       return "poi";
     }
     return "address";
-  }
-
-  get useMap(){
-    return this.locationType === "name" || this.locationType === "address" || this.locationType === "coordinates";
   }
   get locationObject(){
     return this.location();
@@ -69,6 +96,17 @@ export class InputLocationComponent {
   showMessageDialog(dialogData: MessageDialogData) {
     this.dialog.open(MessageDialogComponent, {
       data: dialogData
+    });
+  }
+
+  showMapDialog() {
+    this.dialog.open(MapDialogComponent, {
+      data: {
+        lookupMode: this.mapLookupMode,
+        onApply: (name: string) => {
+          this.mapRetrievedPoint(name);
+        }
+      }
     });
   }
 

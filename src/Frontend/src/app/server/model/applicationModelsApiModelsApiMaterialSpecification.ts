@@ -12,7 +12,10 @@
 import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiModelsApiBaseEntity';
 import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
+import { DomainDataTypesFormattedContent } from './domainDataTypesFormattedContent';
 
 export interface ApplicationModelsApiModelsApiMaterialSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
-    value?: string;
+    name?: string;
+    title?: DomainDataTypesFormattedContent;
+    description?: DomainDataTypesFormattedContent;
 }

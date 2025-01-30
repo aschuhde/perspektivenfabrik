@@ -16,6 +16,7 @@ import { ApplicationModelsApiModelsApiRequirementSpecification } from './applica
 import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationModelsApiModelsApiTimeSpecification';
 
 export interface ApplicationModelsApiModelsApiRequirementSpecificationMaterial extends ApplicationModelsApiModelsApiRequirementSpecification { 
+    locationSpecificationsSameAsProject?: boolean;
     materialSpecifications?: Array<ApplicationModelsApiModelsApiMaterialSpecification>;
     locationSpecifications?: Array<ApplicationModelsApiModelsApiLocationSpecification>;
 }

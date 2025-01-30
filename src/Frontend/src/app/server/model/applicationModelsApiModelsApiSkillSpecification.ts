@@ -12,7 +12,9 @@
 import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiModelsApiBaseEntity';
 import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
+import { DomainDataTypesFormattedContent } from './domainDataTypesFormattedContent';
 
 export interface ApplicationModelsApiModelsApiSkillSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
-    value?: string;
+    name?: string;
+    title?: DomainDataTypesFormattedContent;
 }

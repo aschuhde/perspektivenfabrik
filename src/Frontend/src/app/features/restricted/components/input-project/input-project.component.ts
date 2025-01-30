@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, model, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -21,8 +21,8 @@ import { InputRequirementMaterialComponent } from '../input-requirement-material
 import { InputRequirementMoneyComponent } from '../input-requirement-money/input-requirement-money.component';
 import { InputRequirementPersonComponent } from '../input-requirement-person/input-requirement-person.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { provideHttpClient } from '@angular/common/http';
 import { UploadedImage } from '../../../../shared/models/uploaded-image';
+import { ProjectInput, ProjectType } from '../../models/project-input';
 
 @Component({
   selector: 'app-input-project',
@@ -46,26 +46,120 @@ import { UploadedImage } from '../../../../shared/models/uploaded-image';
 export class InputProjectComponent {
   readonly dialog = inject(MatDialog);
 
-  projectType: "project" | "idea" | "inspiration" | "none" = "none";
-  projectTitle: string = ""
-  projectPhase: "unknown" | "planning" | "ongoing" | "finished" | "cancelled" = "unknown";
-  locations: LocationInput[] = [new LocationInput()];
-  projectTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
-  requirementPersons: RequirementPersonInput[] = [new RequirementPersonInput()];
-  requirementMaterials: RequirementMaterialInput[] = [new RequirementMaterialInput()];
-  requirementsMoney: RequirementMoneyInput[] = [new RequirementMoneyInput()];
-  contactMail: string = ""
-  contactPhone: string = ""
-  description: string = ""
+  projectInput = model.required<ProjectInput>();
+  currentGroup: string = "projectType";
   @ViewChild('fileUpload') 
   fileUpload!: ElementRef;
+  currentRequirementGroup: "person" | "material" | "money" = "person";
 
-  uploadedImages: UploadedImage[] = []
-  projectVisibility: "draft" | "public" | "internal" = "draft"
+  get projectType(): ProjectType {
+    return this.projectInput().projectType;
+  }
+
+  set projectType(value: ProjectType) {
+    this.projectInput().projectType = value;
+  }
+
+  get projectTitle(): string {
+    return this.projectInput().projectTitle;
+  }
+
+  set projectTitle(value: string) {
+    this.projectInput().projectTitle = value;
+  }
+
+  get projectPhase(): "unknown" | "planning" | "ongoing" | "finished" | "cancelled" {
+    return this.projectInput().projectPhase;
+  }
+
+  set projectPhase(value: "unknown" | "planning" | "ongoing" | "finished" | "cancelled") {
+    this.projectInput().projectPhase = value;
+  }
+
+  get locations(): LocationInput[] {
+    return this.projectInput().locations;
+  }
+
+  set locations(value: LocationInput[]) {
+    this.projectInput().locations = value;
+  }
+
+  get projectTimes(): ProjectTimeInput[] {
+    return this.projectInput().projectTimes;
+  }
+
+  set projectTimes(value: ProjectTimeInput[]) {
+    this.projectInput().projectTimes = value;
+  }
+
+  get requirementPersons(): RequirementPersonInput[] {
+    return this.projectInput().requirementPersons;
+  }
+
+  set requirementPersons(value: RequirementPersonInput[]) {
+    this.projectInput().requirementPersons = value;
+  }
+
+  get requirementMaterials(): RequirementMaterialInput[] {
+    return this.projectInput().requirementMaterials;
+  }
+
+  set requirementMaterials(value: RequirementMaterialInput[]) {
+    this.projectInput().requirementMaterials = value;
+  }
+
+  get requirementsMoney(): RequirementMoneyInput[] {
+    return this.projectInput().requirementsMoney;
+  }
+
+  set requirementsMoney(value: RequirementMoneyInput[]) {
+    this.projectInput().requirementsMoney = value;
+  }
+
+  get contactMail(): string {
+    return this.projectInput().contactMail;
+  }
+
+  set contactMail(value: string) {
+    this.projectInput().contactMail = value;
+  }
+
+  get contactPhone(): string {
+    return this.projectInput().contactPhone;
+  }
+
+  set contactPhone(value: string) {
+    this.projectInput().contactPhone = value;
+  }
+
+  get description(): string {
+    return this.projectInput().description;
+  }
+
+  set description(value: string) {
+    this.projectInput().description = value;
+  }
+
+  get uploadedImages(): UploadedImage[] {
+    return this.projectInput().uploadedImages;
+  }
+
+  set uploadedImages(value: UploadedImage[]) {
+    this.projectInput().uploadedImages = value;
+  }
+
+  get projectVisibility(): "draft" | "public" | "internal" {
+    return this.projectInput().projectVisibility;
+  }
+
+  set projectVisibility(value: "draft" | "public" | "internal") {
+    this.projectInput().projectVisibility = value;
+  }
 
   get projectName(){
-    return this.projectTitle; //todo: generate name
+    return this.projectInput().projectTitle; //todo: generate name
   }
+  
   get typeName(){
     switch(this.projectType){
       case "project":
@@ -97,52 +191,54 @@ export class InputProjectComponent {
         return "deiner";
       case "inspiration":
         return "deiner";
-    }
+    }    
   }
 
 
-  readonly messageDialogs = {
-    helpProjectType: new MessageDialogData({
-      message: "Du kannst Projekte, Ideen oder Inspirationen hinzufügen. Projekt sind...",
-      title: "Was möchtest du hinzufügen?"
-    }),
-    helpProjectTitle: new MessageDialogData({
-      message: `Der Titel ${this.yoursDeclination} ${this.typeName} wird auf der Platform angezeigt und kann Formatierungen enthalten. Der Name ${this.yoursDeclination} ${this.typeName} wird beispielsweise in Links verwendet.`,
-      title: "Projekttitel und Projektname"
-    }),
-    helpProjectPhase: new MessageDialogData({
-      message: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}...`,
-      title: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}?`
-    }),
-    helpProjectLocation: new MessageDialogData({
-      message: `Du kannst mehrere Orte für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst Namen von Orten, Adressen oder Koordinaten verwenden. Findet ${this.yourDeclination} ${this.typeName} nur digital statt, wähle Remote aus`,
-      title: `Orte ${this.yoursDeclination} ${this.typeName}?`
-    }),
-    helpProjectTime: new MessageDialogData({
-      message: `Du kannst mehrere Zeitpunkte/Zeiträume für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst konkrete Daten oder einen ganzen Monat auswählen. Wann du helfende Hände, Material oder Geld für ${this.yourDeclination} ${this.typeName} brauchst, kannst du weiter unten nochmal auswählen.`,
-      title: `Projektzeiten ${this.yoursDeclination} ${this.typeName}?`
-    }),
-    helpRequirements: new MessageDialogData({
-      message: `Du kannst Helfer*innen, Material und Finanzielle Unterstützung für ${this.yourDeclination} ${this.typeName} anfordern.`,
-      title: `Unterstützung für ${this.yourDeclination} ${this.typeName}?`
-    }),
-    helpContact: new MessageDialogData({
-      message: `todo.`,
-      title: `todo?`
-    }),
-    helpDescription: new MessageDialogData({
-      message: `todo.`,
-      title: `todo?`
-    }),
-    helpImageUpload: new MessageDialogData({
-      message: `todo.`,
-      title: `todo?`
-    }),
-    helpProjectVisibility: new MessageDialogData({
-      message: `todo.`,
-      title: `todo?`
-    })    
-  };
+  get messageDialogs(){
+    return {
+      helpProjectType: new MessageDialogData({
+        message: "Du kannst Projekte, Ideen oder Inspirationen hinzufügen. Projekt sind...",
+        title: "Was möchtest du hinzufügen?"
+      }),
+      helpProjectTitle: new MessageDialogData({
+        message: `Der Titel ${this.yoursDeclination} ${this.typeName} wird auf der Platform angezeigt und kann Formatierungen enthalten. Der Name ${this.yoursDeclination} ${this.typeName} wird beispielsweise in Links verwendet.`,
+        title: "Projekttitel und Projektname"
+      }),
+      helpProjectPhase: new MessageDialogData({
+        message: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}...`,
+        title: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}?`
+      }),
+      helpProjectLocation: new MessageDialogData({
+        message: `Du kannst mehrere Orte für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst Namen von Orten, Adressen oder Koordinaten verwenden. Findet ${this.yourDeclination} ${this.typeName} nur digital statt, wähle Remote aus`,
+        title: `Orte ${this.yoursDeclination} ${this.typeName}?`
+      }),
+      helpProjectTime: new MessageDialogData({
+        message: `Du kannst mehrere Zeitpunkte/Zeiträume für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst konkrete Daten oder einen ganzen Monat auswählen. Wann du helfende Hände, Material oder Geld für ${this.yourDeclination} ${this.typeName} brauchst, kannst du weiter unten nochmal auswählen.`,
+        title: `Projektzeiten ${this.yoursDeclination} ${this.typeName}?`
+      }),
+      helpRequirements: new MessageDialogData({
+        message: `Du kannst Helfer*innen, Material und Finanzielle Unterstützung für ${this.yourDeclination} ${this.typeName} anfordern.`,
+        title: `Unterstützung für ${this.yourDeclination} ${this.typeName}?`
+      }),
+      helpContact: new MessageDialogData({
+        message: `todo.`,
+        title: `todo?`
+      }),
+      helpDescription: new MessageDialogData({
+        message: `todo.`,
+        title: `todo?`
+      }),
+      helpImageUpload: new MessageDialogData({
+        message: `todo.`,
+        title: `todo?`
+      }),
+      helpProjectVisibility: new MessageDialogData({
+        message: `todo.`,
+        title: `todo?`
+      })    
+    };
+  }
 
   showMessageDialog(dialogData: MessageDialogData) {
     this.dialog.open(MessageDialogComponent, {
@@ -229,4 +325,24 @@ export class InputProjectComponent {
     this.fileUpload.nativeElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   }
 
+  select(groupName: string){
+    this.currentGroup = groupName;
+  }
+
+  stepNumber(baseNumber: number){    
+    if(baseNumber <= 2){
+      return baseNumber;
+    }
+    if(this.projectType === 'project'){
+      return baseNumber;
+    }
+    return baseNumber - 1;
+  }
+
+  changeProjectType(projectType: ProjectType){
+    this.projectType = projectType;
+    setTimeout(() => {
+      this.currentGroup = "projectName";
+    }, 400);    
+  }
 }
