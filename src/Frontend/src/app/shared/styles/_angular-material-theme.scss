@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+@use 'theme-colors' as theme;
+
+html {
+    @include mat.theme((
+      color: (
+        primary: theme.$primary-palette,
+        tertiary: theme.$tertiary-palette,
+        theme-type: light,
+      ),
+      typography: Roboto,
+      density: 0
+    ));
+}
+
+.mdc-text-field {
+    border-radius: 2rem !important;
+    transition: border-radius .2s ease;
+}
+.mdc-line-ripple{
+    display: none;
+}
+.mat-mdc-select-panel {
+    border-bottom-right-radius: 2rem !important;
+    border-bottom-left-radius: 2rem !important;
+}
+.mat-mdc-dialog-panel{
+    max-width: none !important;
+    max-height: none !important;
+}
