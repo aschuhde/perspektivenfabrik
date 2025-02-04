@@ -5,7 +5,7 @@ namespace Infrastructure.Data.DbEntities;
 [Table("ProjectTags")]
 public sealed class DbProjectTag : DbEntity
 {
-    
+    public required string TagName { get; init; }
 }
 
 [Table("ProjectTagConnections")]

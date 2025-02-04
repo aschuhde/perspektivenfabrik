@@ -14,4 +14,5 @@ import { ApplicationModelsApiModelsApiModificationHistory } from './applicationM
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
 
 export interface ApplicationModelsApiModelsApiProjectTag extends ApplicationModelsApiModelsApiBaseEntity { 
+    tagName?: string;
 }
