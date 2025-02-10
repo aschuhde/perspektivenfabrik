@@ -9,10 +9,10 @@ public static class LocationSpecificationUpdater
         LocationSpecificationDto? existingItem,
         EntityUpdatingContext updatingContext)
     {
+        entity.PrepareBaseEntity(existingItem, updatingContext);
+        
         if(updatingContext.IsCreating)
             UpdateChanges(entity, existingItem!, updatingContext);
-
-        entity.UpdateBaseEntity(existingItem, updatingContext);
     }
     
     private static void UpdateChanges(this ApiLocationSpecification entity, LocationSpecificationDto existingItem,
@@ -20,8 +20,8 @@ public static class LocationSpecificationUpdater
     {
         if(entity is ApiLocationSpecificationAddress locationSpecificationAddress
            && locationSpecificationAddress.PostalAddress.ToString() != (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString())
-            updatingContext.AddChange(nameof(ApiLocationSpecificationAddress.MailAddress), locationSpecificationAddress.PostalAddress.ToString(), (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString());
-        //continue here        
+            updatingContext.AddChange(nameof(ApiLocationSpecificationAddress.PostalAddress), locationSpecificationAddress.PostalAddress.ToString(), (existingItem as LocationSpecificationDtoAddress)?.PostalAddress.ToString());
+       
         if(entity is ApiLocationSpecificationCoordinates locationSpecificationCoordinates
            && locationSpecificationCoordinates.Coordinates.ToString() != (existingItem as LocationSpecificationDtoCoordinates)?.Coordinates.ToString())
             updatingContext.AddChange(nameof(ApiLocationSpecificationCoordinates.Coordinates), locationSpecificationCoordinates.Coordinates.ToString(), (existingItem as LocationSpecificationDtoCoordinates)?.Coordinates.ToString());

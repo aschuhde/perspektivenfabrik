@@ -2,5 +2,5 @@
 
 public sealed class Bic
 {
-    public required string Bic { get; init; }
+    public required string BicName { get; init; }
 }

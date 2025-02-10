@@ -7,5 +7,5 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbIban
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Iban { get; init; }
+    public required string IbanName { get; init; }
 }

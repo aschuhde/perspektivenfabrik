@@ -2,5 +2,5 @@
 
 public sealed class Iban
 {
-    public required string Iban { get; init; }
+    public required string IbanName { get; init; }
 }

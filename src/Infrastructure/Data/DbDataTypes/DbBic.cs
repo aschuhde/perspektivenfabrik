@@ -7,5 +7,5 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbBic
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Bic { get; init; }
+    public required string BicName { get; init; }
 }
