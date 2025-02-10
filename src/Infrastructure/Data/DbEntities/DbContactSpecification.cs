@@ -24,6 +24,20 @@ public sealed class DbContactSpecificationPostalAddress : DbContactSpecification
     public required DbPostalAddress PostalAddress { get; init; }
 }
 
+public sealed class DbContactSpecificationBankAccount : DbContactSpecification
+{
+  public required DbBankAccount BankAccount { get; init; }
+}
+public sealed class DbContactSpecificationWebsite : DbContactSpecification
+{
+  public required DbUrl Website { get; init; }
+}
+public sealed class DbContactSpecificationPaypal : DbContactSpecification
+{
+  public required DbMailAddress PaypalAddress { get; init; }
+  public required DbUrl PaypalMeAddress { get; init; }
+}
+
 [Table("ContactSpecificationConnections")]
 public sealed class DbContactSpecificationProjectConnection : DbEntityWithId
 {

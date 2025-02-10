@@ -12,6 +12,9 @@ public static partial class MappingExtensions
     public static partial ContactSpecificationDtoPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
     public static partial ContactSpecificationDtoMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
     public static partial ContactSpecificationDtoPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
+    public static partial ContactSpecificationDtoBankAccount ToContactSpecificationBankAccount(this DbContactSpecificationBankAccount dbContactSpecificationBankAccount);
+    public static partial ContactSpecificationDtoWebsite ToContactSpecificationWebsite(this DbContactSpecificationWebsite dbContactSpecificationWebsite);
+    public static partial ContactSpecificationDtoPaypal ToContactSpecificationPaypal(this DbContactSpecificationPaypal dbContactSpecificationPaypal);
 
     [UserMapping(Default = true)]
     public static ContactSpecificationDto ToContactSpecification(
@@ -24,6 +27,12 @@ public static partial class MappingExtensions
                 .ToContactSpecificationMailAddress(),
             DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress =>
                 dbContactSpecificationPostalAddress.ToContactSpecificationPostalAddress(),
+            DbContactSpecificationBankAccount dbContactSpecificationBankAccount =>
+              dbContactSpecificationBankAccount.ToContactSpecificationBankAccount(),
+            DbContactSpecificationWebsite dbContactSpecificationWebsite =>
+              dbContactSpecificationWebsite.ToContactSpecificationWebsite(),
+            DbContactSpecificationPaypal dbContactSpecificationPaypal =>
+              dbContactSpecificationPaypal.ToContactSpecificationPaypal(),
             _ => dbContactSpecification.ToContactSpecificationInner()
         };
 
@@ -32,6 +41,9 @@ public static partial class MappingExtensions
     public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationDtoPhoneNumber contactSpecificationDtoPhoneNumber);
     public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationDtoMailAddress contactSpecificationDtoMailAddress);
     public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationDtoPostalAddress contactSpecificationDtoPostalAddress);
+    public static partial DbContactSpecificationBankAccount ToDbContactSpecificationBankAccount(this ContactSpecificationDtoBankAccount contactSpecificationDtoBankAccount);
+    public static partial DbContactSpecificationWebsite ToDbContactSpecificationWebsite(this ContactSpecificationDtoWebsite contactSpecificationDtoWebsite);
+    public static partial DbContactSpecificationPaypal ToDbContactSpecificationPaypal(this ContactSpecificationDtoPaypal contactSpecificationDtoPaypal);
 
     [UserMapping(Default = true)]
     public static DbContactSpecification ToDbContactSpecification(
@@ -44,6 +56,12 @@ public static partial class MappingExtensions
                 .ToDbContactSpecificationMailAddress(),
             ContactSpecificationDtoPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress
                 .ToDbContactSpecificationPostalAddress(),
+            ContactSpecificationDtoBankAccount contactSpecificationBankAccount => contactSpecificationBankAccount
+              .ToDbContactSpecificationBankAccount(),
+            ContactSpecificationDtoWebsite contactSpecificationWebsite => contactSpecificationWebsite
+              .ToDbContactSpecificationWebsite(),
+            ContactSpecificationDtoPaypal contactSpecificationPaypal => contactSpecificationPaypal
+              .ToDbContactSpecificationPaypal(),
             _ => contactSpecificationDto.ToDbContactSpecificationInner()
         };
 }

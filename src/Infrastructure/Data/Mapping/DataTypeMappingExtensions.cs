@@ -21,6 +21,15 @@ public static partial class MappingExtensions
     public static partial MailAddress ToMailAddress(this DbMailAddress dbMailAddress);
     public static partial DbMailAddress ToDbMailAddress(this MailAddress mailAddress);
     
+    public static partial BankAccount ToBankAccount(this DbBankAccount dbBankAccount);
+    public static partial DbBankAccount ToDbBankAccount(this BankAccount bankAccount);
+    
+    public static partial Iban ToIban(this DbIban dbIban);
+    public static partial DbIban ToDbIban(this Iban iban);
+    
+    public static partial Bic ToBic(this DbBic dbBic);
+    public static partial DbBic ToDbBic(this Bic bic);
+    
     public static partial Month ToMonth(this DbMonth dbMonth);
     public static partial DbMonth ToDbMonth(this Month month);
     

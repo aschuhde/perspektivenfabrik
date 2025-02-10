@@ -29,5 +29,22 @@ public static class ContactSpecificationUpdater
         if(entity is ApiContactSpecificationPostalAddress contactSpecificationPostalAddress
            && contactSpecificationPostalAddress.PostalAddress.ToString() != (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString())
             updatingContext.AddChange(nameof(ApiContactSpecificationPostalAddress.PostalAddress), contactSpecificationPostalAddress.PostalAddress.ToString(), (existingItem as ContactSpecificationDtoPostalAddress)?.PostalAddress.ToString());
+        
+        if(entity is ApiContactSpecificationBankAccount contactSpecificationBankAccount
+           && contactSpecificationBankAccount.BankAccount.ToString() != (existingItem as ContactSpecificationDtoBankAccount)?.BankAccount.ToString())
+          updatingContext.AddChange(nameof(ApiContactSpecificationBankAccount.BankAccount), contactSpecificationBankAccount.BankAccount.ToString(), (existingItem as ContactSpecificationDtoBankAccount)?.BankAccount.ToString());
+        
+        if(entity is ApiContactSpecificationWebsite contactSpecificationWebsite
+           && contactSpecificationWebsite.Website.ToString() != (existingItem as ContactSpecificationDtoWebsite)?.Website.ToString())
+          updatingContext.AddChange(nameof(ApiContactSpecificationWebsite.Website), contactSpecificationWebsite.Website.ToString(), (existingItem as ContactSpecificationDtoWebsite)?.Website.ToString());
+
+        if (entity is ApiContactSpecificationPaypal contactSpecificationPaypal)
+        {
+          if (contactSpecificationPaypal.PaypalAddress.ToString() != (existingItem as ContactSpecificationDtoPaypal)?.PaypalAddress.ToString())
+              updatingContext.AddChange(nameof(ApiContactSpecificationPaypal.PaypalAddress), contactSpecificationPaypal.PaypalAddress.ToString(), (existingItem as ContactSpecificationDtoPaypal)?.PaypalAddress.ToString());
+          
+          if (contactSpecificationPaypal.PaypalMeAddress.ToString() != (existingItem as ContactSpecificationDtoPaypal)?.PaypalMeAddress.ToString())
+              updatingContext.AddChange(nameof(ApiContactSpecificationPaypal.PaypalMeAddress), contactSpecificationPaypal.PaypalMeAddress.ToString(), (existingItem as ContactSpecificationDtoPaypal)?.PaypalMeAddress.ToString());
+        }
     }
 }

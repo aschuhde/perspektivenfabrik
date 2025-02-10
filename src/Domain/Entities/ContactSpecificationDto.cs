@@ -21,3 +21,16 @@ public sealed class ContactSpecificationDtoPostalAddress : ContactSpecificationD
 {
     public required PostalAddress PostalAddress { get; init; }
 }
+public sealed class ContactSpecificationDtoBankAccount : ContactSpecificationDto
+{
+  public required BankAccount BankAccount { get; init; }
+}
+public sealed class ContactSpecificationDtoWebsite : ContactSpecificationDto
+{
+  public required Url Website { get; init; }
+}
+public sealed class ContactSpecificationDtoPaypal : ContactSpecificationDto
+{
+  public required MailAddress PaypalAddress { get; init; }
+  public required Url PaypalMeAddress { get; init; }
+}
