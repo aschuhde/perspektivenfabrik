@@ -28,6 +28,7 @@ export class ProjectInput{
     requirementPersons: RequirementPersonInput[] = [new RequirementPersonInput()];
     requirementMaterials: RequirementMaterialInput[] = [new RequirementMaterialInput()];
     requirementsMoney: RequirementMoneyInput[] = [new RequirementMoneyInput()];
+    selectedTags: SelectOption[] = []
     contactMail: string = ""
     contactPhone: string = ""
     description: string = ""

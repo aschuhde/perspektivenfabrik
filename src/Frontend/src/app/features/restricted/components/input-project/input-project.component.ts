@@ -39,6 +39,8 @@ import { ProjectInput, ProjectType } from '../../models/project-input';
     InputRequirementMaterialComponent,
     InputRequirementMoneyComponent,
     InputRequirementPersonComponent,
+      MatAutocompleteModule, 
+      MatChipsModule
     AngularEditorModule],
   templateUrl: './input-project.component.html',
   styleUrl: './input-project.component.scss'
@@ -46,12 +48,23 @@ import { ProjectInput, ProjectType } from '../../models/project-input';
 export class InputProjectComponent {
   readonly dialog = inject(MatDialog);
 
+    readonly addOnBlur = false;
+    readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
   projectInput = model.required<ProjectInput>();
   currentGroup: string = "projectType";
   @ViewChild('fileUpload') 
   fileUpload!: ElementRef;
   currentRequirementGroup: "person" | "material" | "money" = "person";
+    tagAutocompleteValue = model("");
+    tagOptions: SelectOption[] = [new SelectOption("Landwirtschaft"), new SelectOption("Tourismus"), new SelectOption("Sozial"), new SelectOption("Kommunikation"), new SelectOption("Migration"), new SelectOption("Mobilität")];
 
+
+    get selectedTags(){
+        return this.projectInput().selectedTags;
+    }
+    set selectedTags(value: SelectOption[]){
+        this.projectInput().selectedTags = value;
+    }
   get projectType(): ProjectType {
     return this.projectInput().projectType;
   }
@@ -171,6 +184,17 @@ export class InputProjectComponent {
         return "Inspiration";
     }
   }
+get typeNameGenitive(){
+    switch(this.projectType){
+        case "project":
+        case "none":
+            return "Projekts";
+        case "idea":
+            return "Idee";
+        case "inspiration":
+            return "Inspiration";
+    }
+}
   get yourDeclination(){
     switch(this.projectType){
       case "project":
@@ -193,6 +217,18 @@ export class InputProjectComponent {
         return "deiner";
     }    
   }
+
+    get yoursDeclinationDative(){
+        switch(this.projectType){
+            case "project":
+            case "none":
+                return "deinem";
+            case "idea":
+                return "deiner";
+            case "inspiration":
+                return "deiner";
+        }
+    }
 
 
   get messageDialogs(){
@@ -236,7 +272,11 @@ export class InputProjectComponent {
       helpProjectVisibility: new MessageDialogData({
         message: `todo.`,
         title: `todo?`
-      })    
+      }), 
+        helpTags: new MessageDialogData({
+            message: `todo.`,
+            title: `todo?`
+        })
     };
   }
 
@@ -345,4 +385,35 @@ export class InputProjectComponent {
       this.currentGroup = "projectName";
     }, 400);    
   }
+
+    addSelectedTag(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim();
+
+        if(!value){
+            return;
+        }
+
+        if (!this.selectedTags.find(x => x.value === value)) {
+            this.selectedTags.push(new SelectOption(value));
+        }
+
+        this.tagAutocompleteValue.set("");
+        event.chipInput.clear();
+    }
+
+    tagSelected(event: MatAutocompleteSelectedEvent){
+        event.option.deselect();
+        if (!this.selectedTags.find(x => x.value === event.option.value)) {
+            this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue));
+        }
+        this.tagAutocompleteValue.set("");
+        setTimeout(() => {
+            this.tagAutocompleteValue.set("");
+        }, 1000);
+    }
+    removeSelectedTag(selectedSkill: SelectOption){
+        const index = this.selectedTags.indexOf(selectedSkill);
+        if(index < 0) return;
+        this.selectedTags.splice(index, 1);
+    }
 }

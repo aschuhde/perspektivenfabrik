@@ -7,11 +7,11 @@
     </div>
     <div class="step" [class.active]="currentGroup == 'projectName'" (click)="select('projectName')">
         <span class="step-number">{{ stepNumber(2) }}</span>
-        <span class="step-label">Name {{ yoursDeclination }} {{ typeName }}</span>
+        <span class="step-label">Name {{ yoursDeclination }} {{ typeNameGenitive }}</span>
     </div>
     <div class="step" [class.hidden]="projectType != 'project'" [class.active]="currentGroup == 'projectPhase'" (click)="select('projectPhase')">
       <span class="step-number">{{ stepNumber(3) }}</span>
-      <span class="step-label">Phase {{ yoursDeclination }} {{ typeName }}</span>
+      <span class="step-label">Phase {{ yoursDeclination }} {{ typeNameGenitive }}</span>
     </div>
     <div class="step" [class.active]="currentGroup == 'projectLocation'" (click)="select('projectLocation')">
         <span class="step-number">{{ stepNumber(4) }}</span>
@@ -29,16 +29,20 @@
       <span class="step-number">{{ stepNumber(7) }}</span>
       <span class="step-label">Deine Kontaktdaten</span>      
     </div>
+    <div class="step" [class.active]="currentGroup == 'projectTags'" (click)="select('projectTags')">
+        <span class="step-number">{{ stepNumber(9) }}</span>
+        <span class="step-label">Tags zu {{ yoursDeclinationDative }} {{ typeName }}</span>
+    </div>
     <div class="step" [class.active]="currentGroup == 'projectDescription'" (click)="select('projectDescription')">
-      <span class="step-number">{{ stepNumber(8) }}</span>
-      <span class="step-label">Beschreibung {{ yoursDeclination }} {{ typeName }}</span>      
+      <span class="step-number">{{ stepNumber(10) }}</span>
+      <span class="step-label">Beschreibung {{ yoursDeclination }} {{ typeNameGenitive }}</span>      
     </div>
     <div class="step" [class.active]="currentGroup == 'projectImages'" (click)="select('projectImages')">
-      <span class="step-number">{{ stepNumber(9) }}</span>
+      <span class="step-number">{{ stepNumber(11) }}</span>
       <span class="step-label">Bilder</span>      
     </div>
     <div class="step" [class.active]="currentGroup == 'projectVisibility'" (click)="select('projectVisibility')">
-      <span class="step-number">{{ stepNumber(10) }}</span>
+      <span class="step-number">{{ stepNumber(12) }}</span>
       <span class="step-label">Sichtbarkeit</span>          
     </div>
   </div>
@@ -86,7 +90,7 @@
       </div>
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
-      <h2 class="step-question">Was kannst du über den Ort {{ yoursDeclination }} {{ typeName }} sagen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></h2>              
+      <h2 class="step-question">Was kannst du über den Ort {{ yoursDeclination }} {{ typeNameGenitive }} sagen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></h2>              
       <div class="item-tiles-container">
       @for(location of locations; track location){
           <app-input-location [locationIndex]="$index" [location]="location" (remove)="removeLocation($event)"></app-input-location>
@@ -98,7 +102,7 @@
       </div>
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
-      <h2 class="step-question">Zu welchem Zeitpunkt oder in welchem Zeitraum findet {{ yoursDeclination }} {{ typeName }} statt? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTime)"></mat-icon></h2>              
+      <h2 class="step-question">Zu welchem Zeitpunkt oder in welchem Zeitraum findet {{ yourDeclination }} {{ typeName }} statt? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTime)"></mat-icon></h2>              
       <div class="item-tiles-container">
       @for(projectTime of projectTimes; track projectTime){
           <app-input-project-time [timeIndex]="$index" [projectTime]="projectTime" (remove)="removeProjectTime($event)"></app-input-project-time>
@@ -110,7 +114,7 @@
       </div>
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectRequirements'">
-      <h2 class="step-question">Was benötigst du um {{ yoursDeclination }} {{ typeName }} umzusetzen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpRequirements)"></mat-icon></h2>              
+      <h2 class="step-question">Was benötigst du um {{ yourDeclination }} {{ typeName }} umzusetzen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpRequirements)"></mat-icon></h2>              
       <div class="prefix-suffix-container">
         <button [class.secondary]="currentRequirementGroup !== 'person'" (click)="currentRequirementGroup = 'person'" class="prefix">Helfer*innen</button>
         <button [class.secondary]="currentRequirementGroup !== 'material'" (click)="currentRequirementGroup = 'material'" class="middle">Material</button>
@@ -158,11 +162,47 @@
         </mat-form-field>
       </div>      
       <div>
-        <button (click)="currentGroup = 'projectDescription'" class="btn-next" >Weiter</button>
+        <button (click)="currentGroup = 'projectTags'" class="btn-next" >Weiter</button>
+      </div>
+    </div>
+    <div class="step-content" [class.hidden]="currentGroup != 'projectTags'">
+      <h2 class="step-question">Wähle Tags aus, die zu {{ yoursDeclinationDative }} {{ typeName }} passen oder füge neue Tags hinzu. <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpTags)"></mat-icon></h2>
+      <div>
+          <mat-form-field class="w-100">
+              <mat-label>Tags</mat-label>
+              <input type="text"
+                     placeholder="Tags"
+                     aria-label="Tags"
+                     matInput
+                     (matChipInputTokenEnd)="addSelectedTag($event)"
+                     [matChipInputFor]="chipGridSelectedTags"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     [matAutocomplete]="autoTag"
+                     [(ngModel)]="tagAutocompleteValue"/>
+              <mat-autocomplete (optionSelected)="tagSelected($event)" #autoTag="matAutocomplete">
+                  @for (option of tagOptions; track option) {
+                      <mat-option [value]="option.value">{{option.text}}</mat-option>
+                  }
+              </mat-autocomplete>
+          </mat-form-field>
+          <mat-chip-grid #chipGridSelectedTags aria-label="Selected Tags">
+              @for (selectedTag of selectedTags; track selectedTag) {
+                  <mat-chip-row (removed)="removeSelectedTag(selectedTag)">
+                      {{ selectedTag.text }}
+                      <button matChipRemove [attr.aria-label]="'remove ' + selectedTag.text">
+                          <mat-icon>cancel</mat-icon>
+                      </button>
+                  </mat-chip-row>
+              }
+          </mat-chip-grid>
+      </div>
+      <div>
+          <button (click)="currentGroup = 'projectDescription'" class="btn-next" >Weiter</button>
       </div>
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
-      <h2 class="step-question">Wie würdest du {{ yoursDeclination }} {{ typeName }} beschreiben? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h2>        
+      <h2 class="step-question">Wie würdest du {{ yourDeclination }} {{ typeName }} beschreiben? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h2>        
       <div>
         <angular-editor [placeholder]="'Beschreibung'" [(ngModel)]="description"></angular-editor>
       </div>      
