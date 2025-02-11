@@ -22,6 +22,14 @@ public static class ContactSpecificationUpdater
            && contactSpecificationMailAddress.MailAddress != (existingItem as ContactSpecificationDtoMailAddress)?.MailAddress)
             updatingContext.AddChange(nameof(ApiContactSpecificationMailAddress.MailAddress), contactSpecificationMailAddress.MailAddress.ToString(), (existingItem as ContactSpecificationDtoMailAddress)?.MailAddress.ToString());
         
+        if(entity is ApiContactSpecificationOrganisationName contactSpecificationOrganisationName
+           && contactSpecificationOrganisationName.OrganisationName != (existingItem as ContactSpecificationDtoOrganisationName)?.OrganisationName)
+            updatingContext.AddChange(nameof(ApiContactSpecificationOrganisationName.OrganisationName), contactSpecificationOrganisationName.OrganisationName.ToString(), (existingItem as ContactSpecificationDtoOrganisationName)?.OrganisationName.ToString());
+        
+        if(entity is ApiContactSpecificationPersonalName contactSpecificationPersonalName
+           && contactSpecificationPersonalName.PersonalName != (existingItem as ContactSpecificationDtoPersonalName)?.PersonalName)
+            updatingContext.AddChange(nameof(ApiContactSpecificationPersonalName.PersonalName), contactSpecificationPersonalName.PersonalName.ToString(), (existingItem as ContactSpecificationDtoPersonalName)?.PersonalName.ToString());
+        
         if(entity is ApiContactSpecificationPhoneNumber contactSpecificationPhoneNumber
            && contactSpecificationPhoneNumber.PhoneNumber.PhoneNumberText != (existingItem as ContactSpecificationDtoPhoneNumber)?.PhoneNumber.PhoneNumberText)
             updatingContext.AddChange(nameof(ApiContactSpecificationPhoneNumber.PhoneNumber), contactSpecificationPhoneNumber.PhoneNumber.PhoneNumberText, (existingItem as ContactSpecificationDtoPhoneNumber)?.PhoneNumber.PhoneNumberText);

@@ -7,6 +7,14 @@ public class ContactSpecificationDto : BaseEntityDto
     
 }
 
+public sealed class ContactSpecificationDtoPersonalName : ContactSpecificationDto
+{
+    public required string PersonalName { get; init; }
+}
+public sealed class ContactSpecificationDtoOrganisationName : ContactSpecificationDto
+{
+    public required string OrganisationName { get; init; }
+}
 public sealed class ContactSpecificationDtoPhoneNumber : ContactSpecificationDto
 {
     public required PhoneNumber PhoneNumber { get; init; }

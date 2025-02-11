@@ -191,6 +191,19 @@ export class InputProjectComponent {
   get contactSpecifications(){
     return this.projectInput().contactSpecifications;
   }
+  get contactName(){
+    return this.projectInput().contactName;
+  }
+  set contactName(value: string) {
+    this.projectInput().contactName = value;
+  }
+
+  get organisationName(){
+    return this.projectInput().organisationName;
+  }
+  set organisationName(value: string) {
+    this.projectInput().organisationName = value;
+  }
   
   get typeName(){
     switch(this.projectType){

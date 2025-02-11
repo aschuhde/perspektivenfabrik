@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export type ApplicationModelsApiModelsApiContactSpecificationTypes = 'Base' | 'PhoneNumber' | 'MailAddress' | 'PostalAddress' | 'BankAccount' | 'Website' | 'Paypal';
+export type ApplicationModelsApiModelsApiContactSpecificationTypes = 'Base' | 'PhoneNumber' | 'MailAddress' | 'PostalAddress' | 'BankAccount' | 'Website' | 'Paypal' | 'PersonalName' | 'OrganisationName';
 
 export const ApplicationModelsApiModelsApiContactSpecificationTypes = {
     Base: 'Base' as ApplicationModelsApiModelsApiContactSpecificationTypes,
@@ -19,5 +19,7 @@ export const ApplicationModelsApiModelsApiContactSpecificationTypes = {
     PostalAddress: 'PostalAddress' as ApplicationModelsApiModelsApiContactSpecificationTypes,
     BankAccount: 'BankAccount' as ApplicationModelsApiModelsApiContactSpecificationTypes,
     Website: 'Website' as ApplicationModelsApiModelsApiContactSpecificationTypes,
-    Paypal: 'Paypal' as ApplicationModelsApiModelsApiContactSpecificationTypes
+    Paypal: 'Paypal' as ApplicationModelsApiModelsApiContactSpecificationTypes,
+    PersonalName: 'PersonalName' as ApplicationModelsApiModelsApiContactSpecificationTypes,
+    OrganisationName: 'OrganisationName' as ApplicationModelsApiModelsApiContactSpecificationTypes
 };

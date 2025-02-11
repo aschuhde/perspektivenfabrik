@@ -1,7 +1,12 @@
 import { ApplicationModelsApiModelsApiContactSpecification } from "../../../server/model/applicationModelsApiModelsApiContactSpecification";
+import { ApplicationModelsApiModelsApiContactSpecificationBankAccount } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationBankAccount";
 import { ApplicationModelsApiModelsApiContactSpecificationMailAddress } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationMailAddress";
+import { ApplicationModelsApiModelsApiContactSpecificationOrganisationName } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationOrganisationName";
+import { ApplicationModelsApiModelsApiContactSpecificationPaypal } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationPaypal";
+import { ApplicationModelsApiModelsApiContactSpecificationPersonalName } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationPersonalName";
 import { ApplicationModelsApiModelsApiContactSpecificationPhoneNumber } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationPhoneNumber";
 import { ApplicationModelsApiModelsApiContactSpecificationTypes } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationTypes";
+import { ApplicationModelsApiModelsApiContactSpecificationWebsite } from "../../../server/model/applicationModelsApiModelsApiContactSpecificationWebsite";
 import { ApplicationModelsApiModelsApiDescriptionSpecification } from "../../../server/model/applicationModelsApiModelsApiDescriptionSpecification";
 import { ApplicationModelsApiModelsApiGraphicsSpecification } from "../../../server/model/applicationModelsApiModelsApiGraphicsSpecification";
 import { ApplicationModelsApiModelsApiProjectBody } from "../../../server/model/applicationModelsApiModelsApiProjectBody";
@@ -33,6 +38,8 @@ export class ProjectInput{
     selectedTags: SelectOption[] = []
     contactMail: string = ""
     contactPhone: string = ""
+    organisationName: string = ""
+    contactName: string = ""
     contactSpecifications: ContactSpecification[] = []
     shortDescription: string = ""
     longDescription: string = ""
@@ -185,6 +192,55 @@ export class ProjectInput{
               mail: this.contactMail
             }
           }));
+        }
+        if(this.contactName){
+          contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationPersonalName>({
+            classType: ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName,
+            personalName: this.contactName
+          }))
+        }
+        if(this.organisationName){
+          contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationOrganisationName>({
+            classType: ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName,
+            organisationName: this.organisationName
+          }))
+        }
+
+        for(const contactSpecification of this.contactSpecifications){
+          if(contactSpecification.contactSpecificationType === "bankAccount"){
+            contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationBankAccount>({
+              classType: ApplicationModelsApiModelsApiContactSpecificationTypes.BankAccount,
+              bankAccount: {
+                accountName: contactSpecification.bankAccountName,
+                bic: {
+                  bicName: contactSpecification.bankAccountBic
+                },
+                iban: {
+                  ibanName: contactSpecification.bankAccountIban
+                },
+                reference: contactSpecification.bankAccountReference
+              }
+            }))
+          }
+          if(contactSpecification.contactSpecificationType === "paypalAccount"){
+            contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationPaypal>({
+              classType: ApplicationModelsApiModelsApiContactSpecificationTypes.Paypal,
+              paypalAddress: {
+                mail: contactSpecification.paypalAddress
+              },
+              paypalMeAddress: {
+                rawUrl: contactSpecification.paypalMeAddress
+              }
+            }))
+          }
+          if(contactSpecification.contactSpecificationType === "website"){
+            contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationWebsite>({
+              classType: ApplicationModelsApiModelsApiContactSpecificationTypes.Website,
+              website: {
+                rawUrl: contactSpecification.website
+              }
+            }))
+          }
         }
         return contactSpecifications;
       }

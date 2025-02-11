@@ -9,6 +9,16 @@ public class DbContactSpecification : DbEntity
     
 }
 
+public sealed class DbContactSpecificationPersonalName : DbContactSpecification
+{
+    public required string PersonalName { get; init; }
+}
+
+public sealed class DbContactSpecificationOrganisationName : DbContactSpecification
+{
+    public required string OrganisationName { get; init; }
+}
+
 public sealed class DbContactSpecificationPhoneNumber : DbContactSpecification
 {
     public required DbPhoneNumber PhoneNumber { get; init; }

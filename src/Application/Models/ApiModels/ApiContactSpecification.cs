@@ -6,12 +6,15 @@ namespace Application.Models.ApiModels;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ApiContactSpecificationTypes
 {
-    Base, PhoneNumber, MailAddress, PostalAddress, BankAccount, Website, Paypal
+    Base, PhoneNumber, MailAddress, PostalAddress, BankAccount, Website, Paypal, PersonalName, OrganisationName
 }
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
 [JsonDerivedType(typeof(ApiContactSpecification), typeDiscriminator: nameof(ApiContactSpecificationTypes.Base))]
+[JsonDerivedType(typeof(ApiContactSpecificationPersonalName), typeDiscriminator: nameof(ApiContactSpecificationTypes.PersonalName))]
+[JsonDerivedType(typeof(ApiContactSpecificationOrganisationName), typeDiscriminator: nameof(ApiContactSpecificationTypes.OrganisationName))]
 [JsonDerivedType(typeof(ApiContactSpecificationPhoneNumber), typeDiscriminator: nameof(ApiContactSpecificationTypes.PhoneNumber))]
+[JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.MailAddress))]
 [JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.MailAddress))]
 [JsonDerivedType(typeof(ApiContactSpecificationPostalAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.PostalAddress))]
 [JsonDerivedType(typeof(ApiContactSpecificationBankAccount), typeDiscriminator: nameof(ApiContactSpecificationTypes.BankAccount))]
@@ -20,6 +23,16 @@ public enum ApiContactSpecificationTypes
 public class ApiContactSpecification : ApiBaseEntity
 {
     
+}
+
+public sealed class ApiContactSpecificationPersonalName : ApiContactSpecification
+{
+    public required string PersonalName { get; init; }
+}
+
+public sealed class ApiContactSpecificationOrganisationName : ApiContactSpecification
+{
+    public required string OrganisationName { get; init; }
 }
 
 public sealed class ApiContactSpecificationPhoneNumber : ApiContactSpecification
