@@ -54,3 +54,16 @@
     padding: 1rem 2rem;
     font-size: 1.3rem;
 }
+.uploaded-image-container{
+    display: flex;
+}
+.uploaded-image-list-item{
+    > div{
+        border: 1px solid #175153;
+        border-radius: 1rem;
+        padding: .5rem;
+    }
+    min-width: 17rem;
+    padding: .5rem;
+    display: block;
+}

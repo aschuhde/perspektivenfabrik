@@ -34,7 +34,8 @@ export class ProjectInput{
     contactMail: string = ""
     contactPhone: string = ""
     contactSpecifications: ContactSpecification[] = []
-    description: string = ""
+    shortDescription: string = ""
+    longDescription: string = ""
     uploadedImages: UploadedImage[] = []
     projectVisibility: "draft" | "public" | "internal" = "draft"
     get projectName(){
@@ -84,13 +85,24 @@ export class ProjectInput{
           contributors: [],
           descriptionSpecifications: [ObjectCreator.Create<ApplicationModelsApiModelsApiDescriptionSpecification>({
             type: {
-              name: "", //todo
+              name: "shortDescription",
               descriptionTitle: {
-                rawContentString: "", //todo
+                rawContentString: "Kurzbeschreibung",
               }
             },
             content: {
-              rawContentString: this.description
+              rawContentString: this.shortDescription
+            }
+          }),
+          ObjectCreator.Create<ApplicationModelsApiModelsApiDescriptionSpecification>({
+            type: {
+              name: "longDescription",
+              descriptionTitle: {
+                rawContentString: "Ausführliche Beschreibung"
+              }
+            },
+            content: {
+              rawContentString: this.longDescription
             }
           })],
           graphicsSpecifications: this.uploadedImages.map(x => {

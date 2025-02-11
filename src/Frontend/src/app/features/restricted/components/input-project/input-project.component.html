@@ -211,23 +211,39 @@
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
       <h2 class="step-question">Wie würdest du {{ yourDeclination }} {{ typeName }} beschreiben? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h2>        
+      <h4>Kurzbeschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
       <div>
-        <angular-editor [placeholder]="'Beschreibung'" [(ngModel)]="description"></angular-editor>
+        <angular-editor [placeholder]="'Kurzbeschreibung'" [(ngModel)]="shortDescription"></angular-editor>
       </div>      
+      <h4>Ausführliche Beschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
+      <div>
+        <angular-editor [placeholder]="'Ausführliche Beschreibung'" [(ngModel)]="longDescription"></angular-editor>
+      </div>  
       <div>
         <button (click)="currentGroup = 'projectImages'" class="btn-next" >Weiter</button>
       </div>
     </div>
     <div class="step-content" [class.hidden]="currentGroup != 'projectImages'">
-      <h2 class="step-question">Möchtest du ein Hintergrundbild und noch weitere Bilder hochladen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpImageUpload)"></mat-icon></h2>        
+      <h2 class="step-question">Möchtest du ein Hintergrundbild und noch weitere Bilder hochladen? <mat-icon class="help-icon" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpImageUpload)"></mat-icon></h2>        
       <div>
         <input multiple accept="image/*" class="hidden" #fileUpload type="file" (change)="onFileUpload($event)">
-        <button class="btn-large" (click)="onUploadButtonClicked()">Bilder hochladen</button>
+        <button class="btn-large" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>Bilder hochladen</span></button>
       </div>
-      <div>
+      <div class="uploaded-image-container">
         @for(image of uploadedImages; track image){
-          
-          <img src="{{ image.src }}" style="max-width: 10rem;" />
+          <div class="uploaded-image-list-item">
+            <div>
+              <div style="text-align: center;">
+                <img src="{{ image.src }}" style="height: 10rem;" />
+              </div>
+              <div>
+                  <button class="w-100" [class.secondary]="!image.isLogo" (click)="setLogo(image)"><span>Als Logo verwenden </span><mat-icon [class.hidden]="!image.isLogo" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+              </div>
+              <div>
+                  <button class="w-100" [class.secondary]="!image.isMainImage" (click)="setMainImage(image)"><span>Als Hauptbild verwenden </span><mat-icon [class.hidden]="!image.isMainImage" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+              </div>
+            </div>
+          </div>
         }
       </div>  
       <div>

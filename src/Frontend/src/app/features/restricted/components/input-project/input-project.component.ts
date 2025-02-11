@@ -152,12 +152,20 @@ export class InputProjectComponent {
     this.projectInput().contactPhone = value;
   }
 
-  get description(): string {
-    return this.projectInput().description;
+  get longDescription(): string {
+    return this.projectInput().longDescription;
   }
 
-  set description(value: string) {
-    this.projectInput().description = value;
+  set longDescription(value: string) {
+    this.projectInput().longDescription = value;
+  }
+
+  get shortDescription(): string {
+    return this.projectInput().shortDescription;
+  }
+
+  set shortDescription(value: string) {
+    this.projectInput().shortDescription = value;
   }
 
   get uploadedImages(): UploadedImage[] {
@@ -406,34 +414,60 @@ get typeNameGenitive(){
     }, 400);    
   }
 
-    addSelectedTag(event: MatChipInputEvent): void {
-        const value = (event.value || '').trim();
-
-        if(!value){
-            return;
-        }
-
-        if (!this.selectedTags.find(x => x.value === value)) {
-            this.selectedTags.push(new SelectOption(value));
-        }
-
-        this.tagAutocompleteValue.set("");
-        event.chipInput.clear();
+  setLogo(image: UploadedImage){
+    if(!image.isLogo){
+      image.isMainImage = false;
     }
+    this.uploadedImages.forEach(x => {
+      if(x === image){
+        x.isLogo = !x.isLogo;
+        return;
+      }
+      x.isLogo = false;
+    });    
+  }
 
-    tagSelected(event: MatAutocompleteSelectedEvent){
-        event.option.deselect();
-        if (!this.selectedTags.find(x => x.value === event.option.value)) {
-            this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue));
-        }
-        this.tagAutocompleteValue.set("");
-        setTimeout(() => {
-            this.tagAutocompleteValue.set("");
-        }, 1000);
+  setMainImage(image: UploadedImage){
+    if(!image.isMainImage){
+      image.isLogo = false;
     }
-    removeSelectedTag(selectedSkill: SelectOption){
-        const index = this.selectedTags.indexOf(selectedSkill);
-        if(index < 0) return;
-        this.selectedTags.splice(index, 1);
-    }
+    this.uploadedImages.forEach(x => {
+      if(x === image){
+        x.isMainImage = !x.isMainImage;
+        return;
+      }
+      x.isMainImage = false;
+    });
+  }
+
+  addSelectedTag(event: MatChipInputEvent): void {
+      const value = (event.value || '').trim();
+
+      if(!value){
+          return;
+      }
+
+      if (!this.selectedTags.find(x => x.value === value)) {
+          this.selectedTags.push(new SelectOption(value));
+      }
+
+      this.tagAutocompleteValue.set("");
+      event.chipInput.clear();
+  }
+
+  tagSelected(event: MatAutocompleteSelectedEvent){
+      event.option.deselect();
+      if (!this.selectedTags.find(x => x.value === event.option.value)) {
+          this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue));
+      }
+      this.tagAutocompleteValue.set("");
+      setTimeout(() => {
+          this.tagAutocompleteValue.set("");
+      }, 1000);
+  }
+  removeSelectedTag(selectedSkill: SelectOption){
+      const index = this.selectedTags.indexOf(selectedSkill);
+      if(index < 0) return;
+      this.selectedTags.splice(index, 1);
+  }
 }

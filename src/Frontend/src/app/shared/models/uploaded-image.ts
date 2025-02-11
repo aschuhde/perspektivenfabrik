@@ -1,8 +1,10 @@
 import { DomainEnumsGraphicsType } from "../../server/model/domainEnumsGraphicsType";
 
 export class UploadedImage{
-    readonly file: File
-    readonly src: string
+    readonly file: File;
+    readonly src: string;
+    isLogo: boolean = false;
+    isMainImage: boolean = false;
     constructor(file: File){
         this.file = file;
         this.src = URL.createObjectURL(file);
