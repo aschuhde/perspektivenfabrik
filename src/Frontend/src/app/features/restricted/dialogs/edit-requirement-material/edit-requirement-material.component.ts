@@ -2,16 +2,13 @@ import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
 import { Component, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
-import { MatChipsModule, MatChipInputEvent, MatChipGrid } from '@angular/material/chips';
+import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { MatOption } from '@angular/material/core';
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { MapComponent } from '../../../../shared/components/map/map.component';
 import { SelectOptionMaterial } from '../../../../shared/models/select-option-material';
 import { InputLocationComponent } from '../../components/input-location/input-location.component';
 import { InputProjectTimeComponent } from '../../components/input-project-time/input-project-time.component';
@@ -21,7 +18,7 @@ import { RequirementMaterialInput } from '../../models/requirement-material-inpu
 
 @Component({
   selector: 'app-edit-requirement-material',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSelect, MatOption, MatButton, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MapComponent],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
   templateUrl: './edit-requirement-material.component.html',
   styleUrl: './edit-requirement-material.component.scss'
 })

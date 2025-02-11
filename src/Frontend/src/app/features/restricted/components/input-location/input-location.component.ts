@@ -1,6 +1,5 @@
 import { Component, model, output, inject } from '@angular/core';
 import { LocationInput, LocationType } from '../../models/location-input';
-import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -13,7 +12,7 @@ import { MapDialogComponent } from '../../../../shared/dialogs/map-dialog/map-di
 
 @Component({
   selector: 'app-input-location',
-  imports: [MatButton, MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule],
+  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule],
   templateUrl: './input-location.component.html',
   styleUrl: './input-location.component.scss'
 })

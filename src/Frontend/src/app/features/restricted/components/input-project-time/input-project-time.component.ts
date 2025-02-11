@@ -3,7 +3,6 @@ import { ProjectTimeInput, ProjectTimeType } from '../../models/project-time-inp
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogData } from '../../../../shared/models/message-dialog-data';
 import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialog/message-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -28,7 +27,7 @@ export const DATE_FORMAT_MONTH = {
 
 @Component({
   selector: 'app-input-project-time',
-  imports: [MatFormFieldModule, MatInputModule, MatIcon, MatSelect, MatOption, MatButton, DatePickerComponent, MonthPickerComponent, DatePickerRangeComponent],
+  imports: [MatFormFieldModule, MatInputModule, MatIcon, MatSelect, MatOption, DatePickerComponent, MonthPickerComponent, DatePickerRangeComponent],
   templateUrl: './input-project-time.component.html',
   styleUrl: './input-project-time.component.scss',
   providers: [provideLuxonDateAdapter(DATE_FORMAT_MONTH)]

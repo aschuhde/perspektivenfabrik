@@ -1,6 +1,5 @@
 import { Component, inject, model, output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -15,7 +14,7 @@ import { InputProjectTimeComponent } from '../input-project-time/input-project-t
 
 @Component({
   selector: 'app-input-requirement-money',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatButton, MatSlideToggle, InputProjectTimeComponent],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSlideToggle, InputProjectTimeComponent],
   templateUrl: './input-requirement-money.component.html',
   styleUrl: './input-requirement-money.component.scss'
 })

@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 
-export type ApplicationModelsApiModelsApiContactSpecificationTypes = 'Base' | 'PhoneNumber' | 'MailAddress' | 'PostalAddress';
+export type ApplicationModelsApiModelsApiContactSpecificationTypes = 'Base' | 'PhoneNumber' | 'MailAddress' | 'PostalAddress' | 'BankAccount' | 'Website' | 'Paypal';
 
 export const ApplicationModelsApiModelsApiContactSpecificationTypes = {
     Base: 'Base' as ApplicationModelsApiModelsApiContactSpecificationTypes,
     PhoneNumber: 'PhoneNumber' as ApplicationModelsApiModelsApiContactSpecificationTypes,
     MailAddress: 'MailAddress' as ApplicationModelsApiModelsApiContactSpecificationTypes,
-    PostalAddress: 'PostalAddress' as ApplicationModelsApiModelsApiContactSpecificationTypes
+    PostalAddress: 'PostalAddress' as ApplicationModelsApiModelsApiContactSpecificationTypes,
+    BankAccount: 'BankAccount' as ApplicationModelsApiModelsApiContactSpecificationTypes,
+    Website: 'Website' as ApplicationModelsApiModelsApiContactSpecificationTypes,
+    Paypal: 'Paypal' as ApplicationModelsApiModelsApiContactSpecificationTypes
 };

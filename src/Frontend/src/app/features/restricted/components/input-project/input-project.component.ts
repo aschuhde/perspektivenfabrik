@@ -23,6 +23,12 @@ import { InputRequirementPersonComponent } from '../input-requirement-person/inp
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { UploadedImage } from '../../../../shared/models/uploaded-image';
 import { ProjectInput, ProjectType } from '../../models/project-input';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
+import { SelectOption } from '../../../../shared/models/select-option';
+import { InputContactSpecificationComponent } from '../input-contact-specification/input-contact-specification.component';
+import { ContactSpecification } from '../../models/contact-specification';
 
 @Component({
   selector: 'app-input-project',
@@ -39,9 +45,10 @@ import { ProjectInput, ProjectType } from '../../models/project-input';
     InputRequirementMaterialComponent,
     InputRequirementMoneyComponent,
     InputRequirementPersonComponent,
-      MatAutocompleteModule, 
-      MatChipsModule
-    AngularEditorModule],
+    MatAutocompleteModule, 
+    MatChipsModule,
+    AngularEditorModule,
+    InputContactSpecificationComponent],
   templateUrl: './input-project.component.html',
   styleUrl: './input-project.component.scss'
 })
@@ -50,11 +57,11 @@ export class InputProjectComponent {
 
     readonly addOnBlur = false;
     readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
-  projectInput = model.required<ProjectInput>();
-  currentGroup: string = "projectType";
-  @ViewChild('fileUpload') 
-  fileUpload!: ElementRef;
-  currentRequirementGroup: "person" | "material" | "money" = "person";
+    projectInput = model.required<ProjectInput>();
+    currentGroup: string = "projectType";
+    @ViewChild('fileUpload') 
+    fileUpload!: ElementRef;
+    currentRequirementGroup: "person" | "material" | "money" = "person";
     tagAutocompleteValue = model("");
     tagOptions: SelectOption[] = [new SelectOption("Landwirtschaft"), new SelectOption("Tourismus"), new SelectOption("Sozial"), new SelectOption("Kommunikation"), new SelectOption("Migration"), new SelectOption("Mobilität")];
 
@@ -171,6 +178,10 @@ export class InputProjectComponent {
 
   get projectName(){
     return this.projectInput().projectTitle; //todo: generate name
+  }
+
+  get contactSpecifications(){
+    return this.projectInput().contactSpecifications;
   }
   
   get typeName(){
@@ -325,6 +336,15 @@ get typeNameGenitive(){
     const index = this.requirementsMoney.indexOf(requirementMoney);
     if(index < 0) return;
     this.requirementsMoney.splice(index, 1);
+  }
+
+  addContactSpecification(){
+    this.contactSpecifications.push(new ContactSpecification());
+  }
+  removeContactSpecification(contactSpecification: ContactSpecification){
+    const index = this.contactSpecifications.indexOf(contactSpecification);
+    if(index < 0) return;
+    this.contactSpecifications.splice(index, 1);
   }
 
   onFileUpload(event: Event){

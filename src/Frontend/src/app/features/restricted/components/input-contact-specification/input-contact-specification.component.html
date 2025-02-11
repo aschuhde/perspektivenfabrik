@@ -1,0 +1,65 @@
+<div>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="wallet"></mat-icon> {{ contactSpecificationTypeName }} {{ bankAccountNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> {{ contactSpecificationTypeName }} entfernen</button></h4>
+    <mat-form-field class="w-100">
+        <mat-label>Kontotyp</mat-label>
+        <mat-select [(value)]="contactSpecificationType">
+        <mat-option value="bankAccount">Bankkonto</mat-option>
+        <mat-option value="paypalAccount">Paypalkonto</mat-option>
+        <mat-option value="website">Website</mat-option>        
+        </mat-select>
+    </mat-form-field>
+
+    @if(contactSpecificationType === "bankAccount"){
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Kontoname</mat-label>
+                <input type="text" matInput [(ngModel)]="bankAccountName" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>IBAN</mat-label>
+                <input type="text" matInput [(ngModel)]="bankAccountIban" />
+            </mat-form-field>        
+        </div>
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>BIC (optional)</mat-label>
+                <input type="text" matInput [(ngModel)]="bankAccountBic" />
+            </mat-form-field>        
+        </div>
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Verwendungszweck (optional)</mat-label>
+                <input type="text" matInput [(ngModel)]="bankAccountReference" />
+            </mat-form-field>
+        </div>
+    }
+
+    @if(contactSpecificationType === "paypalAccount"){
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Paypal E-Mail Adresse</mat-label>
+                <input type="text" matInput [(ngModel)]="paypalAddress" />
+            </mat-form-field>        
+        </div>
+        <div style="margin-bottom: 1.3rem;">
+            <span>und/oder</span>
+        </div>
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Paypal-Me Url</mat-label>
+                <input type="text" matInput [(ngModel)]="paypalMeAddress" />
+            </mat-form-field>
+        </div>
+    }
+
+    @if(contactSpecificationType === "website"){
+        <div>
+            <mat-form-field class="w-100 prefix">
+                <mat-label>Website</mat-label>
+                <input type="text" matInput [(ngModel)]="website" />
+            </mat-form-field>        
+        </div>
+    }
+</div>

@@ -1,7 +1,6 @@
 ﻿import {Routes} from "@angular/router";
 import { TestComponent } from "./pages/test/test.component";
 import {AppRouteNames} from "../../app.routes.names";
-import { TempOneComponent } from "./pages/temp-one/temp-one.component";
 import { InputProjectPageComponent } from "./pages/input-project-page/input-project-page.component";
 
 export class RestrictedRouteNames{

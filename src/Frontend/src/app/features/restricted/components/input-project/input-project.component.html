@@ -159,7 +159,15 @@
                 aria-label="Contact Phone Number"
                 matInput
                 [(ngModel)]="contactPhone"/>
-        </mat-form-field>
+        </mat-form-field>        
+        <div>
+          <button (click)="addContactSpecification()"><mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add"></mat-icon> Bankdaten, Paypal-Konto oder Website ergänzen</button>
+        </div>
+        <div class="item-tiles-container">
+          @for(contactSpecification of contactSpecifications; track contactSpecification){
+              <app-input-contact-specification [contactSpecificationIndex]="$index" [contactSpecification]="contactSpecification" (remove)="removeContactSpecification($event)"></app-input-contact-specification>
+          }
+        </div>
       </div>      
       <div>
         <button (click)="currentGroup = 'projectTags'" class="btn-next" >Weiter</button>

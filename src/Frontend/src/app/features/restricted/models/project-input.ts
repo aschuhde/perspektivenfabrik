@@ -9,8 +9,10 @@ import { ApplicationModelsApiModelsApiRequirementSpecification } from "../../../
 import { DomainEnumsProjectPhase } from "../../../server/model/domainEnumsProjectPhase";
 import { DomainEnumsProjectType } from "../../../server/model/domainEnumsProjectType";
 import { DomainEnumsProjectVisibility } from "../../../server/model/domainEnumsProjectVisibility";
+import { SelectOption } from "../../../shared/models/select-option";
 import { UploadedImage } from "../../../shared/models/uploaded-image";
 import { ObjectCreator } from "../../../shared/tools/object-creator";
+import { ContactSpecification } from "./contact-specification";
 import { LocationInput } from "./location-input";
 import { ProjectTimeInput } from "./project-time-input";
 import { RequirementMaterialInput } from "./requirement-material-input";
@@ -31,6 +33,7 @@ export class ProjectInput{
     selectedTags: SelectOption[] = []
     contactMail: string = ""
     contactPhone: string = ""
+    contactSpecifications: ContactSpecification[] = []
     description: string = ""
     uploadedImages: UploadedImage[] = []
     projectVisibility: "draft" | "public" | "internal" = "draft"

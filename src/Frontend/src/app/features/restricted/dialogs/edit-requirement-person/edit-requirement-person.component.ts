@@ -19,11 +19,10 @@ import { InputProjectTimeComponent } from '../../components/input-project-time/i
 import { LocationInput } from '../../models/location-input';
 import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementPersonInput, EffortHoursType } from '../../models/requirement-person-input';
-import { MapComponent } from '../../../../shared/components/map/map.component';
 
 @Component({
   selector: 'app-edit-requirement-person',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSelect, MatOption, MatButton, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MapComponent],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSelect, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
   templateUrl: './edit-requirement-person.component.html',
   styleUrl: './edit-requirement-person.component.scss'
 })
