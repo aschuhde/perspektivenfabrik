@@ -46,7 +46,7 @@ export class ProjectInput{
     uploadedImages: UploadedImage[] = []
     projectVisibility: "draft" | "public" | "internal" = "draft"
     get projectName(){
-        return this.projectTitle; //todo: generate name
+        return this.projectTitle?.replaceAll(" ", ""); //todo: generate name
     }
     get typeName(){
         switch(this.projectType){
@@ -81,7 +81,16 @@ export class ProjectInput{
             return "deiner";
         }
       }
-    buildRequest(): ApplicationModelsApiModelsApiProjectBody{
+    async buildRequest(): Promise<ApplicationModelsApiModelsApiProjectBody>{      
+      const graphicsSpecifications: ApplicationModelsApiModelsApiGraphicsSpecification[] = [];
+      for(const uploadedImage of this.uploadedImages){
+        graphicsSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiGraphicsSpecification>({
+          type: uploadedImage.getType(),
+          content: {
+            content: await uploadedImage.getBase64()
+          }
+        }));
+      }
         return {
           projectTitle: {
             rawContentString: this.projectTitle
@@ -112,14 +121,7 @@ export class ProjectInput{
               rawContentString: this.longDescription
             }
           })],
-          graphicsSpecifications: this.uploadedImages.map(x => {
-            return ObjectCreator.Create<ApplicationModelsApiModelsApiGraphicsSpecification>({
-              type: x.getType(),
-              content: {
-                content: "todo"
-              }
-            }); 
-          }),
+          graphicsSpecifications: graphicsSpecifications,
           locationSpecifications: this.locations.map(x => x.toLocationSpecification()).filter(x => !!x),
           phase: this.getProjectPhaseForApi(),
           projectName: this.projectName,

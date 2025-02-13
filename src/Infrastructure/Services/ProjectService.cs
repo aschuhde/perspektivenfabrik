@@ -39,7 +39,8 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     
     public async Task<ProjectDto?> GetProjectById(Guid entityId, CancellationToken ct)
     {
-        return (await dbContext.Projects.Where(x => x.EntityId == entityId).AsNoTracking().FirstOrDefaultAsync(ct))?.ToProject();
+        return (await GetProjects(query => query.Where(x => x.EntityId == entityId), query => query, ct))
+            .FirstOrDefault();
     }
     
     private void UpdateRelatedEntityWithHistory<T1, T2>(T1? entity, T1? existingEntity, Func<T1, T2> onGetDbEntity) 

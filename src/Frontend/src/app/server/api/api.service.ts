@@ -20,6 +20,7 @@ import { Observable }                                        from 'rxjs';
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
+import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
 import { ApplicationGetProjectsGetProjectsGetProjectsResponse } from '../model/applicationGetProjectsGetProjectsGetProjectsResponse';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse';
@@ -214,6 +215,62 @@ export class ApiService {
         ];
 
         return this.httpClient.request<ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse>('get',`${this.basePath}/api/json-type-discriminator-names`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param projectIdentifier 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectGetProjectGetProjectResponse>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectGetProjectGetProjectResponse>>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectGetProjectGetProjectResponse>>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetProject.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetProjectGetProjectGetProjectResponse>('get',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

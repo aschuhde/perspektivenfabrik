@@ -1,0 +1,50 @@
+.top{
+    height: calc(100% - 10rem);
+    display: flex;
+}
+.left{
+    height: 100%;
+    width: 30rem;
+    background-color: #EA6A31;
+    color: white;
+
+    .stats{
+        padding: 1rem 1.5rem;
+    }
+    .intro{
+        padding: 1rem 1.5rem;
+    }
+}
+.main{
+    width: calc(100% - 30rem);
+    height: 100%;
+
+    .content{
+        padding: 1.5rem;
+    }
+}
+.bottom{
+    height: 10rem;
+    background-color: #B497E5;
+    display: flex;
+    color: white;
+
+    .bottom-left{        
+        width: 50%;
+
+        > div{
+            padding-left: 5rem;
+            padding-top: 2rem;
+        }
+    }
+    .bottom-right{
+        width: 50%;
+        > div{
+            padding-left: 5rem;
+            padding-top: 1rem;
+        }
+    }
+}
+.gallery{
+    height: 20rem;
+}

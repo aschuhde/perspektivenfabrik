@@ -1,7 +1,7 @@
 ﻿import {Routes} from "@angular/router";
 import { TestComponent } from "./pages/test/test.component";
 import {AppRouteNames} from "../../app.routes.names";
-import { InputProjectPageComponent } from "./pages/input-project-page/input-project-page.component";
+import { TempOneComponent } from "./pages/temp-one/temp-one.component";
 
 export class RestrictedRouteNames{
     public static readonly TestName = "test";
@@ -11,5 +11,5 @@ export class RestrictedRouteNames{
 }
 export const RestrictedRoutes: Routes = [
     {path: RestrictedRouteNames.TestName, component: TestComponent},
-    {path: RestrictedRouteNames.TempOneName, component: InputProjectPageComponent}
+    {path: RestrictedRouteNames.TempOneName, component: TempOneComponent}
 ]

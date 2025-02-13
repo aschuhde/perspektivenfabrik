@@ -185,7 +185,7 @@ export class InputProjectComponent {
   }
 
   get projectName(){
-    return this.projectInput().projectTitle; //todo: generate name
+    return this.projectInput().projectName;
   }
 
   get contactSpecifications(){

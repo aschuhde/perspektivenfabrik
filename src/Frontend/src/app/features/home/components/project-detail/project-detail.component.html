@@ -1,0 +1,84 @@
+<div class="top">
+    <div class="left">
+        <div class="intro">
+            <h2>{{ projectTitle }}</h2>
+            <p [innerHtml]="shortDescription"></p>
+        </div>
+        <div class="stats">
+            @if (locationSpecifications.length > 0){
+                <p>Ort:</p>
+                <div class="stat-grid">
+                    @for (locationSpecification of locationSpecifications; track locationSpecification){
+                        <div class="stat-grid-item">{{ getLocationSpecificationShortName(locationSpecification) }}</div>
+                    }
+                </div>
+            }
+            @if (timeSpecifications.length > 0){
+                <p>Zeitraum:</p>
+                <div class="stat-grid">
+                    @for (timeSpecification of timeSpecifications; track timeSpecification){
+                        <div class="stat-grid-item">{{ getTimeSpecificationShortName(timeSpecification) }}</div>
+                    }
+                </div>
+            }
+            @if (tags.length > 0){
+                <p>Tags:</p>
+                <div class="stat-grid">
+                    @for (tag of tags; track tag){
+                        <div class="stat-grid-item">{{ getTagShortName(tag) }}</div>
+                    }
+                </div>
+            }
+            @if (requirementSpecificationPersons.length > 0){
+                <p>Wir suchen:</p>
+                <div class="stat-grid">
+                    @for (requirementSpecificationPerson of requirementSpecificationPersons; track requirementSpecificationPerson){
+                        <div class="stat-grid-item">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
+                    }
+                </div>
+            }
+            @if (requirementSpecificationOthers.length > 0){
+                <p>Wir benötigen:</p>
+                <div class="stat-grid">
+                    @for (requirementSpecificationOther of requirementSpecificationOthers; track requirementSpecificationOther){
+                        <div class="stat-grid-item">{{ getRequirementSpecificationOtherShortName(requirementSpecificationOther) }}</div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="main">
+        <div class="gallery">
+            <app-image-gallery [images]="projectImages"></app-image-gallery>
+        </div>
+        <div class="content" [innerHtml]="longDescription">        
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <div class="bottom-left">
+        <div>
+            <h3>Kontakt</h3>
+        </div>
+    </div>
+    <div class="bottom-right">
+        <div>
+            <p>Schreib uns eine Nachricht!</p>
+            @if(contactPersonalName){
+                <p>{{ contactPersonalName }}</p>
+            }
+            @if(contactOrganisationName){
+                <p>{{ contactOrganisationName }}</p>
+            }
+            @if(contactPhone){
+                <p>{{ contactPhone }}</p>
+            }
+            @if(contactMailAddress){
+                <p>{{ contactMailAddress }}</p>
+            }
+            @if(contactWebsite){
+                <p>{{ contactWebsite }}</p>
+            }
+        </div>
+    </div>
+</div>

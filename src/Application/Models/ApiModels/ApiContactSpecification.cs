@@ -15,7 +15,6 @@ public enum ApiContactSpecificationTypes
 [JsonDerivedType(typeof(ApiContactSpecificationOrganisationName), typeDiscriminator: nameof(ApiContactSpecificationTypes.OrganisationName))]
 [JsonDerivedType(typeof(ApiContactSpecificationPhoneNumber), typeDiscriminator: nameof(ApiContactSpecificationTypes.PhoneNumber))]
 [JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.MailAddress))]
-[JsonDerivedType(typeof(ApiContactSpecificationMailAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.MailAddress))]
 [JsonDerivedType(typeof(ApiContactSpecificationPostalAddress), typeDiscriminator: nameof(ApiContactSpecificationTypes.PostalAddress))]
 [JsonDerivedType(typeof(ApiContactSpecificationBankAccount), typeDiscriminator: nameof(ApiContactSpecificationTypes.BankAccount))]
 [JsonDerivedType(typeof(ApiContactSpecificationWebsite), typeDiscriminator: nameof(ApiContactSpecificationTypes.Website))]
