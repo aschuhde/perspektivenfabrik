@@ -9,13 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiModelsApiBaseEntity';
-import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
-import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
+import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
 import { DomainDataTypesGraphicsContent } from './domainDataTypesGraphicsContent';
 import { DomainEnumsGraphicsType } from './domainEnumsGraphicsType';
 
-export interface ApplicationModelsApiModelsApiGraphicsSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
+export interface ApplicationModelsApiModelsApiGraphicsSpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     type?: DomainEnumsGraphicsType;
     content?: DomainDataTypesGraphicsContent;
 }

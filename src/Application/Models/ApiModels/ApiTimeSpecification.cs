@@ -26,6 +26,10 @@ public sealed class ApiTimeSpecificationPeriod : ApiTimeSpecification
     public required ApiTimeSpecificationMoment End { get; init; }
 }
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
+[JsonDerivedType(typeof(ApiTimeSpecificationDate), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Date))]
+[JsonDerivedType(typeof(ApiTimeSpecificationDateTime), typeDiscriminator: nameof(ApiTimeSpecificationTypes.DateTime))]
+[JsonDerivedType(typeof(ApiTimeSpecificationMonth), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Month))]
 public class ApiTimeSpecificationMoment : ApiTimeSpecification
 {
     

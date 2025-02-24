@@ -9,6 +9,8 @@ public sealed class DbMaterialSpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
     public required string Name { get; init; }
+    [MaxLength(Constants.StringLengths.Medium)]
+    public required string AmountValue { get; init; }
     public required DbFormattedContent Title  { get; init; }
     public required DbFormattedContent Description { get; init; }
 }

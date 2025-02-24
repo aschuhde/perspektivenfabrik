@@ -9,10 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiModelsApiBaseEntity';
-import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
-import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
+import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
 
-export interface ApplicationModelsApiModelsApiTimeSpecification extends ApplicationModelsApiModelsApiBaseEntity { 
+export interface ApplicationModelsApiModelsApiTimeSpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     classType: string;
 }
