@@ -8,4 +8,8 @@ export class CoordinatesConverter{
             lon: 0
         }
     }
+
+  static FromApiCoordinates(geoCoordinates: DomainDataTypesCoordinates | null) {
+    return `${geoCoordinates?.lat},${geoCoordinates?.lon}`;
+  }
 }

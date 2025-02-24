@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, model, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, model, output, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -54,17 +54,19 @@ import { ContactSpecification } from '../../models/contact-specification';
 })
 export class InputProjectComponent {
   readonly dialog = inject(MatDialog);
-
+    
+    isLoading = input(false); 
     readonly addOnBlur = false;
     readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
     projectInput = model.required<ProjectInput>();
+    onSave = output();
     currentGroup: string = "projectType";
     @ViewChild('fileUpload') 
     fileUpload!: ElementRef;
     currentRequirementGroup: "person" | "material" | "money" = "person";
     tagAutocompleteValue = model("");
     tagOptions: SelectOption[] = [new SelectOption("Landwirtschaft"), new SelectOption("Tourismus"), new SelectOption("Sozial"), new SelectOption("Kommunikation"), new SelectOption("Migration"), new SelectOption("Mobilität")];
-
+    
 
     get selectedTags(){
         return this.projectInput().selectedTags;
@@ -482,5 +484,9 @@ get typeNameGenitive(){
       const index = this.selectedTags.indexOf(selectedSkill);
       if(index < 0) return;
       this.selectedTags.splice(index, 1);
+  }
+
+  save() {
+    this.onSave.emit();
   }
 }

@@ -40,5 +40,29 @@ export class LocationInput{
             });
     }
     return null;
-  }    
+  }
+
+  static fromLocationSpecification(location: ApplicationModelsApiModelsApiLocationSpecification) {
+    const result = new LocationInput();
+    if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Address){
+      result.locationType = "address";
+      result.locationAddress = AddressConverter.GetAddressFromApiAddress((location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress ?? null)
+    }
+    else if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote){
+      result.locationType = "remote";
+      result.locationLink = (location as ApplicationModelsApiModelsApiLocationSpecificationRemote)?.link?.rawUrl ?? "";
+    }
+    else if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Coordinates){
+      result.locationType = "coordinates";
+      result.locationCoordinates = CoordinatesConverter.FromApiCoordinates((location as ApplicationModelsApiModelsApiLocationSpecificationCoordinates)?.coordinates ?? null)
+    }
+    else if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Region){
+      result.locationType = "name";
+      result.locationName = AddressConverter.GetRegionFromApiAddress((location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress ?? null)
+    }
+    else{
+      return null;
+    }
+    return result;
+  }
 }

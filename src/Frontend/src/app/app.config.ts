@@ -12,6 +12,14 @@ import { provideTranslateService, TranslateLoader, TranslateModule } from '@ngx-
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeEn from '@angular/common/locales/en';
+import localeIt from '@angular/common/locales/it';
+registerLocaleData(localeDe);
+registerLocaleData(localeEn);
+registerLocaleData(localeIt);
+
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
 

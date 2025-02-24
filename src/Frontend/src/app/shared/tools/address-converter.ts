@@ -23,4 +23,19 @@ export class AddressConverter{
             addressLine6: "",
         }
     }
+
+    static getShortName(address: DomainDataTypesPostalAddress): string{
+        //todo
+        return address.addressLine1 ?? "";
+    }
+    
+    static GetAddressFromApiAddress(postalAddress: DomainDataTypesPostalAddress | null): string {
+        return postalAddress?.addressLine1 ?? "";
+//todo
+    }
+
+    static GetRegionFromApiAddress(postalAddress: DomainDataTypesPostalAddress | null): string {
+        return postalAddress?.addressLine1 ?? "";
+//todo
+    }
 }

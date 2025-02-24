@@ -3,6 +3,10 @@ import { ApplicationModelsApiModelsApiRequirementSpecificationTypes } from "../.
 import { SelectOptionMaterial } from "../../../shared/models/select-option-material";
 import { LocationInput } from "./location-input";
 import { ProjectTimeInput } from "./project-time-input";
+import {
+  ApplicationModelsApiModelsApiRequirementSpecificationPerson
+} from "../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
+import {SelectOption} from "../../../shared/models/select-option";
 
 export class RequirementMaterialInput{
   selectedMaterials: SelectOptionMaterial[] = [];  
@@ -34,5 +38,14 @@ export class RequirementMaterialInput{
         }
     })
   }
-    
+
+  static fromRequirementSpecification(requirementSpecification: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
+    const result = new RequirementMaterialInput();
+    result.requirementTimeIsIdenticalToProjectTime = requirementSpecification.timeSpecificationSameAsProject ?? true;
+    result.requirementLocationIsIdenticalToProjectLocation = requirementSpecification.locationSpecificationsSameAsProject ?? true;
+    result.requirementLocations = requirementSpecification.locationSpecifications?.map(x => LocationInput.fromLocationSpecification(x))?.filter(x => !!x) ?? [];
+    result.requirementTimes = requirementSpecification.timeSpecifications?.map(x => ProjectTimeInput.fromTimeSpecification(x))?.filter(x => !!x) ?? [];
+    result.selectedMaterials = requirementSpecification.materialSpecifications?.map(x => new SelectOptionMaterial(x.name ?? "", x.title?.rawContentString ?? "", x.amountValue ?? "", x.description?.rawContentString ?? "")).filter(x => !!x.value) ?? [];
+    return result;
+  }
 }

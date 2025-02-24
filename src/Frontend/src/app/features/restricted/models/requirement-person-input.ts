@@ -38,5 +38,17 @@ export class RequirementPersonInput{
         timeSpecifications:  this.requirementTimeIsIdenticalToProjectTime ? [] : this.requirementTimes.map(x => x.toTimeSpecification()).filter(x => !!x)        
     };
   }
-    
+
+  static fromRequirementSpecification(requirementSpecification: ApplicationModelsApiModelsApiRequirementSpecificationPerson) {
+    const result = new RequirementPersonInput();
+    result.numberOfPersons = requirementSpecification.quantitySpecification?.value ?? "";
+    result.hours = requirementSpecification.workAmountSpecification?.value?.split(" ")[0] ?? "";
+    result.effortHoursType = requirementSpecification.workAmountSpecification?.value?.split(" ")[1]?.toLowerCase()?.trim() === "perweek" ? "perWeek" : "total";
+    result.requirementTimeIsIdenticalToProjectTime = requirementSpecification.timeSpecificationSameAsProject ?? true;
+    result.requirementLocationIsIdenticalToProjectLocation = requirementSpecification.locationSpecificationsSameAsProject ?? true;
+    result.requirementLocations = requirementSpecification.locationSpecifications?.map(x => LocationInput.fromLocationSpecification(x))?.filter(x => !!x) ?? [];
+    result.requirementTimes = requirementSpecification.timeSpecifications?.map(x => ProjectTimeInput.fromTimeSpecification(x))?.filter(x => !!x) ?? [];
+    result.selectedSkills = requirementSpecification.skillSpecifications?.map(x => new SelectOption(x.name ?? "", x.title?.rawContentString ?? "")).filter(x => !!x.value) ?? [];
+    return result;
+  }
 }

@@ -29,19 +29,22 @@
                     }
                 </div>
             }
-            @if (requirementSpecificationPersons.length > 0){
+
                 <p>Wir suchen:</p>
                 <div class="stat-grid">
-                    @for (requirementSpecificationPerson of requirementSpecificationPersons; track requirementSpecificationPerson){
+                    @for (requirementSpecificationPerson of requirementSpecificationPersonsFlat; track requirementSpecificationPerson){
                         <div class="stat-grid-item">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
                     }
                 </div>
-            }
-            @if (requirementSpecificationOthers.length > 0){
+            
+            @if (requirementSpecificationMaterials.length > 0 || requirementSpecificationMoneySummed){
                 <p>Wir benötigen:</p>
                 <div class="stat-grid">
-                    @for (requirementSpecificationOther of requirementSpecificationOthers; track requirementSpecificationOther){
-                        <div class="stat-grid-item">{{ getRequirementSpecificationOtherShortName(requirementSpecificationOther) }}</div>
+                    @for (requirementSpecificationMaterial of requirementSpecificationMaterials; track requirementSpecificationMaterial){
+                        <div class="stat-grid-item">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
+                    }
+                    @if(requirementSpecificationMoneySummed){
+                        <div class="stat-grid-item">{{ getRequirementSpecificationMoneyShortName(requirementSpecificationMoneySummed) }}</div>
                     }
                 </div>
             }

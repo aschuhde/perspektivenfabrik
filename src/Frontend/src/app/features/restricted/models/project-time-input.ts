@@ -4,8 +4,15 @@ import { ApplicationModelsApiModelsApiTimeSpecificationMonth } from "../../../se
 import { ApplicationModelsApiModelsApiTimeSpecificationPeriod } from "../../../server/model/applicationModelsApiModelsApiTimeSpecificationPeriod"
 import { ObjectCreator } from "../../../shared/tools/object-creator"
 import { ApplicationModelsApiModelsApiTimeSpecificationDate } from "../../../server/model/applicationModelsApiModelsApiTimeSpecificationDate"
-import { DateTools } from "../../../shared/tools/date-tools"
+import {
+  DateTools,
+  getLuxonDateTimeFromMonth,
+  getLuxonDateTimeFromNullableJsDate
+} from "../../../shared/tools/date-tools"
 import { ApplicationModelsApiModelsApiTimeSpecificationTypes } from "../../../server/model/applicationModelsApiModelsApiTimeSpecificationTypes"
+import {
+  ApplicationModelsApiModelsApiTimeSpecificationDateTime
+} from "../../../server/model/applicationModelsApiModelsApiTimeSpecificationDateTime";
 
 export declare type ProjectTimeType = "unknown" | "range" | "date" | "month"
 export class ProjectTimeInput{
@@ -47,5 +54,39 @@ export class ProjectTimeInput{
     }
     return null;
   }
-    
+  
+  getRelevantMomentDate(){
+    switch(this.projectTimeType){
+        case "date":
+            return this.date;
+        case "month":
+            return this.month;
+    }
+    return null;
+  }
+
+  static fromTimeSpecification(timeSpecification: ApplicationModelsApiModelsApiTimeSpecification | null) {
+    const result = new ProjectTimeInput();
+    if(!timeSpecification){
+      return null;
+    }
+    if(timeSpecification.classType === ApplicationModelsApiModelsApiTimeSpecificationTypes.Date){
+      result.projectTimeType = "date";
+      result.date = DateTime.fromISO((timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationDate)?.date ?? "");
+    }
+    else if(timeSpecification.classType === ApplicationModelsApiModelsApiTimeSpecificationTypes.DateTime){
+      result.projectTimeType = "date";
+      result.date = getLuxonDateTimeFromNullableJsDate((timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationDateTime)?.date ?? null);
+    }
+    else if(timeSpecification.classType === ApplicationModelsApiModelsApiTimeSpecificationTypes.Period){
+      result.projectTimeType = "range";
+      result.startDate = (this.fromTimeSpecification((timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationPeriod)?.start ?? null))?.getRelevantMomentDate() ?? null;
+      result.endDate = (this.fromTimeSpecification((timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationPeriod)?.end ?? null))?.getRelevantMomentDate() ?? null;       
+    }
+    else if(timeSpecification.classType === ApplicationModelsApiModelsApiTimeSpecificationTypes.Month){
+      result.projectTimeType = "month";
+      result.month = getLuxonDateTimeFromMonth((timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationMonth)?.month ?? null);
+    }
+    return result;
+  }
 }

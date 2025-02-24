@@ -50,4 +50,30 @@ export class ContactSpecification{
                 });
         }
     }
+    private static getEmpty(type: ContactSpecificationType){
+        const result = new ContactSpecification();
+        result.contactSpecificationType = type;
+        return result;
+    }
+    static fromContactSpecificationPaypal(contactSpecificationPaypal: ApplicationModelsApiModelsApiContactSpecificationPaypal){
+        const result = this.getEmpty("paypalAccount");
+        result.paypalAddress = contactSpecificationPaypal.paypalAddress?.mail ?? "";
+        result.paypalMeAddress = contactSpecificationPaypal.paypalMeAddress?.rawUrl ?? "";
+        return result;
+    }
+
+    static fromContactSpecificationWebsite(contactSpecificationWebsite: ApplicationModelsApiModelsApiContactSpecificationWebsite){
+        const result = this.getEmpty("website");
+        result.website = contactSpecificationWebsite.website?.rawUrl ?? "";
+        return result;
+    }
+
+    static fromContactSpecificationBankAccount(contactSpecificationBankAccount: ApplicationModelsApiModelsApiContactSpecificationBankAccount){
+        const result = this.getEmpty("bankAccount");
+        result.bankAccountReference = contactSpecificationBankAccount.bankAccount?.reference ?? "";
+        result.bankAccountName = contactSpecificationBankAccount.bankAccount?.accountName ?? "";
+        result.bankAccountBic = contactSpecificationBankAccount.bankAccount?.bic?.bicName ?? "";
+        result.bankAccountIban = contactSpecificationBankAccount.bankAccount?.iban?.ibanName ?? "";
+        return result;
+    }
 }

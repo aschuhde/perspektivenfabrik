@@ -23,6 +23,13 @@ import { ProjectTimeInput } from "./project-time-input";
 import { RequirementMaterialInput } from "./requirement-material-input";
 import { RequirementMoneyInput } from "./requirement-money-input";
 import { RequirementPersonInput } from "./requirement-person-input";
+import {GalleryImage} from "../../../shared/models/gallery-image";
+import {
+  ApplicationModelsApiModelsApiRequirementSpecificationTypes
+} from "../../../server/model/applicationModelsApiModelsApiRequirementSpecificationTypes";
+import {
+  ApplicationModelsApiModelsApiRequirementSpecificationPerson
+} from "../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
 
 export declare type ProjectType = "project" | "idea" | "inspiration" | "none";
 
@@ -81,6 +88,48 @@ export class ProjectInput{
             return "deiner";
         }
       }
+      
+    loadFromProject(project: ApplicationModelsApiModelsApiProjectBody){
+      if (!project) {
+        return;
+      }
+
+      this.loadProjectTypeFromApi(project.type ?? "Unkown");
+
+      this.projectTitle = project.projectTitle?.rawContentString ?? "";
+      this.loadProjectPhaseFromApi(project.phase ?? "Unkown");
+
+      this.locations = (project.locationSpecifications ?? []).map(
+        (location) => LocationInput.fromLocationSpecification(location)
+      ).filter(x => !!x);
+      this.projectTimes = (project.timeSpecifications ?? []).map(
+        (time) => ProjectTimeInput.fromTimeSpecification(time)
+      ).filter(x => !!x);
+      this.requirementPersons = (project.requirementSpecifications ?? []).filter(x => x.classType == ApplicationModelsApiModelsApiRequirementSpecificationTypes.Person).map(
+        (req) => RequirementPersonInput.fromRequirementSpecification(req as ApplicationModelsApiModelsApiRequirementSpecificationPerson)
+      );
+      this.requirementMaterials = (project.requirementSpecifications ?? []).filter(x => x.classType == ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material).flatMap(
+        (req) => RequirementMaterialInput.fromRequirementSpecification(req)
+      );
+      this.requirementsMoney = (project.requirementSpecifications ?? []).filter(x => x.classType == ApplicationModelsApiModelsApiRequirementSpecificationTypes.Money).flatMap(
+        (req) => RequirementMoneyInput.fromRequirementSpecification(req)
+      );
+      this.selectedTags = (project.projectTags ?? []).map(x => {
+        return new SelectOption(x.tagName ?? x.entityId ?? "", x.tagName);
+      }).filter(x => !!x.value);
+
+      this.loadContactSpecificationsFromApi(project.contactSpecifications ?? []);
+      this.shortDescription =
+        project.descriptionSpecifications?.find(
+          (desc) => desc.type?.name === "shortDescription"
+        )?.content?.rawContentString ?? "";
+      this.longDescription =
+        project.descriptionSpecifications?.find(
+          (desc) => desc.type?.name === "longDescription"
+        )?.content?.rawContentString ?? "";
+      this.uploadedImages = project?.graphicsSpecifications?.map(x => UploadedImage.fromApi(x)) ?? [];
+      this.loadProjectVisibilityFromApi(project.visibility ?? "Unkown");
+    }  
     async buildRequest(): Promise<ApplicationModelsApiModelsApiProjectBody>{      
       const graphicsSpecifications: ApplicationModelsApiModelsApiGraphicsSpecification[] = [];
       for(const uploadedImage of this.uploadedImages){
@@ -152,6 +201,44 @@ export class ProjectInput{
         }
         return "Unkown";
       }
+
+  loadProjectTypeFromApi(projectType: DomainEnumsProjectType) {
+    if (projectType === "Project") {
+      this.projectType = "project";
+    } else if (projectType === "Idea") {
+      this.projectType = "idea";
+    } else if (projectType === "Inspiration") {
+      this.projectType = "inspiration";
+    } else {
+      this.projectType = "none";
+    }
+  }
+
+  loadProjectPhaseFromApi(projectPhase: DomainEnumsProjectPhase) {
+    if (projectPhase === "Planning") {
+      this.projectPhase = "planning";
+    } else if (projectPhase === "Ongoing") {
+      this.projectPhase = "ongoing";
+    } else if (projectPhase === "Finished") {
+      this.projectPhase = "finished";
+    } else if (projectPhase === "Cancelled") {
+      this.projectPhase = "cancelled";
+    } else {
+      this.projectPhase = "unknown";
+    }
+  }
+
+  loadProjectVisibilityFromApi(projectVisibility: DomainEnumsProjectVisibility) {
+    if (projectVisibility === "Draft") {
+      this.projectVisibility = "draft";
+    } else if (projectVisibility === "Internal") {
+      this.projectVisibility = "internal";
+    } else if (projectVisibility === "Public") {
+      this.projectVisibility = "public";
+    } else {
+      this.projectVisibility = "draft";
+    }
+  }
       getProjectVisibilityForApi(): DomainEnumsProjectVisibility{
         switch(this.projectVisibility){
           case "draft":
@@ -177,6 +264,27 @@ export class ProjectInput{
         return "Unkown"
       }
     
+      loadContactSpecificationsFromApi(contactSpecifications: ApplicationModelsApiModelsApiContactSpecification[]){
+        this.contactName = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName)?.personalName ?? "";
+        this.organisationName = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName)?.organisationName ?? "";
+        this.contactPhone = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber)?.phoneNumber?.phoneNumberText ?? "";
+        this.contactMail = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress)?.mailAddress?.mail ?? "";
+        this.contactSpecifications = contactSpecifications.map(x => {
+          if(x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Paypal){
+            return ContactSpecification.fromContactSpecificationPaypal(x as ApplicationModelsApiModelsApiContactSpecificationPaypal);
+          }
+          
+          if(x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.BankAccount){
+            return ContactSpecification.fromContactSpecificationBankAccount(x as ApplicationModelsApiModelsApiContactSpecificationBankAccount);
+          }
+          
+          if(x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website){
+            return ContactSpecification.fromContactSpecificationWebsite(x as ApplicationModelsApiModelsApiContactSpecificationWebsite);
+          }
+          return null;
+        }).filter(x => !!x);
+      }
+      
       getContactSpecifications(){
         const contactSpecifications: ApplicationModelsApiModelsApiContactSpecification[] = []
         if(this.contactPhone){
