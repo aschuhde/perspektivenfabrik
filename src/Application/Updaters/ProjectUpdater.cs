@@ -231,7 +231,7 @@ public static class ProjectUpdater
 
     private static void UpdateChangesList<T1, T2>(IEnumerable<T1> entities, IEnumerable<T2> existingEntities, EntityUpdatingContext updatingContext,
         string propertyName, Action<T1, T2?, EntityUpdatingContext> onUpdateEntity) 
-        where T1 : ApiBaseEntity where T2 : BaseEntityDto
+        where T1 : ApiBaseEntityWithId where T2 : BaseEntityWithIdDto
     {
         foreach (var entity in entities)
         {

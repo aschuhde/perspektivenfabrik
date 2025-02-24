@@ -5,7 +5,7 @@ using Infrastructure.Data.DbDataTypes;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("SkillSpecifications")]
-public sealed class DbSkillSpecification : DbEntity
+public sealed class DbSkillSpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
     public required string Name { get; init; }

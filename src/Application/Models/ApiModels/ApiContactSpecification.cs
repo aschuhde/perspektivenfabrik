@@ -19,7 +19,7 @@ public enum ApiContactSpecificationTypes
 [JsonDerivedType(typeof(ApiContactSpecificationBankAccount), typeDiscriminator: nameof(ApiContactSpecificationTypes.BankAccount))]
 [JsonDerivedType(typeof(ApiContactSpecificationWebsite), typeDiscriminator: nameof(ApiContactSpecificationTypes.Website))]
 [JsonDerivedType(typeof(ApiContactSpecificationPaypal), typeDiscriminator: nameof(ApiContactSpecificationTypes.Paypal))]
-public class ApiContactSpecification : ApiBaseEntity
+public class ApiContactSpecification : ApiBaseEntityWithId
 {
     
 }

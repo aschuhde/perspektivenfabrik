@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class LocationSpecificationDto : BaseEntityDto
+public class LocationSpecificationDto : BaseEntityWithIdDto
 {
     
 }

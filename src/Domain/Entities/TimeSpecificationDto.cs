@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class TimeSpecificationDto : BaseEntityDto
+public class TimeSpecificationDto : BaseEntityWithIdDto
 {
     
 }

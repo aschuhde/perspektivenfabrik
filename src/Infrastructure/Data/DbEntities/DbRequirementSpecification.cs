@@ -3,7 +3,7 @@
 namespace Infrastructure.Data.DbEntities;
 
 [Table("RequirementSpecifications")]
-public class DbRequirementSpecification : DbEntity
+public class DbRequirementSpecification : DbEntityWithId
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
     public List<DbTimeSpecificationRequirementConnection>? TimeSpecifications { get; set; }

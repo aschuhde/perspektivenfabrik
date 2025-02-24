@@ -5,7 +5,7 @@ using Infrastructure.Data.DbDataTypes;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("GraphicsSpecifications")]
-public sealed class DbGraphicsSpecification : DbEntity
+public sealed class DbGraphicsSpecification : DbEntityWithId
 {
     public required GraphicsType Type { get; init; }
     public required DbGraphicsContent Content { get; init; }

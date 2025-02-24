@@ -3,7 +3,7 @@
 namespace Infrastructure.Data.DbEntities;
 
 [Table("ProjectTags")]
-public sealed class DbProjectTag : DbEntity
+public sealed class DbProjectTag : DbEntityWithId
 {
     public required string TagName { get; init; }
 }

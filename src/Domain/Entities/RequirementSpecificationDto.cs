@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class RequirementSpecificationDto : BaseEntityDto
+public class RequirementSpecificationDto : BaseEntityWithIdDto
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
     public required TimeSpecificationDto[] TimeSpecifications { get; init; }

@@ -43,14 +43,14 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             .FirstOrDefault();
     }
     
-    private void UpdateRelatedEntityWithHistory<T1, T2>(T1? entity, T1? existingEntity, Func<T1, T2> onGetDbEntity) 
-        where T1 : BaseEntityDto where T2 : class
+    private void UpdateRelatedEntity<T1, T2>(T1? entity, T1? existingEntity, Func<T1, T2> onGetDbEntity) 
+        where T1 : BaseEntityWithIdDto where T2 : class
     {
         if (existingEntity == null && entity == null)
         {
             return;
         }
-        UpdateHistory(entity?.History, existingEntity?.History);
+        
         if (existingEntity == null)
         {
             dbContext.Add(onGetDbEntity(entity!));    
@@ -64,32 +64,6 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             else
             {
                 dbContext.Update(onGetDbEntity(entity));
-            }
-        }
-    }
-
-    private void UpdateHistoryItems(ModificationHistoryDto? history, ModificationHistoryDto? existingHistory)
-    {
-        var historyItems = history?.HistoryItems ?? [];
-        var existingHistoryItems = existingHistory?.HistoryItems ?? [];
-        foreach (var historyItem in historyItems)
-        {
-            var existingHistoryItem = existingHistoryItems.FirstOrDefault(x => x.EntityId == historyItem.EntityId);
-
-            if (existingHistoryItem == null)
-            {
-                dbContext.Add(historyItem.ToDbHistoryItem(history!));    
-            }
-            else
-            {
-                dbContext.Update(historyItem.ToDbHistoryItem(history!));
-            }
-        }
-        foreach (var existingHistoryItem in existingHistoryItems)
-        {
-            if (historyItems.All(x => x.EntityId != existingHistoryItem.EntityId))
-            {
-                dbContext.Remove(existingHistoryItem.ToDbHistoryItem(existingHistory!));
             }
         }
     }
@@ -114,14 +88,14 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         
         dbContext.Update(history.ToDbHistory());
     }
-    private void UpdateRelatedEntitiesWithHistory<T1, T2>(T1[] entities, T1[]? existingEntities, Func<T1, T2> onGetDbEntity) 
-        where T1 : BaseEntityDto where T2 : class
+    private void UpdateRelatedEntities<T1, T2>(T1[] entities, T1[]? existingEntities,
+        Func<T1, T2> onGetDbEntity)
+        where T1 : BaseEntityWithIdDto where T2 : class
     {
         foreach (var entity in entities)
         {
             var existingEntity = existingEntities?.FirstOrDefault(x => x.EntityId == entity.EntityId);
-
-            UpdateHistory(entity.History, existingEntity?.History);
+            
             if (existingEntity == null)
             {
                 dbContext.Add(onGetDbEntity(entity));    
@@ -133,14 +107,12 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         }
         foreach (var existingEntity in existingEntities ?? [])
         {
-            UpdateHistory(null, existingEntity.History);
             if (entities.All(x => x.EntityId != existingEntity.EntityId))
             {
                 dbContext.Remove(onGetDbEntity(existingEntity));
             }
         }
     }
-    
 
     public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct)
     {
@@ -153,10 +125,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         {
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications ?? []);
             SaveTimeSpecification(project.TimeSpecifications, existingProject?.TimeSpecifications ?? []);
-            UpdateRelatedEntitiesWithHistory(project.LocationSpecifications, existingProject?.LocationSpecifications, x => x.ToDbLocationSpecification());
-            UpdateRelatedEntitiesWithHistory(project.ContactSpecifications, existingProject?.ContactSpecifications, x => x.ToDbContactSpecification());
+            UpdateRelatedEntities(project.LocationSpecifications, existingProject?.LocationSpecifications, x => x.ToDbLocationSpecification());
+            UpdateRelatedEntities(project.ContactSpecifications, existingProject?.ContactSpecifications, x => x.ToDbContactSpecification());
             SaveDescriptionSpecification(project.DescriptionSpecifications, existingProject?.DescriptionSpecifications ?? []);
-            UpdateRelatedEntitiesWithHistory(project.GraphicsSpecifications, existingProject?.GraphicsSpecifications, x => x.ToDbGraphicsSpecification());
+            UpdateRelatedEntities(project.GraphicsSpecifications, existingProject?.GraphicsSpecifications, x => x.ToDbGraphicsSpecification());
             AddOrUpdateWithHistory(project, null, x => x.ToDbProject());
             await dbContext.SaveChangesAsync(ctInner);
             await transaction.CommitAsync(ctInner);
@@ -178,50 +150,49 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
             SaveTimeSpecification(entity.TimeSpecifications, existingEntity?.TimeSpecifications ?? []);
             
-            AddOrUpdateWithHistory(entity.QuantitySpecification, existingEntity?.QuantitySpecification, x => x.ToDbQuantitySpecification());
+            AddOrUpdate(entity.QuantitySpecification, existingEntity?.QuantitySpecification, x => x.ToDbQuantitySpecification());
             if (entity is RequirementSpecificationDtoMaterial requirementSpecificationDtoMaterial)
             {
-                UpdateRelatedEntitiesWithHistory(requirementSpecificationDtoMaterial.MaterialSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.MaterialSpecifications, x => x.ToDbMaterialSpecification());
-                UpdateRelatedEntitiesWithHistory(requirementSpecificationDtoMaterial.LocationSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.LocationSpecifications, x => x.ToDbLocationSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoMaterial.MaterialSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.MaterialSpecifications, x => x.ToDbMaterialSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoMaterial.LocationSpecifications, (existingEntity as RequirementSpecificationDtoMaterial)?.LocationSpecifications, x => x.ToDbLocationSpecification());
             }
 
             if (entity is RequirementSpecificationDtoPerson requirementSpecificationDtoPerson)
             {
-                UpdateRelatedEntitiesWithHistory(requirementSpecificationDtoPerson.SkillSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.SkillSpecifications, x => x.ToDbSkillSpecification());
-                UpdateRelatedEntityWithHistory(requirementSpecificationDtoPerson.WorkAmountSpecification, (existingEntity as RequirementSpecificationDtoPerson)?.WorkAmountSpecification, x => x.ToDbWorkAmountSpecification());
-                UpdateRelatedEntitiesWithHistory(requirementSpecificationDtoPerson.LocationSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.LocationSpecifications, x => x.ToDbLocationSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoPerson.SkillSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.SkillSpecifications, x => x.ToDbSkillSpecification());
+                UpdateRelatedEntity(requirementSpecificationDtoPerson.WorkAmountSpecification, (existingEntity as RequirementSpecificationDtoPerson)?.WorkAmountSpecification, x => x.ToDbWorkAmountSpecification());
+                UpdateRelatedEntities(requirementSpecificationDtoPerson.LocationSpecifications, (existingEntity as RequirementSpecificationDtoPerson)?.LocationSpecifications, x => x.ToDbLocationSpecification());
             }
-            AddOrUpdateWithHistory(entity, existingEntity, x => x.ToDbRequirementSpecification());
+            AddOrUpdate(entity, existingEntity, x => x.ToDbRequirementSpecification());
         }
         foreach (var existingEntity in existingRequirementSpecifications ?? [])
         {
             if (requirementSpecifications.All(x => x.EntityId != existingEntity.EntityId))
             {
                 SaveTimeSpecification([], existingEntity.TimeSpecifications);
-                RemoveWithHistory(existingEntity.QuantitySpecification, x => x.ToDbQuantitySpecification());
+                Remove(existingEntity.QuantitySpecification, x => x.ToDbQuantitySpecification());
                 
                 
                 if (existingEntity is RequirementSpecificationDtoMaterial requirementSpecificationDtoMaterial)
                 {
-                    UpdateRelatedEntitiesWithHistory([], requirementSpecificationDtoMaterial.MaterialSpecifications, x => x.ToDbMaterialSpecification());
-                    UpdateRelatedEntitiesWithHistory([], requirementSpecificationDtoMaterial.LocationSpecifications, x => x.ToDbLocationSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoMaterial.MaterialSpecifications, x => x.ToDbMaterialSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoMaterial.LocationSpecifications, x => x.ToDbLocationSpecification());
                 }
                 
                 if (existingEntity is RequirementSpecificationDtoPerson requirementSpecificationDtoPerson)
                 {
-                    UpdateRelatedEntitiesWithHistory([], requirementSpecificationDtoPerson.SkillSpecifications, x => x.ToDbSkillSpecification());
-                    UpdateRelatedEntityWithHistory(null, requirementSpecificationDtoPerson.WorkAmountSpecification, x => x.ToDbWorkAmountSpecification());
-                    UpdateRelatedEntitiesWithHistory([], requirementSpecificationDtoPerson.LocationSpecifications, x => x.ToDbLocationSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoPerson.SkillSpecifications, x => x.ToDbSkillSpecification());
+                    UpdateRelatedEntity(null, requirementSpecificationDtoPerson.WorkAmountSpecification, x => x.ToDbWorkAmountSpecification());
+                    UpdateRelatedEntities([], requirementSpecificationDtoPerson.LocationSpecifications, x => x.ToDbLocationSpecification());
                 }
-                RemoveWithHistory(existingEntity, x => x.ToDbRequirementSpecification());
+                Remove(existingEntity, x => x.ToDbRequirementSpecification());
             }
         }
     }
 
-    private void RemoveWithHistory<T1, T2>(T1 entity, Func<T1, T2> toDbEntity)
-        where T1 : BaseEntityDto where T2 : class
+    private void Remove<T1, T2>(T1 entity, Func<T1, T2> toDbEntity)
+        where T1 : BaseEntityWithIdDto where T2 : class
     {
-        UpdateHistory(null, entity.History);
         dbContext.Remove(toDbEntity(entity));
     }
 
@@ -233,10 +204,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
             if (entity is TimeSpecificationDtoPeriod timeSpecificationDtoPeriod)
             {
-                AddOrUpdateWithHistory(timeSpecificationDtoPeriod.Start, (existingEntity as TimeSpecificationDtoPeriod)?.Start, x => x.ToDbTimeSpecificationMoment());
-                AddOrUpdateWithHistory(timeSpecificationDtoPeriod.End, (existingEntity as TimeSpecificationDtoPeriod)?.End, x => x.ToDbTimeSpecificationMoment());
+                AddOrUpdate(timeSpecificationDtoPeriod.Start, (existingEntity as TimeSpecificationDtoPeriod)?.Start, x => x.ToDbTimeSpecificationMoment());
+                AddOrUpdate(timeSpecificationDtoPeriod.End, (existingEntity as TimeSpecificationDtoPeriod)?.End, x => x.ToDbTimeSpecificationMoment());
             }
-            AddOrUpdateWithHistory(entity, existingEntity, x => x.ToDbTimeSpecification());
+            AddOrUpdate(entity, existingEntity, x => x.ToDbTimeSpecification());
         }
         foreach (var existingEntity in existingTimeSpecifications ?? [])
         {
@@ -244,11 +215,11 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             {
                 if (existingEntity is TimeSpecificationDtoPeriod timeSpecificationDtoPeriod)
                 {
-                    RemoveWithHistory(timeSpecificationDtoPeriod.Start, x => x.ToDbTimeSpecificationMoment());
-                    RemoveWithHistory(timeSpecificationDtoPeriod.End, x => x.ToDbTimeSpecificationMoment());
+                    Remove(timeSpecificationDtoPeriod.Start, x => x.ToDbTimeSpecificationMoment());
+                    Remove(timeSpecificationDtoPeriod.End, x => x.ToDbTimeSpecificationMoment());
                 }
 
-                RemoveWithHistory(existingEntity, x => x.ToDbTimeSpecification());
+                Remove(existingEntity, x => x.ToDbTimeSpecification());
             }
         }
     }
@@ -258,22 +229,28 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         foreach (var entity in descriptionSpecifications)
         {
             var existingEntity = existingDescriptionSpecifications?.FirstOrDefault(x => x.EntityId == entity.EntityId);
-
-            UpdateHistory(entity.Type.History, existingEntity?.Type.History);
-            AddOrUpdateWithHistory(entity, existingEntity, x => x.ToDbDescriptionSpecification());
+            
+            AddOrUpdate(entity, existingEntity, x => x.ToDbDescriptionSpecification());
         }
         foreach (var existingEntity in existingDescriptionSpecifications ?? [])
         {
             if (descriptionSpecifications.All(x => x.EntityId != existingEntity.EntityId))
             {
-                UpdateHistory(null, existingEntity.Type.History);
-                RemoveWithHistory(existingEntity, x => x.ToDbDescriptionSpecification());
+                Remove(existingEntity, x => x.ToDbDescriptionSpecification());
             }
         }
     }
 
+    private void AddOrUpdate<T1, T2>(T1? entity, T1? existingEntity, Func<T1, T2> toDbEntity)
+    where T1 : BaseEntityWithIdDto where T2 : class
+    {
+        if (entity != null)
+        {
+            dbContext.AddOrUpdate(toDbEntity(entity), existingEntity != null);
+        }
+    }
     private void AddOrUpdateWithHistory<T1, T2>(T1? entity, T1? existingEntity, Func<T1, T2> toDbEntity)
-    where T1 : BaseEntityDto where T2 : class
+        where T1 : BaseEntityDto where T2 : class
     {
         UpdateHistory(entity?.History, existingEntity?.History);
         if (entity != null)

@@ -4,7 +4,7 @@ using Infrastructure.Data.DbDataTypes;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("ContactSpecifications")]
-public class DbContactSpecification : DbEntity
+public class DbContactSpecification : DbEntityWithId
 {
     
 }

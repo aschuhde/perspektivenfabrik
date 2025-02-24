@@ -6,6 +6,11 @@ namespace Application.Updaters;
 
 public static class BaseUpdater
 {
+    public static void PrepareBaseEntity(this ApiBaseEntityWithId entity, BaseEntityWithIdDto? existingItem,
+        EntityUpdatingContext updatingContext)
+    {
+        
+    }
     public static void PrepareBaseEntity(this ApiBaseEntity entity, BaseEntityDto? existingItem, EntityUpdatingContext updatingContext)
     {
         var isCreating = updatingContext.IsCreating;

@@ -4,7 +4,7 @@ using Infrastructure.Data.DbDataTypes;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("DescriptionSpecifications")]
-public sealed class DbDescriptionSpecification : DbEntity
+public sealed class DbDescriptionSpecification : DbEntityWithId
 {
     public required DbDescriptionType Type { get; init; }
     public required DbFormattedContent Content { get; init; }

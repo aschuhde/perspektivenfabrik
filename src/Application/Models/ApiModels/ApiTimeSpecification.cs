@@ -15,7 +15,7 @@ public enum ApiTimeSpecificationTypes
 [JsonDerivedType(typeof(ApiTimeSpecificationDate), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Date))]
 [JsonDerivedType(typeof(ApiTimeSpecificationDateTime), typeDiscriminator: nameof(ApiTimeSpecificationTypes.DateTime))]
 [JsonDerivedType(typeof(ApiTimeSpecificationMonth), typeDiscriminator: nameof(ApiTimeSpecificationTypes.Month))]
-public class ApiTimeSpecification : ApiBaseEntity
+public class ApiTimeSpecification : ApiBaseEntityWithId
 {
     
 }

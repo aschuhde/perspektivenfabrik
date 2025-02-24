@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class ContactSpecificationDto : BaseEntityDto
+public class ContactSpecificationDto : BaseEntityWithIdDto
 {
     
 }

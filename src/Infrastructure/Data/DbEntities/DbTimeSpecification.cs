@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("TimeSpecifications")]
-public class DbTimeSpecification : DbEntity
+public class DbTimeSpecification : DbEntityWithId
 {
     
 }

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public sealed class OrganizationConnectionDto : BaseEntityDto
+public sealed class OrganizationConnectionDto : BaseEntityWithIdDto
 {
     public required OrganizationDto Organization { get; init; }
     public required OrganizationPosition[] OrganizationPositions { get; init; }

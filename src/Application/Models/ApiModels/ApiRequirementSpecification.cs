@@ -12,7 +12,7 @@ public enum ApiRequirementSpecificationTypes
 [JsonDerivedType(typeof(ApiRequirementSpecificationPerson), typeDiscriminator: nameof(ApiRequirementSpecificationTypes.Person))]
 [JsonDerivedType(typeof(ApiRequirementSpecificationMaterial), typeDiscriminator: nameof(ApiRequirementSpecificationTypes.Material))]
 [JsonDerivedType(typeof(ApiRequirementSpecificationMoney), typeDiscriminator: nameof(ApiRequirementSpecificationTypes.Money))]
-public class ApiRequirementSpecification : ApiBaseEntity
+public class ApiRequirementSpecification : ApiBaseEntityWithId
 {
     public required bool TimeSpecificationSameAsProject { get; init; }
     public required ApiTimeSpecification[] TimeSpecifications { get; init; }

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public sealed class MaterialSpecificationDto : BaseEntityDto
+public sealed class MaterialSpecificationDto : BaseEntityWithIdDto
 {
     public required string Name { get; init; }
     public required FormattedContent Title  { get; init; }

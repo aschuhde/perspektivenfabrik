@@ -14,7 +14,7 @@ public enum ApiLocationSpecificationTypes
 [JsonDerivedType(typeof(ApiLocationSpecificationRegion), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Region))]
 [JsonDerivedType(typeof(ApiLocationSpecificationCoordinates), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Coordinates))]
 [JsonDerivedType(typeof(ApiLocationSpecificationAddress), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Address))]
-public class ApiLocationSpecification : ApiBaseEntity
+public class ApiLocationSpecification : ApiBaseEntityWithId
 {
     
 }

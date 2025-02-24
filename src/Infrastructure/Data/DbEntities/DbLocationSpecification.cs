@@ -4,7 +4,7 @@ using Infrastructure.Data.DbDataTypes;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("LocationSpecifications")]
-public class DbLocationSpecification : DbEntity
+public class DbLocationSpecification : DbEntityWithId
 {
     
 }

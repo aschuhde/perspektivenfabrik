@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Infrastructure.Data.DbEntities;
 
 [Table("QuantitySpecifications")]
-public sealed class DbQuantitySpecification : DbEntity
+public sealed class DbQuantitySpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
     public required string Value { get; init; }
