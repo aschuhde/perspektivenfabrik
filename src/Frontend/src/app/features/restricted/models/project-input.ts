@@ -30,10 +30,12 @@ import {
 import {
   ApplicationModelsApiModelsApiRequirementSpecificationPerson
 } from "../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
+import {ApplicationModelsApiModelsApiProjectTag} from "../../../server/model/applicationModelsApiModelsApiProjectTag";
 
 export declare type ProjectType = "project" | "idea" | "inspiration" | "none";
 
 export class ProjectInput{
+    entityId: string | null = null;
     projectType: ProjectType = "none";
     projectTitle: string = ""
     projectPhase: "unknown" | "planning" | "ongoing" | "finished" | "cancelled" = "unknown";
@@ -93,6 +95,7 @@ export class ProjectInput{
       if (!project) {
         return;
       }
+      this.entityId = project.entityId ?? null;
 
       this.loadProjectTypeFromApi(project.type ?? "Unkown");
 
@@ -141,6 +144,7 @@ export class ProjectInput{
         }));
       }
         return {
+          entityId: this.entityId ?? undefined,
           projectTitle: {
             rawContentString: this.projectTitle
           },
@@ -174,7 +178,9 @@ export class ProjectInput{
           locationSpecifications: this.locations.map(x => x.toLocationSpecification()).filter(x => !!x),
           phase: this.getProjectPhaseForApi(),
           projectName: this.projectName,
-          projectTags: [],
+          projectTags: this.selectedTags.map(x => ObjectCreator.Create<ApplicationModelsApiModelsApiProjectTag>({
+              tagName: x?.text ?? x?.value ?? ""
+          })).filter(x => !!x),
           relatedProjects: [],
           timeSpecifications: this.projectTimes.map(x => x.toTimeSpecification()).filter(x => !!x),
           requirementSpecifications: this.getRequirementSpecifications(),

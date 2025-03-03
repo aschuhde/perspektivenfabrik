@@ -5,7 +5,7 @@ namespace Application.PutProject.PutProject;
 
 public sealed class PutProjectRequest : BaseRequest<PutProjectResponse>
 {
-    public required Guid EntityId { get; init; }
+    public Guid EntityId { get; init; } = Guid.Empty;
     
     public required ApiProjectBody Project { get; init; }
 }

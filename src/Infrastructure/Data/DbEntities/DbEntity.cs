@@ -38,4 +38,9 @@ public sealed class DbModificationHistoryConnection
     public DbModificationHistory? History { get; set; }
     [ForeignKey(nameof(History))]
     public Guid? HistoryId { get; init; }
+
+    public DbModificationHistoryConnection WithoutRelatedEntites()
+    {
+      return new DbModificationHistoryConnection() { HistoryId = HistoryId, };
+    }
 }

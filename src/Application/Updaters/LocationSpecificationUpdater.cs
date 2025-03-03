@@ -11,8 +11,8 @@ public static class LocationSpecificationUpdater
     {
         entity.PrepareBaseEntity(existingItem, updatingContext);
         
-        if(updatingContext.IsCreating)
-            UpdateChanges(entity, existingItem!, updatingContext);
+        if(existingItem != null)
+            UpdateChanges(entity, existingItem, updatingContext);
     }
     
     private static void UpdateChanges(this ApiLocationSpecification entity, LocationSpecificationDto existingItem,

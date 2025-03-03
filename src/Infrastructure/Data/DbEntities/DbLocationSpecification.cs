@@ -6,7 +6,7 @@ namespace Infrastructure.Data.DbEntities;
 [Table("LocationSpecifications")]
 public class DbLocationSpecification : DbEntityWithId
 {
-    
+  
 }
 
 public sealed class DbLocationSpecificationRemote : DbLocationSpecification
@@ -38,6 +38,16 @@ public sealed class DbLocationSpecificationProjectConnection : DbEntityWithId
     [ForeignKey(nameof(LocationSpecification))]
     public required Guid LocationSpecificationId { get; init; }
     public DbLocationSpecification? LocationSpecification { get; init; }
+    
+    public DbLocationSpecificationProjectConnection WithoutRelatedEntites()
+    {
+      return new DbLocationSpecificationProjectConnection
+      {
+        EntityId = this.EntityId,
+        ProjectId = this.ProjectId,
+        LocationSpecificationId = this.LocationSpecificationId
+      };
+    }
 }
 
 [Table("LocationSpecificationRequirementConnections")]
@@ -49,4 +59,14 @@ public sealed class DbLocationSpecificationRequirementConnection : DbEntityWithI
     [ForeignKey(nameof(LocationSpecification))]
     public required Guid LocationSpecificationId { get; init; }
     public DbLocationSpecification? LocationSpecification { get; init; }
+    
+    public DbLocationSpecificationRequirementConnection WithoutRelatedEntites()
+    {
+      return new DbLocationSpecificationRequirementConnection
+      {
+        EntityId = this.EntityId,
+        RequirementSpecificationId = this.RequirementSpecificationId,
+        LocationSpecificationId = this.LocationSpecificationId
+      };
+    }
 }

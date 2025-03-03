@@ -44,6 +44,7 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
             UserCanChangeMetadata = userCanChangeMetadata,
             HasChanged = false
         };
+        
         command.Project.PrepareEntityForNewProject(creationContext);
         var projectDto = command.Project.ToProject();
         

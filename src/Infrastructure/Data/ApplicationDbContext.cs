@@ -10,13 +10,21 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbUser> Users { get; init; }
     public required DbSet<DbUserRefreshTokens> UserRefreshTokens { get; init; }
     public required DbSet<DbProject> Projects { get; init; }
+    public required DbSet<DbProjectConnection> ProjectsConnections { get; init; }
     public required DbSet<DbOrganization> Organizations { get; init; }
+    public required DbSet<DbOrganizationProjectConnection> OrganizationProjectConnections { get; init; }
     public required DbSet<DbContactSpecification> ContactSpecifications { get; init; }
+    public required DbSet<DbContactSpecificationProjectConnection> ContactSpecificationsProjectConnections { get; init; }
     public required DbSet<DbDescriptionSpecification> DescriptionSpecifications { get; init; }
+    public required DbSet<DbDescriptionSpecificationProjectConnection> DescriptionSpecificationProjectConnections { get; init; }
     public required DbSet<DbDescriptionType> DescriptionTypes { get; init; }
     public required DbSet<DbGraphicsSpecification> GraphicsSpecifications { get; init; }
+    public required DbSet<DbGraphicsSpecificationProjectConnection> GraphicsSpecificationProjectConnections { get; init; }
     public required DbSet<DbLocationSpecification> LocationSpecifications { get; init; }
+    public required DbSet<DbLocationSpecificationProjectConnection> LocationSpecificationProjectConnections { get; init; }
+    public required DbSet<DbLocationSpecificationRequirementConnection> LocationSpecificationRequirementConnections { get; init; }
     public required DbSet<DbMaterialSpecification> MaterialSpecifications { get; init; }
+    public required DbSet<DbMaterialSpecificationRequirementConnection> MaterialSpecificationRequirementConnections { get; init; }
     public required DbSet<DbModificationHistory> Histories { get; init; }
     public required DbSet<DbOrganizationConnection> OrganizationConnections { get; init; }
     public required DbSet<DbOrganizationPositionConnection> OrganizationPositionConnections { get; init; }
@@ -24,11 +32,18 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbPersonProjectContributorConnection> PersonProjectContributorConnections { get; init; }
     public required DbSet<DbProjectConnection> ProjectConnections { get; init; }
     public required DbSet<DbProjectTag> ProjectTags { get; init; }
+    public required DbSet<DbProjectTagConnection> ProjectTagConnections { get; init; }
     public required DbSet<DbQuantitySpecification> QuantitySpecifications { get; init; }
+    public required DbSet<DbQuantitySpecificationRequirementConnection> QuantitySpecificationRequirementConnections { get; init; }
     public required DbSet<DbRequirementSpecification> RequirementSpecifications { get; init; }
+    public required DbSet<DbRequirementSpecificationProjectConnection> RequirementSpecificationProjectConnections { get; init; }
     public required DbSet<DbSkillSpecification> SkillSpecifications { get; init; }
+    public required DbSet<DbSkillSpecificationRequirementConnection> SkillSpecificationRequirementConnections { get; init; }
     public required DbSet<DbTimeSpecification> TimeSpecifications { get; init; }
+    public required DbSet<DbTimeSpecificationProjectConnection> TimeSpecificationProjectConnections { get; init; }
+    public required DbSet<DbTimeSpecificationRequirementConnection> TimeSpecificationRequirementConnections { get; init; }
     public required DbSet<DbWorkAmountSpecification> WorkAmountSpecifications { get; init; }
+    public required DbSet<DbWorkAmountSpecificationRequirementConnection> WorkAmountSpecificationRequirementConnections { get; init; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -6,4 +6,9 @@ namespace Infrastructure.Data.DbEntities;
 public class DbModificationHistory : DbEntityWithId
 {
     public List<DbModificationHistoryItem>? HistoryItems { get; set; }
+
+    public DbModificationHistory WithoutRelatedEntites()
+    {
+      return new DbModificationHistory() { EntityId = this.EntityId };
+    }
 }

@@ -57,4 +57,12 @@ public sealed class DbContactSpecificationProjectConnection : DbEntityWithId
     [ForeignKey(nameof(ContactSpecification))]
     public required Guid ContactSpecificationId { get; init; }
     public DbContactSpecification? ContactSpecification { get; init; }
+
+    public DbContactSpecificationProjectConnection WithoutRelatedEntites()
+    {
+      return new DbContactSpecificationProjectConnection()
+      {
+        ProjectId = this.ProjectId, ContactSpecificationId = this.ContactSpecificationId, EntityId = this.EntityId
+      };
+    }
 }

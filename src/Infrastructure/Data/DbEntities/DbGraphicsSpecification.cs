@@ -20,4 +20,12 @@ public sealed class DbGraphicsSpecificationProjectConnection : DbEntityWithId
     [ForeignKey(nameof(GraphicsSpecification))]
     public required Guid GraphicsSpecificationId { get; init; }
     public DbGraphicsSpecification? GraphicsSpecification { get; init; }
+
+    public DbGraphicsSpecificationProjectConnection WithoutRelatedEntites()
+    {
+      return new DbGraphicsSpecificationProjectConnection()
+      {
+        ProjectId = ProjectId, GraphicsSpecificationId = GraphicsSpecificationId, EntityId = EntityId
+      };
+    }
 }

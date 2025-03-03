@@ -9,8 +9,8 @@ public static class ContactSpecificationUpdater
         ContactSpecificationDto? existingItem,
         EntityUpdatingContext updatingContext)
     {
-        if(updatingContext.IsCreating)
-            UpdateChanges(entity, existingItem!, updatingContext);
+        if(existingItem != null)
+            UpdateChanges(entity, existingItem, updatingContext);
         
         entity.PrepareBaseEntity(existingItem, updatingContext);
     }

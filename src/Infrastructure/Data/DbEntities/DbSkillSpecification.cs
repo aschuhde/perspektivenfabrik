@@ -22,4 +22,14 @@ public sealed class DbSkillSpecificationRequirementConnection : DbEntityWithId
     [ForeignKey(nameof(SkillSpecification))]
     public required Guid SkillSpecificationId { get; init; }
     public DbSkillSpecification? SkillSpecification { get; init; }
+
+    public DbSkillSpecificationRequirementConnection WithoutRelatedEntites()
+    {
+      return new DbSkillSpecificationRequirementConnection()
+      {
+        EntityId = this.EntityId,
+        SkillSpecificationId = this.SkillSpecificationId,
+        RequirementSpecificationId = this.RequirementSpecificationId
+      };
+    }
 }

@@ -24,4 +24,14 @@ public sealed class DbMaterialSpecificationRequirementConnection : DbEntityWithI
     [ForeignKey(nameof(MaterialSpecification))]
     public required Guid MaterialSpecificationId { get; init; }
     public DbMaterialSpecification? MaterialSpecification { get; init; }
+
+    public DbMaterialSpecificationRequirementConnection WithoutRelatedEntites()
+    {
+      return new DbMaterialSpecificationRequirementConnection()
+      {
+        EntityId = this.EntityId,
+        MaterialSpecificationId = this.MaterialSpecificationId,
+        RequirementSpecificationId = this.RequirementSpecificationId
+      };
+    }
 }

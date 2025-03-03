@@ -38,6 +38,7 @@ export class UpdateProjectPageComponent {
   async sendRequest(){
     this.apiService.webApiEndpointsPutProject({
       project: await this.projectInput.buildRequest(),
+        
     }, this.projectIdentifier).subscribe(x => {
       console.log("saved");
     });

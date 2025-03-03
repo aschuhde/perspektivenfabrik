@@ -8,6 +8,7 @@ public sealed class DbDescriptionSpecification : DbEntityWithId
 {
     public required DbDescriptionType Type { get; init; }
     public required DbFormattedContent Content { get; init; }
+    
 }
 
 [Table("DescriptionSpecificationProjectConnections")]
@@ -19,4 +20,12 @@ public sealed class DbDescriptionSpecificationProjectConnection : DbEntityWithId
     [ForeignKey(nameof(DescriptionSpecification))]
     public required Guid DescriptionSpecificationId { get; init; }
     public DbDescriptionSpecification? DescriptionSpecification { get; init; }
+
+    public DbDescriptionSpecificationProjectConnection WithoutRelatedEntites()
+    {
+      return new DbDescriptionSpecificationProjectConnection()
+      {
+        ProjectId = ProjectId, DescriptionSpecificationId = DescriptionSpecificationId, EntityId = EntityId
+      };
+    }
 }

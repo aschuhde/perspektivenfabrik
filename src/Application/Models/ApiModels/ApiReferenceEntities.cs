@@ -16,4 +16,9 @@ public sealed class ApiProjectReference
 public sealed class ApiPersonReference
 {
     public required Guid PersonEntityId { get; init; }
+    
+    public static ApiPersonReference WithUserId(Guid userId) => new ()
+    {
+      PersonEntityId = userId
+    };
 }

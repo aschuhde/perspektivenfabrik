@@ -7,13 +7,18 @@ namespace Infrastructure.Data.DbEntities;
 [Table("TimeSpecifications")]
 public class DbTimeSpecification : DbEntityWithId
 {
-    
+  
 }
 
 public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 {
-    public required DbTimeSpecificationPeriodStartConnection Start { get; init; }
-    public required DbTimeSpecificationPeriodEndConnection End { get; init; }
+    public DbTimeSpecificationPeriodStartConnection? Start { get; init; }
+    public DbTimeSpecificationPeriodEndConnection? End { get; init; }
+
+    public DbTimeSpecificationPeriod WithoutRelatedEntites()
+    {
+      return new DbTimeSpecificationPeriod() { EntityId = this.EntityId };
+    }
 }
 
 [Owned]
@@ -22,6 +27,11 @@ public sealed class DbTimeSpecificationPeriodStartConnection
     public DbTimeSpecificationMoment? Moment { get; set; }
     [ForeignKey(nameof(Moment))]
     public Guid MomentId { get; set; }
+    
+    public DbTimeSpecificationPeriodStartConnection WithoutRelatedEntites()
+    {
+      return new DbTimeSpecificationPeriodStartConnection() { MomentId = this.MomentId };
+    }
 }
 
 [Owned]
@@ -30,6 +40,11 @@ public sealed class DbTimeSpecificationPeriodEndConnection
     public DbTimeSpecificationMoment? Moment { get; set; }
     [ForeignKey(nameof(Moment))]
     public Guid MomentId { get; set; }
+
+    public DbTimeSpecificationPeriodEndConnection WithoutRelatedEntites()
+    {
+      return new DbTimeSpecificationPeriodEndConnection() { MomentId = this.MomentId };
+    }
 }
 
 public class DbTimeSpecificationMoment : DbTimeSpecification

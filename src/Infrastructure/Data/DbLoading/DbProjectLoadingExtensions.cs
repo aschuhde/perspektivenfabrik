@@ -49,9 +49,9 @@ public static class DbProjectLoadingExtensions
     public static IQueryable<DbProject> IncludeTimeSpecifications(
         this IQueryable<DbProject> query) =>
         query.Include(x => x.TimeSpecifications!).ThenInclude(x => x.TimeSpecification!)
-            .ThenInclude(x => (x as DbTimeSpecificationPeriod)!.Start).ThenInclude(x => x.Moment)
+            .ThenInclude(x => (x as DbTimeSpecificationPeriod)!.Start!).ThenInclude(x => x.Moment)
             .Include(x => x.TimeSpecifications!).ThenInclude(x => x.TimeSpecification!)
-            .ThenInclude(x => (x as DbTimeSpecificationPeriod)!.End).ThenInclude(x => x.Moment);
+            .ThenInclude(x => (x as DbTimeSpecificationPeriod)!.End!).ThenInclude(x => x.Moment);
     
     public static IIncludableQueryable<DbProject, DbRequirementSpecification> IncludeRequirementSpecificationsInner(
         this IQueryable<DbProject> query) =>
@@ -61,10 +61,10 @@ public static class DbProjectLoadingExtensions
     public static IQueryable<DbProject> IncludeRequirementSpecifications(
         this IQueryable<DbProject> query) =>
         query.IncludeRequirementSpecificationsInner().ThenInclude(x => x.TimeSpecifications!)
-            .ThenInclude(x => x.TimeSpecification!).ThenInclude(x => (x as DbTimeSpecificationPeriod)!.Start)
+            .ThenInclude(x => x.TimeSpecification!).ThenInclude(x => (x as DbTimeSpecificationPeriod)!.Start!)
             .ThenInclude(x => x.Moment)
             .IncludeRequirementSpecificationsInner().ThenInclude(x => x.TimeSpecifications!)
-            .ThenInclude(x => x.TimeSpecification!).ThenInclude(x => (x as DbTimeSpecificationPeriod)!.End)
+            .ThenInclude(x => x.TimeSpecification!).ThenInclude(x => (x as DbTimeSpecificationPeriod)!.End!)
             .ThenInclude(x => x.Moment)
             .IncludeRequirementSpecificationsInner().ThenInclude(x => x.QuantitySpecification!)
             .ThenInclude(x => x.QuantitySpecification!)

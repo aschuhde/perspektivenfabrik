@@ -29,7 +29,8 @@ export class RequirementMaterialInput{
                 },
                 description: {
                     rawContentString: x.description
-                }
+                },
+                amountValue: x.amount
             }],            
             timeSpecificationSameAsProject: this.requirementTimeIsIdenticalToProjectTime,
             locationSpecificationsSameAsProject: this.requirementLocationIsIdenticalToProjectLocation,

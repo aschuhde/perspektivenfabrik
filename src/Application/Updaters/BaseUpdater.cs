@@ -9,15 +9,15 @@ public static class BaseUpdater
     public static void PrepareBaseEntity(this ApiBaseEntityWithId entity, BaseEntityWithIdDto? existingItem,
         EntityUpdatingContext updatingContext)
     {
-        
+      entity.EntityId ??= Guid.NewGuid();
     }
     public static void PrepareBaseEntity(this ApiBaseEntity entity, BaseEntityDto? existingItem, EntityUpdatingContext updatingContext)
     {
         var isCreating = updatingContext.IsCreating;
-        if(entity.EntityId == null && !isCreating)
-            return; // entity id required
-        if(!isCreating && entity.EntityId != existingItem!.EntityId)
-            return; // entity id cannot be changed
+        // if(entity.EntityId == null && !isCreating)
+        //     return; // entity id required
+        // if(!isCreating && entity.EntityId != existingItem!.EntityId)
+        //     return; // entity id cannot be changed
         var hasChanged = updatingContext.HasChanged;
 
         entity.History ??= isCreating ? new ApiModificationHistory()
@@ -25,7 +25,8 @@ public static class BaseUpdater
             EntityId = Guid.NewGuid(),
             HistoryItems = [new ApiModificationHistoryItem()
             {
-                HistoryEntryType = HistoryEntryType.Created,
+                EntityId = Guid.NewGuid(),
+                HistoryEntryType = HistoryEntryType.Created
             }],
         } : new ApiModificationHistory()
         {

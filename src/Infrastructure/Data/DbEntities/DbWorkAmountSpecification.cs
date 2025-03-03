@@ -19,4 +19,14 @@ public sealed class DbWorkAmountSpecificationRequirementConnection : DbEntityWit
     [ForeignKey(nameof(WorkAmountSpecification))]
     public required Guid WorkAmountSpecificationId { get; init; }
     public DbWorkAmountSpecification? WorkAmountSpecification { get; init; }
+
+    public DbWorkAmountSpecificationRequirementConnection WithoutRelatedEntites()
+    {
+      return new DbWorkAmountSpecificationRequirementConnection()
+      {
+        EntityId = EntityId,
+        WorkAmountSpecificationId = WorkAmountSpecificationId,
+        RequirementSpecificationPersonId = RequirementSpecificationPersonId
+      };
+    }
 }

@@ -12,12 +12,17 @@ public static partial class MappingExtensions
     [MapperIgnoreSource(nameof(ModificationHistoryDto.HistoryItems))]
     internal static partial DbModificationHistory ToDbHistoryInner(this ModificationHistoryDto historyDto);
     
-    [UserMapping(Default = true)]
+    [UserMapping(Default = false)]
     public static DbModificationHistory ToDbHistory(this ModificationHistoryDto historyDto)
     {
         var h = historyDto.ToDbHistoryInner();
         h.HistoryItems = MappingTools.MapArrayToList(historyDto.HistoryItems, x => x.ToDbHistoryItem(historyDto));
         return h;
+    }
+    [UserMapping(Default = true)]
+    public static DbModificationHistory ToDbHistoryWithoutHistoryItems(this ModificationHistoryDto historyDto)
+    {
+      return historyDto.ToDbHistoryInner();
     }
 
     public static partial ModificationHistoryDto ToHistory(this DbModificationHistory dbHistory);

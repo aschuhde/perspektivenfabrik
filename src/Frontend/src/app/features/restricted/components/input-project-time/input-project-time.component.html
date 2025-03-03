@@ -10,7 +10,7 @@
             </mat-select>
         </mat-form-field>
         @if (projectTimeType === "range"){
-            <app-date-picker-range class="suffix suffix-50" [(startDate)]="startDate" [(endDate)]="startDate"></app-date-picker-range>
+            <app-date-picker-range class="suffix suffix-50" [(startDate)]="startDate" [(endDate)]="endDate"></app-date-picker-range>
         }
         @if (projectTimeType === "date"){
             <app-date-picker class="suffix suffix-50" [(date)]="date"></app-date-picker>

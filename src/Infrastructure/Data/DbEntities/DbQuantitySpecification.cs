@@ -19,4 +19,14 @@ public sealed class DbQuantitySpecificationRequirementConnection : DbEntityWithI
     [ForeignKey(nameof(QuantitySpecification))]
     public required Guid QuantitySpecificationId { get; init; }
     public DbQuantitySpecification? QuantitySpecification { get; init; }
+
+    public DbQuantitySpecificationRequirementConnection WithoutRelatedEntites()
+    {
+      return new DbQuantitySpecificationRequirementConnection()
+      {
+        EntityId = this.EntityId,
+        QuantitySpecificationId = this.QuantitySpecificationId,
+        RequirementSpecificationId = this.RequirementSpecificationId
+      };
+    }
 }
