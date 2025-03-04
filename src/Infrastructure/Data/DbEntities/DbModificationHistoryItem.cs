@@ -17,4 +17,16 @@ public class DbModificationHistoryItem : DbEntityWithId
     public string? Message { get; init; }
     [MaxLength(StringLengths.Medium)]
     public string HistoryEntryType { get; set; } = Domain.Enums.HistoryEntryType.Unknown.ToString();
+
+    public DbModificationHistoryItem WithoutRelatedEntites()
+    {
+        return new DbModificationHistoryItem()
+        {
+            HistoryId = HistoryId,
+            Timestamp = Timestamp,
+            Message = Message,
+            HistoryEntryType = HistoryEntryType,
+            EntityId = EntityId
+        };
+    }
 }

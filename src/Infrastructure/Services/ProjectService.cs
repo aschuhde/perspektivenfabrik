@@ -132,26 +132,26 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
     private void UpdateHistoryItems(ModificationHistoryDto? history, DbModificationHistory? existingHistory)
     {
-        var historyItems = history?.HistoryItems ?? [];
-        var existingHistoryItems = existingHistory?.HistoryItems ?? [];
+        var historyItems = history?.HistoryItems?.ToArray() ?? [];
+        var existingHistoryItems = existingHistory?.HistoryItems?.ToArray() ?? [];
         foreach (var historyItem in historyItems)
         {
             var existingHistoryItem = existingHistoryItems.FirstOrDefault(x => x.EntityId == historyItem.EntityId);
 
             if (existingHistoryItem == null)
             {
-                dbContext.Add(historyItem.ToDbHistoryItem(history!));    
+                dbContext.Add(historyItem.ToDbHistoryItem(history!).WithoutRelatedEntites());    
             }
             else
             {
-                dbContext.Update(historyItem.ToDbHistoryItem(history!));
+                dbContext.Update(historyItem.ToDbHistoryItem(history!).WithoutRelatedEntites());
             }
         }
         foreach (var existingHistoryItem in existingHistoryItems)
         {
             if (historyItems.All(x => x.EntityId != existingHistoryItem.EntityId))
             {
-                dbContext.Remove(existingHistoryItem);
+                dbContext.Remove(existingHistoryItem.WithoutRelatedEntites());
             }
         }
     }
@@ -290,8 +290,8 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
         if (entity is TimeSpecificationDtoPeriod timeSpecificationDtoPeriod)
         {
-          AddOrUpdate(timeSpecificationDtoPeriod.Start, existingEntity != null, x => x.ToDbTimeSpecificationMoment());
-          AddOrUpdate(timeSpecificationDtoPeriod.End, existingEntity != null, x => x.ToDbTimeSpecificationMoment());
+          //AddOrUpdate(timeSpecificationDtoPeriod.Start, existingEntity != null, x => x.ToDbTimeSpecificationMoment());
+          //AddOrUpdate(timeSpecificationDtoPeriod.End, existingEntity != null, x => x.ToDbTimeSpecificationMoment());
         }
         AddOrUpdate(entity, existingEntity != null, x => x.ToDbTimeSpecification());
       }
@@ -301,9 +301,9 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         {
           if (onGetExistingEntity(existingEntity) is DbTimeSpecificationPeriod dbTimeSpecificationPeriod)
           {
-            Remove(dbTimeSpecificationPeriod.Start?.WithoutRelatedEntites());
+            //Remove(dbTimeSpecificationPeriod.Start?.WithoutRelatedEntites());
             Remove(dbTimeSpecificationPeriod.Start?.Moment);
-            Remove(dbTimeSpecificationPeriod.End?.WithoutRelatedEntites());
+            //Remove(dbTimeSpecificationPeriod.End?.WithoutRelatedEntites());
             Remove(dbTimeSpecificationPeriod.End?.Moment);
             Remove(dbTimeSpecificationPeriod.WithoutRelatedEntites());
           }
