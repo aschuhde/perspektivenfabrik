@@ -23,7 +23,7 @@ public static class ConnectionUpdateExtensions
       }
       else
       {
-        existingEntity.EntityId = targetConnection.EntityId;
+        // targetConnection.EntityId = existingEntity.EntityId;
       }
     }
     foreach (var connection in connections.ToList())

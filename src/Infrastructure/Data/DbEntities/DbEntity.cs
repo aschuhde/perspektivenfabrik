@@ -7,9 +7,13 @@ namespace Infrastructure.Data.DbEntities;
 public class DbEntity : DbEntityWithId
 {
     public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbEntityPersonCreatedByConnection? CreatedBy { get; set; }
     public DateTimeOffset LastModifiedOn { get; set; } = DateTimeOffset.UtcNow;
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbModificationHistoryConnection? History { get; set; }
 
     public override void UpdateToTarget(DbEntityWithId target)
@@ -52,6 +56,7 @@ public class DbEntity : DbEntityWithId
 public sealed class DbEntityPersonCreatedByConnection
 {
     [ForeignKey(nameof(PersonId))]
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbPerson? Person { get; set; }
     [ForeignKey(nameof(Person))]
     public Guid PersonId { get; set; }
@@ -61,6 +66,7 @@ public sealed class DbEntityPersonCreatedByConnection
 public sealed class DbEntityPersonLastModifiedByConnection
 {
     [ForeignKey(nameof(PersonId))]
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbPerson? Person { get; set; }
     [ForeignKey(nameof(Person))]
     public Guid PersonId { get; set; }
@@ -69,6 +75,7 @@ public sealed class DbEntityPersonLastModifiedByConnection
 [Owned]
 public sealed class DbModificationHistoryConnection
 {
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbModificationHistory? History { get; set; }
     [ForeignKey(nameof(History))]
     public Guid? HistoryId { get; init; }

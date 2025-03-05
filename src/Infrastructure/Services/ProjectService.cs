@@ -186,7 +186,16 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
         existingHistoryConnection.History.UpdateToTarget(history.ToDbHistory());
     }
-
+    private void ConcurrencyFix(){
+      foreach (var entry in dbContext.ChangeTracker.Entries().Where(e => 
+                 e.State == EntityState.Unchanged
+                 && e.References.Any(r =>
+                   r.TargetEntry != null
+                   && r.TargetEntry.State == EntityState.Modified
+                   && r.TargetEntry.Metadata.IsOwned()
+                   && e.Metadata.GetTableName() == r.TargetEntry.Metadata.GetTableName())))
+        entry.State = EntityState.Modified;
+    }
     public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct)
     {
         var existingProject = changeContext.IsCreating
@@ -243,7 +252,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             if (requirementSpecifications.All(x => x.EntityId != existingEntity.EntityId))
             {
                 SaveRequirementTimeSpecifications([], existingEntity.RequirementSpecification?.TimeSpecifications?.ToArray() ?? []);
-                //Remove(existingEntity.RequirementSpecification?.QuantitySpecification?);
+                Remove(existingEntity.RequirementSpecification?.QuantitySpecification);
                 Remove(existingEntity.RequirementSpecification?.QuantitySpecification?.QuantitySpecification);
                 
                 
@@ -259,7 +268,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
                     RemoveRelatedEntity(requirementSpecificationDtoPerson.WorkAmountSpecification, x => x.WorkAmountSpecification!, x => x, x => x);
                     RemoveRelatedEntities(requirementSpecificationDtoPerson.LocationSpecifications?.ToArray() ?? [], x => x.LocationSpecification!, x => x, x => x);
                 }
-                //Remove(existingEntity);
+                Remove(existingEntity);
                 Remove(existingEntity.RequirementSpecification);
             }
         }
@@ -305,18 +314,12 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         {
           if (onGetExistingEntity(existingConnection) is DbTimeSpecificationPeriod dbTimeSpecificationPeriod)
           {
-            //Remove(dbTimeSpecificationPeriod.Start?);
+            Remove(dbTimeSpecificationPeriod.Start);
             Remove(dbTimeSpecificationPeriod.Start?.Moment);
-            //Remove(dbTimeSpecificationPeriod.End?);
+            Remove(dbTimeSpecificationPeriod.End);
             Remove(dbTimeSpecificationPeriod.End?.Moment);
-            Remove(dbTimeSpecificationPeriod);
           }
-          else
-          {
-            Remove(existingConnection);
-          }
-
-          
+          Remove(existingConnection);
           Remove(onGetExistingEntity(existingConnection));
         }
       }
@@ -347,7 +350,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
       {
         if (entities.All(x => x.EntityId != onGetExistingEntity(existingEntityConnection).EntityId))
         {
-          //Remove(onGetConnectionWithoutRelatedEntites(existingEntityConnection));
+          Remove(onGetConnectionWithoutRelatedEntites(existingEntityConnection));
           Remove(onGetEntityWithoutRelatedEntites(onGetExistingEntity(existingEntityConnection)));
         }
       }
@@ -366,7 +369,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         {
             if (descriptionSpecifications.All(x => x.EntityId != existingEntityConnection.DescriptionSpecificationId))
             {
-                //Remove(existingEntityConnection);
+                Remove(existingEntityConnection);
                 Remove(existingEntityConnection.DescriptionSpecification);
             }
         }
