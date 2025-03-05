@@ -12,9 +12,9 @@ public class DbModificationHistoryItem : DbEntityWithId
     
     public DbModificationHistory? History { get; set; }
     
-    public DateTimeOffset Timestamp { get; init; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
     [MaxLength(StringLengths.Largest)]
-    public string? Message { get; init; }
+    public string? Message { get; set; }
     [MaxLength(StringLengths.Medium)]
     public string HistoryEntryType { get; set; } = Domain.Enums.HistoryEntryType.Unknown.ToString();
 
@@ -28,5 +28,24 @@ public class DbModificationHistoryItem : DbEntityWithId
             HistoryEntryType = HistoryEntryType,
             EntityId = EntityId
         };
+    }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbModificationHistoryItem historyItem) return;
+      if (this.HistoryEntryType != historyItem.HistoryEntryType)
+      {
+        this.HistoryEntryType = historyItem.HistoryEntryType;
+      }
+
+      if (this.Message != historyItem.Message)
+      {
+        this.Message = historyItem.Message;
+      }
+
+      if (this.Timestamp != historyItem.Timestamp)
+      {
+        this.Timestamp = historyItem.Timestamp;
+      }
     }
 }

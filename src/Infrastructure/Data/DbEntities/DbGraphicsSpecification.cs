@@ -7,8 +7,18 @@ namespace Infrastructure.Data.DbEntities;
 [Table("GraphicsSpecifications")]
 public sealed class DbGraphicsSpecification : DbEntityWithId
 {
-    public required GraphicsType Type { get; init; }
-    public required DbGraphicsContent Content { get; init; }
+    public required GraphicsType Type { get; set; }
+    public required DbGraphicsContent Content { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbGraphicsSpecification graphicsSpecification) return;
+      if (this.Type != graphicsSpecification.Type)
+      {
+        this.Type = graphicsSpecification.Type;
+      }
+      this.Content.Update(graphicsSpecification.Content);
+    }
 }
 
 [Table("GraphicsSpecificationProjectConnections")]

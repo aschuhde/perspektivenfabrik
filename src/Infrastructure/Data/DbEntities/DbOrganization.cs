@@ -7,7 +7,17 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbOrganization : DbEntity
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbOrganization organization) return;
+      if (this.Name != organization.Name)
+      {
+        this.Name = organization.Name;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 [Table("OrganizationProjectConnections")]

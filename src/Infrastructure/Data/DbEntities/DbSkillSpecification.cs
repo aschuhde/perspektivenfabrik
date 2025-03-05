@@ -8,8 +8,19 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbSkillSpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Name { get; init; }
-    public required DbFormattedContent Title { get; init; }
+    public required string Name { get; set; }
+    public required DbFormattedContent Title { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if( target is not DbSkillSpecification skillSpecification) return;
+      if (this.Name != skillSpecification.Name)
+      {
+        this.Name = skillSpecification.Name;
+      }
+      this.Title.Update(skillSpecification.Title);
+      base.UpdateToTarget(target);
+    }
 }
 
 

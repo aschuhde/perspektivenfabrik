@@ -8,4 +8,9 @@ public class DbEntityWithId
 {
     [Key] 
     public Guid EntityId { get; init; } = Guid.NewGuid();
+
+    public virtual void UpdateToTarget(DbEntityWithId target)
+    {
+      
+    }
 }

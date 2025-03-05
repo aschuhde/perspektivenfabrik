@@ -7,7 +7,16 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbQuantitySpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Value { get; init; }
+    public required string Value { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbQuantitySpecification quantitySpecification) return;
+      if (this.Value != quantitySpecification.Value)
+      {
+        this.Value = quantitySpecification.Value;
+      }
+    }
 }
 
 [Table("QuantitySpecificationRequirementConnections")]

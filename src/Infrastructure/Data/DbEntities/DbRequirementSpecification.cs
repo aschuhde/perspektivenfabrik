@@ -5,7 +5,7 @@ namespace Infrastructure.Data.DbEntities;
 [Table("RequirementSpecifications")]
 public class DbRequirementSpecification : DbEntityWithId
 {
-    public required bool TimeSpecificationSameAsProject { get; init; }
+    public required bool TimeSpecificationSameAsProject { get; set; }
     public List<DbTimeSpecificationRequirementConnection>? TimeSpecifications { get; set; }
     public DbQuantitySpecificationRequirementConnection? QuantitySpecification { get; set; }
 
@@ -17,11 +17,21 @@ public class DbRequirementSpecification : DbEntityWithId
         TimeSpecificationSameAsProject = this.TimeSpecificationSameAsProject
       };
     }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbRequirementSpecification requirementSpecification) return;
+      if (this.TimeSpecificationSameAsProject != requirementSpecification.TimeSpecificationSameAsProject)
+      {
+        this.TimeSpecificationSameAsProject = requirementSpecification.TimeSpecificationSameAsProject;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 public sealed class DbRequirementSpecificationPerson : DbRequirementSpecification
 {
-    public required bool LocationSpecificationsSameAsProject { get; init; }
+    public required bool LocationSpecificationsSameAsProject { get; set; }
     public List<DbSkillSpecificationRequirementConnection>? SkillSpecifications { get; set; }
 
     public DbWorkAmountSpecificationRequirementConnection? WorkAmountSpecification { get; set; }
@@ -36,11 +46,21 @@ public sealed class DbRequirementSpecificationPerson : DbRequirementSpecificatio
         LocationSpecificationsSameAsProject = this.LocationSpecificationsSameAsProject
       };
     }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbRequirementSpecificationPerson requirementSpecification) return;
+      if (this.LocationSpecificationsSameAsProject != requirementSpecification.LocationSpecificationsSameAsProject)
+      {
+        this.LocationSpecificationsSameAsProject = requirementSpecification.LocationSpecificationsSameAsProject;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
-    public required bool LocationSpecificationsSameAsProject { get; init; }
+    public required bool LocationSpecificationsSameAsProject { get; set; }
     public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
     
     public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
@@ -53,6 +73,15 @@ public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecificat
         TimeSpecificationSameAsProject = this.TimeSpecificationSameAsProject,
         LocationSpecificationsSameAsProject = this.LocationSpecificationsSameAsProject
       };
+    }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbRequirementSpecificationMaterial requirementSpecification) return;
+      if (this.LocationSpecificationsSameAsProject != requirementSpecification.LocationSpecificationsSameAsProject)
+      {
+        this.LocationSpecificationsSameAsProject = requirementSpecification.LocationSpecificationsSameAsProject;
+      }
+      base.UpdateToTarget(target);
     }
 }
 

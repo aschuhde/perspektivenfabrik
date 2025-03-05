@@ -54,17 +54,43 @@ public class DbTimeSpecificationMoment : DbTimeSpecification
 
 public sealed class DbTimeSpecificationDate : DbTimeSpecificationMoment
 {
-    public required DateOnly Date { get; init; }
+    public required DateOnly Date { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbTimeSpecificationDate date) return;
+      if (this.Date != date.Date)
+      {
+        this.Date = date.Date;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 public sealed class DbTimeSpecificationDateTime : DbTimeSpecificationMoment
 {
-    public required DateTimeOffset Date { get; init; }
+    public required DateTimeOffset Date { get; set; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbTimeSpecificationDateTime date) return;
+      if (this.Date != date.Date)
+      {
+        this.Date = date.Date;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 public sealed class DbTimeSpecificationMonth : DbTimeSpecificationMoment
 {
     public required DbMonth Month { get; init; }
+    
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbTimeSpecificationMonth date) return;
+      this.Month.Update(date.Month);
+      base.UpdateToTarget(target);
+    }
 }
 
 [Table("TimeSpecificationProjectConnections")]

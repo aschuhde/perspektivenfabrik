@@ -8,7 +8,13 @@ public sealed class DbDescriptionSpecification : DbEntityWithId
 {
     public required DbDescriptionType Type { get; init; }
     public required DbFormattedContent Content { get; init; }
-    
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbDescriptionSpecification descriptionSpecification) return;
+      this.Type.UpdateToTarget(descriptionSpecification.Type);
+      this.Content.Update(descriptionSpecification.Content);
+    }
 }
 
 [Table("DescriptionSpecificationProjectConnections")]

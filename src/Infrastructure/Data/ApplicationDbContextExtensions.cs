@@ -1,16 +1,19 @@
+using Infrastructure.Data.DbEntities;
+
 namespace Infrastructure.Data;
 
 public static class ApplicationDbContextExtensions
 {
-    public static void AddOrUpdate<TEntity>(this ApplicationDbContext dbContext, TEntity entity, bool entityExists)
+    public static void AddOrUpdate<TEntity>(this ApplicationDbContext dbContext, TEntity? entity, TEntity? existingEntity)
+    where TEntity : DbEntityWithId
     {
         if (entity == null)
         {
             return;
         }
-        if (entityExists)
+        if (existingEntity != null)
         {
-            dbContext.Update(entity);
+            existingEntity.UpdateToTarget(entity);
         }
         else
         {

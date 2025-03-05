@@ -7,7 +7,16 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbWorkAmountSpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Value { get; init; }
+    public required string Value { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbWorkAmountSpecification workAmountSpecification) return;
+      if (this.Value != workAmountSpecification.Value)
+      {
+        this.Value = workAmountSpecification.Value;
+      }
+    }
 }
 
 [Table("WorkAmountSpecificationRequirementConnections")]

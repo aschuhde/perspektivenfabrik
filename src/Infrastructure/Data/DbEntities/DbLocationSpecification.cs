@@ -12,21 +12,41 @@ public class DbLocationSpecification : DbEntityWithId
 public sealed class DbLocationSpecificationRemote : DbLocationSpecification
 {
     public required DbUrl Link { get; init; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbLocationSpecificationRemote remote) return;
+      this.Link.Update(remote.Link);
+    }
 }
 
 public sealed class DbLocationSpecificationRegion : DbLocationSpecification
 {
     public required DbRegion Region { get; init; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbLocationSpecificationRegion targetEntity) return;
+      this.Region.Update(targetEntity.Region);
+    }
 }
 
 public sealed class DbLocationSpecificationCoordinates : DbLocationSpecification
 {
     public required DbCoordinates Coordinates { get; init; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbLocationSpecificationCoordinates targetEntity) return;
+      this.Coordinates.Update(targetEntity.Coordinates);
+    }
 }
 
 public sealed class DbLocationSpecificationAddress : DbLocationSpecification
 {
     public required DbPostalAddress PostalAddress { get; init; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbLocationSpecificationAddress targetEntity) return;
+      this.PostalAddress.Update(targetEntity.PostalAddress);
+    }
 }
 
 [Table("LocationSpecificationProjectConnections")]

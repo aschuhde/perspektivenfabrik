@@ -10,8 +10,28 @@ public sealed class DbUserRefreshTokens : DbEntity
     public required Guid UserId { get; init; }
     
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string RefreshToken { get; init; }
+    public required string RefreshToken { get; set; }
     
-    public required DateTimeOffset AbsoluteExpirationUtc { get; init; }
-    public required bool Active { get; init; }
+    public required DateTimeOffset AbsoluteExpirationUtc { get; set; }
+    public required bool Active { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if (target is not DbUserRefreshTokens userRefreshToken) return;
+      if (this.RefreshToken != userRefreshToken.RefreshToken)
+      {
+        this.RefreshToken = userRefreshToken.RefreshToken;
+      }
+
+      if (this.AbsoluteExpirationUtc != userRefreshToken.AbsoluteExpirationUtc)
+      {
+        this.AbsoluteExpirationUtc = userRefreshToken.AbsoluteExpirationUtc;
+      }
+
+      if (this.Active != userRefreshToken.Active)
+      {
+        this.Active = userRefreshToken.Active;
+      }
+      base.UpdateToTarget(target);
+    }
 }

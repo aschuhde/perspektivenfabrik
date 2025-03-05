@@ -7,5 +7,13 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbRegion
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string RegionName { get; init; }
+    public required string RegionName { get; set; }
+
+    public void Update(DbRegion targetEntityRegion)
+    {
+      if (this.RegionName != targetEntityRegion.RegionName)
+      {
+        this.RegionName = targetEntityRegion.RegionName;
+      }
+    }
 }

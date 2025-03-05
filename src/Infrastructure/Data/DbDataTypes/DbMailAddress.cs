@@ -6,4 +6,12 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbMailAddress
 {
     public required string Mail { get; set; }
+
+    public void Update(DbMailAddress targetEntity)
+    {
+      if (this.Mail != targetEntity.Mail)
+      {
+        this.Mail = targetEntity.Mail;
+      }
+    }
 }

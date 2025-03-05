@@ -6,12 +6,25 @@ namespace Infrastructure.Data.DbEntities;
 
 public class DbEntity : DbEntityWithId
 {
-    public DateTimeOffset CreatedOn { get; init; } = DateTimeOffset.UtcNow;
-    public DbEntityPersonCreatedByConnection? CreatedBy { get; init; }
-    public DateTimeOffset LastModifiedOn { get; init; } = DateTimeOffset.UtcNow;
-    public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; init; }
-    public DbModificationHistoryConnection? History { get; init; }
+    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+    public DbEntityPersonCreatedByConnection? CreatedBy { get; set; }
+    public DateTimeOffset LastModifiedOn { get; set; } = DateTimeOffset.UtcNow;
+    public DbEntityPersonLastModifiedByConnection? LastModifiedBy { get; set; }
+    public DbModificationHistoryConnection? History { get; set; }
 
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbEntity entity) return;
+      if (this.CreatedOn != entity.CreatedOn)
+      {
+        this.CreatedOn = entity.CreatedOn;
+      }
+      if (this.LastModifiedOn != entity.LastModifiedOn)
+      {
+        this.LastModifiedOn = entity.LastModifiedOn;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 [Owned]

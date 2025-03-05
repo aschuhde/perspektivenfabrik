@@ -8,11 +8,28 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbMaterialSpecification : DbEntityWithId
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string AmountValue { get; init; }
-    public required DbFormattedContent Title  { get; init; }
-    public required DbFormattedContent Description { get; init; }
+    public required string AmountValue { get; set; }
+    public required DbFormattedContent Title  { get; set; }
+    public required DbFormattedContent Description { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbMaterialSpecification materialSpecification) return;
+      if (this.Name != materialSpecification.Name)
+      {
+        this.Name = materialSpecification.Name;
+      }
+
+      if (this.AmountValue != materialSpecification.AmountValue)
+      {
+        this.AmountValue = materialSpecification.AmountValue;
+      }
+
+      this.Title.Update(materialSpecification.Title);
+      this.Description.Update(materialSpecification.Description);
+    }
 }
 
 [Table("MaterialSpecificationRequirementConnections")]

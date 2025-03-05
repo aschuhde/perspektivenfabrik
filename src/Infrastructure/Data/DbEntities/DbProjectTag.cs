@@ -5,7 +5,17 @@ namespace Infrastructure.Data.DbEntities;
 [Table("ProjectTags")]
 public sealed class DbProjectTag : DbEntityWithId
 {
-    public required string TagName { get; init; }
+    public required string TagName { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbProjectTag projectTag) return;
+      if(this.TagName != projectTag.TagName)
+      {
+        this.TagName = projectTag.TagName;
+      }
+      
+    }
 }
 
 [Table("ProjectTagConnections")]
