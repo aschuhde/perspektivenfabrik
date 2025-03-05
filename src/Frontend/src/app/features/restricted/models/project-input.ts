@@ -36,6 +36,10 @@ export declare type ProjectType = "project" | "idea" | "inspiration" | "none";
 
 export class ProjectInput{
     entityId: string | null = null;
+    shortDescriptionEntityId: string | null = null;
+    shortDescriptionTypeEntityId: string | null = null;
+    longDescriptionEntityId: string | null = null;
+    longDescriptionTypeEntityId: string | null = null;
     projectType: ProjectType = "none";
     projectTitle: string = ""
     projectPhase: "unknown" | "planning" | "ongoing" | "finished" | "cancelled" = "unknown";
@@ -46,9 +50,13 @@ export class ProjectInput{
     requirementsMoney: RequirementMoneyInput[] = [new RequirementMoneyInput()];
     selectedTags: SelectOption[] = []
     contactMail: string = ""
+    contactMailEntityId : string | null = null;
     contactPhone: string = ""
+    contactPhoneEntityId : string | null = null;
     organisationName: string = ""
+    contactOrganisationNameEntityId : string | null = null;
     contactName: string = ""
+    contactNameEntityId : string | null = null;
     contactSpecifications: ContactSpecification[] = []
     shortDescription: string = ""
     longDescription: string = ""
@@ -96,6 +104,7 @@ export class ProjectInput{
         return;
       }
       this.entityId = project.entityId ?? null;
+      
 
       this.loadProjectTypeFromApi(project.type ?? "Unkown");
 
@@ -118,18 +127,24 @@ export class ProjectInput{
         (req) => RequirementMoneyInput.fromRequirementSpecification(req)
       );
       this.selectedTags = (project.projectTags ?? []).map(x => {
-        return new SelectOption(x.tagName ?? x.entityId ?? "", x.tagName);
+        return new SelectOption(x.tagName ?? x.entityId ?? "", x.tagName, x.entityId ?? null);
       }).filter(x => !!x.value);
 
       this.loadContactSpecificationsFromApi(project.contactSpecifications ?? []);
-      this.shortDescription =
-        project.descriptionSpecifications?.find(
+      const shortDescriptionObj = project.descriptionSpecifications?.find(
           (desc) => desc.type?.name === "shortDescription"
-        )?.content?.rawContentString ?? "";
-      this.longDescription =
-        project.descriptionSpecifications?.find(
-          (desc) => desc.type?.name === "longDescription"
-        )?.content?.rawContentString ?? "";
+      );
+        const longDescriptionObj = project.descriptionSpecifications?.find(
+            (desc) => desc.type?.name === "longDescription"
+        );
+        this.shortDescription =
+          shortDescriptionObj?.content?.rawContentString ?? "";
+        this.shortDescriptionEntityId = shortDescriptionObj?.entityId ?? null; 
+        this.shortDescriptionTypeEntityId = shortDescriptionObj?.type?.entityId ?? null; 
+            this.longDescription =
+        longDescriptionObj?.content?.rawContentString ?? "";
+        this.longDescriptionEntityId = longDescriptionObj?.entityId ?? null;
+        this.longDescriptionTypeEntityId = longDescriptionObj?.type?.entityId ?? null;
       this.uploadedImages = project?.graphicsSpecifications?.map(x => UploadedImage.fromApi(x)) ?? [];
       this.loadProjectVisibilityFromApi(project.visibility ?? "Unkown");
     }  
@@ -138,6 +153,7 @@ export class ProjectInput{
       for(const uploadedImage of this.uploadedImages){
         graphicsSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiGraphicsSpecification>({
           type: uploadedImage.getType(),
+            entityId: uploadedImage.entityId ?? undefined,
           content: {
             content: await uploadedImage.getBase64()
           }
@@ -153,8 +169,10 @@ export class ProjectInput{
           contactSpecifications: this.getContactSpecifications(),
           contributors: [],
           descriptionSpecifications: [ObjectCreator.Create<ApplicationModelsApiModelsApiDescriptionSpecification>({
+              entityId: this.shortDescriptionEntityId ?? undefined,
             type: {
               name: "shortDescription",
+                entityId: this.shortDescriptionTypeEntityId ?? undefined,
               descriptionTitle: {
                 rawContentString: "Kurzbeschreibung",
               }
@@ -164,8 +182,10 @@ export class ProjectInput{
             }
           }),
           ObjectCreator.Create<ApplicationModelsApiModelsApiDescriptionSpecification>({
+              entityId: this.longDescriptionEntityId ?? undefined,
             type: {
               name: "longDescription",
+                entityId: this.longDescriptionTypeEntityId ?? undefined,
               descriptionTitle: {
                 rawContentString: "Ausführliche Beschreibung"
               }
@@ -179,7 +199,8 @@ export class ProjectInput{
           phase: this.getProjectPhaseForApi(),
           projectName: this.projectName,
           projectTags: this.selectedTags.map(x => ObjectCreator.Create<ApplicationModelsApiModelsApiProjectTag>({
-              tagName: x?.text ?? x?.value ?? ""
+              tagName: x?.text ?? x?.value ?? "",
+              entityId: x?.entityId ?? undefined
           })).filter(x => !!x),
           relatedProjects: [],
           timeSpecifications: this.projectTimes.map(x => x.toTimeSpecification()).filter(x => !!x),
@@ -271,10 +292,19 @@ export class ProjectInput{
       }
     
       loadContactSpecificationsFromApi(contactSpecifications: ApplicationModelsApiModelsApiContactSpecification[]){
-        this.contactName = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName)?.personalName ?? "";
-        this.organisationName = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName)?.organisationName ?? "";
-        this.contactPhone = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber)?.phoneNumber?.phoneNumberText ?? "";
-        this.contactMail = (contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress)?.mailAddress?.mail ?? "";
+        const contactNameObj = contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName;
+        this.contactName = contactNameObj?.personalName ?? "";
+        this.contactNameEntityId = contactNameObj?.entityId ?? null;
+        const organisationNameObj = contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName;
+        this.organisationName = organisationNameObj?.organisationName ?? "";
+        this.contactOrganisationNameEntityId = organisationNameObj?.entityId ?? null;
+        const contactPhoneObj = contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber;
+        this.contactPhone = contactPhoneObj?.phoneNumber?.phoneNumberText ?? "";
+        this.contactPhoneEntityId = contactPhoneObj?.entityId ?? null;
+        const contactMailObj = contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress;
+        this.contactMail = contactMailObj?.mailAddress?.mail ?? "";
+        this.contactMailEntityId = contactMailObj?.entityId ?? null;
+        
         this.contactSpecifications = contactSpecifications.map(x => {
           if(x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Paypal){
             return ContactSpecification.fromContactSpecificationPaypal(x as ApplicationModelsApiModelsApiContactSpecificationPaypal);
@@ -296,6 +326,7 @@ export class ProjectInput{
         if(this.contactPhone){
           contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationPhoneNumber>({
             classType: ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber,
+              entityId: this.contactPhoneEntityId ?? undefined,
             phoneNumber: {
               phoneNumberText: this.contactPhone
             }
@@ -304,6 +335,7 @@ export class ProjectInput{
         if(this.contactMail){
           contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationMailAddress>({
             classType: ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress,
+              entityId: this.contactMailEntityId ?? undefined,
             mailAddress: {
               mail: this.contactMail
             }
@@ -312,12 +344,14 @@ export class ProjectInput{
         if(this.contactName){
           contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationPersonalName>({
             classType: ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName,
+              entityId: this.contactNameEntityId ?? undefined,
             personalName: this.contactName
           }))
         }
         if(this.organisationName){
           contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationOrganisationName>({
             classType: ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName,
+              entityId: this.contactOrganisationNameEntityId ?? undefined,
             organisationName: this.organisationName
           }))
         }
@@ -326,6 +360,7 @@ export class ProjectInput{
           if(contactSpecification.contactSpecificationType === "bankAccount"){
             contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationBankAccount>({
               classType: ApplicationModelsApiModelsApiContactSpecificationTypes.BankAccount,
+                entityId: contactSpecification.entityId ?? undefined,
               bankAccount: {
                 accountName: contactSpecification.bankAccountName,
                 bic: {
@@ -341,6 +376,7 @@ export class ProjectInput{
           if(contactSpecification.contactSpecificationType === "paypalAccount"){
             contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationPaypal>({
               classType: ApplicationModelsApiModelsApiContactSpecificationTypes.Paypal,
+                entityId: contactSpecification.entityId ?? undefined,
               paypalAddress: {
                 mail: contactSpecification.paypalAddress
               },
@@ -352,6 +388,7 @@ export class ProjectInput{
           if(contactSpecification.contactSpecificationType === "website"){
             contactSpecifications.push(ObjectCreator.Create<ApplicationModelsApiModelsApiContactSpecificationWebsite>({
               classType: ApplicationModelsApiModelsApiContactSpecificationTypes.Website,
+                entityId: contactSpecification.entityId ?? undefined,
               website: {
                 rawUrl: contactSpecification.website
               }

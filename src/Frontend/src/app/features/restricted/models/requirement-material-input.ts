@@ -9,6 +9,8 @@ import {
 import {SelectOption} from "../../../shared/models/select-option";
 
 export class RequirementMaterialInput{
+    entityId: string | null = null;
+    quantitySpecificationEntityId: string | null = null;
   selectedMaterials: SelectOptionMaterial[] = [];  
   requirementTimeIsIdenticalToProjectTime: boolean = true
   requirementTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
@@ -16,14 +18,17 @@ export class RequirementMaterialInput{
   requirementLocations: LocationInput[] = [new LocationInput()];
     
   toRequirementMaterialSpecifications(): ApplicationModelsApiModelsApiRequirementSpecificationMaterial[] {
-    return this.selectedMaterials.map(x => {
+    return this.selectedMaterials.map((x, index) => {
         return {
             classType: ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material,
+            entityId: index === 0 ? this.entityId ?? undefined: undefined,
             quantitySpecification: {
-                value: x.amount
+                value: x.amount,
+                entityId: index === 0 ? this.quantitySpecificationEntityId ?? undefined : undefined
             },            
             materialSpecifications: [{
                 name: x.value,
+                entityId: x.entityId ?? undefined,
                 title: {
                     rawContentString: x.text
                 },
@@ -42,11 +47,13 @@ export class RequirementMaterialInput{
 
   static fromRequirementSpecification(requirementSpecification: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
     const result = new RequirementMaterialInput();
+    result.entityId = requirementSpecification.entityId ?? null;
+    result.quantitySpecificationEntityId = requirementSpecification.quantitySpecification?.entityId ?? null;
     result.requirementTimeIsIdenticalToProjectTime = requirementSpecification.timeSpecificationSameAsProject ?? true;
     result.requirementLocationIsIdenticalToProjectLocation = requirementSpecification.locationSpecificationsSameAsProject ?? true;
     result.requirementLocations = requirementSpecification.locationSpecifications?.map(x => LocationInput.fromLocationSpecification(x))?.filter(x => !!x) ?? [];
     result.requirementTimes = requirementSpecification.timeSpecifications?.map(x => ProjectTimeInput.fromTimeSpecification(x))?.filter(x => !!x) ?? [];
-    result.selectedMaterials = requirementSpecification.materialSpecifications?.map(x => new SelectOptionMaterial(x.name ?? "", x.title?.rawContentString ?? "", x.amountValue ?? "", x.description?.rawContentString ?? "")).filter(x => !!x.value) ?? [];
+    result.selectedMaterials = requirementSpecification.materialSpecifications?.map(x => new SelectOptionMaterial(x.name ?? "", x.title?.rawContentString ?? "", x.amountValue ?? "", x.description?.rawContentString ?? "", x.entityId ?? null)).filter(x => !!x.value) ?? [];
     return result;
   }
 }

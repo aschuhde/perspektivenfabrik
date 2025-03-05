@@ -14,26 +14,31 @@ export class LocationInput{
   locationName: string = ""
   locationAddress: string = ""
   locationCoordinates: string = ""
+    entityId: string | null = null
   toLocationSpecification(): ApplicationModelsApiModelsApiLocationSpecification | null {
     switch(this.locationType){
         case "address":
             return this.locationAddress ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationAddress>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Address,
+                entityId: this.entityId ?? undefined,
                 postalAddress: AddressConverter.TransformAddressStringToApiAddress(this.locationAddress)
             }) : null;
         case "coordinates":
             return this.locationCoordinates ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationCoordinates>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Coordinates,
+                entityId: this.entityId ?? undefined,
                 coordinates: CoordinatesConverter.TransformCoordinatesStringToApiCoordinates(this.locationCoordinates)
             }) : null;
         case "name":
             return this.locationName ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationAddress>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Address,
+                entityId: this.entityId ?? undefined,
                 postalAddress: AddressConverter.TransformLocationNameStringToApiAddress(this.locationName)
             }) : null;
         case "remote":
             return ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationRemote>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote,
+                entityId: this.entityId ?? undefined,
                 link: {
                     rawUrl: this.locationLink
                 }
@@ -44,6 +49,7 @@ export class LocationInput{
 
   static fromLocationSpecification(location: ApplicationModelsApiModelsApiLocationSpecification) {
     const result = new LocationInput();
+    result.entityId = location.entityId ?? null;
     if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Address){
       result.locationType = "address";
       result.locationAddress = AddressConverter.GetAddressFromApiAddress((location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress ?? null)

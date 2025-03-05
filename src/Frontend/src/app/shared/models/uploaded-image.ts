@@ -4,6 +4,7 @@ import {
 } from "../../server/model/applicationModelsApiModelsApiGraphicsSpecification";
 
 export class UploadedImage{
+    entityId: string | null = null;
     readonly file: File | null = null;
     src: string = "";
     isLogo: boolean = false;
@@ -21,6 +22,7 @@ export class UploadedImage{
 
     static fromApi(graphicsSpecification: ApplicationModelsApiModelsApiGraphicsSpecification): UploadedImage{
         const result = new UploadedImage(null);
+        result.entityId = graphicsSpecification.entityId ?? null;
         result.src = "data:image/png;base64, " + (graphicsSpecification.content?.content ?? "");
         result.isLogo = graphicsSpecification.type == "Logo";
         result.isMainImage = graphicsSpecification.type == "Header"

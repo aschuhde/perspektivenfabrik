@@ -6,6 +6,7 @@ import { ObjectCreator } from "../../../shared/tools/object-creator";
 
 export declare type ContactSpecificationType = "bankAccount" | "paypalAccount" | "website";
 export class ContactSpecification{
+    entityId: null | string = null;
     contactSpecificationType: ContactSpecificationType = "bankAccount";
     bankAccountName: string = "";
     bankAccountIban: string = "";
@@ -57,6 +58,7 @@ export class ContactSpecification{
     }
     static fromContactSpecificationPaypal(contactSpecificationPaypal: ApplicationModelsApiModelsApiContactSpecificationPaypal){
         const result = this.getEmpty("paypalAccount");
+        result.entityId = contactSpecificationPaypal.entityId ?? null;
         result.paypalAddress = contactSpecificationPaypal.paypalAddress?.mail ?? "";
         result.paypalMeAddress = contactSpecificationPaypal.paypalMeAddress?.rawUrl ?? "";
         return result;
@@ -64,12 +66,14 @@ export class ContactSpecification{
 
     static fromContactSpecificationWebsite(contactSpecificationWebsite: ApplicationModelsApiModelsApiContactSpecificationWebsite){
         const result = this.getEmpty("website");
+        result.entityId = contactSpecificationWebsite.entityId ?? null;
         result.website = contactSpecificationWebsite.website?.rawUrl ?? "";
         return result;
     }
 
     static fromContactSpecificationBankAccount(contactSpecificationBankAccount: ApplicationModelsApiModelsApiContactSpecificationBankAccount){
         const result = this.getEmpty("bankAccount");
+        result.entityId = contactSpecificationBankAccount.entityId ?? null;
         result.bankAccountReference = contactSpecificationBankAccount.bankAccount?.reference ?? "";
         result.bankAccountName = contactSpecificationBankAccount.bankAccount?.accountName ?? "";
         result.bankAccountBic = contactSpecificationBankAccount.bankAccount?.bic?.bicName ?? "";
