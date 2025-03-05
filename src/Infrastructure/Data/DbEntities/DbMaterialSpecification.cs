@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Infrastructure.Data.DbDataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -37,9 +38,11 @@ public sealed class DbMaterialSpecificationRequirementConnection : DbEntityWithI
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(MaterialSpecification))]
     public required Guid MaterialSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbMaterialSpecification? MaterialSpecification { get; init; }
 
     public DbMaterialSpecificationRequirementConnection WithoutRelatedEntites()

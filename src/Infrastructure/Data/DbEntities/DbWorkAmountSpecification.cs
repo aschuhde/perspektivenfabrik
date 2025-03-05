@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -24,9 +25,11 @@ public sealed class DbWorkAmountSpecificationRequirementConnection : DbEntityWit
 {
     [ForeignKey(nameof(RequirementSpecificationPerson))]
     public required Guid RequirementSpecificationPersonId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecificationPerson? RequirementSpecificationPerson { get; init; }
     [ForeignKey(nameof(WorkAmountSpecification))]
     public required Guid WorkAmountSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbWorkAmountSpecification? WorkAmountSpecification { get; init; }
 
     public DbWorkAmountSpecificationRequirementConnection WithoutRelatedEntites()

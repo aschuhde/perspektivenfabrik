@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Infrastructure.Constants;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -10,6 +11,7 @@ public class DbModificationHistoryItem : DbEntityWithId
     [ForeignKey(nameof(History))]
     public Guid HistoryId { get; set; }
     
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbModificationHistory? History { get; set; }
     
     public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;

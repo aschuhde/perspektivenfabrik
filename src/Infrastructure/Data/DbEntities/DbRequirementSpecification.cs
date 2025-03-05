@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -41,9 +42,12 @@ public class DbRequirementSpecification : DbEntityWithId
 public sealed class DbRequirementSpecificationPerson : DbRequirementSpecification
 {
     public required bool LocationSpecificationsSameAsProject { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbSkillSpecificationRequirementConnection>? SkillSpecifications { get; set; }
 
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbWorkAmountSpecificationRequirementConnection? WorkAmountSpecification { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
     
     public override DbRequirementSpecification WithoutRelatedEntites()
@@ -80,8 +84,10 @@ public sealed class DbRequirementSpecificationPerson : DbRequirementSpecificatio
 public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecification
 {
     public required bool LocationSpecificationsSameAsProject { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbMaterialSpecificationRequirementConnection>? MaterialSpecifications { get; set; }
     
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbLocationSpecificationRequirementConnection>? LocationSpecifications { get; set; }
     
     public override DbRequirementSpecification WithoutRelatedEntites()
@@ -123,9 +129,11 @@ public sealed class DbRequirementSpecificationProjectConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
 
     public DbRequirementSpecificationProjectConnection WithoutRelatedEntites()

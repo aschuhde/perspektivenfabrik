@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -23,8 +24,10 @@ public sealed class DbProjectTagConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(ProjectTag))]
     public required Guid ProjectTagId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProjectTag? ProjectTag { get; init; }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Infrastructure.Data.DbDataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -54,9 +55,11 @@ public sealed class DbLocationSpecificationProjectConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(LocationSpecification))]
     public required Guid LocationSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbLocationSpecification? LocationSpecification { get; init; }
     
     public DbLocationSpecificationProjectConnection WithoutRelatedEntites()
@@ -75,9 +78,11 @@ public sealed class DbLocationSpecificationRequirementConnection : DbEntityWithI
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(LocationSpecification))]
     public required Guid LocationSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbLocationSpecification? LocationSpecification { get; init; }
     
     public DbLocationSpecificationRequirementConnection WithoutRelatedEntites()

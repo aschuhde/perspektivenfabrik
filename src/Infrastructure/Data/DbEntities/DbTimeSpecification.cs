@@ -12,7 +12,9 @@ public class DbTimeSpecification : DbEntityWithId
 
 public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 {
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecificationPeriodStartConnection? Start { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecificationPeriodEndConnection? End { get; set; }
 
     public DbTimeSpecificationPeriod WithoutRelatedEntites()
@@ -44,6 +46,7 @@ public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 [Owned]
 public sealed class DbTimeSpecificationPeriodStartConnection
 {
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecificationMoment? Moment { get; set; }
     [ForeignKey(nameof(Moment))]
     public Guid MomentId { get; set; }
@@ -57,6 +60,7 @@ public sealed class DbTimeSpecificationPeriodStartConnection
 [Owned]
 public sealed class DbTimeSpecificationPeriodEndConnection
 {
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecificationMoment? Moment { get; set; }
     [ForeignKey(nameof(Moment))]
     public Guid MomentId { get; set; }
@@ -118,9 +122,11 @@ public sealed class DbTimeSpecificationProjectConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(TimeSpecification))]
     public required Guid TimeSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecification? TimeSpecification { get; init; }
 }
 
@@ -129,8 +135,10 @@ public sealed class DbTimeSpecificationRequirementConnection : DbEntityWithId
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(TimeSpecification))]
     public required Guid TimeSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbTimeSpecification? TimeSpecification { get; init; }
 }

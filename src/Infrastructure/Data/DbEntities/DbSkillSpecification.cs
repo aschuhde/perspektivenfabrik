@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Infrastructure.Data.DbDataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -29,9 +30,11 @@ public sealed class DbSkillSpecificationRequirementConnection : DbEntityWithId
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(SkillSpecification))]
     public required Guid SkillSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbSkillSpecification? SkillSpecification { get; init; }
 
     public DbSkillSpecificationRequirementConnection WithoutRelatedEntites()

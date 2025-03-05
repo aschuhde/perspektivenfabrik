@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -25,8 +26,10 @@ public sealed class DbOrganizationProjectConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(Organization))]
     public required Guid OrganizationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbOrganization? Organization { get; init; }
 }

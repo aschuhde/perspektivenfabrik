@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enums;
 using Infrastructure.Data.DbDataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -12,21 +13,32 @@ public sealed class DbProject : DbEntity
     public required ProjectType Type { get; set; }
     public required ProjectVisibility Visibility  { get; set; }
     
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbLocationSpecificationProjectConnection>? LocationSpecifications { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbTimeSpecificationProjectConnection>? TimeSpecifications { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbRequirementSpecificationProjectConnection>? RequirementSpecifications { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbContactSpecificationProjectConnection>? ContactSpecifications { get; set; }
     [MaxLength(Constants.StringLengths.Medium)]
     public required string ProjectName { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbProjectTagConnection>? ProjectTags { get; set; }
     public required DbFormattedTitle ProjectTitle { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbDescriptionSpecificationProjectConnection>? DescriptionSpecifications { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbGraphicsSpecificationProjectConnection>? GraphicsSpecifications { get; set; }
     public required bool ConnectedOrganizationsSameAsOwner { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbOrganizationProjectConnection>? ConnectedOrganizations { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbPersonProjectOwnerConnection? Owner { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbPersonProjectContributorConnection>? Contributors { get; set; }
     [InverseProperty(nameof(DbProjectConnection.Project))]
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbProjectConnection>? RelatedProjects { get; set; }
 
     public override void UpdateToTarget(DbEntityWithId target)

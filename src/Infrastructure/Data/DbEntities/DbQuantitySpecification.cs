@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -24,9 +25,11 @@ public sealed class DbQuantitySpecificationRequirementConnection : DbEntityWithI
 {
     [ForeignKey(nameof(RequirementSpecification))]
     public required Guid RequirementSpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbRequirementSpecification? RequirementSpecification { get; init; }
     [ForeignKey(nameof(QuantitySpecification))]
     public required Guid QuantitySpecificationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbQuantitySpecification? QuantitySpecification { get; init; }
 
     public DbQuantitySpecificationRequirementConnection WithoutRelatedEntites()
