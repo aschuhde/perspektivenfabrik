@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250305143258_OnDeleteNoAction")]
+    partial class OnDeleteNoAction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1283,7 +1286,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1308,8 +1311,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("HistoryId");
 
                             b1.Navigation("History");
                         });
@@ -1334,7 +1336,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1436,8 +1438,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithOne()
-                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.CreatedBy#Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "PersonId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.CreatedBy#Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "PersonId");
 
                             b1.Navigation("Person");
                         });
@@ -1461,8 +1462,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("HistoryId");
 
                             b1.Navigation("History");
                         });
@@ -1487,8 +1487,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithOne()
-                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.LastModifiedBy#Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "PersonId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.LastModifiedBy#Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "PersonId");
 
                             b1.Navigation("Person");
                         });
@@ -1560,7 +1559,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1585,8 +1584,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("HistoryId");
 
                             b1.Navigation("History");
                         });
@@ -1611,7 +1609,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1830,7 +1828,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1855,8 +1853,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId")
-                                .OnDelete(DeleteBehavior.NoAction);
+                                .HasForeignKey("HistoryId");
 
                             b1.Navigation("History");
                         });
@@ -1881,7 +1878,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.NoAction)
+                                .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
                             b1.Navigation("Person");
