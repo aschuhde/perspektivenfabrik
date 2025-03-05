@@ -53,6 +53,24 @@ public sealed class DbProject : DbEntity
         this.ConnectedOrganizationsSameAsOwner = project.ConnectedOrganizationsSameAsOwner;
       }
       this.ProjectTitle.Update(project.ProjectTitle);
+      this.Contributors = this.Contributors?.GetUpdateConnections(project.Contributors, x => x.ProjectId, x => x.PersonId) ?? project.Contributors;
+      this.ContactSpecifications = this.ContactSpecifications?.GetUpdateConnections(project.ContactSpecifications, x => x.ProjectId, x => x.ContactSpecificationId) ?? project.ContactSpecifications;
+      this.LocationSpecifications = this.LocationSpecifications?.GetUpdateConnections(project.LocationSpecifications, x => x.ProjectId, x => x.LocationSpecificationId) ?? project.LocationSpecifications;
+      this.TimeSpecifications = this.TimeSpecifications?.GetUpdateConnections(project.TimeSpecifications, x => x.ProjectId, x => x.TimeSpecificationId) ?? project.TimeSpecifications;
+      this.RequirementSpecifications = this.RequirementSpecifications?.GetUpdateConnections(project.RequirementSpecifications, x => x.ProjectId, x => x.RequirementSpecificationId) ?? project.RequirementSpecifications;
+      this.ProjectTags = this.ProjectTags?.GetUpdateConnections(project.ProjectTags, x => x.ProjectId, x => x.ProjectTagId) ?? project.ProjectTags;
+      this.DescriptionSpecifications = this.DescriptionSpecifications?.GetUpdateConnections(project.DescriptionSpecifications, x => x.ProjectId, x => x.DescriptionSpecificationId) ?? project.DescriptionSpecifications;
+      this.GraphicsSpecifications = this.GraphicsSpecifications?.GetUpdateConnections(project.GraphicsSpecifications, x => x.ProjectId, x => x.GraphicsSpecificationId) ?? project.GraphicsSpecifications;
+      this.ConnectedOrganizations = this.ConnectedOrganizations?.GetUpdateConnections(project.ConnectedOrganizations, x => x.ProjectId, x => x.OrganizationId) ?? project.ConnectedOrganizations;
+      this.RelatedProjects = this.RelatedProjects?.GetUpdateConnections(project.RelatedProjects, x => x.ProjectId, x => x.RelatedProjectId) ?? project.RelatedProjects;
+
+      if ( this.Owner?.PersonId != project.Owner?.PersonId)
+      {
+        this.Owner = project.Owner == null ? null : new DbPersonProjectOwnerConnection()
+        {
+          PersonId = project.Owner.PersonId, ProjectId = this.EntityId
+        };
+      }
       base.UpdateToTarget(target);
     }
 }

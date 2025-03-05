@@ -7,7 +7,7 @@ namespace Infrastructure.Data.DbEntities;
 public class DbEntityWithId
 {
     [Key] 
-    public Guid EntityId { get; init; } = Guid.NewGuid();
+    public Guid EntityId { get; set; } = Guid.NewGuid();
 
     public virtual void UpdateToTarget(DbEntityWithId target)
     {

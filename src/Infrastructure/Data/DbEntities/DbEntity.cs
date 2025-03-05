@@ -23,6 +23,27 @@ public class DbEntity : DbEntityWithId
       {
         this.LastModifiedOn = entity.LastModifiedOn;
       }
+      if ( this.History?.HistoryId != entity.History?.HistoryId)
+      {
+        this.History = entity.History == null ? null : new DbModificationHistoryConnection()
+        {
+          HistoryId = entity.History.HistoryId, 
+        };
+      }
+      if ( this.LastModifiedBy?.PersonId != entity.LastModifiedBy?.PersonId)
+      {
+        this.LastModifiedBy = entity.LastModifiedBy == null ? null : new DbEntityPersonLastModifiedByConnection()
+        {
+          PersonId = entity.LastModifiedBy.PersonId, 
+        };
+      }
+      if ( this.CreatedBy?.PersonId != entity.CreatedBy?.PersonId)
+      {
+        this.CreatedBy = entity.CreatedBy == null ? null : new DbEntityPersonCreatedByConnection()
+        {
+          PersonId = entity.CreatedBy.PersonId, 
+        };
+      }
       base.UpdateToTarget(target);
     }
 }

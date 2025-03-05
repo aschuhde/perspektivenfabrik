@@ -12,12 +12,32 @@ public class DbTimeSpecification : DbEntityWithId
 
 public sealed class DbTimeSpecificationPeriod : DbTimeSpecification
 {
-    public DbTimeSpecificationPeriodStartConnection? Start { get; init; }
-    public DbTimeSpecificationPeriodEndConnection? End { get; init; }
+    public DbTimeSpecificationPeriodStartConnection? Start { get; set; }
+    public DbTimeSpecificationPeriodEndConnection? End { get; set; }
 
     public DbTimeSpecificationPeriod WithoutRelatedEntites()
     {
       return new DbTimeSpecificationPeriod() { EntityId = this.EntityId };
+    }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbTimeSpecificationPeriod period) return;
+      
+      if ( this.Start?.MomentId != period.Start?.MomentId)
+      {
+        this.Start = period.Start == null ? null : new DbTimeSpecificationPeriodStartConnection()
+        {
+          MomentId = period.Start.MomentId, 
+        };
+      }
+      if ( this.End?.MomentId != period.End?.MomentId)
+      {
+        this.End = period.End == null ? null : new DbTimeSpecificationPeriodEndConnection()
+        {
+          MomentId = period.End.MomentId, 
+        };
+      }
     }
 }
 

@@ -25,6 +25,15 @@ public class DbRequirementSpecification : DbEntityWithId
       {
         this.TimeSpecificationSameAsProject = requirementSpecification.TimeSpecificationSameAsProject;
       }
+      this.TimeSpecifications = this.TimeSpecifications?.GetUpdateConnections(requirementSpecification.TimeSpecifications, x => x.RequirementSpecificationId, x => x.TimeSpecificationId) ?? requirementSpecification.TimeSpecifications;
+      if ( this.QuantitySpecification?.QuantitySpecificationId != requirementSpecification.QuantitySpecification?.QuantitySpecificationId)
+      {
+        this.QuantitySpecification = requirementSpecification.QuantitySpecification == null ? null : new DbQuantitySpecificationRequirementConnection()
+        {
+          QuantitySpecificationId = requirementSpecification.QuantitySpecification.QuantitySpecificationId,
+          RequirementSpecificationId = this.EntityId
+        };
+      }
       base.UpdateToTarget(target);
     }
 }
@@ -54,6 +63,16 @@ public sealed class DbRequirementSpecificationPerson : DbRequirementSpecificatio
       {
         this.LocationSpecificationsSameAsProject = requirementSpecification.LocationSpecificationsSameAsProject;
       }
+      this.SkillSpecifications = this.SkillSpecifications?.GetUpdateConnections(requirementSpecification.SkillSpecifications, x => x.RequirementSpecificationId, x => x.SkillSpecificationId) ?? requirementSpecification.SkillSpecifications;
+      this.LocationSpecifications = this.LocationSpecifications?.GetUpdateConnections(requirementSpecification.LocationSpecifications, x => x.RequirementSpecificationId, x => x.LocationSpecificationId) ?? requirementSpecification.LocationSpecifications;
+      if ( this.WorkAmountSpecification?.WorkAmountSpecificationId != requirementSpecification.WorkAmountSpecification?.WorkAmountSpecificationId)
+      {
+        this.WorkAmountSpecification = requirementSpecification.WorkAmountSpecification == null ? null : new DbWorkAmountSpecificationRequirementConnection()
+        {
+          WorkAmountSpecificationId = requirementSpecification.WorkAmountSpecification.WorkAmountSpecificationId,
+          RequirementSpecificationPersonId = this.EntityId
+        };
+      }
       base.UpdateToTarget(target);
     }
 }
@@ -81,6 +100,8 @@ public sealed class DbRequirementSpecificationMaterial : DbRequirementSpecificat
       {
         this.LocationSpecificationsSameAsProject = requirementSpecification.LocationSpecificationsSameAsProject;
       }
+      this.LocationSpecifications = this.LocationSpecifications?.GetUpdateConnections(requirementSpecification.LocationSpecifications, x => x.RequirementSpecificationId, x => x.LocationSpecificationId) ?? requirementSpecification.LocationSpecifications;
+      this.MaterialSpecifications = this.MaterialSpecifications?.GetUpdateConnections(requirementSpecification.MaterialSpecifications, x => x.RequirementSpecificationId, x => x.MaterialSpecificationId) ?? requirementSpecification.MaterialSpecifications;
       base.UpdateToTarget(target);
     }
 }
