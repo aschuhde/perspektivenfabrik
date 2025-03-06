@@ -19,6 +19,7 @@ public static class ConnectionUpdateExtensions
       var existingEntity = connections.FirstOrDefault(x => onGetLeftGuid(x) == onGetLeftGuid(targetConnection) && onGetRightGuid(x) == onGetRightGuid(targetConnection));
       if (existingEntity == null)
       {
+        targetConnection.IsNewEntity = true;
         connections.Add(targetConnection);
       }
       else

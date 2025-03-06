@@ -1,4 +1,5 @@
 using Infrastructure.Data.DbEntities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
 
@@ -18,6 +19,15 @@ public static class ApplicationDbContextExtensions
         else
         {
             dbContext.Add(entity);
+        }
+    }
+    public static void PutNewEntriesInAddedState(this ApplicationDbContext dbContext)
+    {
+        foreach (var entry in dbContext.ChangeTracker.Entries<DbEntityWithId>())
+        {
+            if (entry.State != EntityState.Modified) continue;
+            
+            entry.State = entry.Entity.IsNewEntity ? EntityState.Added : EntityState.Modified;
         }
     }
 }

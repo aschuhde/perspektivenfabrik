@@ -212,6 +212,8 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             SaveDescriptionSpecification(project.DescriptionSpecifications, existingProject?.DescriptionSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.GraphicsSpecifications, existingProject?.GraphicsSpecifications?.ToArray(), x => x.ToDbGraphicsSpecification(), x => x.GraphicsSpecification!, x => x, x => x);
             AddOrUpdateProject(project, existingProject);
+            dbContext.ChangeTracker.DetectChanges();
+            dbContext.PutNewEntriesInAddedState();
             await dbContext.SaveChangesAsync(ctInner);
             await transaction.CommitAsync(ctInner);
             var resultProject =
@@ -249,7 +251,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         }
         foreach (var existingEntity in existingRequirementSpecifications ?? [])
         {
-            if (requirementSpecifications.All(x => x.EntityId != existingEntity.EntityId))
+            if (requirementSpecifications.All(x => x.EntityId != existingEntity.RequirementSpecificationId))
             {
                 SaveRequirementTimeSpecifications([], existingEntity.RequirementSpecification?.TimeSpecifications?.ToArray() ?? []);
                 Remove(existingEntity.RequirementSpecification?.QuantitySpecification);
@@ -360,7 +362,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         foreach (var entity in descriptionSpecifications)
         {
-            var existingEntityConnection = existingDescriptionSpecificationConnections?.FirstOrDefault(x => x.EntityId == entity.EntityId);
+            var existingEntityConnection = existingDescriptionSpecificationConnections?.FirstOrDefault(x => x.DescriptionSpecificationId == entity.EntityId);
             var existingEntity = existingEntityConnection?.DescriptionSpecification;
             
             AddOrUpdate(entity, existingEntity, x => x.ToDbDescriptionSpecification());
