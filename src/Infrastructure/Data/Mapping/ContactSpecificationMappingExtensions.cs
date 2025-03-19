@@ -60,6 +60,10 @@ public static partial class MappingExtensions
         {
             ContactSpecificationDtoPhoneNumber contactSpecificationPhoneNumber => contactSpecificationPhoneNumber
                 .ToDbContactSpecificationPhoneNumber(),
+            ContactSpecificationDtoPersonalName contactSpecificationPersonalName => contactSpecificationPersonalName
+                .ToDbContactSpecificationPersonalName(),
+            ContactSpecificationDtoOrganisationName contactSpecificationOrganisationName => contactSpecificationOrganisationName
+                .ToDbContactSpecificationOrganisationName(),
             ContactSpecificationDtoMailAddress contactSpecificationMailAddress => contactSpecificationMailAddress
                 .ToDbContactSpecificationMailAddress(),
             ContactSpecificationDtoPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress

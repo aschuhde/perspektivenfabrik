@@ -26,7 +26,7 @@ export class AddressConverter{
 
     static getShortName(address: DomainDataTypesPostalAddress): string{
         //todo
-        return address.addressLine1 ?? "";
+        return address.addressLine1?.split(',')[0] ?? "";
     }
     
     static GetAddressFromApiAddress(postalAddress: DomainDataTypesPostalAddress | null): string {

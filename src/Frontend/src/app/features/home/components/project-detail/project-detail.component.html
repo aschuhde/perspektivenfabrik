@@ -2,45 +2,45 @@
     <div class="left">
         <div class="intro">
             <h2>{{ projectTitle }}</h2>
-            <p [innerHtml]="shortDescription"></p>
+            <p class="font-smaller" style="margin-bottom: 0" [innerHtml]="shortDescription"></p>
         </div>
-        <div class="stats">
+        <div class="stats font-smaller">
             @if (locationSpecifications.length > 0){
-                <p>Ort:</p>
                 <div class="stat-grid">
+                    <p class="stat-label">Ort:</p>
                     @for (locationSpecification of locationSpecifications; track locationSpecification){
                         <div class="stat-grid-item">{{ getLocationSpecificationShortName(locationSpecification) }}</div>
                     }
                 </div>
             }
             @if (timeSpecifications.length > 0){
-                <p>Zeitraum:</p>
                 <div class="stat-grid">
+                    <p class="stat-label">Zeitraum:</p>
                     @for (timeSpecification of timeSpecifications; track timeSpecification){
                         <div class="stat-grid-item">{{ getTimeSpecificationShortName(timeSpecification) }}</div>
                     }
                 </div>
             }
             @if (tags.length > 0){
-                <p>Tags:</p>
                 <div class="stat-grid">
+                    <p class="stat-label">Tags:</p>
                     @for (tag of tags; track tag){
                         <div class="stat-grid-item">{{ getTagShortName(tag) }}</div>
                     }
                 </div>
             }
-
-                <p>Wir suchen:</p>
+             
                 <div class="stat-grid">
+                    <p class="stat-label">Wir suchen:</p>
                     @for (requirementSpecificationPerson of requirementSpecificationPersonsFlat; track requirementSpecificationPerson){
                         <div class="stat-grid-item">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
                     }
                 </div>
             
-            @if (requirementSpecificationMaterials.length > 0 || requirementSpecificationMoneySummed){
-                <p>Wir benötigen:</p>
+            @if (requirementSpecificationMaterialsFlat.length > 0 || requirementSpecificationMoneySummed){
                 <div class="stat-grid">
-                    @for (requirementSpecificationMaterial of requirementSpecificationMaterials; track requirementSpecificationMaterial){
+                    <p class="stat-label">Wir benötigen:</p>
+                    @for (requirementSpecificationMaterial of requirementSpecificationMaterialsFlat; track requirementSpecificationMaterial){
                         <div class="stat-grid-item">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
                     }
                     @if(requirementSpecificationMoneySummed){
@@ -66,22 +66,24 @@
     </div>
     <div class="bottom-right">
         <div>
-            <p>Schreib uns eine Nachricht!</p>
+            <p class="contact-text">Schreib uns eine Nachricht!</p>
+            <div style="display: flex; justify-content: space-between;flex-wrap: wrap;">
             @if(contactPersonalName){
-                <p>{{ contactPersonalName }}</p>
+                <p class="contact-text"><mat-icon fontIcon="person"></mat-icon> {{ contactPersonalName }}</p>
             }
             @if(contactOrganisationName){
-                <p>{{ contactOrganisationName }}</p>
+                <p class="contact-text"><mat-icon fontIcon="apartment"></mat-icon> {{ contactOrganisationName }}</p>
             }
             @if(contactPhone){
-                <p>{{ contactPhone }}</p>
+                <p class="contact-text"><mat-icon fontIcon="phone"></mat-icon><span>&nbsp;</span><a href="tel: {{ contactPhone }}">{{ contactPhone }}</a></p>
             }
             @if(contactMailAddress){
-                <p>{{ contactMailAddress }}</p>
+                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
             }
             @if(contactWebsite){
-                <p>{{ contactWebsite }}</p>
+                <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ contactWebsite }}">{{ contactWebsite }}</a></p>
             }
+            </div>
         </div>
     </div>
 </div>

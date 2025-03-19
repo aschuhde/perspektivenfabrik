@@ -1,0 +1,49 @@
+.project-list{
+  display: flex;
+  width: calc(100% - 6rem);
+  align-items: stretch;
+  padding: 0 3rem;
+}
+.project-list-item{
+  padding: 1rem;
+  width: 20rem;
+  
+  > div{
+    height: 100%;
+    background-color: white;
+    border-radius: 1.5rem;
+    position: relative;
+    
+    > img{
+      border-radius: 1.5rem 1.5rem 0 0;
+    }
+    
+    .project-list-item-text-container{
+      padding: 1rem 2rem 3rem 2rem;
+      font-size: 1rem;
+    }
+  }
+  
+}
+.project-list-item-thumbnail{
+  width: 100%;
+}
+.thumbnail-description{
+  max-height: 2.5rem;
+  margin-top: .2rem;
+  margin-bottom: .2rem;
+  overflow: hidden;
+  font-size: 1rem;
+}
+.project-title{
+  margin-top: .2rem;
+  margin-bottom: .5rem;
+  font-size: 1.4rem;
+}
+.project-list-item-button-container{
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}

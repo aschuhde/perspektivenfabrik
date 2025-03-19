@@ -212,7 +212,7 @@ export class ProjectInput{
     
       getRequirementSpecifications(): ApplicationModelsApiModelsApiRequirementSpecification[]{
         const result: ApplicationModelsApiModelsApiRequirementSpecification[] = [];
-        result.push(...this.requirementMaterials.flatMap(x => x.toRequirementMaterialSpecifications()));
+        result.push(...this.requirementMaterials.map(x => x.toRequirementMaterialSpecifications()));
         result.push(...this.requirementPersons.map(x => x.toRequirementPersonSpecification()));
         result.push(...this.requirementsMoney.map(x => x.toRequirementMoneySpecification()));
         return result;

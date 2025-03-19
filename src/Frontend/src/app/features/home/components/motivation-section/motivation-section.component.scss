@@ -4,3 +4,16 @@
     background-color: vars.$bg-color-alt;
     color: white;
 }
+
+#motivation-section-left{
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    padding-top: 1rem;
+}
+#motivation-section-right{
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    padding-top: 5rem;
+}

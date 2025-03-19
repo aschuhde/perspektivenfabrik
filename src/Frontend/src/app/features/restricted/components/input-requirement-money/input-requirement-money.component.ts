@@ -25,14 +25,31 @@ export class InputRequirementMoneyComponent {
 
   requirementMoney = model.required<RequirementMoneyInput>();
   remove = output<RequirementMoneyInput>();
-
-  requirementTimeIsIdenticalToProjectTime: boolean = true;
-  requirementTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
-  amountOfMoney: string = "";
+  
   requirementIndex = model.required<number>();
 
   get requirementNumber(){
     return this.requirementIndex() + 1;
+  }
+
+  get amountOfMoney(){
+    return this.requirementMoney().amountOfMoney;
+  }
+  set amountOfMoney(value: string){
+    this.requirementMoney().amountOfMoney = value;
+  }
+  
+  get requirementTimeIsIdenticalToProjectTime(){
+    return this.requirementMoney().requirementTimeIsIdenticalToProjectTime
+  }
+  set requirementTimeIsIdenticalToProjectTime(value: boolean){
+    this.requirementMoney().requirementTimeIsIdenticalToProjectTime = value
+  }
+  get requirementTimes(){
+    return this.requirementMoney().requirementTimes
+  }
+  set requirementTimes(value: ProjectTimeInput[]){
+    this.requirementMoney().requirementTimes = value
   }
 
 

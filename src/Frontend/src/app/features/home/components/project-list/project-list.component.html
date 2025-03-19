@@ -1,1 +1,55 @@
-<p>project-list works!</p>
+<div class="project-list">
+    @for (project of projects; track project){
+        <div class="project-list-item">
+            <div>
+                <img class="project-list-item-thumbnail" src="{{ project.getThumbnailUrl()}}"  alt="Thumbnail Image of {{ project.projectTitle }}"/>
+                <div class="project-list-item-text-container">
+                <h4 class="project-title">{{ project.projectTitle }}</h4>
+                <p class="thumbnail-description" [innerHTML]="project.thumbnailDescription"></p>
+                @if (project.locationSpecifications.length > 0){
+                    <p>
+                        <span><mat-icon fontIcon="location_on"></mat-icon> {{ getLocationSpecificationText(project) }}</span>
+                        @if (needLocationSpecificationPlusIcons(project.locationSpecifications)){
+                            <app-more-icon [count]="getLocationSpecificationPlusIconCount(project.locationSpecifications)" [tooltipContent]="getLocationSpecificationTooltipContent(project)"></app-more-icon>
+                        }
+                    </p>
+                }
+                @if (project.timeSpecifications.length > 0){
+                    <p>
+                        <span><mat-icon fontIcon="date_range"></mat-icon> {{ getTimeSpecificationText(project) }}</span>
+                        @if (needTimeSpecificationPlusIcons(project.timeSpecifications)){
+                            <app-more-icon [count]="getTimeSpecificationPlusIconCount(project.timeSpecifications)" [tooltipContent]="getTimeSpecificationTooltipContent(project)"></app-more-icon>
+                        }
+                    </p>
+                }
+                @if (project.tags.length > 0){
+                    <p>
+                        <span><mat-icon fontIcon="bookmark"></mat-icon> {{ getTagText(project) }}</span>
+                        @if (needTagPlusIcons(project.tags)){
+                            <app-more-icon [count]="getTagPlusIconCount(project.tags)" [tooltipContent]="getTagTooltipContent(project)"></app-more-icon>
+                        }
+                    </p>
+                }
+                @if (project.requirementSpecificationPersonsFlat.length > 0){
+                    <p>
+                        <span><mat-icon fontIcon="person"></mat-icon> {{ getRequirementPersonText(project) }}</span>
+                    </p>
+                }
+                @if (project.requirementSpecificationMaterialsFlat.length > 0){
+                    <p>
+                        <span><mat-icon fontIcon="construction"></mat-icon> {{ getRequirementMaterialText(project) }}</span>
+                    </p>
+                }
+                @if (project.needsMoney()){
+                    <p>
+                        <span><mat-icon fontIcon="savings"></mat-icon> {{ getRequirementMoneyText(project) }}</span>
+                    </p>
+                }
+                    <div class="project-list-item-button-container">
+                        <a href="/home/projects/{{project.project?.entityId}}"><button class="secondary">zum Projekt</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

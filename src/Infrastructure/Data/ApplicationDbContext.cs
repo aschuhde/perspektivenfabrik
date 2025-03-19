@@ -81,6 +81,11 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             .HasValue<DbContactSpecification>(nameof(DbContactSpecification))
             .HasValue<DbContactSpecificationPhoneNumber>(nameof(DbContactSpecificationPhoneNumber))
             .HasValue<DbContactSpecificationMailAddress>(nameof(DbContactSpecificationMailAddress))
+            .HasValue<DbContactSpecificationPaypal>(nameof(DbContactSpecificationPaypal))
+            .HasValue<DbContactSpecificationWebsite>(nameof(DbContactSpecificationWebsite))
+            .HasValue<DbContactSpecificationBankAccount>(nameof(DbContactSpecificationBankAccount))
+            .HasValue<DbContactSpecificationOrganisationName>(nameof(DbContactSpecificationOrganisationName))
+            .HasValue<DbContactSpecificationPersonalName>(nameof(DbContactSpecificationPersonalName))
             .HasValue<DbContactSpecificationPostalAddress>(nameof(DbContactSpecificationPostalAddress));
         
         modelBuilder.Entity<DbLocationSpecification>().HasDiscriminator<string>($"{nameof(DbLocationSpecification)}{DiscriminatorPostfix}")

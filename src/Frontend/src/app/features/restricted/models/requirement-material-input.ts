@@ -7,47 +7,50 @@ import {
   ApplicationModelsApiModelsApiRequirementSpecificationPerson
 } from "../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
 import {SelectOption} from "../../../shared/models/select-option";
+import {ObjectCreator} from "../../../shared/tools/object-creator";
 
 export class RequirementMaterialInput{
     entityId: string | null = null;
     quantitySpecificationEntityId: string | null = null;
-  selectedMaterials: SelectOptionMaterial[] = [];  
-  requirementTimeIsIdenticalToProjectTime: boolean = true
-  requirementTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
-  requirementLocationIsIdenticalToProjectLocation: boolean = true
-  requirementLocations: LocationInput[] = [new LocationInput()];
+    quantitySpecificationValue: string | null = null;
+    selectedMaterials: SelectOptionMaterial[] = [];  
+    requirementTimeIsIdenticalToProjectTime: boolean = true
+    requirementTimes: ProjectTimeInput[] = [new ProjectTimeInput()];
+    requirementLocationIsIdenticalToProjectLocation: boolean = true
+    requirementLocations: LocationInput[] = [new LocationInput()];
     
-  toRequirementMaterialSpecifications(): ApplicationModelsApiModelsApiRequirementSpecificationMaterial[] {
-    return this.selectedMaterials.map((x, index) => {
+  toRequirementMaterialSpecifications(): ApplicationModelsApiModelsApiRequirementSpecificationMaterial {
+    return ObjectCreator.Create<ApplicationModelsApiModelsApiRequirementSpecificationMaterial>({
+      classType: ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material,
+      entityId: this.entityId ?? undefined,
+      quantitySpecification: {
+        value: this.quantitySpecificationValue ?? "",
+        entityId: this.quantitySpecificationEntityId ?? undefined,
+      },
+      materialSpecifications: this.selectedMaterials.map(x => {
         return {
-            classType: ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material,
-            entityId: index === 0 ? this.entityId ?? undefined: undefined,
-            quantitySpecification: {
-                value: x.amount,
-                entityId: index === 0 ? this.quantitySpecificationEntityId ?? undefined : undefined
-            },            
-            materialSpecifications: [{
-                name: x.value,
-                entityId: x.entityId ?? undefined,
-                title: {
-                    rawContentString: x.text
-                },
-                description: {
-                    rawContentString: x.description
-                },
-                amountValue: x.amount
-            }],            
-            timeSpecificationSameAsProject: this.requirementTimeIsIdenticalToProjectTime,
-            locationSpecificationsSameAsProject: this.requirementLocationIsIdenticalToProjectLocation,
-            locationSpecifications: this.requirementLocationIsIdenticalToProjectLocation ? [] : this.requirementLocations.map(x => x.toLocationSpecification()).filter(x => !!x),
-            timeSpecifications:  this.requirementTimeIsIdenticalToProjectTime ? [] : this.requirementTimes.map(x => x.toTimeSpecification()).filter(x => !!x)            
+          name: x.value,
+          entityId: x.entityId ?? undefined,
+          title: {
+            rawContentString: x.text
+          },
+          description: {
+            rawContentString: x.description
+          },
+          amountValue: x.amount
         }
-    })
+      }),
+      timeSpecificationSameAsProject: this.requirementTimeIsIdenticalToProjectTime,
+      locationSpecificationsSameAsProject: this.requirementLocationIsIdenticalToProjectLocation,
+      locationSpecifications: this.requirementLocationIsIdenticalToProjectLocation ? [] : this.requirementLocations.map(x => x.toLocationSpecification()).filter(x => !!x),
+      timeSpecifications:  this.requirementTimeIsIdenticalToProjectTime ? [] : this.requirementTimes.map(x => x.toTimeSpecification()).filter(x => !!x)
+    });
   }
 
   static fromRequirementSpecification(requirementSpecification: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
     const result = new RequirementMaterialInput();
     result.entityId = requirementSpecification.entityId ?? null;
+    result.quantitySpecificationValue = requirementSpecification.quantitySpecification?.value ?? null;
     result.quantitySpecificationEntityId = requirementSpecification.quantitySpecification?.entityId ?? null;
     result.requirementTimeIsIdenticalToProjectTime = requirementSpecification.timeSpecificationSameAsProject ?? true;
     result.requirementLocationIsIdenticalToProjectLocation = requirementSpecification.locationSpecificationsSameAsProject ?? true;

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 
-declare type LocaleCode = "en-EN" | "de-DE" | "it-IT";
+export declare type LocaleCode = "en-EN" | "de-DE" | "it-IT";
 @Injectable({
     providedIn: "root"
 })
