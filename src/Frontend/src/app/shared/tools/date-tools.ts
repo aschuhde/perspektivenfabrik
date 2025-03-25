@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import {DomainDataTypesMonth} from "../../server/model/domainDataTypesMonth";
+import {parseMoneyWithFallback} from "./parsing";
 
 export class DateTools{
     static ToDateOnlyApiString(date: DateTime | null){
@@ -44,4 +45,8 @@ export function getLuxonDateTimeFromMonth(month: DomainDataTypesMonth | null) {
         return null;
     }
     return DateTime.fromJSDate(new Date(month.year.yearNumber, month.monthFromOneToTwelve - 1, 1));
+}
+
+export function formatDate(value: Date | null, locale: string){
+    return getLuxonDateTimeFromNullableJsDate(value)?.toFormat("dd.MM.yyyy") ?? "";
 }

@@ -11,10 +11,11 @@ import { ProjectTimeInput } from '../../models/project-time-input';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { InputProjectTimeComponent } from '../input-project-time/input-project-time.component';
+import {InputLocationComponent} from "../input-location/input-location.component";
 
 @Component({
   selector: 'app-input-requirement-money',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSlideToggle, InputProjectTimeComponent],
+    imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent],
   templateUrl: './input-requirement-money.component.html',
   styleUrl: './input-requirement-money.component.scss'
 })
@@ -27,6 +28,7 @@ export class InputRequirementMoneyComponent {
   remove = output<RequirementMoneyInput>();
   
   requirementIndex = model.required<number>();
+    onChanged = output();
 
   get requirementNumber(){
     return this.requirementIndex() + 1;
@@ -37,6 +39,7 @@ export class InputRequirementMoneyComponent {
   }
   set amountOfMoney(value: string){
     this.requirementMoney().amountOfMoney = value;
+      this.onChanged.emit();
   }
   
   get requirementTimeIsIdenticalToProjectTime(){
@@ -44,6 +47,7 @@ export class InputRequirementMoneyComponent {
   }
   set requirementTimeIsIdenticalToProjectTime(value: boolean){
     this.requirementMoney().requirementTimeIsIdenticalToProjectTime = value
+      this.onChanged.emit();
   }
   get requirementTimes(){
     return this.requirementMoney().requirementTimes
@@ -68,10 +72,16 @@ export class InputRequirementMoneyComponent {
 
   addRequirementTime(){
     this.requirementTimes.push(new ProjectTimeInput());
+      this.onChanged.emit();
   }
   removeRequirementTime(requirementTime: ProjectTimeInput){
     const index = this.requirementTimes.indexOf(requirementTime);
     if(index < 0) return;
     this.requirementTimes.splice(index, 1);
+      this.onChanged.emit();
   }
+
+    onUpdated() {
+        this.onChanged.emit();
+    }
 }

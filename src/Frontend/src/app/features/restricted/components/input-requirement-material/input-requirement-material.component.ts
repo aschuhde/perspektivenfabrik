@@ -18,7 +18,8 @@ export class InputRequirementMaterialComponent {
   remove = output<RequirementMaterialInput>();
   
   requirementIndex = model.required<number>();
-
+    onChanged = output();
+    
   get requirementNumber(){
     return this.requirementIndex() + 1;
   }
@@ -31,7 +32,8 @@ export class InputRequirementMaterialComponent {
     this.dialog.open(EditRequirementMaterialComponent, {
       data: {
         requirementMaterial: this.requirementMaterial(),
-        requirementIndex: this.requirementIndex()
+        requirementIndex: this.requirementIndex(),
+          onChanged: () => { this.onChanged.emit(); }
       }
     });
   }

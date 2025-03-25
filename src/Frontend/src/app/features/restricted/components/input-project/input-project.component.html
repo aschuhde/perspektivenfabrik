@@ -134,7 +134,7 @@
                     <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
                         <div class="item-tiles-container">
                             @for(location of locations; track location){
-                                <app-input-location [locationIndex]="$index" [location]="location" (remove)="removeLocation($event)"></app-input-location>
+                                <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="location" (remove)="removeLocation($event)"></app-input-location>
                             }
                         </div>
                         <button aria-label="Add another location" (click)="addLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
@@ -145,7 +145,7 @@
                     <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
                         <div class="item-tiles-container">
                             @for(projectTime of projectTimes; track projectTime){
-                                <app-input-project-time [timeIndex]="$index" [projectTime]="projectTime" (remove)="removeProjectTime($event)"></app-input-project-time>
+                                <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="projectTime" (remove)="removeProjectTime($event)"></app-input-project-time>
                             }
                         </div>
                         <div>
@@ -161,19 +161,19 @@
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'person'">
                             @for(requirementPerson of requirementPersons; track requirementPerson){
-                                <app-input-requirement-person [requirementIndex]="$index" [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
+                                <app-input-requirement-person (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
                             }
                             <button aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> Helfer*innen hinzufügen</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'material'">
                             @for(requirementMaterial of requirementMaterials; track requirementMaterial){
-                                <app-input-requirement-material [requirementIndex]="$index" [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
+                                <app-input-requirement-material (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
                             }
                             <button aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> Material</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'money'">
                             @for(requirementMoney of requirementsMoney; track requirementMoney){
-                                <app-input-requirement-money [requirementIndex]="$index" [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
+                                <app-input-requirement-money (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
                             }
                             <button aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> Finanzielle unterstützung</button>
                         </div>
@@ -220,7 +220,7 @@
                             </div>
                             <div class="item-tiles-container">
                                 @for(contactSpecification of contactSpecifications; track contactSpecification){
-                                    <app-input-contact-specification [contactSpecificationIndex]="$index" [contactSpecification]="contactSpecification" (remove)="removeContactSpecification($event)"></app-input-contact-specification>
+                                    <app-input-contact-specification (onChanged)="onUpdated()" [contactSpecificationIndex]="$index" [contactSpecification]="contactSpecification" (remove)="removeContactSpecification($event)"></app-input-contact-specification>
                                 }
                             </div>
                         </div>
@@ -314,7 +314,33 @@
             <div class="right-bar">
                 <div [class.hidden]="isLoading()">
                     <div style="text-align: center;">
-                        <button class="w-100" (click)="save()">Speichern</button>
+                        
+                        @if(projectSaveContext()?.hasChanges ?? false){
+                            @if(projectSaveContext()?.lastSave !== null){
+                                <span>zuletzt gespeichert: {{ formatDate(projectSaveContext()?.lastSave ?? null) }}</span>
+                            }
+                            <button class="w-100" (click)="save()">
+                                @if(projectVisibility === "draft"){
+                                    <span>Speichern</span>
+                                }@else{
+                                    <span>Speichern und veröffentlichen</span>
+                                }
+                            </button>
+                        } @else {
+                            <button class="w-100 secondary">
+                                @if(projectVisibility === "draft"){
+                                    <span>Als Entwurf gespeichert</span>
+                                } @else if (projectVisibility === "public"){
+                                    <span>
+                                        Gespeichert und veröffentlicht
+                                    </span>
+                                } @else{
+                                    <span>
+                                        Gespeichert und per Link einsehbar
+                                    </span>
+                                }
+                            </button>    
+                        }
                     </div>
                 </div>
             </div>

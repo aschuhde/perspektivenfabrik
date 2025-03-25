@@ -5,52 +5,55 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialog/message-dialog.component';
-import { MessageDialogData } from '../../../../shared/models/message-dialog-data';
-import { LocationInput } from '../../models/location-input';
-import { InputLocationComponent } from '../input-location/input-location.component';
-import { InputProjectTimeComponent } from '../input-project-time/input-project-time.component';
-import { ProjectTimeInput } from '../../models/project-time-input';
-import { RequirementPersonInput } from '../../models/requirement-person-input';
-import { RequirementMaterialInput } from '../../models/requirement-material-input';
-import { RequirementMoneyInput } from '../../models/requirement-money-input';
-import { InputRequirementMaterialComponent } from '../input-requirement-material/input-requirement-material.component';
-import { InputRequirementMoneyComponent } from '../input-requirement-money/input-requirement-money.component';
-import { InputRequirementPersonComponent } from '../input-requirement-person/input-requirement-person.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
-import { UploadedImage } from '../../../../shared/models/uploaded-image';
-import { ProjectInput, ProjectType } from '../../models/project-input';
-import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
-import { SelectOption } from '../../../../shared/models/select-option';
-import { InputContactSpecificationComponent } from '../input-contact-specification/input-contact-specification.component';
-import { ContactSpecification } from '../../models/contact-specification';
+import {MessageDialogComponent} from '../../../../shared/dialogs/message-dialog/message-dialog.component';
+import {MessageDialogData} from '../../../../shared/models/message-dialog-data';
+import {LocationInput} from '../../models/location-input';
+import {InputLocationComponent} from '../input-location/input-location.component';
+import {InputProjectTimeComponent} from '../input-project-time/input-project-time.component';
+import {ProjectTimeInput} from '../../models/project-time-input';
+import {RequirementPersonInput} from '../../models/requirement-person-input';
+import {RequirementMaterialInput} from '../../models/requirement-material-input';
+import {RequirementMoneyInput} from '../../models/requirement-money-input';
+import {InputRequirementMaterialComponent} from '../input-requirement-material/input-requirement-material.component';
+import {InputRequirementMoneyComponent} from '../input-requirement-money/input-requirement-money.component';
+import {InputRequirementPersonComponent} from '../input-requirement-person/input-requirement-person.component';
+import {AngularEditorModule} from '@kolkov/angular-editor';
+import {UploadedImage} from '../../../../shared/models/uploaded-image';
+import {ProjectInput, ProjectType} from '../../models/project-input';
+import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {COMMA, ENTER, TAB} from '@angular/cdk/keycodes';
+import {SelectOption} from '../../../../shared/models/select-option';
+import {InputContactSpecificationComponent} from '../input-contact-specification/input-contact-specification.component';
+import {ContactSpecification} from '../../models/contact-specification';
+import {ProjectSaveContext} from "../../models/project-save-context";
+import {formatDate} from "../../../../shared/tools/date-tools";
+import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
 
 @Component({
-  selector: 'app-input-project',
-  imports: [MatStepperModule,
-    FormsModule,    
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatSelectModule,
-    InputLocationComponent,
-    InputProjectTimeComponent,
-    InputRequirementMaterialComponent,
-    InputRequirementMoneyComponent,
-    InputRequirementPersonComponent,
-    MatAutocompleteModule, 
-    MatChipsModule,
-    AngularEditorModule,
-    InputContactSpecificationComponent],
-  templateUrl: './input-project.component.html',
-  styleUrl: './input-project.component.scss'
+    selector: 'app-input-project',
+    imports: [MatStepperModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        MatSelectModule,
+        InputLocationComponent,
+        InputProjectTimeComponent,
+        InputRequirementMaterialComponent,
+        InputRequirementMoneyComponent,
+        InputRequirementPersonComponent,
+        MatAutocompleteModule,
+        MatChipsModule,
+        AngularEditorModule,
+        InputContactSpecificationComponent],
+    templateUrl: './input-project.component.html',
+    styleUrl: './input-project.component.scss'
 })
 export class InputProjectComponent {
   readonly dialog = inject(MatDialog);
@@ -66,7 +69,9 @@ export class InputProjectComponent {
     currentRequirementGroup: "person" | "material" | "money" = "person";
     tagAutocompleteValue = model("");
     tagOptions: SelectOption[] = [new SelectOption("Landwirtschaft"), new SelectOption("Tourismus"), new SelectOption("Sozial"), new SelectOption("Kommunikation"), new SelectOption("Migration"), new SelectOption("Mobilität")];
-    
+    isSaving: boolean = false
+    projectSaveContext = input<ProjectSaveContext | null>(null);
+    localeDataProvider = inject(LocaleDataProvider);
 
     get selectedTags(){
         return this.projectInput().selectedTags;
@@ -80,6 +85,7 @@ export class InputProjectComponent {
 
   set projectType(value: ProjectType) {
     this.projectInput().projectType = value;
+      this.onUpdated();
   }
 
   get projectTitle(): string {
@@ -88,6 +94,7 @@ export class InputProjectComponent {
 
   set projectTitle(value: string) {
     this.projectInput().projectTitle = value;
+      this.onUpdated();
   }
 
   get projectPhase(): "unknown" | "planning" | "ongoing" | "finished" | "cancelled" {
@@ -96,6 +103,7 @@ export class InputProjectComponent {
 
   set projectPhase(value: "unknown" | "planning" | "ongoing" | "finished" | "cancelled") {
     this.projectInput().projectPhase = value;
+      this.onUpdated();
   }
 
   get locations(): LocationInput[] {
@@ -144,6 +152,7 @@ export class InputProjectComponent {
 
   set contactMail(value: string) {
     this.projectInput().contactMail = value;
+      this.onUpdated();
   }
 
   get contactPhone(): string {
@@ -152,6 +161,7 @@ export class InputProjectComponent {
 
   set contactPhone(value: string) {
     this.projectInput().contactPhone = value;
+      this.onUpdated();
   }
 
   get longDescription(): string {
@@ -160,6 +170,7 @@ export class InputProjectComponent {
 
   set longDescription(value: string) {
     this.projectInput().longDescription = value;
+      this.onUpdated();
   }
 
   get shortDescription(): string {
@@ -168,6 +179,7 @@ export class InputProjectComponent {
 
   set shortDescription(value: string) {
     this.projectInput().shortDescription = value;
+      this.onUpdated();
   }
 
   get uploadedImages(): UploadedImage[] {
@@ -184,6 +196,7 @@ export class InputProjectComponent {
 
   set projectVisibility(value: "draft" | "public" | "internal") {
     this.projectInput().projectVisibility = value;
+      this.onUpdated();
   }
 
   get projectName(){
@@ -198,6 +211,7 @@ export class InputProjectComponent {
   }
   set contactName(value: string) {
     this.projectInput().contactName = value;
+      this.onUpdated();
   }
 
   get organisationName(){
@@ -205,6 +219,7 @@ export class InputProjectComponent {
   }
   set organisationName(value: string) {
     this.projectInput().organisationName = value;
+    this.onUpdated();
   }
   
   get typeName(){
@@ -322,52 +337,64 @@ get typeNameGenitive(){
 
   addLocation(){
     this.locations.push(new LocationInput());
+      this.onUpdated();
   }
   removeLocation(location: LocationInput){
     const index = this.locations.indexOf(location);
     if(index < 0) return;
     this.locations.splice(index, 1);
+      this.onUpdated();
   }
   addProjectTime(){
     this.projectTimes.push(new ProjectTimeInput());
+      this.onUpdated();
   }
   removeProjectTime(projectTime: ProjectTimeInput){
     const index = this.projectTimes.indexOf(projectTime);
     if(index < 0) return;
     this.projectTimes.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementPerson(){
     this.requirementPersons.push(new RequirementPersonInput());
+      this.onUpdated();
   }
   removeRequirementPerson(requirementPerson: RequirementPersonInput){
     const index = this.requirementPersons.indexOf(requirementPerson);
     if(index < 0) return;
     this.requirementPersons.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementMaterial(){
     this.requirementMaterials.push(new RequirementMaterialInput());
+      this.onUpdated();
   }
   removeRequirementMaterial(requirementMaterial: RequirementMaterialInput){
     const index = this.requirementMaterials.indexOf(requirementMaterial);
     if(index < 0) return;
     this.requirementMaterials.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementMoney(){
     this.requirementsMoney.push(new RequirementMoneyInput());
+      this.onUpdated();
   }
   removeRequirementMoney(requirementMoney: RequirementMoneyInput){
     const index = this.requirementsMoney.indexOf(requirementMoney);
     if(index < 0) return;
     this.requirementsMoney.splice(index, 1);
+      this.onUpdated();
   }
 
   addContactSpecification(){
     this.contactSpecifications.push(new ContactSpecification());
+      this.onUpdated();
   }
   removeContactSpecification(contactSpecification: ContactSpecification){
     const index = this.contactSpecifications.indexOf(contactSpecification);
     if(index < 0) return;
     this.contactSpecifications.splice(index, 1);
+      this.onUpdated();
   }
 
   onFileUpload(event: Event){
@@ -402,6 +429,7 @@ get typeNameGenitive(){
     }
     
     this.uploadedImages.push(...validFiles.map(x => new UploadedImage(x)));
+      this.onUpdated();
   }
 
   onUploadButtonClicked(){
@@ -431,20 +459,21 @@ get typeNameGenitive(){
 
   setLogo(image: UploadedImage){
     if(!image.isLogo){
-      image.isMainImage = false;
+      image.isMainImage = false;       
     }
     this.uploadedImages.forEach(x => {
       if(x === image){
         x.isLogo = !x.isLogo;
         return;
       }
-      x.isLogo = false;
-    });    
+      x.isLogo = false;       
+    });
+      this.onUpdated();
   }
 
   setMainImage(image: UploadedImage){
     if(!image.isMainImage){
-      image.isLogo = false;
+      image.isLogo = false;       
     }
     this.uploadedImages.forEach(x => {
       if(x === image){
@@ -453,6 +482,7 @@ get typeNameGenitive(){
       }
       x.isMainImage = false;
     });
+      this.onUpdated();
   }
 
   addSelectedTag(event: MatChipInputEvent): void {
@@ -464,6 +494,7 @@ get typeNameGenitive(){
 
       if (!this.selectedTags.find(x => x.value === value)) {
           this.selectedTags.push(new SelectOption(value));
+          this.onUpdated();
       }
 
       this.tagAutocompleteValue.set("");
@@ -474,6 +505,7 @@ get typeNameGenitive(){
       event.option.deselect();
       if (!this.selectedTags.find(x => x.value === event.option.value)) {
           this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue));
+          this.onUpdated();
       }
       this.tagAutocompleteValue.set("");
       setTimeout(() => {
@@ -484,9 +516,18 @@ get typeNameGenitive(){
       const index = this.selectedTags.indexOf(selectedSkill);
       if(index < 0) return;
       this.selectedTags.splice(index, 1);
+      this.onUpdated();
   }
 
   save() {
     this.onSave.emit();
   }
+
+  onUpdated() {
+    this.projectSaveContext()?.onChange(this.projectInput());
+  }
+
+    formatDate(date: Date | null) {
+        return formatDate(date, this.localeDataProvider.locale);
+    }
 }

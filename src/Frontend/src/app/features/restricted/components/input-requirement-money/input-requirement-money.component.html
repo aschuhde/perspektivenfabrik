@@ -19,7 +19,7 @@
   </div>  
   <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">    
     @for(requirementTime of requirementTimes; track requirementTime){
-        <app-input-project-time [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
+        <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
     }        
     <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
   </div>       

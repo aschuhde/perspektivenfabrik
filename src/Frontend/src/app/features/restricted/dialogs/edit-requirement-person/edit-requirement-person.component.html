@@ -61,7 +61,7 @@
         </div>
         <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">        
             @for(requirementTime of requirementTimes; track requirementTime){
-                <app-input-project-time [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
+                <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
             }        
             <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
         </div>
@@ -71,7 +71,7 @@
         </div>
         <div [class.hidden]="requirementLocationIsIdenticalToProjectLocation">        
             @for(requirementLocation of requirementLocations; track requirementLocation){
-                <app-input-location [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
+                <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
             }        
             <button aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
         </div>

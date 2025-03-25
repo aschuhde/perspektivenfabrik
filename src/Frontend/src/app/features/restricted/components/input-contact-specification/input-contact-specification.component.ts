@@ -17,12 +17,14 @@ export class InputContactSpecificationComponent {
   contactSpecification = model.required<ContactSpecification>();
   contactSpecificationIndex = model.required<number>();
   remove = output<ContactSpecification>();
+    onChanged = output();
   
   get contactSpecificationType(): ContactSpecificationType{
     return this.contactSpecification().contactSpecificationType;
   }
   set contactSpecificationType(value: ContactSpecificationType){
     this.contactSpecification().contactSpecificationType = value;
+    this.onChanged.emit();
   }
 
   get contactSpecificationTypeName(){
@@ -46,6 +48,7 @@ export class InputContactSpecificationComponent {
   }
   set bankAccountName(value: string){
     this.contactSpecification().bankAccountName = value;
+      this.onChanged.emit();
   }
 
   get bankAccountIban(){
@@ -53,6 +56,7 @@ export class InputContactSpecificationComponent {
   }
   set bankAccountIban(value: string){
     this.contactSpecification().bankAccountIban = value;
+      this.onChanged.emit();
   }
 
   get bankAccountBic(){
@@ -60,6 +64,7 @@ export class InputContactSpecificationComponent {
   }
   set bankAccountBic(value: string){
     this.contactSpecification().bankAccountBic = value;
+      this.onChanged.emit();
   }
 
   get bankAccountReference(){
@@ -67,6 +72,7 @@ export class InputContactSpecificationComponent {
   }
   set bankAccountReference(value: string){
     this.contactSpecification().bankAccountReference = value;
+      this.onChanged.emit();
   }
 
   get paypalAddress(){
@@ -74,6 +80,7 @@ export class InputContactSpecificationComponent {
   }
   set paypalAddress(value: string){
     this.contactSpecification().paypalAddress = value;
+      this.onChanged.emit();
   }
 
   get paypalMeAddress(){
@@ -81,6 +88,7 @@ export class InputContactSpecificationComponent {
   }
   set paypalMeAddress(value: string){
     this.contactSpecification().paypalMeAddress = value;
+      this.onChanged.emit();
   }
 
   get website(){
@@ -88,6 +96,7 @@ export class InputContactSpecificationComponent {
   }
   set website(value: string){
     this.contactSpecification().website = value;
+      this.onChanged.emit();
   }
 
   removeClicked(){

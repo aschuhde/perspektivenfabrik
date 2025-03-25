@@ -6,7 +6,7 @@ import { Observable, from, switchMap } from 'rxjs';
 
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
-
+    
     constructor( private jwtTokenService: JWTTokenService, private refreshTokenService: RefreshTokenService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

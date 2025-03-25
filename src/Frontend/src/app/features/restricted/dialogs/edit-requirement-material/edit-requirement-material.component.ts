@@ -1,5 +1,5 @@
 import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
@@ -32,6 +32,7 @@ export class EditRequirementMaterialComponent {
   materialAutocompleteValue = model("");
   materialOptions: SelectOptionMaterial[] = [new SelectOptionMaterial("Holz"), new SelectOptionMaterial("Biertischganituren"), new SelectOptionMaterial("Elektroschrott")];
   requirementIndex: number = this.data?.requirementIndex;
+    onChanged: () => void = this.data?.onChanged;
 
   get requirementNumber(){
     return this.requirementIndex + 1;
@@ -48,6 +49,7 @@ export class EditRequirementMaterialComponent {
   }
   set requirementTimeIsIdenticalToProjectTime(value: boolean){
     this.requirementMaterial.requirementTimeIsIdenticalToProjectTime = value
+      this.onUpdated();
   }
   get requirementTimes(){
     return this.requirementMaterial.requirementTimes
@@ -60,6 +62,7 @@ export class EditRequirementMaterialComponent {
   }
   set requirementLocationIsIdenticalToProjectLocation(value: boolean){
     this.requirementMaterial.requirementLocationIsIdenticalToProjectLocation = value
+      this.onUpdated();
   }
   get requirementLocations(){
     return this.requirementMaterial.requirementLocations
@@ -77,6 +80,7 @@ export class EditRequirementMaterialComponent {
 
     if (!this.selectedMaterials.find(x => x.value === value)) {
       this.selectedMaterials.push(new SelectOptionMaterial(value));
+        this.onUpdated();
     }
 
     this.materialAutocompleteValue.set("");
@@ -86,7 +90,8 @@ export class EditRequirementMaterialComponent {
   materialSelected(event: MatAutocompleteSelectedEvent){        
     event.option.deselect();               
     if (!this.selectedMaterials.find(x => x.value === event.option.value)) { 
-      this.selectedMaterials.push(new SelectOptionMaterial(event.option.value, event.option.viewValue));    
+      this.selectedMaterials.push(new SelectOptionMaterial(event.option.value, event.option.viewValue));
+        this.onUpdated();
     }
     this.materialAutocompleteValue.set("");
     setTimeout(() => {
@@ -97,21 +102,30 @@ export class EditRequirementMaterialComponent {
     const index = this.selectedMaterials.indexOf(selectedMaterial);
     if(index < 0) return;
     this.selectedMaterials.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementTime(){
     this.requirementTimes.push(new ProjectTimeInput());
+      this.onUpdated();
   }
   removeRequirementTime(requirementTime: ProjectTimeInput){
     const index = this.requirementTimes.indexOf(requirementTime);
     if(index < 0) return;
     this.requirementTimes.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementLocation(){
     this.requirementLocations.push(new LocationInput());
+      this.onUpdated();
   }
   removeRequirementLocation(requirementLocation: LocationInput){
     const index = this.requirementLocations.indexOf(requirementLocation);
     if(index < 0) return;
     this.requirementLocations.splice(index, 1);
+    this.onUpdated();
   }
+
+    onUpdated() {
+        this.onChanged();
+    }
 }

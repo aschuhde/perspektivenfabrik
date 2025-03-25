@@ -7,6 +7,7 @@ import {InputProjectComponent} from "../../components/input-project/input-projec
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../../../server/api/api.service";
 import {ApplicationModelsApiModelsApiProject} from "../../../../server/model/applicationModelsApiModelsApiProject";
+import {ProjectSaveContext} from "../../models/project-save-context";
 
 @Component({
   selector: 'app-update-project-page',
@@ -20,12 +21,18 @@ export class UpdateProjectPageComponent {
   apiService = inject(ApiService)
   project: ApplicationModelsApiModelsApiProject | null = null
   isLoading: boolean = true;
+  projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
   loadProject(){
     const projectResponse = this.apiService.webApiEndpointsGetProject(this.projectIdentifier);
 
     projectResponse.subscribe(x => {
       if((x as any).project){
         this.projectInput.loadFromProject((x as any).project);
+        this.projectInput.buildRequest().then((x) => {
+            this.projectSaveContext.hasChanges = false;
+            this.projectSaveContext.lastSavedProjectRequest = x;
+            this.projectSaveContext.onChange(this.projectInput);
+        })
         this.isLoading = false;
       }
     });
@@ -36,11 +43,18 @@ export class UpdateProjectPageComponent {
   }
 
   async sendRequest(){
+    this.projectSaveContext.isSaving = true;
+    this.projectSaveContext.madeChangesWhileSaving = false;
+    const projectRequest = await this.projectInput.buildRequest() 
     this.apiService.webApiEndpointsPutProject({
-      project: await this.projectInput.buildRequest(),
-        
+      project: projectRequest,         
     }, this.projectIdentifier).subscribe(x => {
-      console.log("saved");
+      this.projectSaveContext.isSaving = false;
+      this.projectSaveContext.lastSave = new Date();
+      this.projectSaveContext.lastSavedProjectRequest = projectRequest;
+      if(!this.projectSaveContext.madeChangesWhileSaving) {
+          this.projectSaveContext.hasChanges = false;
+      }
     });
   }
   

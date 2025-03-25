@@ -22,6 +22,7 @@ export class InputLocationComponent {
   location = model.required<LocationInput>();
   locationIndex = model.required<number>();
   remove = output<LocationInput>();
+  onChanged = output();
 
   get locationNumber(){
     return this.locationIndex() + 1;
@@ -32,30 +33,35 @@ export class InputLocationComponent {
   }
   set locationType(value: LocationType){
     this.location().locationType = value
+      this.onChanged.emit();
   }
   get locationLink(){
     return this.location().locationLink
   }
   set locationLink(value: string){
     this.location().locationLink = value
+      this.onChanged.emit();
   }
   get locationName(){
     return this.location().locationName
   }
   set locationName(value: string){
     this.location().locationName = value
+      this.onChanged.emit();
   }
   get locationAddress(){
     return this.location().locationAddress
   }
   set locationAddress(value: string){
     this.location().locationAddress = value
+      this.onChanged.emit();
   }
   get locationCoordinates(){
     return this.location().locationCoordinates
   }
   set locationCoordinates(value: string){
     this.location().locationCoordinates = value
+      this.onChanged.emit();
   }
 
   get mapLookupMode(){
@@ -120,7 +126,7 @@ export class InputLocationComponent {
       case "name":
         this.locationName = name;
         break;
-    }
+    }     
   }
 
 }

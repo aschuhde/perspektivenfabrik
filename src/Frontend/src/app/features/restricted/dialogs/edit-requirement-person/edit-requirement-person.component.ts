@@ -1,5 +1,5 @@
 import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatButton } from '@angular/material/button';
@@ -36,6 +36,8 @@ export class EditRequirementPersonComponent {
   skillAutocompleteValue = model("");
   skillOptions: SelectOption[] = [new SelectOption("Designer*in"), new SelectOption("Softwareentwickler*in"), new SelectOption("Projektorganisator*in")];
   requirementIndex: number = this.data?.requirementIndex;
+  onChanged: () => void = this.data?.onChanged;
+  
 
   get requirementNumber(){
     return this.requirementIndex + 1;
@@ -46,6 +48,7 @@ export class EditRequirementPersonComponent {
   }
   set selectedSkills(value: SelectOption[]){
     this.requirementPerson.selectedSkills = value
+      this.onUpdated();
   }
   
   get numberOfPersons(){
@@ -53,6 +56,7 @@ export class EditRequirementPersonComponent {
   }
   set numberOfPersons(value: string){
     this.requirementPerson.numberOfPersons = value
+      this.onUpdated();
   }
 
   get effortHoursType(){
@@ -60,18 +64,21 @@ export class EditRequirementPersonComponent {
   }
   set effortHoursType(value: EffortHoursType){
     this.requirementPerson.effortHoursType = value
+      this.onUpdated();
   }
   get hours(){
     return this.requirementPerson.hours
   }
   set hours(value: string){
     this.requirementPerson.hours = value
+      this.onUpdated();
   }
   get requirementTimeIsIdenticalToProjectTime(){
     return this.requirementPerson.requirementTimeIsIdenticalToProjectTime
   }
   set requirementTimeIsIdenticalToProjectTime(value: boolean){
     this.requirementPerson.requirementTimeIsIdenticalToProjectTime = value
+      this.onUpdated();
   }
   get requirementTimes(){
     return this.requirementPerson.requirementTimes
@@ -84,6 +91,7 @@ export class EditRequirementPersonComponent {
   }
   set requirementLocationIsIdenticalToProjectLocation(value: boolean){
     this.requirementPerson.requirementLocationIsIdenticalToProjectLocation = value
+      this.onUpdated();
   }
   get requirementLocations(){
     return this.requirementPerson.requirementLocations
@@ -110,6 +118,7 @@ export class EditRequirementPersonComponent {
 
     if (!this.selectedSkills.find(x => x.value === value)) {
       this.selectedSkills.push(new SelectOption(value));
+        this.onUpdated();
     }
 
     this.skillAutocompleteValue.set("");
@@ -119,8 +128,10 @@ export class EditRequirementPersonComponent {
   skillSelected(event: MatAutocompleteSelectedEvent){        
     event.option.deselect();               
     if (!this.selectedSkills.find(x => x.value === event.option.value)) { 
-      this.selectedSkills.push(new SelectOption(event.option.value, event.option.viewValue));    
+      this.selectedSkills.push(new SelectOption(event.option.value, event.option.viewValue));
+        this.onUpdated();
     }
+    
     this.skillAutocompleteValue.set("");
     setTimeout(() => {
       this.skillAutocompleteValue.set("");      
@@ -130,21 +141,30 @@ export class EditRequirementPersonComponent {
     const index = this.selectedSkills.indexOf(selectedSkill);
     if(index < 0) return;
     this.selectedSkills.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementTime(){
     this.requirementTimes.push(new ProjectTimeInput());
+      this.onUpdated();
   }
   removeRequirementTime(requirementTime: ProjectTimeInput){
     const index = this.requirementTimes.indexOf(requirementTime);
     if(index < 0) return;
     this.requirementTimes.splice(index, 1);
+      this.onUpdated();
   }
   addRequirementLocation(){
     this.requirementLocations.push(new LocationInput());
+      this.onUpdated();
   }
   removeRequirementLocation(requirementLocation: LocationInput){
     const index = this.requirementLocations.indexOf(requirementLocation);
     if(index < 0) return;
     this.requirementLocations.splice(index, 1);
+      this.onUpdated();
   }
+
+    onUpdated() {
+        this.onChanged();
+    }
 }

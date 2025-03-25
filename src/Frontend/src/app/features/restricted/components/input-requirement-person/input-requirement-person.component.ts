@@ -18,6 +18,7 @@ export class InputRequirementPersonComponent {
   requirementPerson = model.required<RequirementPersonInput>();
   remove = output<RequirementPersonInput>();  
   requirementIndex = model.required<number>();
+    onChanged = output();
 
   get requirementNumber(){
     return this.requirementIndex() + 1;
@@ -31,7 +32,8 @@ export class InputRequirementPersonComponent {
     this.dialog.open(EditRequirementPersonComponent, {
       data: {
         requirementPerson: this.requirementPerson(),
-        requirementIndex: this.requirementIndex()
+        requirementIndex: this.requirementIndex(),
+          onChanged: () => { this.onChanged.emit(); }
       }
     });
   }
