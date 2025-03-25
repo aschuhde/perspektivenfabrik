@@ -28,57 +28,158 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
   }
     private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, CancellationToken ct)
     {
-        var query = selectFunction(filterFunction(dbContext.Projects.AsSplitQuery().IncludeFull()));
-        if (!withTracking)
+        // var query = selectFunction(filterFunction(dbContext.Projects.AsSplitQuery().IncludeFull()));
+        // if (!withTracking)
+        // {
+        //   query = query.AsNoTracking();
+        // }
+        TestQueryInterceptor.Queries = new List<(string, double)>();
+        TestQueryInterceptor.Calls++;
+        var start = Stopwatch.GetTimestamp();
+        var projectsQuery = selectFunction(filterFunction(dbContext.Projects)).WithAsNoTrackingIfEnabled(withTracking);
+        var projects = await projectsQuery.ToArrayAsync(ct);
+        
+        var projectIds = projects.Select(x => x.EntityId).ToArray();
+        
+        var requirementsQuery = dbContext.RequirementSpecificationProjectConnections.Include(x => x.RequirementSpecification)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking);
+        
+        var requirements = (await requirementsQuery.ToArrayAsync(ct)).ToArray();
+        var requirementIds = requirements.Select(x => x.RequirementSpecificationId).ToArray();
+        
+        var requirementIdsPerson = requirements.Where(x => x.RequirementSpecification is DbRequirementSpecificationPerson).Select(x => x.RequirementSpecificationId).ToArray();
+        var requirementIdsMaterial = requirements.Where(x => x.RequirementSpecification is DbRequirementSpecificationMaterial).Select(x => x.RequirementSpecificationId).ToArray();
+        
+        var requirementTimeSpecifications = await dbContext.TimeSpecificationRequirementConnections.Include(x => x.TimeSpecification)
+          .Where(x => requirementIds.Contains(x.RequirementSpecificationId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var requirementQuantitySpecifications =  await dbContext.QuantitySpecificationRequirementConnections.Include(x => x.QuantitySpecification)
+          .Where(x => requirementIds.Contains(x.RequirementSpecificationId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
+        var requirementLocationSpecifications = await dbContext.LocationSpecificationRequirementConnections.Include(x => x.LocationSpecification)
+          .Where(x => requirementIdsMaterial.Union(requirementIdsPerson).Contains(x.RequirementSpecificationId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var requirementSkillSpecifications =  await dbContext.SkillSpecificationRequirementConnections.Include(x => x.SkillSpecification)
+          .Where(x => requirementIdsPerson.Contains(x.RequirementSpecificationId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var requirementMaterialSpecifications =  await dbContext.MaterialSpecificationRequirementConnections.Include(x => x.MaterialSpecification)
+          .Where(x => requirementIdsMaterial.Contains(x.RequirementSpecificationId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var requirementWorkAmountSpecifications =  await dbContext.WorkAmountSpecificationRequirementConnections.Include(x => x.WorkAmountSpecification)
+          .Where(x => requirementIdsPerson.Contains(x.RequirementSpecificationPersonId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
+        var projectTimeSpecifications = await dbContext.TimeSpecificationProjectConnections.Include(x => x.TimeSpecification)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var projectLocationSpecifications = await dbContext.LocationSpecificationProjectConnections.Include(x => x.LocationSpecification)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var projectTagSpecifications = await dbContext.ProjectTagConnections.Include(x => x.ProjectTag)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var projectContactSpecifications = await dbContext.ContactSpecificationsProjectConnections.Include(x => x.ContactSpecification)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var projectDescriptionSpecifications = await dbContext.DescriptionSpecificationProjectConnections.Include(x => x.DescriptionSpecification).ThenInclude(x => x!.Type)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var projectGraphicsSpecifications = await dbContext.GraphicsSpecificationProjectConnections.Include(x => x.GraphicsSpecification)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
+        var connectedOrganizations = await dbContext.OrganizationProjectConnections.Include(x => x.Organization)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var relatedProjects = await dbContext.ProjectConnections.Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
+        var timeSpecificationMomentIds = projectTimeSpecifications
+          .Where(x => x.TimeSpecification is DbTimeSpecificationPeriod)
+          .Select(x => x.TimeSpecification as DbTimeSpecificationPeriod)
+          .Union(requirementTimeSpecifications.Where(x => x.TimeSpecification is DbTimeSpecificationPeriod).Select(x => x.TimeSpecification as DbTimeSpecificationPeriod))
+          .SelectMany(x => new[] { x?.Start?.MomentId, x?.End?.MomentId }).Where(x => x != null);
+        
+        var otherTimeSpecifications = await dbContext.TimeSpecifications.Where(x => timeSpecificationMomentIds.Contains(x.EntityId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+
+        var owners = await dbContext.PersonProjectOwnerConnections.Include(x => x.Person)
+          .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        var elapsed1 = (Stopwatch.GetTimestamp() - start) * 1000 / Stopwatch.Frequency;
+        foreach (var requirement in requirements)
         {
-          query = query.AsNoTracking();
+          requirement.RequirementSpecification!.TimeSpecifications = requirementTimeSpecifications
+            .Where(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId).ToList();
+
+          foreach (var timeSpecification in requirement.RequirementSpecification!.TimeSpecifications)
+          {
+            if (timeSpecification.TimeSpecification is not DbTimeSpecificationPeriod timeSpecificationPeriod)
+            {
+              continue;
+            }
+
+            if (timeSpecificationPeriod.Start != null)
+            {
+              timeSpecificationPeriod.Start.Moment =
+                otherTimeSpecifications.FirstOrDefault(x => x.EntityId == timeSpecificationPeriod.Start.MomentId) as DbTimeSpecificationMoment;
+            }
+            if (timeSpecificationPeriod.End != null)
+            {
+              timeSpecificationPeriod.End.Moment =
+                otherTimeSpecifications.FirstOrDefault(x => x.EntityId == timeSpecificationPeriod.End.MomentId) as DbTimeSpecificationMoment;
+            }
+          }
+          
+          requirement.RequirementSpecification.QuantitySpecification = requirementQuantitySpecifications.FirstOrDefault(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId);
+          if (requirement.RequirementSpecification is DbRequirementSpecificationMaterial requirementMaterial)
+          {
+            requirementMaterial.MaterialSpecifications = requirementMaterialSpecifications
+              .Where(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId).ToList();
+            requirementMaterial.LocationSpecifications = requirementLocationSpecifications.Where(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId).ToList();
+          }else if (requirement.RequirementSpecification is DbRequirementSpecificationPerson requirementPerson)
+          {
+            requirementPerson.LocationSpecifications = requirementLocationSpecifications.Where(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId).ToList();
+            requirementPerson.SkillSpecifications = requirementSkillSpecifications.Where(x => x.RequirementSpecificationId == requirement.RequirementSpecificationId).ToList();
+            requirementPerson.WorkAmountSpecification = requirementWorkAmountSpecifications.FirstOrDefault(x => x.RequirementSpecificationPersonId == requirement.RequirementSpecificationId);
+          }
         }
 
-        // var projects = await selectFunction(filterFunction(dbContext.Projects)).AsNoTracking()
-        //   .ToArrayAsync(ct);
+        foreach (DbProject project in projects)
+        {
+          project.ContactSpecifications = projectContactSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.DescriptionSpecifications = projectDescriptionSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.GraphicsSpecifications = projectGraphicsSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.ProjectTags = projectTagSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.LocationSpecifications = projectLocationSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.TimeSpecifications = projectTimeSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.RequirementSpecifications = requirements.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.ConnectedOrganizations = connectedOrganizations.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.RelatedProjects = relatedProjects.Where(x => x.ProjectId == project.EntityId).ToList();
+          project.Owner = owners.FirstOrDefault(x => x.ProjectId == project.EntityId);
+          project.Contributors = [];
+          foreach (var relatedProject in project.RelatedProjects)
+          {
+            relatedProject.Project = project;
+            relatedProject.RelatedProject = projects.FirstOrDefault(x => x.EntityId == relatedProject.RelatedProjectId);
+          }
+          
+          foreach (var timeSpecification in project.TimeSpecifications)
+          {
+            if (timeSpecification.TimeSpecification is not DbTimeSpecificationPeriod timeSpecificationPeriod)
+            {
+              continue;
+            }
+
+            if (timeSpecificationPeriod.Start != null)
+            {
+              timeSpecificationPeriod.Start.Moment =
+                otherTimeSpecifications.FirstOrDefault(x => x.EntityId == timeSpecificationPeriod.Start.MomentId) as DbTimeSpecificationMoment;
+            }
+            if (timeSpecificationPeriod.End != null)
+            {
+              timeSpecificationPeriod.End.Moment =
+                otherTimeSpecifications.FirstOrDefault(x => x.EntityId == timeSpecificationPeriod.End.MomentId) as DbTimeSpecificationMoment;
+            }
+          }
+        }
         //
-        // var projectIds = projects.Select(x => x.EntityId).ToArray();
-        // var query2 = dbContext.RequirementSpecificationProjectConnections.Include(x => x.RequirementSpecification)
-        //   .Where(x => projectIds.Contains(x.ProjectId)).AsNoTracking();
-        // var requirements = (await query2.ToArrayAsync(ct)).Select(x => x.RequirementSpecification!).ToArray();
+        // #if DEBUG
+        // var queryString = query.ToQueryString();
+        // // var queryString2 = query2.ToQueryString();
+        // #endif
         //
-        // var requirementIds = requirements.Select(x => x.EntityId).ToArray();
-        // var requirementTimeSpecifications = await dbContext.TimeSpecificationRequirementConnections.Include(x => x.TimeSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var requirementLocationSpecifications = await dbContext.LocationSpecificationRequirementConnections.Include(x => x.LocationSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var requirementSkillSpecifications =  await dbContext.SkillSpecificationRequirementConnections.Include(x => x.SkillSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var requirementMaterialSpecifications =  await dbContext.MaterialSpecificationRequirementConnections.Include(x => x.MaterialSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var requirementWorkAmountSpecifications =  await dbContext.WorkAmountSpecificationRequirementConnections.Include(x => x.WorkAmountSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var requirementQuantitySpecifications =  await dbContext.QuantitySpecificationRequirementConnections.Include(x => x.QuantitySpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        //
-        // var projectTimeSpecifications = await dbContext.TimeSpecificationProjectConnections.Include(x => x.TimeSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var projectLocationSpecifications = await dbContext.LocationSpecificationProjectConnections.Include(x => x.LocationSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var projectTagSpecifications = await dbContext.ProjectTagConnections.Include(x => x.ProjectTag)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var projectContactSpecifications = await dbContext.ContactSpecificationsProjectConnections.Include(x => x.ContactSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var projectDescriptionSpecifications = await dbContext.DescriptionSpecificationProjectConnections.Include(x => x.DescriptionSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        // var projectGraphicsSpecifications = await dbContext.GraphicsSpecificationProjectConnections.Include(x => x.GraphicsSpecification)
-        //   .Where(x => requirementIds.Contains(x.EntityId)).AsNoTracking().ToArrayAsync(ct);
-        //
-        //
-        #if DEBUG
-        var queryString = query.ToQueryString();
-        // var queryString2 = query2.ToQueryString();
-        #endif
-        var start = Stopwatch.GetTimestamp();
-        var result = (await query.ToArrayAsync(ct));
+        // var result = (await query.ToArrayAsync(ct));
         var elapsed = (Stopwatch.GetTimestamp() - start) * 1000 / Stopwatch.Frequency;
 
-        return result;
+        logger.LogWarning($"############# Elapsed query ms: {elapsed} ############");
+        var queries = TestQueryInterceptor.Queries;
+        return projects;
 
     }
 
