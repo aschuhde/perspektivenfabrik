@@ -22,6 +22,7 @@ import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applica
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
 import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
 import { ApplicationGetProjectsGetProjectsGetProjectsResponse } from '../model/applicationGetProjectsGetProjectsGetProjectsResponse';
+import { ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse } from '../model/applicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse';
 import { ApplicationJwtTokenJwtTokenRequest } from '../model/applicationJwtTokenJwtTokenRequest';
@@ -31,7 +32,9 @@ import { ApplicationPostProjectPostProjectPostProjectResponse } from '../model/a
 import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
 import { ApplicationPutProjectPutProjectPutProjectResponse } from '../model/applicationPutProjectPutProjectPutProjectResponse';
 import { Filter } from '../model/filter';
+import { Filter1 } from '../model/filter1';
 import { Selector } from '../model/selector';
+import { Selector1 } from '../model/selector1';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -318,6 +321,67 @@ export class ApiService {
         ];
 
         return this.httpClient.request<ApplicationGetProjectsGetProjectsGetProjectsResponse>('get',`${this.basePath}/api/projects`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param filter 
+     * @param selector 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filter !== undefined && filter !== null) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+        if (selector !== undefined && selector !== null) {
+            queryParameters = queryParameters.set('selector', <any>selector);
+        }
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>('get',`${this.basePath}/api/my/projects`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

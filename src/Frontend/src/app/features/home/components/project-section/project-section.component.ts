@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import { ProjectFilteringComponent } from '../project-filtering/project-filtering.component';
 import { ProjectListComponent } from '../project-list/project-list.component';
 
@@ -9,5 +9,5 @@ import { ProjectListComponent } from '../project-list/project-list.component';
   styleUrl: './project-section.component.scss'
 })
 export class ProjectSectionComponent {
-
+  type = input<"home" | "user-area">("home")
 }

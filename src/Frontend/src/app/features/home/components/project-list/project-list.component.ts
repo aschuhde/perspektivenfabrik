@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {ApiService} from "../../../../server/api/api.service";
 import { ApiProjectModel } from '../../models/api-project-model';
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
@@ -14,16 +14,6 @@ import {
 import {
   ApplicationModelsApiModelsApiProjectTag
 } from "../../../../server/model/applicationModelsApiModelsApiProjectTag";
-import {
-  ApplicationModelsApiModelsApiRequirementSpecificationMoney
-} from "../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMoney";
-import {
-  ApplicationModelsApiModelsApiRequirementSpecificationMaterial
-} from "../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMaterial";
-import {
-  ApplicationModelsApiModelsApiRequirementSpecificationPerson
-} from "../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
-
 @Component({
   selector: 'app-project-list',
   imports: [MoreIconComponent, MatIcon],
@@ -34,7 +24,20 @@ export class ProjectListComponent {
   apiService = inject(ApiService)
   projects: ApiProjectModel[] = []
   localeDataProvider = inject(LocaleDataProvider)
+  type = input<"home" | "user-area">("home")
   loadProjects(){
+    if(this.type() === "user-area"){
+      const projectsResponse = this.apiService.webApiEndpointsGetUsersProjects();
+
+      projectsResponse.subscribe(x => {
+        if(x.projects){
+          this.projects = x.projects?.map(x => {
+            return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider);
+          }) ?? [];
+        }
+      });
+      return;
+    }
     const projectsResponse = this.apiService.webApiEndpointsGetProjects();
 
     projectsResponse.subscribe(x => {

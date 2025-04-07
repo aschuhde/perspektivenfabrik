@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, input} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
@@ -21,5 +21,5 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './project-filtering.component.scss'
 })
 export class ProjectFilteringComponent {
-
+  type = input<"home" | "user-area">("home")
 }
