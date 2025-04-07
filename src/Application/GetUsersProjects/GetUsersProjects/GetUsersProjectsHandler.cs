@@ -10,7 +10,7 @@ public class GetUsersProjectsHandler(IServiceProvider serviceProvider, IProjectS
     {
         return new GetUsersProjectsResponse()
         {
-            Projects = (await projectService.GetPublicProjects(command.Filter, command.Selector, ct)).Select(x => x.ToApiProject()).ToArray()
+            Projects = (await projectService.GetUsersProjects(command.Filter, command.Selector, ct)).Select(x => x.ToApiProject()).ToArray()
         };
     }
 }

@@ -15,11 +15,12 @@ using Infrastructure.ResultExtensions;
 using Infrastructure.SelectorExtensions;
 using Infrastructure.Tools;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Services;
 
-public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectService> logger) : IProjectService
+public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectService> logger, IServiceProvider serviceProvider) : IProjectService
 {
 
     private readonly List<DbProject> _cachedProjects = [];
@@ -221,6 +222,17 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return await GetProjects(query =>
             (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
                 x.Visibility == ProjectVisibility.Public)), query => 
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
+    }
+    public async Task<ProjectDto[]> GetUsersProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
+    {
+        var currentUser = serviceProvider.GetRequiredService<ICurrentUserService>();
+        var userId = currentUser.CurrentUserId;
+        var projectOwnerIds = await dbContext.PersonProjectOwnerConnections.Where(x => x.PersonId == userId).Select(x => x.ProjectId).ToArrayAsync(ct);
+        var projectContributerIds = await dbContext.PersonProjectContributorConnections.Where(x => x.PersonId == userId).Select(x => x.ProjectId).ToArrayAsync(ct);
+        return await GetProjects(query =>
+            (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
+                currentUser.IsAdmin | projectOwnerIds.Contains(x.EntityId) || projectContributerIds.Contains(x.EntityId))), query => 
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
 

@@ -9,4 +9,5 @@ public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor)
     private readonly ClaimsPrincipalUserData _currentUser = ThrowIf.Null(httpContextAccessor.HttpContext?.User, $"HttpContext could not be resolved in {nameof(CurrentUserService)}").ToUserData();
 
     public Guid CurrentUserId => _currentUser.UserId;
+    public bool IsAdmin => _currentUser.Roles.Any(x => string.Equals(x, UserRoles.Admin, StringComparison.OrdinalIgnoreCase));
 }
