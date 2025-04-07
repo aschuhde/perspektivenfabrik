@@ -8,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../../../server/api/api.service";
 import {ApplicationModelsApiModelsApiProject} from "../../../../server/model/applicationModelsApiModelsApiProject";
 import {ProjectSaveContext} from "../../models/project-save-context";
-import { RestrictedRouteNames } from '../../restricted.routes';
+import { RestrictedRouteNames } from '../../restricted-route-names';
 
 @Component({
   selector: 'app-update-project-page',

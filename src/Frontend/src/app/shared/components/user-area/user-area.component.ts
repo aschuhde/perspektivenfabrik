@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
-import {RestrictedRouteNames} from "../../../features/restricted/restricted.routes";
+import { RestrictedRouteNames } from '../../../features/restricted/restricted-route-names';
 
 @Component({
   selector: 'app-user-area',

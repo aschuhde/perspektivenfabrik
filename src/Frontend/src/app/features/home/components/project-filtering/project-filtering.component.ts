@@ -1,18 +1,16 @@
 import {Component, input} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
-import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
+import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
 
 @Component({
   selector: 'app-project-filtering',
   imports: [
     MatFormField,
     MatLabel,
-    MatOption,
     MatSelect,
     FormsModule,
     MatInput,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationComponent } from '../navigation/navigation.component';
-import {HomeRouteNames} from "../../../features/home/home.routes";
+import { HomeRouteNames } from '../../../features/home/home-route-names';
+
 
 @Component({
   selector: 'app-navigation-bar-full',

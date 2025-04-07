@@ -4,7 +4,7 @@ import { ProjectInput } from '../../models/project-input';
 import { InputProjectComponent } from '../../components/input-project/input-project.component';
 import {ApiService} from "../../../../server/api/api.service";
 import { ProjectSaveContext } from '../../models/project-save-context';
-import {RestrictedRouteNames, RestrictedRoutes} from "../../restricted.routes";
+import { RestrictedRouteNames } from '../../restricted-route-names';
 
 @Component({
   selector: 'app-input-project-page',

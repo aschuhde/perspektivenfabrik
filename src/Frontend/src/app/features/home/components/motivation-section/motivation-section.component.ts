@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
+import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
 
 @Component({
   selector: 'app-motivation-section',

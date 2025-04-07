@@ -14,8 +14,9 @@ import {
 import {
   ApplicationModelsApiModelsApiProjectTag
 } from "../../../../server/model/applicationModelsApiModelsApiProjectTag";
-import {HomeRouteNames} from "../../home.routes";
-import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
+import { HomeRouteNames } from '../../home-route-names';
+import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
+
 @Component({
   selector: 'app-project-list',
   imports: [MoreIconComponent, MatIcon],
