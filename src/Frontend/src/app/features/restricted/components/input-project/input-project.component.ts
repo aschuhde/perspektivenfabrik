@@ -73,6 +73,14 @@ export class InputProjectComponent {
     projectSaveContext = input<ProjectSaveContext | null>(null);
     localeDataProvider = inject(LocaleDataProvider);
 
+    constructor() {
+      
+      const queryParams = new URLSearchParams(window.location.search);
+      const group = queryParams.get('group');
+      if (group) {
+        this.currentGroup = group;
+      }
+    }
     get selectedTags(){
         return this.projectInput().selectedTags;
     }
@@ -429,7 +437,8 @@ get typeNameGenitive(){
     }
     
     this.uploadedImages.push(...validFiles.map(x => new UploadedImage(x)));
-      this.onUpdated();
+    this.fileUpload.nativeElement.value = "";
+    this.onUpdated();
   }
 
   onUploadButtonClicked(){
@@ -438,6 +447,10 @@ get typeNameGenitive(){
 
   select(groupName: string){
     this.currentGroup = groupName;
+    
+    const url = new URL(window.location.href);
+    url.searchParams.set("group", groupName);
+    window.history.replaceState({}, '', url.toString());
   }
 
   stepNumber(baseNumber: number){    
@@ -453,7 +466,7 @@ get typeNameGenitive(){
   changeProjectType(projectType: ProjectType){
     this.projectType = projectType;
     setTimeout(() => {
-      this.currentGroup = "projectName";
+      this.select("projectName");
     }, 400);    
   }
 
@@ -527,7 +540,12 @@ get typeNameGenitive(){
     this.projectSaveContext()?.onChange(this.projectInput());
   }
 
-    formatDate(date: Date | null) {
-        return formatDate(date, this.localeDataProvider.locale);
-    }
+  formatDate(date: Date | null) {
+      return formatDate(date, this.localeDataProvider.locale);
+  }
+
+  removeUploadedImage(image: UploadedImage) {
+    this.uploadedImages = this.uploadedImages.filter(x => x !== image);
+    this.onUpdated();
+  }
 }

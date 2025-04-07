@@ -99,3 +99,15 @@
 .title-container{
     flex-shrink: 0;
 }
+.uploaded-image-list-item-close-button-container{
+    text-align: right;
+    cursor: pointer;
+    
+    mat-icon {
+        transition: transform .2s ease;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    
+}

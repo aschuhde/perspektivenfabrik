@@ -3,6 +3,8 @@ import { NavigationBarFullComponent } from '../../../../shared/components/naviga
 import { ProjectInput } from '../../models/project-input';
 import { InputProjectComponent } from '../../components/input-project/input-project.component';
 import {ApiService} from "../../../../server/api/api.service";
+import { ProjectSaveContext } from '../../models/project-save-context';
+import {RestrictedRouteNames, RestrictedRoutes} from "../../restricted.routes";
 
 @Component({
   selector: 'app-input-project-page',
@@ -13,15 +15,21 @@ import {ApiService} from "../../../../server/api/api.service";
 export class InputProjectPageComponent {
   projectInput: ProjectInput = new ProjectInput();
   apiService = inject(ApiService)
+  projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
+  constructor() { 
+    this.projectSaveContext.hasChanges = true;
+  }
   async sendRequest(){
     this.apiService.webApiEndpointsPostProject({
       project: await this.projectInput.buildRequest()
     }).subscribe(x => {
-
+      if((x as any).project){
+        window.location.href = `${RestrictedRouteNames.UpdateProjectUrl((x as any).project.entityId)}${window.location.search}`;
+      }
     });
   }
 
-  onSave() {
-    this.sendRequest();
+  async onSave() {
+    await this.sendRequest();
   }
 }

@@ -33,8 +33,6 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         // {
         //   query = query.AsNoTracking();
         // }
-        TestQueryInterceptor.Queries = new List<(string, double)>();
-        TestQueryInterceptor.Calls++;
         var start = Stopwatch.GetTimestamp();
         var projectsQuery = selectFunction(filterFunction(dbContext.Projects)).WithAsNoTrackingIfEnabled(withTracking);
         var projects = await projectsQuery.ToArrayAsync(ct);
@@ -178,7 +176,6 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         var elapsed = (Stopwatch.GetTimestamp() - start) * 1000 / Stopwatch.Frequency;
 
         logger.LogWarning($"############# Elapsed query ms: {elapsed} ############");
-        var queries = TestQueryInterceptor.Queries;
         return projects;
 
     }

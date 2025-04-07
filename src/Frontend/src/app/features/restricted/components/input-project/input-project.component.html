@@ -285,6 +285,9 @@
                             @for(image of uploadedImages; track image){
                                 <div class="uploaded-image-list-item">
                                     <div>
+                                        <div class="uploaded-image-list-item-close-button-container">
+                                            <mat-icon style="font-size: 1.2rem;" fontIcon="close" (click)="removeUploadedImage(image)"></mat-icon>
+                                        </div>
                                         <div style="text-align: center;">
                                             <img src="{{ image.src }}" style="height: 10rem;" />
                                         </div>
