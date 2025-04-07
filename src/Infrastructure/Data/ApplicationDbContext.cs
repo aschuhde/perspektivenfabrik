@@ -26,6 +26,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbMaterialSpecification> MaterialSpecifications { get; init; }
     public required DbSet<DbMaterialSpecificationRequirementConnection> MaterialSpecificationRequirementConnections { get; init; }
     public required DbSet<DbModificationHistory> Histories { get; init; }
+    public required DbSet<DbModificationHistoryItem> HistoryItems { get; init; }
     public required DbSet<DbOrganizationConnection> OrganizationConnections { get; init; }
     public required DbSet<DbOrganizationPositionConnection> OrganizationPositionConnections { get; init; }
     public required DbSet<DbPersonProjectOwnerConnection> PersonProjectOwnerConnections { get; init; }

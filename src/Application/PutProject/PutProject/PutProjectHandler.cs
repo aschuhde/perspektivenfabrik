@@ -34,7 +34,7 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         }
         command.Project.Owner ??= ApiPersonReference.WithUserId(CurrentUserId);
         
-        var existingProject = await projectService.GetProjectById(command.Project.EntityId.Value, ct);
+        var existingProject = await projectService.GetProjectWithHistoryByIdAndCacheDbProject(command.Project.EntityId.Value, ct);
         if (existingProject == null)
         {
             return new PutProjectEntityNotFoundResponse(command.Project.EntityId.Value);

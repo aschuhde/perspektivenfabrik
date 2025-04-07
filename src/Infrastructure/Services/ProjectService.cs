@@ -21,13 +21,19 @@ namespace Infrastructure.Services;
 
 public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectService> logger) : IProjectService
 {
+
+    private readonly List<DbProject> _cachedProjects = [];
   private async Task<ProjectDto[]> GetProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction,
-    Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, CancellationToken ct)
+    Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct)
   {
-    return (await GetDbProjects(filterFunction, selectFunction, false, ct)).Select(x => x.ToProject()).ToArray();
+    return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(x => x.ToProject()).ToArray();
   }
-    private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, CancellationToken ct)
+    private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct)
     {
+        if (cache && _cachedProjects.Count > 0)
+        {
+            return _cachedProjects.ToArray();
+        }
         // var query = selectFunction(filterFunction(dbContext.Projects.AsSplitQuery().IncludeFull()));
         // if (!withTracking)
         // {
@@ -86,6 +92,32 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
           .SelectMany(x => new[] { x?.Start?.MomentId, x?.End?.MomentId }).Where(x => x != null);
         
         var otherTimeSpecifications = await dbContext.TimeSpecifications.Where(x => timeSpecificationMomentIds.Contains(x.EntityId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+
+        if (withHistory)
+        {
+            var historyIds = projects.Select(x => x.History?.HistoryId).Where(x => x != null).ToArray();
+
+            var historyItems = await dbContext.HistoryItems.Where(x => historyIds.Contains(x.HistoryId))
+                .ToArrayAsync(ct);
+
+            foreach (var project in projects)
+            {
+                if (project.History == null) continue;
+                if (project.History.History != null) continue;
+
+                project.History.History = new DbModificationHistory()
+                {
+                    EntityId = project.History.HistoryId ?? Guid.NewGuid()
+                };
+                if (withTracking)
+                {
+                    dbContext.Attach(project.History.History);
+                }
+
+                project.History.History.HistoryItems =
+                    historyItems.Where(x => x.HistoryId == project.History.HistoryId).ToList();
+            }
+        }
 
         var owners = await dbContext.PersonProjectOwnerConnections.Include(x => x.Person)
           .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
@@ -176,6 +208,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         var elapsed = (Stopwatch.GetTimestamp() - start) * 1000 / Stopwatch.Frequency;
 
         logger.LogWarning($"############# Elapsed query ms: {elapsed} ############");
+        if (cache)
+        {
+            _cachedProjects.AddRange(projects);
+        }
         return projects;
 
     }
@@ -185,12 +221,17 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return await GetProjects(query =>
             (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
                 x.Visibility == ProjectVisibility.Public)), query => 
-            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), ct);
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
-    
+
+    public async Task<ProjectDto?> GetProjectWithHistoryByIdAndCacheDbProject(Guid entityId, CancellationToken ct)
+    {
+        return (await GetProjects(query => query.Where(x => x.EntityId == entityId), query => query, true, true, true, ct))
+            .FirstOrDefault();
+    }
     public async Task<ProjectDto?> GetProjectById(Guid entityId, CancellationToken ct)
     {
-        return (await GetProjects(query => query.Where(x => x.EntityId == entityId), query => query, ct))
+        return (await GetProjects(query => query.Where(x => x.EntityId == entityId), query => query, false, false, false, ct))
             .FirstOrDefault();
     }
 
@@ -298,15 +339,16 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         var existingProject = changeContext.IsCreating
             ? null
-            : (await GetDbProjects(query => query.Where(x => x.EntityId == project.EntityId), query => query, true, ct))
+            : (await GetDbProjects(query => query.Where(x => x.EntityId == project.EntityId), query => query, true, true, true, ct))
             .FirstOrDefault();
-
+        
         return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (transaction,ctInner) =>
         {
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications?.ToArray() ?? []);
             SaveProjectTimeSpecifications(project.TimeSpecifications, existingProject?.TimeSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.LocationSpecifications, existingProject?.LocationSpecifications?.ToArray(), x => x.ToDbLocationSpecification(), x => x.LocationSpecification!, x => x, x => x);
             UpdateRelatedEntities(project.ContactSpecifications, existingProject?.ContactSpecifications?.ToArray(), x => x.ToDbContactSpecification(), x => x.ContactSpecification!, x => x, x => x);
+            UpdateRelatedEntities(project.ProjectTags, existingProject?.ProjectTags?.ToArray(), x => x.ToDbProjectTag(), x => x.ProjectTag!, x => x, x => x);
             SaveDescriptionSpecification(project.DescriptionSpecifications, existingProject?.DescriptionSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.GraphicsSpecifications, existingProject?.GraphicsSpecifications?.ToArray(), x => x.ToDbGraphicsSpecification(), x => x.GraphicsSpecification!, x => x, x => x);
             AddOrUpdateProject(project, existingProject);
@@ -315,7 +357,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             await dbContext.SaveChangesAsync(ctInner);
             await transaction.CommitAsync(ctInner);
             var resultProject =
-                (await GetProjects(query => query.Where(x => x.EntityId == project.EntityId), query => query, ctInner))
+                (await GetProjects(query => query.Where(x => x.EntityId == project.EntityId), query => query, false, false, false, ctInner))
                 .FirstOrDefault();
             
             // todo: save history from changeContext
