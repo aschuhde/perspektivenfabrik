@@ -1,3 +1,4 @@
+export * from './applicationCommonBaseRequestOfDeleteProjectResponse';
 export * from './applicationCommonBaseRequestOfGetExampleAnonymousResponse';
 export * from './applicationCommonBaseRequestOfGetExampleResponse';
 export * from './applicationCommonBaseRequestOfGetJsonTypeDiscriminatorNamesResponse';
@@ -10,6 +11,8 @@ export * from './applicationCommonBaseRequestOfPostProjectResponse';
 export * from './applicationCommonBaseRequestOfPutProjectResponse';
 export * from './applicationCommonResponseBaseResponse';
 export * from './applicationCommonResponseJsonResponse';
+export * from './applicationDeleteProjectDeleteProjectDeleteProjectRequest';
+export * from './applicationDeleteProjectDeleteProjectDeleteProjectResponse';
 export * from './applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousRequest';
 export * from './applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 export * from './applicationExampleGetExampleGetExampleRequest';

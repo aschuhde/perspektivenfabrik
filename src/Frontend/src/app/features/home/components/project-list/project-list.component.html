@@ -46,7 +46,11 @@
                     </p>
                 }
                     <div class="project-list-item-button-container">
-                        <a href="/home/projects/{{project.project?.entityId}}"><button class="secondary">zum Projekt</button></a>
+                        @if (type() === 'user-area'){
+                            <a href="{{editProjectUrl(project.project?.entityId ?? '')}}"><button class="secondary">bearbeiten</button></a>
+                        } @else {
+                            <a href="{{projectUrl(project.project?.entityId ?? '')}}"><button class="secondary">zum Projekt</button></a>
+                        }
                     </div>
                 </div>
             </div>

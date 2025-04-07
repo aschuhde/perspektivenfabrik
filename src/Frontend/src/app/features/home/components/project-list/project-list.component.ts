@@ -14,6 +14,8 @@ import {
 import {
   ApplicationModelsApiModelsApiProjectTag
 } from "../../../../server/model/applicationModelsApiModelsApiProjectTag";
+import {HomeRouteNames} from "../../home.routes";
+import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
 @Component({
   selector: 'app-project-list',
   imports: [MoreIconComponent, MatIcon],
@@ -166,5 +168,12 @@ export class ProjectListComponent {
       return "";
     }
     return project.getRequirementSpecificationMoneyShortName(requirementSpecificationMoneySummed, this.localeDataProvider);
+  }
+
+  projectUrl(entityId: string) {
+    return HomeRouteNames.ProjectUrl(entityId);
+  }
+  editProjectUrl(entityId: string) {
+    return RestrictedRouteNames.UpdateProjectUrl(entityId);
   }
 }

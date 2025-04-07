@@ -485,6 +485,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsSoftDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
 

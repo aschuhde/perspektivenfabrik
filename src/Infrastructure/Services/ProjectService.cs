@@ -29,7 +29,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
   {
     return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(x => x.ToProject()).ToArray();
   }
-    private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct)
+    private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct, bool includeDeleted = false)
     {
         if (cache && _cachedProjects.Count > 0)
         {
@@ -41,7 +41,12 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         //   query = query.AsNoTracking();
         // }
         var start = Stopwatch.GetTimestamp();
-        var projectsQuery = selectFunction(filterFunction(dbContext.Projects)).WithAsNoTrackingIfEnabled(withTracking);
+        IQueryable<DbProject> innerProjectsQuery = dbContext.Projects;
+        if (!includeDeleted)
+        {
+            innerProjectsQuery = innerProjectsQuery.Where(x => !x.IsSoftDeleted);
+        }
+        var projectsQuery = selectFunction(filterFunction(innerProjectsQuery)).WithAsNoTrackingIfEnabled(withTracking);
         var projects = await projectsQuery.ToArrayAsync(ct);
         
         var projectIds = projects.Select(x => x.EntityId).ToArray();
@@ -122,6 +127,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
         var owners = await dbContext.PersonProjectOwnerConnections.Include(x => x.Person)
           .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
+        var contributors = await dbContext.PersonProjectContributorConnections.Include(x => x.Person)
+            .Where(x => projectIds.Contains(x.ProjectId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
+        
         var elapsed1 = (Stopwatch.GetTimestamp() - start) * 1000 / Stopwatch.Frequency;
         foreach (var requirement in requirements)
         {
@@ -173,7 +182,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
           project.ConnectedOrganizations = connectedOrganizations.Where(x => x.ProjectId == project.EntityId).ToList();
           project.RelatedProjects = relatedProjects.Where(x => x.ProjectId == project.EntityId).ToList();
           project.Owner = owners.FirstOrDefault(x => x.ProjectId == project.EntityId);
-          project.Contributors = [];
+          project.Contributors = contributors.Where(x => x.ProjectId == project.EntityId).ToList();
           foreach (var relatedProject in project.RelatedProjects)
           {
             relatedProject.Project = project;
@@ -541,5 +550,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         UpdateHistory(entity.History, existingEntity?.History);
         dbContext.AddOrUpdate(entity.ToDbProject(), existingEntity);
+    }
+
+    public async Task SoftDeleteProject(Guid entityId, CancellationToken ct)
+    {
+        await dbContext.Projects.Where(x => x.EntityId == entityId).ExecuteUpdateAsync(x => x.SetProperty(y => y.IsSoftDeleted, true), ct);
     }
 }

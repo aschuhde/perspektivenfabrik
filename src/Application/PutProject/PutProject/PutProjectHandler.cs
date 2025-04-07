@@ -39,6 +39,12 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         {
             return new PutProjectEntityNotFoundResponse(command.Project.EntityId.Value);
         }
+
+        if (existingProject.Owner.EntityId != CurrentUserId &&
+            existingProject.Contributors.All(c => c.EntityId != CurrentUserId))
+        {
+            return new PutProjectNotAllowedResponse(ProjectMessages.EntityCannotBeEditedDueToMissingRights());
+        }
         
         var updatingContext = new EntityUpdatingContext()
         {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
 
 @Component({
   selector: 'app-motivation-section',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './motivation-section.component.scss'
 })
 export class MotivationSectionComponent {
+  newProjectUrl = RestrictedRouteNames.CreateProjectUrl();
 
 }

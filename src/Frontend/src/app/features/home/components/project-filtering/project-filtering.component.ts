@@ -5,6 +5,7 @@ import {MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
+import {RestrictedRouteNames} from "../../../restricted/restricted.routes";
 
 @Component({
   selector: 'app-project-filtering',
@@ -22,4 +23,5 @@ import {MatIcon} from "@angular/material/icon";
 })
 export class ProjectFilteringComponent {
   type = input<"home" | "user-area">("home")
+  newProjectUrl = RestrictedRouteNames.CreateProjectUrl();
 }

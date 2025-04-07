@@ -32,6 +32,7 @@ import {ContactSpecification} from '../../models/contact-specification';
 import {ProjectSaveContext} from "../../models/project-save-context";
 import {formatDate, formatTime} from "../../../../shared/tools/date-tools";
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
+import { ConfirmDialogComponent } from '../../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'app-input-project',
@@ -63,6 +64,7 @@ export class InputProjectComponent {
     readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
     projectInput = model.required<ProjectInput>();
     onSave = output();
+    onDelete = output();
     currentGroup: string = "projectType";
     @ViewChild('fileUpload') 
     fileUpload!: ElementRef;
@@ -91,6 +93,9 @@ export class InputProjectComponent {
     }
     set selectedTags(value: SelectOption[]){
         this.projectInput().selectedTags = value;
+    }
+    get isNewProject(): boolean {
+      return !this.projectInput().entityId;
     }
   get projectType(): ProjectType {
     return this.projectInput().projectType;
@@ -555,5 +560,19 @@ get typeNameGenitive(){
   removeUploadedImage(image: UploadedImage) {
     this.uploadedImages = this.uploadedImages.filter(x => x !== image);
     this.onUpdated();
+  }
+
+  deleteProject() {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: "Wirklich löschen?",
+        message: "Willst du das Projekt wirklich löschen?",
+        confirmButtonText: "Ja",
+        cancelButtonText: "Abbrechen",
+        onConfirm: () => {
+          this.onDelete.emit();
+        }
+      }
+    });
   }
 }

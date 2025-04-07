@@ -315,7 +315,7 @@
                 </div>
             </div>
             <div class="right-bar">
-                <div [class.hidden]="isLoading()">
+                <div [class.hidden]="isLoading()" class="split-top-bottom">
                     <div style="text-align: center;">
                         
                         @if(projectSaveContext()?.hasChanges ?? false){
@@ -349,6 +349,11 @@
                                     </span>
                                 }
                             </button>    
+                        }
+                    </div>
+                    <div>
+                        @if(!this.isNewProject){
+                            <button (click)="deleteProject()" class="tertiary w-100"><mat-icon fontIcon="delete"></mat-icon> Löschen</button>
                         }
                     </div>
                 </div>

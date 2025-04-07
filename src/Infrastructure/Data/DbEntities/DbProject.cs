@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enums;
 using Infrastructure.Data.DbDataTypes;
 using Microsoft.EntityFrameworkCore;
+using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -12,6 +13,9 @@ public sealed class DbProject : DbEntity
     public required ProjectPhase Phase { get; set; }
     public required ProjectType Type { get; set; }
     public required ProjectVisibility Visibility  { get; set; }
+    
+    [MapperIgnore]
+    public bool IsSoftDeleted { get; set; } = false;
     
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbLocationSpecificationProjectConnection>? LocationSpecifications { get; set; }

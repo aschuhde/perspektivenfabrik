@@ -17,6 +17,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ApplicationDeleteProjectDeleteProjectDeleteProjectRequest } from '../model/applicationDeleteProjectDeleteProjectDeleteProjectRequest';
+import { ApplicationDeleteProjectDeleteProjectDeleteProjectResponse } from '../model/applicationDeleteProjectDeleteProjectDeleteProjectResponse';
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
@@ -71,6 +73,66 @@ export class ApiService {
         return false;
     }
 
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param projectIdentifier 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsDeleteProject.');
+        }
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsDeleteProject.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            '*/*',
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>('delete',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 
