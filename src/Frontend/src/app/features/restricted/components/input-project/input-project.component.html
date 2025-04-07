@@ -320,15 +320,21 @@
                         
                         @if(projectSaveContext()?.hasChanges ?? false){
                             @if(projectSaveContext()?.lastSave !== null){
-                                <span>zuletzt gespeichert: {{ formatDate(projectSaveContext()?.lastSave ?? null) }}</span>
+                                <mat-icon fontIcon="info"></mat-icon> <span>zuletzt gespeichert: {{ formatTime(projectSaveContext()?.lastSave ?? null) }}</span>
                             }
-                            <button class="w-100" (click)="save()">
-                                @if(projectVisibility === "draft"){
-                                    <span>Speichern</span>
-                                }@else{
-                                    <span>Speichern und veröffentlichen</span>
-                                }
-                            </button>
+                            @if(projectSaveContext()?.isSaving ?? false){
+                                <button class="w-100">
+                                    <mat-icon fontIcon="hourglass_empty"></mat-icon>
+                                </button>
+                            } @else {
+                                <button class="w-100" (click)="save()">
+                                    @if(projectVisibility === "draft"){
+                                        <span>Speichern</span>
+                                    }@else{
+                                        <span>Speichern und veröffentlichen</span>
+                                    }
+                                </button>
+                            }
                         } @else {
                             <button class="w-100 secondary">
                                 @if(projectVisibility === "draft"){

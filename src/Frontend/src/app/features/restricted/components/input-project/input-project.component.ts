@@ -30,7 +30,7 @@ import {SelectOption} from '../../../../shared/models/select-option';
 import {InputContactSpecificationComponent} from '../input-contact-specification/input-contact-specification.component';
 import {ContactSpecification} from '../../models/contact-specification';
 import {ProjectSaveContext} from "../../models/project-save-context";
-import {formatDate} from "../../../../shared/tools/date-tools";
+import {formatDate, formatTime} from "../../../../shared/tools/date-tools";
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
 
 @Component({
@@ -74,7 +74,12 @@ export class InputProjectComponent {
     localeDataProvider = inject(LocaleDataProvider);
 
     constructor() {
-      
+      window.addEventListener("beforeunload", (event) => {
+        if(this.projectSaveContext()?.hasChanges ?? false){
+          event.preventDefault();
+          event.returnValue = true;
+        }
+      });
       const queryParams = new URLSearchParams(window.location.search);
       const group = queryParams.get('group');
       if (group) {
@@ -345,7 +350,7 @@ get typeNameGenitive(){
 
   addLocation(){
     this.locations.push(new LocationInput());
-      this.onUpdated();
+    this.onUpdated();
   }
   removeLocation(location: LocationInput){
     const index = this.locations.indexOf(location);
@@ -542,6 +547,9 @@ get typeNameGenitive(){
 
   formatDate(date: Date | null) {
       return formatDate(date, this.localeDataProvider.locale);
+  }
+  formatTime(date: Date | null) {
+    return formatTime(date, this.localeDataProvider.locale);
   }
 
   removeUploadedImage(image: UploadedImage) {

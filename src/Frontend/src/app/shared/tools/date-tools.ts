@@ -50,3 +50,6 @@ export function getLuxonDateTimeFromMonth(month: DomainDataTypesMonth | null) {
 export function formatDate(value: Date | null, locale: string){
     return getLuxonDateTimeFromNullableJsDate(value)?.toFormat("dd.MM.yyyy") ?? "";
 }
+export function formatTime(value: Date | null, locale: string){
+    return getLuxonDateTimeFromNullableJsDate(value)?.toFormat("HH:mm:ss") ?? "";
+}
