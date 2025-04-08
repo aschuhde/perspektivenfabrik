@@ -38,7 +38,7 @@ export class MapComponent {
         L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        const bounds = L.latLngBounds([46.9539, 11.3106], [46.5568, 11.3469]);
+        const bounds = L.latLngBounds([47.081, 10.398], [46.155, 12.543]);
   
         // Fit the map view to the bounds
         map.fitBounds(bounds);
