@@ -7,15 +7,20 @@
         <div class="stats font-smaller">
             @if (locationSpecifications.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label">Ort:</p>
+                    <p class="stat-label"><mat-icon fontIcon="location_on"></mat-icon> Ort</p>
                     @for (locationSpecification of locationSpecifications; track locationSpecification){
-                        <div class="stat-grid-item" (click)="locationClicked(locationSpecification)" [attr.data-clickable]="isLocationClickable(locationSpecification)">{{ getLocationSpecificationShortName(locationSpecification) }}</div>
+                        <div class="stat-grid-item" (click)="locationClicked(locationSpecification)" [attr.data-clickable]="isLocationClickable(locationSpecification)">
+                            <span>{{ getLocationSpecificationShortName(locationSpecification) }}</span>
+                            @if(isLocationClickable(locationSpecification)){
+                                <mat-icon fontIcon="map"></mat-icon>
+                            }
+                        </div>
                     }
                 </div>
             }
             @if (timeSpecifications.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label">Zeitraum:</p>
+                    <p class="stat-label"><mat-icon fontIcon="date_range"></mat-icon> Zeitraum</p>
                     @for (timeSpecification of timeSpecifications; track timeSpecification){
                         <div class="stat-grid-item" data-clickable="false">{{ getTimeSpecificationShortName(timeSpecification) }}</div>
                     }
@@ -23,7 +28,7 @@
             }
             @if (tags.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label">Tags:</p>
+                    <p class="stat-label"><mat-icon fontIcon="bookmark"></mat-icon> Tags</p>
                     @for (tag of tags; track tag){
                         <div class="stat-grid-item" data-clickable="false">{{ getTagShortName(tag) }}</div>
                     }
@@ -31,17 +36,25 @@
             }
              
                 <div class="stat-grid">
-                    <p class="stat-label">Wir suchen:</p>
+                    <div class="split-left-right w-100">
+                        <p class="stat-label" data-clickable="true" (click)="showRequirementPersonsDialog()">
+                            <span><mat-icon fontIcon="groups"></mat-icon> Wir suchen <a class="show-more-details">(Details anzeigen)</a></span>
+                        </p>
+                    </div>
+                    
                     @for (requirementSpecificationPerson of requirementSpecificationPersonsFlat; track requirementSpecificationPerson){
-                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationPersonClicked(requirementSpecificationPerson)">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
+                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationPersonClicked()">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
                     }
+                    
                 </div>
             
             @if (requirementSpecificationMaterialsFlat.length > 0 || requirementSpecificationMoneySummed){
                 <div class="stat-grid">
-                    <p class="stat-label">Wir benötigen:</p>
+                    <p class="stat-label" data-clickable="true" (click)="showRequirementMaterialsDialog()">
+                        <span><mat-icon fontIcon="construction"></mat-icon>/<mat-icon fontIcon="savings"></mat-icon> Wir benötigen <a class="show-more-details">(Details anzeigen)</a></span>
+                    </p>
                     @for (requirementSpecificationMaterial of requirementSpecificationMaterialsFlat; track requirementSpecificationMaterial){
-                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMaterialClicked(requirementSpecificationMaterial)">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
+                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMaterialClicked()">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
                     }
                     @if(requirementSpecificationMoneySummed){
                         <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMoneyClicked()">{{ getRequirementSpecificationMoneyShortName(requirementSpecificationMoneySummed) }}</div>

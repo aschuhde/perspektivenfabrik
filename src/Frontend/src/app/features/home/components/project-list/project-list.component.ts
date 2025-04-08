@@ -62,12 +62,12 @@ export class ProjectListComponent {
       return "";
     }
     if(locationSpecifications?.length === 1){
-      return project.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider);
+      return ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider);
     }
     if(locationSpecifications?.length === 2){
-      return joinWithConjunction(locationSpecifications.map(x => project.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(locationSpecifications.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale);
     }
-    return `${project.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider)}, ${project.getLocationSpecificationShortName(locationSpecifications[1], this.localeDataProvider)}...`;
+    return `${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider)}, ${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[1], this.localeDataProvider)}...`;
   }
 
   needLocationSpecificationPlusIcons(locationSpecifications: ApplicationModelsApiModelsApiLocationSpecification[]) {
@@ -79,7 +79,7 @@ export class ProjectListComponent {
   }
 
   getLocationSpecificationTooltipContent(project: ApiProjectModel) {
-    return joinWithConjunction(project.locationSpecifications.slice(2).map(x => project.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale)
+    return joinWithConjunction(project.locationSpecifications.slice(2).map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale)
   }
 
 
@@ -89,12 +89,12 @@ export class ProjectListComponent {
       return "";
     }
     if(timeSpecifications?.length === 1){
-      return project.getTimeSpecificationShortName(timeSpecifications[0], this.localeDataProvider);
+      return ApiProjectModel.getTimeSpecificationShortName(timeSpecifications[0], this.localeDataProvider);
     }
     if(timeSpecifications?.length === 2){
-      return joinWithConjunction(timeSpecifications.map(x => project.getTimeSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(timeSpecifications.map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale);
     }
-    return `${project.getTimeSpecificationShortName(timeSpecifications[0], this.localeDataProvider)}, ${project.getTimeSpecificationShortName(timeSpecifications[1], this.localeDataProvider)}...`;
+    return `${ApiProjectModel.getTimeSpecificationShortName(timeSpecifications[0], this.localeDataProvider)}, ${ApiProjectModel.getTimeSpecificationShortName(timeSpecifications[1], this.localeDataProvider)}...`;
   }
 
   needTimeSpecificationPlusIcons(timeSpecifications: ApplicationModelsApiModelsApiTimeSpecification[]) {
@@ -106,7 +106,7 @@ export class ProjectListComponent {
   }
 
   getTimeSpecificationTooltipContent(project: ApiProjectModel) {
-    return joinWithConjunction(project.timeSpecifications.slice(2).map(x => project.getTimeSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale)
+    return joinWithConjunction(project.timeSpecifications.slice(2).map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale)
   }
 
   getTagText(project: ApiProjectModel) {

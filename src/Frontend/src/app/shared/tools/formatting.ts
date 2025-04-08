@@ -7,7 +7,6 @@ export function formatMoney(value: unknown, locale: string, currency: "euro"){
     if(typeof number !== "number"){
         return "";
     }
-    //todo
     return `${formatNumber(number, "en-en", "1.2-2")} €`;
 }
 

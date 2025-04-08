@@ -1,0 +1,24 @@
+@for (requirement of requirements(); track requirement){
+    <div class="group-outer">
+        <div class="group">
+            <h4><mat-icon fontIcon="construction"></mat-icon> Materialgruppe {{ $index + 1}}</h4>
+            <p class="question">Was?</p>
+            <p class="answer">{{ materialText(requirement) }}</p>
+            <p class="question"><mat-icon fontIcon="date_range"></mat-icon> Wann?</p>
+            <p class="answer">{{ periodText(requirement) }}</p>
+            <p class="question"><mat-icon fontIcon="location_on"></mat-icon> Wo?</p>
+            <p class="answer">{{ locationText(requirement) }}</p>
+        </div>
+    </div>
+}
+@for (requirementMoney of requirementsMoney(); track requirementMoney){
+    <div class="group-outer">
+        <div class="group">
+            <h4><mat-icon fontIcon="savings"></mat-icon> Finanzielle Unterstützung {{ $index + 1}}</h4>
+            <p class="question">Was?</p>
+            <p class="answer">{{ moneyText(requirementMoney) }}</p>
+            <p class="question"><mat-icon fontIcon="date_range"></mat-icon> Wann?</p>
+            <p class="answer">{{ periodText(requirementMoney) }}</p>
+        </div>
+    </div>
+}

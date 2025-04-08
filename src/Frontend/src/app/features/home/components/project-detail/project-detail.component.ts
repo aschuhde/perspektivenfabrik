@@ -9,7 +9,6 @@ import { ImageGalleryComponent } from '../../../../shared/components/image-galle
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
 import {MatIconModule} from "@angular/material/icon";
 import { ApiProjectModel } from '../../models/api-project-model';
-import { ApplicationModelsApiModelsApiRequirementSpecificationMaterial } from '../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMaterial';
 import {
   ApplicationModelsApiModelsApiLocationSpecificationTypes
 } from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationTypes";
@@ -22,11 +21,13 @@ import {formatCoordinates} from "../../../../shared/tools/formatting";
 import {
   ApplicationModelsApiModelsApiLocationSpecificationRegion
 } from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationRegion";
-import {AddressConverter} from "../../../../shared/tools/address-converter";
 import {
   ApplicationModelsApiModelsApiLocationSpecificationAddress
 } from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationAddress";
-import {start} from "node:repl";
+import {
+  RequirementMaterialsDialogComponent
+} from "../../dialogs/requirement-materials-dialog/requirement-materials-dialog.component";
+import { RequirementPersonsDialogComponent } from '../../dialogs/requirement-persons-dialog/requirement-persons-dialog.component';
 
 @Component({
   selector: 'app-project-detail',
@@ -104,7 +105,7 @@ export class ProjectDetailComponent {
         }
     }
     getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
-        return this.apiProjectModel.getLocationSpecificationShortName(locationSpecification, this.localeDataProvider);
+        return ApiProjectModel.getLocationSpecificationShortName(locationSpecification, this.localeDataProvider);
     }
 
     getLocationSpecificationIconName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification): string {
@@ -112,7 +113,7 @@ export class ProjectDetailComponent {
     }
 
     getTimeSpecificationShortName(timeSpecification: ApplicationModelsApiModelsApiTimeSpecification): string{
-      return this.apiProjectModel.getTimeSpecificationShortName(timeSpecification, this.localeDataProvider);
+      return ApiProjectModel.getTimeSpecificationShortName(timeSpecification, this.localeDataProvider);
     }
     getTimeSpecificationIcon(timeSpecification: ApplicationModelsApiModelsApiTimeSpecification){
       return this.apiProjectModel.getTimeSpecificationIcon(timeSpecification);
@@ -165,13 +166,35 @@ export class ProjectDetailComponent {
       return locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote
         && locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Base;  
     }
-    requirementSpecificationPersonClicked(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson){
-  
+    requirementSpecificationPersonClicked(){
+      this.showRequirementPersonsDialog();
     }
-    requirementSpecificationMaterialClicked(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecificationMaterial){
-  
+    requirementSpecificationMaterialClicked(){
+      this.showRequirementMaterialsDialog();
     }
     requirementSpecificationMoneyClicked(){
-  
+      this.showRequirementMaterialsDialog();
+    }
+    
+    showRequirementMaterialsDialog(){
+      if(this.requirementSpecificationMaterials.length === 0 && this.requirementSpecificationMoney.length === 0){
+        return
+      }
+      this.dialog.open(RequirementMaterialsDialogComponent, {
+        data: {
+          requirementMaterials: this.requirementSpecificationMaterials,
+          requirementsMoney: this.requirementSpecificationMoney,
+        }
+      });
+    }
+    showRequirementPersonsDialog(){
+      if(this.requirementSpecificationPersons.length === 0){
+        return
+      }
+      this.dialog.open(RequirementPersonsDialogComponent, {
+        data: {
+          requirementPersons: this.requirementSpecificationPersons,
+        }
+      });
     }
 }

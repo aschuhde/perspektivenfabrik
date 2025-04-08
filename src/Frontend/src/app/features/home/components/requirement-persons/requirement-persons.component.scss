@@ -1,0 +1,26 @@
+p{
+  margin-bottom: .2rem;
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+.question{
+  font-size: 16px;
+}
+.answer{
+  margin-bottom: 1rem;
+}
+.group{
+  border: 1px solid #175153;
+  border-radius: 1rem;
+  padding: .5rem;
+  height: calc(100% - 1rem);
+}
+.group-outer{
+  padding: .5rem;
+}
+:host{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}

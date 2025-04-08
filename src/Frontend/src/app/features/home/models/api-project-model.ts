@@ -162,7 +162,7 @@ export class ApiProjectModel {
     this.contactWebsite = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website) as ApplicationModelsApiModelsApiContactSpecificationWebsite)?.website?.rawUrl ?? "";
     return this;
   }
-  getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider){
+  static getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider){
     switch(locationSpecification.classType){
       case ApplicationModelsApiModelsApiLocationSpecificationTypes.Address:
         const address = (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress;
@@ -196,7 +196,7 @@ export class ApiProjectModel {
     return "";
   }
 
-  getTimeSpecificationShortName(timeSpecification: ApplicationModelsApiModelsApiTimeSpecification, localeDataProvider: LocaleDataProvider): string{
+  static getTimeSpecificationShortName(timeSpecification: ApplicationModelsApiModelsApiTimeSpecification, localeDataProvider: LocaleDataProvider): string{
     switch (timeSpecification.classType){
       case ApplicationModelsApiModelsApiTimeSpecificationTypes.DateTime:
         const dateTime = (timeSpecification as ApplicationModelsApiModelsApiTimeSpecificationDateTime).date;
