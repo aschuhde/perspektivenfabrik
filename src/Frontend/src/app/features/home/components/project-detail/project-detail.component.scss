@@ -4,23 +4,23 @@
 }
 .left{
     height: 100%;
-    width: 30rem;
+    width: 40rem;
     background-color: #EA6A31;
     color: white;
 
     .stats{
-        padding: .5rem 1.5rem;
+        padding: 2rem 3rem 1rem 3rem;
     }
     .intro{
-        padding: .5rem 1.5rem;
+        padding: 1rem 3rem;
     }
 }
 .main{
-    width: calc(100% - 30rem);
+    width: calc(100% - 40rem);
     height: 100%;
 
     .content{
-        padding: 1.5rem;
+        padding: 3rem 10rem;
     }
 }
 .bottom{
@@ -63,13 +63,14 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: .5rem;
+    margin-bottom: 1.5rem;
 }
 .stat-label{
     margin: 0 1rem 0 0;
-    display: inline-block;
+    display: block;
+    width: 100%;
     white-space: nowrap;
-    text-decoration: underline;
+    font-size: 16px;
 }
 .contact-text{
     margin: 0;
