@@ -9,6 +9,10 @@
     <app-map [lookupMode]="lookupMode" [type]="type" [startPoint]="startPoint" (onRetrievedPoint)="mapRetrievedPoint($event.value, $event.displayName)"></app-map>
 </mat-dialog-content>
 <mat-dialog-actions>    
-  <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>Übernehmen</button>
-  <button class="secondary" mat-dialog-close>Abbrechen</button>
+    @if(type == "lookup"){
+      <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>Übernehmen</button>
+      <button class="secondary" mat-dialog-close>Abbrechen</button>
+    } @else {
+        <button class="secondary" mat-dialog-close>Schließen</button>
+    }
 </mat-dialog-actions>

@@ -42,24 +42,10 @@ export class MapComponent {
   
         // Fit the map view to the bounds
         map.fitBounds(bounds);
-        const geocoder = C.geocoders.nominatim();
-        const geocoderControl = C.geocoder({
-          placeholder: "Suchen...",
-          geocoder: geocoder
-        });
         let marker: Marker<any> | null = null;
         const self = this;
-        geocoderControl.on("markgeocode", e => {
-          marker?.remove();
-          marker = null;
-          if(self.lookupMode() === "latLon"){
-            self.onRetrievedPoint.emit({value: `${e.geocode.center.lat}, ${e.geocode.center.lng}`, displayName: ""});
-            return;
-          }
-          self.onRetrievedPoint.emit({value: e.geocode.name, displayName: this.getDisplayName(e.geocode)});                    
-        });      
-        
-        geocoderControl.addTo(map);                
+        const geocoder = C.geocoders.nominatim();
+                      
         
         if(this.startPoint()){
           if (this.lookupMode() === "latLon") {
@@ -77,6 +63,22 @@ export class MapComponent {
         }
         
         if(this.type() === "lookup") {
+          const geocoderControl = C.geocoder({
+            placeholder: "Suchen...",
+            geocoder: geocoder
+          });
+
+          geocoderControl.on("markgeocode", e => {
+            marker?.remove();
+            marker = null;
+            if(self.lookupMode() === "latLon"){
+              self.onRetrievedPoint.emit({value: `${e.geocode.center.lat}, ${e.geocode.center.lng}`, displayName: ""});
+              return;
+            }
+            self.onRetrievedPoint.emit({value: e.geocode.name, displayName: this.getDisplayName(e.geocode)});
+          });
+
+          geocoderControl.addTo(map);
           map.on('click', e => {
 
             if (this.lookupMode() === "latLon") {
