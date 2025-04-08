@@ -1,41 +1,20 @@
 import { DomainDataTypesPostalAddress } from "../../server/model/domainDataTypesPostalAddress";
 
 export class AddressConverter{
-    static TransformAddressStringToApiAddress(addressString: string): DomainDataTypesPostalAddress{
-        //todo
+    static TransformAddressStringToApiAddress(addressString: string, locationDisplayName: string): DomainDataTypesPostalAddress{
         return {
-            addressLine1: addressString,
-            addressLine2: "",
-            addressLine3: "",
-            addressLine4: "",
-            addressLine5: "",
-            addressLine6: "",
+            addressText: addressString,
+            addressDisplayName: locationDisplayName
         }
     }
-    static TransformLocationNameStringToApiAddress(addressString: string): DomainDataTypesPostalAddress{
-        // todo
+    static TransformLocationNameStringToApiAddress(addressString: string, locationDisplayName: string): DomainDataTypesPostalAddress{
         return {
-            addressLine1: addressString,
-            addressLine2: "",
-            addressLine3: "",
-            addressLine4: "",
-            addressLine5: "",
-            addressLine6: "",
+            addressText: addressString,
+            addressDisplayName: locationDisplayName
         }
     }
 
     static getShortName(address: DomainDataTypesPostalAddress): string{
-        //todo
-        return address.addressLine1?.split(',')[0] ?? "";
-    }
-    
-    static GetAddressFromApiAddress(postalAddress: DomainDataTypesPostalAddress | null): string {
-        return postalAddress?.addressLine1 ?? "";
-//todo
-    }
-
-    static GetRegionFromApiAddress(postalAddress: DomainDataTypesPostalAddress | null): string {
-        return postalAddress?.addressLine1 ?? "";
-//todo
+        return address?.addressDisplayName ?? "";
     }
 }

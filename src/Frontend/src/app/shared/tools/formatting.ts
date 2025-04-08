@@ -1,5 +1,6 @@
 import {formatNumber} from "@angular/common";
 import { parseMoneyWithFallback } from "./parsing";
+import {DomainDataTypesCoordinates} from "../../server/model/domainDataTypesCoordinates";
 
 export function formatMoney(value: unknown, locale: string, currency: "euro"){
     const number = typeof value === "number" ? value : parseMoneyWithFallback(value, null);
@@ -8,4 +9,9 @@ export function formatMoney(value: unknown, locale: string, currency: "euro"){
     }
     //todo
     return `${formatNumber(number, "en-en", "1.2-2")} €`;
+}
+
+export function formatCoordinates(coordinates: DomainDataTypesCoordinates | null | undefined, locale: string){
+    if(!coordinates || !coordinates.lat || !coordinates.lon) return "";
+    return `${formatNumber(coordinates.lat, locale)}, ${formatNumber(coordinates.lon, locale)}`;
 }

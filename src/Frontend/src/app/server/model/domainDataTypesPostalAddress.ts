@@ -11,10 +11,6 @@
  */
 
 export interface DomainDataTypesPostalAddress { 
-    addressLine1?: string;
-    addressLine2?: string;
-    addressLine3?: string;
-    addressLine4?: string;
-    addressLine5?: string;
-    addressLine6?: string;
+    addressText?: string;
+    addressDisplayName?: string;
 }

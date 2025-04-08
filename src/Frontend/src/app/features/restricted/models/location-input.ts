@@ -13,6 +13,8 @@ export class LocationInput{
   locationLink: string = ""
   locationName: string = ""
   locationAddress: string = ""
+  locationDisplayName: string = ""
+  locationAddressDisplayName: string = ""
   locationCoordinates: string = ""
     entityId: string | null = null
   toLocationSpecification(): ApplicationModelsApiModelsApiLocationSpecification | null {
@@ -21,7 +23,7 @@ export class LocationInput{
             return this.locationAddress ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationAddress>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Address,
                 entityId: this.entityId ?? undefined,
-                postalAddress: AddressConverter.TransformAddressStringToApiAddress(this.locationAddress)
+                postalAddress: AddressConverter.TransformAddressStringToApiAddress(this.locationAddress, this.locationAddressDisplayName)
             }) : null;
         case "coordinates":
             return this.locationCoordinates ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationCoordinates>({
@@ -33,7 +35,7 @@ export class LocationInput{
             return this.locationName ? ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationAddress>({
                 classType: ApplicationModelsApiModelsApiLocationSpecificationTypes.Address,
                 entityId: this.entityId ?? undefined,
-                postalAddress: AddressConverter.TransformLocationNameStringToApiAddress(this.locationName)
+                postalAddress: AddressConverter.TransformLocationNameStringToApiAddress(this.locationName, this.locationDisplayName)
             }) : null;
         case "remote":
             return ObjectCreator.Create<ApplicationModelsApiModelsApiLocationSpecificationRemote>({
@@ -52,7 +54,8 @@ export class LocationInput{
     result.entityId = location.entityId ?? null;
     if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Address){
       result.locationType = "address";
-      result.locationAddress = AddressConverter.GetAddressFromApiAddress((location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress ?? null)
+      result.locationAddress = (location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress?.addressText ?? ""
+      result.locationDisplayName = (location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress?.addressDisplayName ?? ""
     }
     else if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote){
       result.locationType = "remote";
@@ -64,7 +67,9 @@ export class LocationInput{
     }
     else if(location.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Region){
       result.locationType = "name";
-      result.locationName = AddressConverter.GetRegionFromApiAddress((location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress ?? null)
+      result.locationName = (location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress?.addressText ?? ""
+      result.locationDisplayName = (location as ApplicationModelsApiModelsApiLocationSpecificationAddress)?.postalAddress?.addressDisplayName ?? ""
+      
     }
     else{
       return null;

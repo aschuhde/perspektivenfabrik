@@ -12,4 +12,5 @@
 
 export interface DomainDataTypesRegion { 
     regionName?: string;
+    addressText?: string;
 }

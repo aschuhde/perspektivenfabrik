@@ -21,8 +21,12 @@
         <p class="location-explanation">Wie heißt der Ort, den du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationName)"></mat-icon></p>
         <div class="prefix-suffix-container">
             <mat-form-field class="w-100 prefix">
-                <mat-label>Name des Ortes</mat-label>
+                <mat-label>Addresse des Ortes</mat-label>
                 <input type="text" matInput [(ngModel)]="locationName" />
+            </mat-form-field>
+            <mat-form-field class="w-100 middle">
+                <mat-label>Name des Ortes</mat-label>
+                <input type="text" matInput [(ngModel)]="locationDisplayName" />
             </mat-form-field>
             <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
         </div>
@@ -33,6 +37,10 @@
             <mat-form-field class="w-100 prefix">
                 <mat-label>Adresse</mat-label>
                 <input type="text" matInput [(ngModel)]="locationAddress" />
+            </mat-form-field>
+            <mat-form-field class="w-100 middle">
+                <mat-label>Name des Ortes</mat-label>
+                <input type="text" matInput [(ngModel)]="locationAddressDisplayName" />
             </mat-form-field>
             <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
         </div>

@@ -49,12 +49,26 @@ export class InputLocationComponent {
     this.location().locationName = value
       this.onChanged.emit();
   }
+  get locationDisplayName(){
+    return this.location().locationDisplayName
+  }
+  set locationDisplayName(value: string){
+    this.location().locationDisplayName = value
+    this.onChanged.emit();
+  }
   get locationAddress(){
     return this.location().locationAddress
   }
   set locationAddress(value: string){
     this.location().locationAddress = value
       this.onChanged.emit();
+  }
+  get locationAddressDisplayName(){
+    return this.location().locationAddressDisplayName
+  }
+  set locationAddressDisplayName(value: string){
+    this.location().locationAddressDisplayName = value
+    this.onChanged.emit();
   }
   get locationCoordinates(){
     return this.location().locationCoordinates
@@ -108,23 +122,25 @@ export class InputLocationComponent {
     this.dialog.open(MapDialogComponent, {
       data: {
         lookupMode: this.mapLookupMode,
-        onApply: (name: string) => {
-          this.mapRetrievedPoint(name);
+        onApply: (value: string, displayName: string) => {
+          this.mapRetrievedPoint(value, displayName);
         }
       }
     });
   }
 
-  mapRetrievedPoint(name: string){
+  mapRetrievedPoint(value: string, displayName: string){
     switch(this.locationType){
       case "address":
-        this.locationAddress = name;
+        this.locationAddress = value;
+        this.locationAddressDisplayName = displayName;
         break;
       case "coordinates":
-        this.locationCoordinates = name;
+        this.locationCoordinates = value;
         break;
       case "name":
-        this.locationName = name;
+        this.locationName = value;
+        this.locationDisplayName = displayName;
         break;
     }     
   }

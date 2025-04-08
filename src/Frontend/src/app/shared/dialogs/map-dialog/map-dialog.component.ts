@@ -14,16 +14,27 @@ import { MatInput } from '@angular/material/input';
 export class MapDialogComponent {
   data = inject(MAT_DIALOG_DATA);
   retrievedPoint: string = ""
+  retrievedPointDisplayName: string = ""
   lookupMode = this.data?.lookupMode ?? "address";
-  mapRetrievedPoint(name: string){
+  type: "lookup" | "display" = this.data?.type ?? "lookup";
+  startPoint: string = this.data?.startPoint ?? "";
+  
+  ngOnInit(){
+    if(this.startPoint){
+      this.mapRetrievedPoint(this.startPoint);
+    }
+  }
+  
+  mapRetrievedPoint(name: string, displayName?: string){
     this.retrievedPoint = name;
+    this.retrievedPointDisplayName = displayName ?? "";
   }
   apply(){
     if(!this.retrievedPoint){
       return;
     }
     if(this.data?.onApply){
-      this.data.onApply(this.retrievedPoint);
+      this.data.onApply(this.retrievedPoint, this.retrievedPointDisplayName);
     }
   }
 }

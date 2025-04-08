@@ -9,6 +9,24 @@ import { ImageGalleryComponent } from '../../../../shared/components/image-galle
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
 import {MatIconModule} from "@angular/material/icon";
 import { ApiProjectModel } from '../../models/api-project-model';
+import { ApplicationModelsApiModelsApiRequirementSpecificationMaterial } from '../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMaterial';
+import {
+  ApplicationModelsApiModelsApiLocationSpecificationTypes
+} from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationTypes";
+import {MatDialog} from "@angular/material/dialog";
+import {MapDialogComponent} from "../../../../shared/dialogs/map-dialog/map-dialog.component";
+import {
+  ApplicationModelsApiModelsApiLocationSpecificationCoordinates
+} from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationCoordinates";
+import {formatCoordinates} from "../../../../shared/tools/formatting";
+import {
+  ApplicationModelsApiModelsApiLocationSpecificationRegion
+} from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationRegion";
+import {AddressConverter} from "../../../../shared/tools/address-converter";
+import {
+  ApplicationModelsApiModelsApiLocationSpecificationAddress
+} from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationAddress";
+import {start} from "node:repl";
 
 @Component({
   selector: 'app-project-detail',
@@ -20,6 +38,7 @@ export class ProjectDetailComponent {
     apiProject = model.required<ApplicationModelsApiModelsApiProject | null>();
     localeDataProvider = inject(LocaleDataProvider)
     apiProjectModel = new ApiProjectModel()
+  readonly dialog = inject(MatDialog);
 
   get project(){
     return this.apiProjectModel.project;
@@ -112,5 +131,47 @@ export class ProjectDetailComponent {
 
     getRequirementSpecificationMoneyShortName(requirementSpecificationMoney: ApplicationModelsApiModelsApiRequirementSpecification){
       return this.apiProjectModel.getRequirementSpecificationMoneyShortName(requirementSpecificationMoney, this.localeDataProvider);
+    }
+    getMapLookupMode(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
+      if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Coordinates){
+        return "latLon";
+      }
+      return "address";
+    }
+    getLocationSpecificationString(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
+      if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Coordinates){
+        return formatCoordinates((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationCoordinates).coordinates, this.localeDataProvider.locale);
+      }
+      if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Region){
+        return (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationRegion).region?.addressText ?? "";
+      }
+      if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Address){
+        return (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress?.addressText ?? "";
+      }
+      return "";
+    }
+    locationClicked(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
+      const startPoint = this.getLocationSpecificationString(locationSpecification);
+      if(!startPoint) return;
+      this.dialog.open(MapDialogComponent, {
+        data: {
+          type: "display",
+          lookupMode: this.getMapLookupMode(locationSpecification),
+          startPoint: startPoint
+        }
+      });
+    }
+    isLocationClickable(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification): boolean{
+      return locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote
+        && locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Base;  
+    }
+    requirementSpecificationPersonClicked(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson){
+  
+    }
+    requirementSpecificationMaterialClicked(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecificationMaterial){
+  
+    }
+    requirementSpecificationMoneyClicked(){
+  
     }
 }
