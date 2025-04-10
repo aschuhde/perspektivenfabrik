@@ -24,7 +24,7 @@ export class UpdateProjectPageComponent {
   isLoading: boolean = true;
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
   loadProject(){
-    const projectResponse = this.apiService.webApiEndpointsGetProject(this.projectIdentifier);
+    const projectResponse = this.apiService.webApiEndpointsGetUsersProject(this.projectIdentifier);
 
     projectResponse.subscribe(x => {
       if((x as any).project){

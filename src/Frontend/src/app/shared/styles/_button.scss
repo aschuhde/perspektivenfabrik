@@ -38,6 +38,11 @@ button[disabled] {
         background-color: vars.$bg-orange-disabled;
     }
 }
+button.readonly {
+    &:hover{
+        background-color: vars.$bg-orange;
+    }
+}
 button.secondary[disabled]{
     background-color: vars.$button-secondary-disabled;
 
@@ -45,11 +50,21 @@ button.secondary[disabled]{
         background-color: vars.$button-secondary-disabled;
     }
 }
+button.secondary.readonly{
+    &:hover{
+        background-color: vars.$button-secondary;
+    }
+}
 
-button.secondary[disabled]{
+button.tertiary[disabled]{
     background-color: vars.$button-tertiary-disabled;
 
     &:hover{
         background-color: vars.$button-tertiary-disabled;
+    }
+}
+button.tertiary.readonly{
+    &:hover{
+        background-color: vars.$button-tertiary;
     }
 }

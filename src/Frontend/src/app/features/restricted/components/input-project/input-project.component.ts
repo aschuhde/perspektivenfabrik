@@ -33,6 +33,9 @@ import {ProjectSaveContext} from "../../models/project-save-context";
 import {formatDate, formatTime} from "../../../../shared/tools/date-tools";
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
 import { ConfirmDialogComponent } from '../../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
+import {RestrictedRouteNames} from "../../restricted-route-names";
+import {HomeRouteNames} from "../../../home/home-route-names";
+import { ShareLinkDialogComponent } from '../../dialogs/share-link-dialog/share-link-dialog.component';
 
 @Component({
     selector: 'app-input-project',
@@ -74,7 +77,7 @@ export class InputProjectComponent {
     isSaving: boolean = false
     projectSaveContext = input<ProjectSaveContext | null>(null);
     localeDataProvider = inject(LocaleDataProvider);
-
+    
     constructor() {
       window.addEventListener("beforeunload", (event) => {
         if(this.projectSaveContext()?.hasChanges ?? false){
@@ -574,5 +577,24 @@ get typeNameGenitive(){
         }
       }
     });
+  }
+  
+  get internalLink(){
+      const entityId = this.projectInput().entityId;
+      if(!entityId) return "#";
+      return window.location.origin + HomeRouteNames.InternalProjectUrl(entityId)
+  }
+  get previewLink(){
+    const entityId = this.projectInput().entityId;
+    if(!entityId) return "#";
+    return RestrictedRouteNames.PreviewProjectUrl(entityId);
+  }
+
+  openShareLinkDialog(){
+      this.dialog.open(ShareLinkDialogComponent, {
+        data: {
+          link: this.internalLink
+        }
+      })
   }
 }
