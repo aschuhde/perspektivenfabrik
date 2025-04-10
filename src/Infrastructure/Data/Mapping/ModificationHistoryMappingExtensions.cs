@@ -1,24 +1,72 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Infrastructure.Data.DbEntities;
+using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Data.Mapping;
 
 
 public static partial class MappingExtensions
 {
-    public static partial ModificationHistory ToHistory(this DbModificationHistory dbHistory);
+    [MapperIgnoreTarget(nameof(DbModificationHistory.HistoryItems))]
+    [MapperIgnoreSource(nameof(ModificationHistoryDto.HistoryItems))]
+    internal static partial DbModificationHistory ToDbHistoryInner(this ModificationHistoryDto historyDto);
     
-    public static partial DbModificationHistory ToDbHistory(this ModificationHistory history);
+    [UserMapping(Default = false)]
+    public static DbModificationHistory ToDbHistory(this ModificationHistoryDto historyDto)
+    {
+        var h = historyDto.ToDbHistoryInner();
+        h.HistoryItems = MappingTools.MapArrayToList(historyDto.HistoryItems, x => x.ToDbHistoryItem(historyDto));
+        return h;
+    }
+    [UserMapping(Default = true)]
+    public static DbModificationHistory ToDbHistoryWithoutHistoryItems(this ModificationHistoryDto historyDto)
+    {
+      return historyDto.ToDbHistoryInner();
+    }
+
+    public static partial ModificationHistoryDto ToHistory(this DbModificationHistory dbHistory);
+
     
-    internal static DbModificationHistoryConnection ToDbModificationHistoryConnection(this ModificationHistory history)
+    
+    internal static DbModificationHistoryConnection ToDbModificationHistoryConnection(this ModificationHistoryDto historyDto)
     {
         return new DbModificationHistoryConnection()
         {
-            HistoryId = history.EntityId
+            HistoryId = historyDto.EntityId
         };
     }
-    internal static ModificationHistory ToModificationHistory(this DbModificationHistoryConnection history)
+    internal static ModificationHistoryDto ToModificationHistory(this DbModificationHistoryConnection history)
     {
-        return history.History!.ToHistory();
+        return history.History?.ToHistory() ?? null!;
     }
+
+    [UserMapping(Default = true)]
+    public static ModificationHistoryItemDto ToHistoryItem(this DbModificationHistoryItem dbHistoryItem)
+    {
+        var i = dbHistoryItem.ToHistoryItemInner();
+        i.HistoryEntryType = Enum.Parse<HistoryEntryType>(dbHistoryItem.HistoryEntryType);
+        return i;
+    }
+    [MapperIgnoreTarget(nameof(ModificationHistoryItemDto.HistoryEntryType))]
+    [MapperIgnoreSource(nameof(DbModificationHistoryItem.HistoryEntryType))]
+    [MapperIgnoreSource(nameof(DbModificationHistoryItem.History))]
+    [MapperIgnoreSource(nameof(DbModificationHistoryItem.HistoryId))]
+    internal static partial ModificationHistoryItemDto ToHistoryItemInner(this DbModificationHistoryItem dbHistoryItem);
+
+
+    public static DbModificationHistoryItem ToDbHistoryItem(this ModificationHistoryItemDto historyItemDto, ModificationHistoryDto history)
+    {
+        var i = historyItemDto.ToDbHistoryItemInner();
+        i.HistoryEntryType = historyItemDto.HistoryEntryType.ToString();
+        i.HistoryId = history.EntityId;
+        return i;
+    }
+
+    [MapperIgnoreTarget(nameof(DbModificationHistoryItem.HistoryEntryType))]
+    [MapperIgnoreSource(nameof(ModificationHistoryItemDto.HistoryEntryType))]
+    [MapperIgnoreTarget(nameof(DbModificationHistoryItem.HistoryId))]
+    [MapperIgnoreTarget(nameof(DbModificationHistoryItem.History))]
+    internal static partial DbModificationHistoryItem ToDbHistoryItemInner(
+        this ModificationHistoryItemDto historyItemDto);
 }

@@ -16,7 +16,19 @@ export const authenticationGuard: CanActivateFn = (_: ActivatedRouteSnapshot, st
             let token = jwtService.getJwtToken();
             let refreshToken = jwtService.getRefreshToken();
             if(token && refreshToken)
-                return refreshTokenService.refreshToken(token, refreshToken);
+                return new Promise((resolve) => {
+                    refreshTokenService.refreshToken(token, refreshToken).then((value) => {
+                        if(value){
+                            resolve(true);
+                            return
+                        }
+                        loginService.signIn(state.url).then((e) => {
+                            resolve(false);
+                        }).catch((e) => {
+                            resolve(false);
+                        }); 
+                    });
+                });
         }
         
         return new Promise((resolve) => {

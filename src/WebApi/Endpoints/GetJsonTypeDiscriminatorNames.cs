@@ -1,0 +1,8 @@
+using Application.GetJsonTypeDiscriminatorNames.GetJsonTypeDiscriminatorNames;
+using Application.Example.GetExample;
+using WebApi.Attributes;
+
+namespace WebApi.Endpoints;
+
+[HttpGet(Constants.Routes.GetJsonTypeDiscriminatorNames)]
+public class GetJsonTypeDiscriminatorNames : JsonResponseEndpoint<GetJsonTypeDiscriminatorNamesRequest, GetJsonTypeDiscriminatorNamesResponse>;

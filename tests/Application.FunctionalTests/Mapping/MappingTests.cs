@@ -1,4 +1,5 @@
-﻿using Domain.DataTypes;
+﻿using Application.Mapping;
+using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 using FluentAssertions;
@@ -16,28 +17,34 @@ using static Testing;
 
 public sealed class MappingTests : BaseTestFixture
 {
-    [Test]
-    public async Task ProjectShouldBeEquivalentAfterMappingSavingLoadingAndMappingBack()
+
+    private OrganizationDto CreateTestOrganization(PersonDto personCreator)
     {
-        var personCreator = new Person()
+        return new OrganizationDto()
+        {
+            EntityId = Guid.NewGuid(),
+            Name = "Organization1",
+            CreatedBy = personCreator,
+            LastModifiedBy = personCreator,
+            History = new ModificationHistoryDto()
+            {
+                
+            }
+        };
+    }
+    private PersonDto CreateTestPersonCreator()
+    {
+        return new PersonDto()
         {
             EntityId = Guid.NewGuid(),
             Email = "creator@test.com",
             Firstname = "createFirst",
             Lastname = "creatorLast",
         };
-        var o1 = new Organization()
-        {
-            EntityId = Guid.NewGuid(),
-            Name = "Organization1",
-            CreatedBy = personCreator,
-            LastModifiedBy = personCreator,
-            History = new ModificationHistory()
-            {
-                
-            }
-        };
-        var p1 = new Person()
+    }
+    private PersonDto CreateTestPerson1(PersonDto personCreator)
+    {
+        return new PersonDto()
         {
             Email = "test1@test.test",
             Firstname = "test1",
@@ -45,27 +52,30 @@ public sealed class MappingTests : BaseTestFixture
             CreatedBy = personCreator,
             LastModifiedBy = personCreator
         };
-        var project1 = new Project()
+    }
+    private ProjectDto CreateTestProject1(PersonDto person1, PersonDto personCreator, OrganizationDto organization1)
+    {
+        return new ProjectDto()
         {
             Contributors =
             [
-                p1, personCreator
+                person1, personCreator
             ],
-            Owner = p1,
+            Owner = person1,
             Phase = ProjectPhase.Planning,
             Type = ProjectType.Inspiration,
             Visibility = ProjectVisibility.Internal,
-            ConnectedOrganizations = [o1],
-            ContactSpecifications = new[] { new ContactSpecification() },
+            ConnectedOrganizations = [organization1],
+            ContactSpecifications = new[] { new ContactSpecificationDto() },
             DescriptionSpecifications =
             [
-                new DescriptionSpecification()
+                new DescriptionSpecificationDto()
                 {
                     Content = new FormattedContent()
                     {
                         RawContentString = "bla",
                     },
-                    Type = new DescriptionType()
+                    Type = new DescriptionTypeDto()
                     {
                         Name = "test6",
                         DescriptionTitle = new FormattedTitle()
@@ -73,26 +83,26 @@ public sealed class MappingTests : BaseTestFixture
                             RawContentString = "testTitle"
                         }
                     },
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 }
             ],
             GraphicsSpecifications =
             [
-                new GraphicsSpecification()
+                new GraphicsSpecificationDto()
                 {
                     Content = new GraphicsContent()
                     {
                         Content = [1, 5, 6, 7],
                     },
                     Type = GraphicsType.Additional,
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 }
             ],
             LocationSpecifications =
             [
-                new LocationSpecificationAddress()
+                new LocationSpecificationDtoAddress()
                 {
                     PostalAddress = new PostalAddress
                     {
@@ -103,48 +113,48 @@ public sealed class MappingTests : BaseTestFixture
                         AddressLine5 = "line5",
                         AddressLine6 = "line6"
                     },
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 },
-                new LocationSpecification()
+                new LocationSpecificationDto()
                 {
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 },
-                new LocationSpecificationCoordinates()
+                new LocationSpecificationDtoCoordinates()
                 {
                     Coordinates = new Coordinates()
                     {
                         Lat = 5,
                         Lon = 6.7
                     },
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 },
-                new LocationSpecificationRemote()
+                new LocationSpecificationDtoRemote()
                 {
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 },
-                new LocationSpecificationRegion()
+                new LocationSpecificationDtoRegion()
                 {
                     Region = new Region()
                     {
                         RegionName = "Europe"
                     },
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 }
             ],
             ProjectName = "projectNameTest",
             ProjectTags =
             [
-                new ProjectTag()
+                new ProjectTagDto()
                 {
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 },
-                new ProjectTag()
+                new ProjectTagDto()
             ],
             ProjectTitle = new FormattedTitle()
             {
@@ -153,29 +163,29 @@ public sealed class MappingTests : BaseTestFixture
             RelatedProjects = [],
             RequirementSpecifications =
             [
-                new RequirementSpecification()
+                new RequirementSpecificationDto()
                 {
-                    QuantitySpecification = new QuantitySpecification()
+                    QuantitySpecification = new QuantitySpecificationDto()
                     {
-                        LastModifiedBy = p1,
+                        LastModifiedBy = person1,
                         CreatedBy = personCreator
                     },
                     TimeSpecifications =
                     [
-                        new TimeSpecification()
+                        new TimeSpecificationDto()
                         {
-                            LastModifiedBy = p1,
+                            LastModifiedBy = person1,
                             CreatedBy = personCreator
                         },
-                        new TimeSpecificationDate()
+                        new TimeSpecificationDtoDate()
                         {
                             Date = DateOnly.FromDateTime(DateTime.Today),
                         },
-                        new TimeSpecificationMoment()
+                        new TimeSpecificationDtoMoment()
                         {
 
                         },
-                        new TimeSpecificationMonth()
+                        new TimeSpecificationDtoMonth()
                         {
                             Month = new Month()
                             {
@@ -186,25 +196,25 @@ public sealed class MappingTests : BaseTestFixture
                                 MonthFromOneToTwelve = 10
                             }
                         },
-                        new TimeSpecificationDateTime()
+                        new TimeSpecificationDtoDateTime()
                         {
                             Date = DateTimeOffset.UtcNow
                         }
                     ],
                     TimeSpecificationSameAsProject = false
                 },
-                new RequirementSpecificationPerson()
+                new RequirementSpecificationDtoPerson()
                 {
-                    QuantitySpecification = new QuantitySpecification()
+                    QuantitySpecification = new QuantitySpecificationDto()
                     {
-                        LastModifiedBy = p1,
+                        LastModifiedBy = person1,
                         CreatedBy = personCreator
                     },
                     TimeSpecifications =
                     [
-                        new TimeSpecificationPeriod()
+                        new TimeSpecificationDtoPeriod()
                         {
-                            End = new TimeSpecificationMonth()
+                            End = new TimeSpecificationDtoMonth()
                             {
                                 Month = new Month()
                                 {
@@ -215,48 +225,48 @@ public sealed class MappingTests : BaseTestFixture
                                     MonthFromOneToTwelve = 10
                                 }
                             },
-                            Start = new TimeSpecificationDateTime()
+                            Start = new TimeSpecificationDtoDateTime()
                             {
                                 Date = DateTimeOffset.UtcNow
                             },
-                            LastModifiedBy = p1,
+                            LastModifiedBy = person1,
                             CreatedBy = personCreator
                         }
                     ],
                     TimeSpecificationSameAsProject = true,
                     SkillSpecifications =
                     [
-                        new SkillSpecification()
+                        new SkillSpecificationDto()
                         {
-                            LastModifiedBy = p1,
+                            LastModifiedBy = person1,
                             CreatedBy = personCreator
                         },
-                        new SkillSpecification()
+                        new SkillSpecificationDto()
                     ],
                     WorkAmountSpecifications =
                     [
-                        new WorkAmountSpecification()
+                        new WorkAmountSpecificationDto()
                         {
-                            LastModifiedBy = p1,
+                            LastModifiedBy = person1,
                             CreatedBy = personCreator
-                        }, new WorkAmountSpecification()
+                        }, new WorkAmountSpecificationDto()
                         {
                             
                         }
                     ]
                 },
-                new RequirementSpecificationMaterial()
+                new RequirementSpecificationDtoMaterial()
                 {
-                    QuantitySpecification = new QuantitySpecification()
+                    QuantitySpecification = new QuantitySpecificationDto()
                     {
-                        LastModifiedBy = p1,
+                        LastModifiedBy = person1,
                         CreatedBy = personCreator
                     },
                     TimeSpecifications =
                     [
-                        new TimeSpecificationPeriod()
+                        new TimeSpecificationDtoPeriod()
                         {
-                            End = new TimeSpecificationMonth()
+                            End = new TimeSpecificationDtoMonth()
                             {
                                 Month = new Month()
                                 {
@@ -267,7 +277,7 @@ public sealed class MappingTests : BaseTestFixture
                                     MonthFromOneToTwelve = 10
                                 }
                             },
-                            Start = new TimeSpecificationDateTime()
+                            Start = new TimeSpecificationDtoDateTime()
                             {
                                 Date = DateTimeOffset.UtcNow
                             }
@@ -276,38 +286,38 @@ public sealed class MappingTests : BaseTestFixture
                     TimeSpecificationSameAsProject = true,
                     MaterialSpecifications =
                     [
-                        new MaterialSpecification()
+                        new MaterialSpecificationDto()
                         {
-                            LastModifiedBy = p1,
+                            LastModifiedBy = person1,
                             CreatedBy = personCreator
                         }
                     ]
                 },
-                new RequirementSpecificationMoney()
+                new RequirementSpecificationDtoMoney()
                 {
-                    QuantitySpecification = new QuantitySpecification()
+                    QuantitySpecification = new QuantitySpecificationDto()
                     {
-                        LastModifiedBy = p1,
+                        LastModifiedBy = person1,
                         CreatedBy = personCreator
                     },
                     TimeSpecifications = [],
                     TimeSpecificationSameAsProject = true,
                     MaterialSpecifications =
                     [
-                        new MaterialSpecification()
+                        new MaterialSpecificationDto()
                         {
 
                         }
                     ],
-                    LastModifiedBy = p1,
+                    LastModifiedBy = person1,
                     CreatedBy = personCreator
                 }
             ],
             TimeSpecifications =
             [
-                new TimeSpecificationPeriod()
+                new TimeSpecificationDtoPeriod()
                 {
-                    End = new TimeSpecificationMonth()
+                    End = new TimeSpecificationDtoMonth()
                     {
                         Month = new Month()
                         {
@@ -318,7 +328,7 @@ public sealed class MappingTests : BaseTestFixture
                             MonthFromOneToTwelve = 10
                         }
                     },
-                    Start = new TimeSpecificationDateTime()
+                    Start = new TimeSpecificationDtoDateTime()
                     {
                         Date = DateTimeOffset.UtcNow
                     }
@@ -328,13 +338,16 @@ public sealed class MappingTests : BaseTestFixture
             LastModifiedBy = personCreator,
             CreatedBy = personCreator
         };
-        var project2 = new Project()
+    }
+    private ProjectDto CreateTestProject2(PersonDto person1, PersonDto personCreator, ProjectDto project1)
+    {
+        return new ProjectDto()
         {
             Contributors =
             [
                 personCreator
             ],
-            LastModifiedBy = p1,
+            LastModifiedBy = person1,
             CreatedBy = personCreator,
             Owner = personCreator,
             Phase = ProjectPhase.Idea,
@@ -348,7 +361,7 @@ public sealed class MappingTests : BaseTestFixture
             ProjectName = "projectNameTest",
             ProjectTags =
             [
-                new ProjectTag()
+                new ProjectTagDto()
                 {
                 },
             ],
@@ -356,7 +369,7 @@ public sealed class MappingTests : BaseTestFixture
             {
                 RawContentString = "testTitle2"
             },
-            RelatedProjects = [new ProjectConnection()
+            RelatedProjects = [new ProjectConnectionDto()
             {
                 Project = project1,
                 Type = ProjectConnectionType.PredecessorProject
@@ -365,21 +378,55 @@ public sealed class MappingTests : BaseTestFixture
             TimeSpecifications = [],
             ConnectedOrganizationsSameAsOwner = true
         };
+    }
 
+    private (PersonDto personCreator, PersonDto person1, OrganizationDto organization1, ProjectDto project1, ProjectDto
+        project2) CreateTestData()
+    {
+        var personCreator = CreateTestPersonCreator();
+        var person1 = CreateTestPerson1(personCreator);
+        var organization1 = CreateTestOrganization(personCreator);
+        var project1 = CreateTestProject1(person1, personCreator, organization1);
+        var project2 = CreateTestProject2(person1, personCreator, project1);
+        return (personCreator, person1, organization1, project1, project2);
+    }
+
+    [Test]
+    public async Task ProjectsShouldBeEquivalentAfterDbMappingAndMappingBack()
+    {
+        var (personCreator, person1, organization1, project1, project2) = CreateTestData();
+        project1.ToDbProject().ToProject().Should().BeEquivalentTo(project1);
+        project2.ToDbProject().ToProject().Should().BeEquivalentTo(project2);
+        await Task.Yield();
+    }
+    
+    [Test]
+    public async Task ProjectsShouldBeEquivalentAfterApiMappingAndMappingBack()
+    {
+        var (personCreator, person1, organization1, project1, project2) = CreateTestData();
+        project1.ToApiProject().ToProject().Should().BeEquivalentTo(project1);
+        project2.ToApiProject().ToProject().Should().BeEquivalentTo(project2);
+        await Task.Yield();
+    }
+
+    [Test]
+    public async Task ProjectsShouldBeEquivalentAfterDbMappingSavingLoadingAndMappingBack()
+    {
+        var (personCreator, person1, organization1, project1, project2) = CreateTestData();
         
         var dbContext = ScopedServices.GetRequiredService<ApplicationDbContext>();
         var dbProject1 = project1.ToDbProject();
         var dbProject2 = project2.ToDbProject();
         await dbContext.Persons.AddAsync(personCreator.ToDbPerson());
-        await dbContext.Persons.AddAsync(p1.ToDbPerson());
+        await dbContext.Persons.AddAsync(person1.ToDbPerson());
         if(project1.History != null)
             await dbContext.Histories.AddAsync(project1.History.ToDbHistory());
         if(project2.History != null)
             await dbContext.Histories.AddAsync(project2.History.ToDbHistory());
         await dbContext.Histories.AddRangeAsync(project1.ConnectedOrganizations.Where(x => x.History != null).Select(x => x.History!.ToDbHistory()));
-        await dbContext.TimeSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x.TimeSpecifications.SelectMany(z => z is TimeSpecificationPeriod p ? new []{p.Start, p.End}.Select(y => y.ToDbTimeSpecificationMoment()) : Array.Empty<DbTimeSpecificationMoment>())));
+        await dbContext.TimeSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x.TimeSpecifications.SelectMany(z => z is TimeSpecificationDtoPeriod p ? new []{p.Start, p.End}.Select(y => y.ToDbTimeSpecificationMoment()) : Array.Empty<DbTimeSpecificationMoment>())));
         await dbContext.TimeSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x.TimeSpecifications.Select(y => y.ToDbTimeSpecification())));
-        await dbContext.TimeSpecifications.AddRangeAsync(project1.TimeSpecifications.SelectMany(x => x is TimeSpecificationPeriod p ? new []{p.Start, p.End}.Select(y => y.ToDbTimeSpecificationMoment()) : Array.Empty<DbTimeSpecificationMoment>()));
+        await dbContext.TimeSpecifications.AddRangeAsync(project1.TimeSpecifications.SelectMany(x => x is TimeSpecificationDtoPeriod p ? new []{p.Start, p.End}.Select(y => y.ToDbTimeSpecificationMoment()) : Array.Empty<DbTimeSpecificationMoment>()));
         await dbContext.TimeSpecifications.AddRangeAsync(project1.TimeSpecifications.Select(x => x.ToDbTimeSpecification()));
         await dbContext.LocationSpecifications.AddRangeAsync(project1.LocationSpecifications.Select(x => x.ToDbLocationSpecification()));
         await dbContext.Organizations.AddRangeAsync(project1.ConnectedOrganizations.Select(x => x.ToDbOrganization()));
@@ -387,10 +434,10 @@ public sealed class MappingTests : BaseTestFixture
         await dbContext.DescriptionSpecifications.AddRangeAsync(project1.DescriptionSpecifications.Select(x => x.ToDbDescriptionSpecification()));
         await dbContext.GraphicsSpecifications.AddRangeAsync(project1.GraphicsSpecifications.Select(x => x.ToDbGraphicsSpecification()));
         await dbContext.QuantitySpecifications.AddRangeAsync(project1.RequirementSpecifications.Select(x => x.QuantitySpecification.ToDbQuantitySpecification()));
-        await dbContext.MaterialSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationMoney m ? m.MaterialSpecifications.Select(y => y.ToDbMaterialSpecification()) : Array.Empty<DbMaterialSpecification>()));
-        await dbContext.MaterialSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationMaterial m ? m.MaterialSpecifications.Select(y => y.ToDbMaterialSpecification()) : Array.Empty<DbMaterialSpecification>()));
-        await dbContext.SkillSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationPerson p ? p.SkillSpecifications.Select(y => y.ToDbSkillSpecification()) : Array.Empty<DbSkillSpecification>()));
-        await dbContext.WorkAmountSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationPerson p ? p.WorkAmountSpecifications.Select(y => y.ToDbWorkAmountSpecification()) : Array.Empty<DbWorkAmountSpecification>()));
+        await dbContext.MaterialSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationDtoMoney m ? m.MaterialSpecifications.Select(y => y.ToDbMaterialSpecification()) : Array.Empty<DbMaterialSpecification>()));
+        await dbContext.MaterialSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationDtoMaterial m ? m.MaterialSpecifications.Select(y => y.ToDbMaterialSpecification()) : Array.Empty<DbMaterialSpecification>()));
+        await dbContext.SkillSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationDtoPerson p ? p.SkillSpecifications.Select(y => y.ToDbSkillSpecification()) : Array.Empty<DbSkillSpecification>()));
+        await dbContext.WorkAmountSpecifications.AddRangeAsync(project1.RequirementSpecifications.SelectMany(x => x is RequirementSpecificationDtoPerson p ? p.WorkAmountSpecifications.Select(y => y.ToDbWorkAmountSpecification()) : Array.Empty<DbWorkAmountSpecification>()));
         await dbContext.RequirementSpecifications.AddRangeAsync(project1.RequirementSpecifications.Select(x => x.ToDbRequirementSpecification()));
         await dbContext.ProjectTags.AddRangeAsync(project1.ProjectTags.Select(x => x.ToDbProjectTag()));
         await dbContext.ProjectTags.AddRangeAsync(project2.ProjectTags.Select(x => x.ToDbProjectTag()));

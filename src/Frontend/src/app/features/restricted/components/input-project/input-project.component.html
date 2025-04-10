@@ -1,0 +1,367 @@
+<div class="h-100" style="display: flex; flex-wrap: nowrap; justify-content: stretch;">
+<div class="step-list-container h-100">
+<div [class.hidden]="isLoading()">
+    <div class="step" [class.active]="currentGroup == 'projectType'" (click)="select('projectType')">
+        <span class="step-number">{{ stepNumber(1) }}</span>
+        <span class="step-label">Um was geht es?</span>
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectName'" (click)="select('projectName')">
+        <span class="step-number">{{ stepNumber(2) }}</span>
+        <span class="step-label">Name {{ yoursDeclination }} {{ typeNameGenitive }}</span>
+    </div>
+    <div class="step" [class.hidden]="projectType != 'project'" [class.active]="currentGroup == 'projectPhase'" (click)="select('projectPhase')">
+      <span class="step-number">{{ stepNumber(3) }}</span>
+      <span class="step-label">Phase {{ yoursDeclination }} {{ typeNameGenitive }}</span>
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectLocation'" (click)="select('projectLocation')">
+        <span class="step-number">{{ stepNumber(4) }}</span>
+        <span class="step-label">Projektort</span>
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectTime'" (click)="select('projectTime')">
+      <span class="step-number">{{ stepNumber(5) }}</span>
+      <span class="step-label">Projektzeitraum</span>
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectRequirements'" (click)="select('projectRequirements')">
+      <span class="step-number">{{ stepNumber(6) }}</span>
+      <span class="step-label">Unterstützung</span>      
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectContact'" (click)="select('projectContact')">
+      <span class="step-number">{{ stepNumber(7) }}</span>
+      <span class="step-label">Deine Kontaktdaten</span>      
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectTags'" (click)="select('projectTags')">
+        <span class="step-number">{{ stepNumber(9) }}</span>
+        <span class="step-label">Tags zu {{ yoursDeclinationDative }} {{ typeName }}</span>
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectDescription'" (click)="select('projectDescription')">
+      <span class="step-number">{{ stepNumber(10) }}</span>
+      <span class="step-label">Beschreibung {{ yoursDeclination }} {{ typeNameGenitive }}</span>      
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectImages'" (click)="select('projectImages')">
+      <span class="step-number">{{ stepNumber(11) }}</span>
+      <span class="step-label">Bilder</span>      
+    </div>
+    <div class="step" [class.active]="currentGroup == 'projectVisibility'" (click)="select('projectVisibility')">
+      <span class="step-number">{{ stepNumber(12) }}</span>
+      <span class="step-label">Sichtbarkeit</span>          
+    </div>
+  </div>
+    <div [class.hidden]="!isLoading()" style="width: 20rem">
+        
+    </div>
+</div>
+    <div class="container-with-title">
+        <div [class.hidden]="!isLoading()">
+            <div class="step-content">
+                <h2 class="step-question">Lade Projekt...</h2>
+            </div>
+        </div>
+        <div class="title-container" [class.hidden]="isLoading()">
+            <div class="step-content" [class.hidden]="currentGroup != 'projectType'">
+                <h2 class="step-question">Was möchtest du hinzufügen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectType)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectName'">
+                <h2 class="step-question">Wie soll {{ yourDeclination }} {{ typeName }} heißen?<mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTitle)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectPhase'">
+                <h2 class="step-question">In welcher Phase befindet sich {{ yourDeclination }} {{ typeName }}? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectPhase)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
+                <h2 class="step-question">Was kannst du über den Ort {{ yoursDeclination }} {{ typeNameGenitive }} sagen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
+                <h2 class="step-question">Zu welchem Zeitpunkt oder in welchem Zeitraum findet {{ yourDeclination }} {{ typeName }} statt? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTime)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectRequirements'">
+                <h2 class="step-question">Was benötigst du um {{ yourDeclination }} {{ typeName }} umzusetzen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpRequirements)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectContact'">
+                <h2 class="step-question">Wie kann man dich oder deine Organisation kontaktieren?<mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpContact)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectTags'">
+                <h2 class="step-question">Wähle Tags aus, die zu {{ yoursDeclinationDative }} {{ typeName }} passen oder füge neue Tags hinzu. <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpTags)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
+                <h2 class="step-question">Wie würdest du {{ yourDeclination }} {{ typeName }} beschreiben? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectImages'">
+                <h2 class="step-question">Möchtest du ein Hintergrundbild und noch weitere Bilder hochladen? <mat-icon class="help-icon" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpImageUpload)"></mat-icon></h2>
+            </div>
+            <div class="step-content" [class.hidden]="currentGroup != 'projectVisibility'">
+                <h2 class="step-question">Wer darf dein Projekt sehen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectVisibility)"></mat-icon></h2>
+            </div>
+        </div>
+        <div class="input-content-container">
+            <div class="center-area">
+                <div [class.hidden]="isLoading()">
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectType'">
+                        <p>
+                            <button class="btn-large" [class.secondary]="projectType !== 'project'" (click)="changeProjectType('project')"><span>Ein Projekt </span><mat-icon [class.hidden]="projectType !== 'project'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>,
+                            <button class="btn-large" [class.secondary]="projectType !== 'idea'" (click)="changeProjectType('idea')">eine Idee <mat-icon [class.hidden]="projectType !== 'idea'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button> oder
+                            <button class="btn-large" [class.secondary]="projectType !== 'inspiration'" (click)="changeProjectType('inspiration')">eine Inspiration <mat-icon [class.hidden]="projectType !== 'inspiration'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                        </p>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectName'">
+                        <div class="prefix-suffix-container">
+                            <mat-form-field class="prefix">
+                                <mat-label>Projekttitel?</mat-label>
+                                <input matInput [(ngModel)]="projectTitle" />
+                            </mat-form-field>
+                            <mat-form-field class="suffix">
+                                <mat-label>Interner Projektname</mat-label>
+                                <input matInput disabled [(ngModel)]="projectName" />
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = projectType === 'project' ? 'projectPhase' : 'projectLocation'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectPhase'">
+                        <mat-form-field>
+                            <mat-label>Projektphase</mat-label>
+                            <mat-select [(value)]="projectPhase">
+                                <mat-option value="unkown">Nicht festgelegt</mat-option>
+                                <mat-option value="planning">In der Planung</mat-option>
+                                <mat-option value="ongoing">Am laufen</mat-option>
+                                <mat-option value="finished">Abgeschlossen</mat-option>
+                                <mat-option value="cancelled">Abgebrochen</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div>
+                            <button (click)="currentGroup = 'projectLocation'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
+                        <div class="item-tiles-container">
+                            @for(location of locations; track location){
+                                <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="location" (remove)="removeLocation($event)"></app-input-location>
+                            }
+                        </div>
+                        <button aria-label="Add another location" (click)="addLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+                        <div>
+                            <button (click)="currentGroup = 'projectTime'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
+                        <div class="item-tiles-container">
+                            @for(projectTime of projectTimes; track projectTime){
+                                <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="projectTime" (remove)="removeProjectTime($event)"></app-input-project-time>
+                            }
+                        </div>
+                        <div>
+                            <button aria-label="Add project time" (click)="addProjectTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+                            <button (click)="currentGroup = 'projectRequirements'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectRequirements'">
+                        <div class="prefix-suffix-container">
+                            <button [class.secondary]="currentRequirementGroup !== 'person'" (click)="currentRequirementGroup = 'person'" class="prefix">Helfer*innen</button>
+                            <button [class.secondary]="currentRequirementGroup !== 'material'" (click)="currentRequirementGroup = 'material'" class="middle">Material</button>
+                            <button [class.secondary]="currentRequirementGroup !== 'money'" (click)="currentRequirementGroup = 'money'" class="suffix">Finanzielle Unterstützung</button>
+                        </div>
+                        <div [class.hidden]="currentRequirementGroup !== 'person'">
+                            @for(requirementPerson of requirementPersons; track requirementPerson){
+                                <app-input-requirement-person (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
+                            }
+                            <button aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> Helfer*innen hinzufügen</button>
+                        </div>
+                        <div [class.hidden]="currentRequirementGroup !== 'material'">
+                            @for(requirementMaterial of requirementMaterials; track requirementMaterial){
+                                <app-input-requirement-material (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
+                            }
+                            <button aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> Material</button>
+                        </div>
+                        <div [class.hidden]="currentRequirementGroup !== 'money'">
+                            @for(requirementMoney of requirementsMoney; track requirementMoney){
+                                <app-input-requirement-money (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
+                            }
+                            <button aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> Finanzielle unterstützung</button>
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = 'projectContact'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectContact'">
+                        <div>
+                            <mat-form-field class="field-min-width-medium">
+                                <mat-label>Dein Name</mat-label>
+                                <input type="text"
+                                       aria-label="Contact Personal Name"
+                                       matInput
+                                       [(ngModel)]="contactName"/>
+                            </mat-form-field>
+                            <span> und/oder </span>
+                            <mat-form-field class="field-min-width-medium">
+                                <mat-label>Name der Organisation</mat-label>
+                                <input type="text"
+                                       aria-label="Contact Organisation Name"
+                                       matInput
+                                       [(ngModel)]="organisationName"/>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="field-min-width-medium">
+                                <mat-label>E-Mail</mat-label>
+                                <input type="text"
+                                       aria-label="Contact E-Mail"
+                                       matInput
+                                       [(ngModel)]="contactMail"/>
+                            </mat-form-field>
+                            <span> und/oder </span>
+                            <mat-form-field class="field-min-width-medium">
+                                <mat-label>Telefonnummer</mat-label>
+                                <input type="text"
+                                       aria-label="Contact Phone Number"
+                                       matInput
+                                       [(ngModel)]="contactPhone"/>
+                            </mat-form-field>
+                            <div>
+                                <button (click)="addContactSpecification()"><mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add"></mat-icon> Bankdaten, Paypal-Konto oder Website ergänzen</button>
+                            </div>
+                            <div class="item-tiles-container">
+                                @for(contactSpecification of contactSpecifications; track contactSpecification){
+                                    <app-input-contact-specification (onChanged)="onUpdated()" [contactSpecificationIndex]="$index" [contactSpecification]="contactSpecification" (remove)="removeContactSpecification($event)"></app-input-contact-specification>
+                                }
+                            </div>
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = 'projectTags'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectTags'">
+                        <div>
+                            <mat-form-field class="w-100">
+                                <mat-label>Tags</mat-label>
+                                <input type="text"
+                                       placeholder="Tags"
+                                       aria-label="Tags"
+                                       matInput
+                                       (matChipInputTokenEnd)="addSelectedTag($event)"
+                                       [matChipInputFor]="chipGridSelectedTags"
+                                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                       [matChipInputAddOnBlur]="addOnBlur"
+                                       [matAutocomplete]="autoTag"
+                                       [(ngModel)]="tagAutocompleteValue"/>
+                                <mat-autocomplete (optionSelected)="tagSelected($event)" #autoTag="matAutocomplete">
+                                    @for (option of tagOptions; track option) {
+                                        <mat-option [value]="option.value">{{option.text}}</mat-option>
+                                    }
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-chip-grid #chipGridSelectedTags aria-label="Selected Tags">
+                                @for (selectedTag of selectedTags; track selectedTag) {
+                                    <mat-chip-row (removed)="removeSelectedTag(selectedTag)">
+                                        {{ selectedTag.text }}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + selectedTag.text">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip-row>
+                                }
+                            </mat-chip-grid>
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = 'projectDescription'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
+                        <h4>Kurzbeschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
+                        <div>
+                            <angular-editor [placeholder]="'Kurzbeschreibung'" [(ngModel)]="shortDescription"></angular-editor>
+                        </div>
+                        <h4>Ausführliche Beschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
+                        <div>
+                            <angular-editor [placeholder]="'Ausführliche Beschreibung'" [(ngModel)]="longDescription"></angular-editor>
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = 'projectImages'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectImages'">
+                        <div>
+                            <input multiple accept="image/*" class="hidden" #fileUpload type="file" (change)="onFileUpload($event)">
+                            <button class="btn-large" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>Bilder hochladen</span></button>
+                        </div>
+                        <div class="uploaded-image-container">
+                            @for(image of uploadedImages; track image){
+                                <div class="uploaded-image-list-item">
+                                    <div>
+                                        <div class="uploaded-image-list-item-close-button-container">
+                                            <mat-icon style="font-size: 1.2rem;" fontIcon="close" (click)="removeUploadedImage(image)"></mat-icon>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <img src="{{ image.src }}" style="height: 10rem;" />
+                                        </div>
+                                        <div>
+                                            <button class="w-100" [class.secondary]="!image.isLogo" (click)="setLogo(image)"><span>Als Logo verwenden </span><mat-icon [class.hidden]="!image.isLogo" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                                        </div>
+                                        <div>
+                                            <button class="w-100" [class.secondary]="!image.isMainImage" (click)="setMainImage(image)"><span>Als Hauptbild verwenden </span><mat-icon [class.hidden]="!image.isMainImage" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            <button (click)="currentGroup = 'projectVisibility'" class="btn-next" >Weiter</button>
+                        </div>
+                    </div>
+                    <div class="step-content" [class.hidden]="currentGroup != 'projectVisibility'">
+                        <p class="prefix-suffix-container">
+                            <button class="prefix" [class.secondary]="projectVisibility !== 'draft'" (click)="projectVisibility = 'draft'"><span>Entwurf (nur du) </span><mat-icon [class.hidden]="projectVisibility !== 'draft'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="middle" [class.secondary]="projectVisibility !== 'internal'" (click)="projectVisibility = 'internal'">Nur Personen mit Link <mat-icon [class.hidden]="projectVisibility !== 'internal'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="suffix" [class.secondary]="projectVisibility !== 'public'" (click)="projectVisibility = 'public'">Öffentlich sichtbar <mat-icon [class.hidden]="projectVisibility !== 'public'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-bar">
+                <div [class.hidden]="isLoading()" class="split-top-bottom">
+                    <div style="text-align: center;">
+                        
+                        @if(projectSaveContext()?.hasChanges ?? false){
+                            @if(projectSaveContext()?.lastSave !== null){
+                                <mat-icon fontIcon="info"></mat-icon> <span>zuletzt gespeichert: {{ formatTime(projectSaveContext()?.lastSave ?? null) }}</span>
+                            }
+                            @if(projectSaveContext()?.isSaving ?? false){
+                                <button class="w-100">
+                                    <mat-icon fontIcon="hourglass_empty"></mat-icon>
+                                </button>
+                            } @else {
+                                <button class="w-100" (click)="save()">
+                                    @if(projectVisibility === "draft"){
+                                        <span>Speichern</span>
+                                    }@else{
+                                        <span>Speichern und veröffentlichen</span>
+                                    }
+                                </button>
+                            }
+                        } @else {
+                            <button class="w-100 secondary">
+                                @if(projectVisibility === "draft"){
+                                    <span>Als Entwurf gespeichert</span>
+                                } @else if (projectVisibility === "public"){
+                                    <span>
+                                        Gespeichert und veröffentlicht
+                                    </span>
+                                } @else{
+                                    <span>
+                                        Gespeichert und per Link einsehbar
+                                    </span>
+                                }
+                            </button>
+                            @if(projectVisibility === "internal"){
+                                <button style="margin-top: 1rem" (click)="openShareLinkDialog()" class="w-100"><mat-icon fontIcon="share"></mat-icon> Interner Link zum Teilen</button>
+                            }
+                            <a href="{{ previewLink }}" target="_blank"><button style="margin-top: 1rem" class="w-100"><mat-icon fontIcon="visibility"></mat-icon> Vorschau in neuem Tab öffnen</button></a>
+                        }
+                    </div>
+                    <div>
+                        @if(!this.isNewProject){
+                            <button (click)="deleteProject()" class="tertiary w-100"><mat-icon fontIcon="delete"></mat-icon> Löschen</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

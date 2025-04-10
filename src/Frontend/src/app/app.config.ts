@@ -4,18 +4,30 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideApiService } from './server/configuration';
-import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from "@angular/common/http";
 import { BASE_PATH } from './server/variables';
 import { environment } from './environments/environment';
 import { UniversalAppInterceptor } from './core/interceptors/authorization-http.interceptor';
+import { provideTranslateService, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeEn from '@angular/common/locales/en';
+import localeIt from '@angular/common/locales/it';
+registerLocaleData(localeDe);
+registerLocaleData(localeEn);
+registerLocaleData(localeIt);
+
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(),
       { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },    
-      provideApiService(), provideHttpClient(),
-      importProvidersFrom(HttpClientModule),
-    {provide: BASE_PATH, useFactory: () => {
+      provideApiService(), provideHttpClient(withFetch(), withInterceptorsFromDi()),
+      {provide: BASE_PATH, useFactory: () => {
         if(typeof window === 'undefined')
           return;
         if(environment.development){
@@ -25,5 +37,13 @@ export const appConfig: ApplicationConfig = {
         }
         return window?.location.origin;
       } 
-    }]
+    }, provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      }
+    }), 
+    provideAnimationsAsync('noop'), 
+    provideAnimationsAsync()]
 };

@@ -7,15 +7,19 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbPostalAddress
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine1 { get; init; }
+    public required string AddressText { get; set; }
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine2 { get; init; }
-    [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine3 { get; init; }
-    [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine4 { get; init; }
-    [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine5 { get; init; }
-    [MaxLength(Constants.StringLengths.Medium)]
-    public required string AddressLine6 { get; init; }
+    public required string AddressDisplayName { get; set; }
+
+    public void Update(DbPostalAddress targetEntity)
+    {
+      if (AddressText != targetEntity.AddressText)
+      {
+        AddressText = targetEntity.AddressText;
+      }
+      if (AddressDisplayName != targetEntity.AddressDisplayName)
+      {
+        AddressDisplayName = targetEntity.AddressDisplayName;
+      }
+    }
 }

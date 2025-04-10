@@ -25,13 +25,17 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 {
     app.UseSerilogRequestLogging();
     await app.InitializeDatabaseAsync();
+}
+
+app.UseCors(CorsPolicies.AllowAll);
+
+if (!builder.Configuration.IsInCodeGenerationMode())
+{
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseHealthChecks("/health");
 }
 
-app.UseCors(CorsPolicies.AllowAll);
-app.UseDefaultExceptionHandler();
 app.UseFastEndpoints();
 app.UseSwaggerGen();
 app.Run();

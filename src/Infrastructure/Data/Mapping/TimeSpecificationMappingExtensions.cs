@@ -8,15 +8,15 @@ namespace Infrastructure.Data.Mapping;
 public static partial class MappingExtensions
 {
     //From DB
-    internal static partial TimeSpecification ToTimeSpecificationInner(this DbTimeSpecification dbTimeSpecification);
-    internal static partial TimeSpecificationMoment ToTimeSpecificationMomentInner(this DbTimeSpecificationMoment dbTimeSpecificationMoment);
-    public static partial TimeSpecificationPeriod ToTimeSpecificationPeriod(this DbTimeSpecificationPeriod dbTimeSpecificationPeriod);
-    public static partial TimeSpecificationDate ToTimeSpecificationDate(this DbTimeSpecificationDate dbTimeSpecificationDate);
-    public static partial TimeSpecificationDateTime ToTimeSpecificationDateTime(this DbTimeSpecificationDateTime dbTimeSpecificationDateTime);
-    public static partial TimeSpecificationMonth ToTimeSpecificationMonth(this DbTimeSpecificationMonth dbTimeSpecificationMonth);
+    internal static partial TimeSpecificationDto ToTimeSpecificationInner(this DbTimeSpecification dbTimeSpecification);
+    internal static partial TimeSpecificationDtoMoment ToTimeSpecificationMomentInner(this DbTimeSpecificationMoment dbTimeSpecificationMoment);
+    public static partial TimeSpecificationDtoPeriod ToTimeSpecificationPeriod(this DbTimeSpecificationPeriod dbTimeSpecificationPeriod);
+    public static partial TimeSpecificationDtoDate ToTimeSpecificationDate(this DbTimeSpecificationDate dbTimeSpecificationDate);
+    public static partial TimeSpecificationDtoDateTime ToTimeSpecificationDateTime(this DbTimeSpecificationDateTime dbTimeSpecificationDateTime);
+    public static partial TimeSpecificationDtoMonth ToTimeSpecificationMonth(this DbTimeSpecificationMonth dbTimeSpecificationMonth);
 
     [UserMapping(Default = true)]
-    public static TimeSpecification ToTimeSpecification(this DbTimeSpecification dbTimeSpecification) =>
+    public static TimeSpecificationDto ToTimeSpecification(this DbTimeSpecification dbTimeSpecification) =>
         dbTimeSpecification switch
         {
             DbTimeSpecificationPeriod dbTimeSpecificationPeriod =>
@@ -27,7 +27,7 @@ public static partial class MappingExtensions
         };
 
     [UserMapping(Default = true)]
-    public static TimeSpecificationMoment ToTimeSpecificationMoment(this DbTimeSpecificationMoment dbTimeSpecificationMoment) =>
+    public static TimeSpecificationDtoMoment ToTimeSpecificationMoment(this DbTimeSpecificationMoment dbTimeSpecificationMoment) =>
         dbTimeSpecificationMoment switch
         {
             DbTimeSpecificationDate dbTimeSpecificationDate => dbTimeSpecificationDate.ToTimeSpecificationDate(),
@@ -38,45 +38,45 @@ public static partial class MappingExtensions
         };
 
     // To DB
-    internal static partial DbTimeSpecification ToDbTimeSpecificationInner(this TimeSpecification timeSpecification);
-    internal static partial DbTimeSpecificationMoment ToDbTimeSpecificationMomentInner(this TimeSpecificationMoment timeSpecificationMoment);
+    internal static partial DbTimeSpecification ToDbTimeSpecificationInner(this TimeSpecificationDto timeSpecificationDto);
+    internal static partial DbTimeSpecificationMoment ToDbTimeSpecificationMomentInner(this TimeSpecificationDtoMoment timeSpecificationDtoMoment);
 
-    public static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(this TimeSpecificationPeriod timeSpecificationPeriod);
+    public static partial DbTimeSpecificationPeriod ToDbTimeSpecificationPeriod(this TimeSpecificationDtoPeriod timeSpecificationDtoPeriod);
     
-    internal static DbTimeSpecificationPeriodStartConnection ToDbTimeSpecificationPeriodStartConnection(this TimeSpecificationMoment moment) => new()
+    internal static DbTimeSpecificationPeriodStartConnection ToDbTimeSpecificationPeriodStartConnection(this TimeSpecificationDtoMoment dtoMoment) => new()
     {
-        MomentId = moment.EntityId
+        MomentId = dtoMoment.EntityId
     };
-    internal static TimeSpecificationMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodStartConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
+    internal static TimeSpecificationDtoMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodStartConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
     
-    internal static DbTimeSpecificationPeriodEndConnection ToDbTimeSpecificationPeriodEndConnection(this TimeSpecificationMoment moment) => new()
+    internal static DbTimeSpecificationPeriodEndConnection ToDbTimeSpecificationPeriodEndConnection(this TimeSpecificationDtoMoment dtoMoment) => new()
     {
-        MomentId = moment.EntityId
+        MomentId = dtoMoment.EntityId
     };
-    internal static TimeSpecificationMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodEndConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
+    internal static TimeSpecificationDtoMoment ToTimeSpecificationMoment(this DbTimeSpecificationPeriodEndConnection dbTimeSpecificationPeriodStartConnection) => dbTimeSpecificationPeriodStartConnection.Moment!.ToTimeSpecificationMoment();
 
     
-    public static partial DbTimeSpecificationDate ToDbTimeSpecificationDate(this TimeSpecificationDate timeSpecificationDate);
-    public static partial DbTimeSpecificationDateTime ToDbTimeSpecificationDateTime(this TimeSpecificationDateTime timeSpecificationDateTime);
-    public static partial DbTimeSpecificationMonth ToDbTimeSpecificationMonth(this TimeSpecificationMonth timeSpecificationMonth);
+    public static partial DbTimeSpecificationDate ToDbTimeSpecificationDate(this TimeSpecificationDtoDate timeSpecificationDtoDate);
+    public static partial DbTimeSpecificationDateTime ToDbTimeSpecificationDateTime(this TimeSpecificationDtoDateTime timeSpecificationDtoDateTime);
+    public static partial DbTimeSpecificationMonth ToDbTimeSpecificationMonth(this TimeSpecificationDtoMonth timeSpecificationDtoMonth);
     [UserMapping(Default = true)]
 
-    public static DbTimeSpecification ToDbTimeSpecification(this TimeSpecification timeSpecification) =>
-        timeSpecification switch
+    public static DbTimeSpecification ToDbTimeSpecification(this TimeSpecificationDto timeSpecificationDto) =>
+        timeSpecificationDto switch
         {
-            TimeSpecificationPeriod timeSpecificationPeriod => timeSpecificationPeriod.ToDbTimeSpecificationPeriod(),
-            TimeSpecificationMoment timeSpecificationMoment => timeSpecificationMoment.ToDbTimeSpecificationMoment(),
-            _ => timeSpecification.ToDbTimeSpecificationInner()
+            TimeSpecificationDtoPeriod timeSpecificationPeriod => timeSpecificationPeriod.ToDbTimeSpecificationPeriod(),
+            TimeSpecificationDtoMoment timeSpecificationMoment => timeSpecificationMoment.ToDbTimeSpecificationMoment(),
+            _ => timeSpecificationDto.ToDbTimeSpecificationInner()
         };
 
     [UserMapping(Default = true)]
-    public static DbTimeSpecificationMoment ToDbTimeSpecificationMoment(this TimeSpecificationMoment timeSpecificationMoment) =>
-        timeSpecificationMoment switch
+    public static DbTimeSpecificationMoment ToDbTimeSpecificationMoment(this TimeSpecificationDtoMoment timeSpecificationDtoMoment) =>
+        timeSpecificationDtoMoment switch
         {
-            TimeSpecificationDate timeSpecificationDate => timeSpecificationDate.ToDbTimeSpecificationDate(),
-            TimeSpecificationDateTime timeSpecificationDateTime => timeSpecificationDateTime
+            TimeSpecificationDtoDate timeSpecificationDate => timeSpecificationDate.ToDbTimeSpecificationDate(),
+            TimeSpecificationDtoDateTime timeSpecificationDateTime => timeSpecificationDateTime
                 .ToDbTimeSpecificationDateTime(),
-            TimeSpecificationMonth timeSpecificationMonth => timeSpecificationMonth.ToDbTimeSpecificationMonth(),
-            _ => timeSpecificationMoment.ToDbTimeSpecificationMomentInner()
+            TimeSpecificationDtoMonth timeSpecificationMonth => timeSpecificationMonth.ToDbTimeSpecificationMonth(),
+            _ => timeSpecificationDtoMoment.ToDbTimeSpecificationMomentInner()
         };
 }

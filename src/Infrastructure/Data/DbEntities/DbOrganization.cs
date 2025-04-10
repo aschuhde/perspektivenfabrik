@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DbEntities;
 
@@ -8,7 +8,17 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbOrganization : DbEntity
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+      if(target is not DbOrganization organization) return;
+      if (this.Name != organization.Name)
+      {
+        this.Name = organization.Name;
+      }
+      base.UpdateToTarget(target);
+    }
 }
 
 [Table("OrganizationProjectConnections")]
@@ -16,8 +26,10 @@ public sealed class DbOrganizationProjectConnection : DbEntityWithId
 {
     [ForeignKey(nameof(Project))]
     public required Guid ProjectId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbProject? Project { get; init; }
     [ForeignKey(nameof(Organization))]
     public required Guid OrganizationId { get; init; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public DbOrganization? Organization { get; init; }
 }

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Auf der Karte auswählen</h2>
+<mat-dialog-content>
+    <div>
+        <mat-form-field class="w-100">
+            <mat-label>Adresse / Name / POI</mat-label>
+            <input type="text" matInput [(ngModel)]="retrievedPoint" />
+        </mat-form-field>
+    </div>
+    <app-map [lookupMode]="lookupMode" [type]="type" [startPoint]="startPoint" (onRetrievedPoint)="mapRetrievedPoint($event.value, $event.displayName)"></app-map>
+</mat-dialog-content>
+<mat-dialog-actions>    
+    @if(type == "lookup"){
+      <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>Übernehmen</button>
+      <button class="secondary" mat-dialog-close>Abbrechen</button>
+    } @else {
+        <button class="secondary" mat-dialog-close>Schließen</button>
+    }
+</mat-dialog-actions>

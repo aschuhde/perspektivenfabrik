@@ -1,0 +1,90 @@
+.top{
+    height: calc(100% - 10rem);
+    display: flex;
+}
+.left{
+    height: 100%;
+    width: 40rem;
+    background-color: #EA6A31;
+    color: white;
+
+    .stats{
+        padding: 2rem 3rem 1rem 3rem;
+    }
+    .intro{
+        padding: 1rem 3rem;
+    }
+}
+.main{
+    width: calc(100% - 40rem);
+    height: 100%;
+
+    .content{
+        padding: 3rem 10rem;
+    }
+}
+.bottom{
+    height: 10rem;
+    background-color: #B497E5;
+    display: flex;
+    color: white;
+
+    .bottom-left{        
+        width: 50%;
+
+        > div{
+            padding-left: 5rem;
+            padding-top: 2rem;
+        }
+    }
+    .bottom-right{
+        width: 50%;
+        > div{
+            padding: 1rem 8rem 1rem 5rem;
+        }
+    }
+}
+.gallery{
+    height: 20rem;
+}
+.stat-grid-item {
+    padding: .2rem .8rem;
+    border: 1px solid white;
+    border-radius: 2rem;
+    margin: .2rem;
+    cursor: default;
+    
+    &[data-clickable=true]{
+        cursor: pointer;
+        transition: background-color .2s ease;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+.stat-grid{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.stat-label{
+    margin: 0 1rem 0 0;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    font-size: 16px;
+
+    &[data-clickable=true] {
+        cursor: pointer;
+    }
+}
+.contact-text{
+    margin: 0;
+    flex-grow: 1;
+    flex-basis: 50%;
+}
+.show-more-details{
+    font-size: 14px;
+    text-decoration: underline;
+}

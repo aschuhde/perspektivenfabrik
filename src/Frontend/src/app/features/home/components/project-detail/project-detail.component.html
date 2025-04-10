@@ -1,0 +1,102 @@
+<div class="top">
+    <div class="left">
+        <div class="intro">
+            <h2>{{ projectTitle }}</h2>
+            <p class="font-smaller" style="margin-bottom: 0" [innerHtml]="shortDescription"></p>
+        </div>
+        <div class="stats font-smaller">
+            @if (locationSpecifications.length > 0){
+                <div class="stat-grid">
+                    <p class="stat-label"><mat-icon fontIcon="location_on"></mat-icon> Ort</p>
+                    @for (locationSpecification of locationSpecifications; track locationSpecification){
+                        <div class="stat-grid-item" (click)="locationClicked(locationSpecification)" [attr.data-clickable]="isLocationClickable(locationSpecification)">
+                            <span>{{ getLocationSpecificationShortName(locationSpecification) }}</span>
+                            @if(isLocationClickable(locationSpecification)){
+                                <mat-icon fontIcon="map"></mat-icon>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            @if (timeSpecifications.length > 0){
+                <div class="stat-grid">
+                    <p class="stat-label"><mat-icon fontIcon="date_range"></mat-icon> Zeitraum</p>
+                    @for (timeSpecification of timeSpecifications; track timeSpecification){
+                        <div class="stat-grid-item" data-clickable="false">{{ getTimeSpecificationShortName(timeSpecification) }}</div>
+                    }
+                </div>
+            }
+            @if (tags.length > 0){
+                <div class="stat-grid">
+                    <p class="stat-label"><mat-icon fontIcon="bookmark"></mat-icon> Tags</p>
+                    @for (tag of tags; track tag){
+                        <div class="stat-grid-item" data-clickable="false">{{ getTagShortName(tag) }}</div>
+                    }
+                </div>
+            }
+             
+                <div class="stat-grid">
+                    <div class="split-left-right w-100">
+                        <p class="stat-label" data-clickable="true" (click)="showRequirementPersonsDialog()">
+                            <span><mat-icon fontIcon="groups"></mat-icon> Wir suchen <a class="show-more-details">(Details anzeigen)</a></span>
+                        </p>
+                    </div>
+                    
+                    @for (requirementSpecificationPerson of requirementSpecificationPersonsFlat; track requirementSpecificationPerson){
+                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationPersonClicked()">{{ getRequirementSpecificationPersonShortName(requirementSpecificationPerson) }}</div>
+                    }
+                    
+                </div>
+            
+            @if (requirementSpecificationMaterialsFlat.length > 0 || requirementSpecificationMoneySummed){
+                <div class="stat-grid">
+                    <p class="stat-label" data-clickable="true" (click)="showRequirementMaterialsDialog()">
+                        <span><mat-icon fontIcon="construction"></mat-icon>/<mat-icon fontIcon="savings"></mat-icon> Wir benötigen <a class="show-more-details">(Details anzeigen)</a></span>
+                    </p>
+                    @for (requirementSpecificationMaterial of requirementSpecificationMaterialsFlat; track requirementSpecificationMaterial){
+                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMaterialClicked()">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
+                    }
+                    @if(requirementSpecificationMoneySummed){
+                        <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMoneyClicked()">{{ getRequirementSpecificationMoneyShortName(requirementSpecificationMoneySummed) }}</div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="main">
+        <div class="gallery">
+            <app-image-gallery [images]="projectImages"></app-image-gallery>
+        </div>
+        <div class="content" [innerHtml]="longDescription">        
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <div class="bottom-left">
+        <div>
+            <h3>Kontakt</h3>
+        </div>
+    </div>
+    <div class="bottom-right">
+        <div>
+            <p class="contact-text">Schreib uns eine Nachricht!</p>
+            <div style="display: flex; justify-content: space-between;flex-wrap: wrap;">
+            @if(contactPersonalName){
+                <p class="contact-text"><mat-icon fontIcon="person"></mat-icon> {{ contactPersonalName }}</p>
+            }
+            @if(contactOrganisationName){
+                <p class="contact-text"><mat-icon fontIcon="apartment"></mat-icon> {{ contactOrganisationName }}</p>
+            }
+            @if(contactPhone){
+                <p class="contact-text"><mat-icon fontIcon="phone"></mat-icon><span>&nbsp;</span><a href="tel: {{ contactPhone }}">{{ contactPhone }}</a></p>
+            }
+            @if(contactMailAddress){
+                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
+            }
+            @if(contactWebsite){
+                <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ contactWebsite }}">{{ contactWebsite }}</a></p>
+            }
+            </div>
+        </div>
+    </div>
+</div>

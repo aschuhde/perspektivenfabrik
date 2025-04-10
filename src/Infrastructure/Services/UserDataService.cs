@@ -2,47 +2,47 @@ using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Data.DbEntities;
-using Infrastructure.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
 public sealed class UserDataService(ApplicationDbContext dbContext) : IUserDataService
 {
-    public async Task<User[]> GetAllActiveUsers(CancellationToken cancellationToken = default)
+    public async Task<UserDto[]> GetAllActiveUsers(CancellationToken cancellationToken = default)
     {
-        return await ToUsers(dbContext.Users.Where(x => x.Active)).ToArrayAsync(cancellationToken: cancellationToken);
+        return await GetUser(await dbContext.Users.AsNoTracking().Where(x => x.Active).ToArrayAsync(cancellationToken), cancellationToken);
     }
     
-    public async Task<User?> GetActiveUserByEMail(string email, CancellationToken cancellationToken = default)
+    public async Task<UserDto?> GetActiveUserByEMail(string email, CancellationToken cancellationToken = default)
     {
-        return await ToUsers(dbContext.Users.Where(x => x.Active &&
-                                                        x.Email.ToLower() == email.ToLower())).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        return (await GetUser([await dbContext.Users.Where(x => x.Active &&
+                                                        x.Email.ToLower() == email.ToLower()).AsNoTracking().FirstOrDefaultAsync(cancellationToken)], cancellationToken)).FirstOrDefault();
     }
     
-    public async Task<User?> GetActiveUserById(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<UserDto?> GetActiveUserById(Guid userId, CancellationToken cancellationToken = default)
     {
-        return await ToUsers(dbContext.Users.Where(x => x.Active &&
-                                                        x.EntityId == userId)).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        return (await GetUser([await dbContext.Users.Where(x => x.Active &&
+                                                        x.EntityId == userId).AsNoTracking().FirstOrDefaultAsync(cancellationToken)], cancellationToken)).FirstOrDefault();
     }
 
-    private static IQueryable<User> ToUsers(IQueryable<DbUser> query)
+    private async Task<UserDto[]> GetUser(DbUser?[] users, CancellationToken ct)
     {
-        return query.Select(x => new User
+        var userIds = users.Select(x => x?.EntityId).Where(x => x != null).ToArray();
+        var roles = await dbContext.UserRoles.Where(x => userIds.Contains(x.UserId)).AsNoTracking().ToArrayAsync(ct); 
+        return users.Where(x => x != null).Select(dbUser => new UserDto
         {
-            EntityId = default,
-            CreatedOn = default,
+            EntityId = dbUser!.EntityId,
+            CreatedOn = dbUser.CreatedOn,
             CreatedBy = null,
-            LastModifiedOn = default,
+            LastModifiedOn = dbUser.LastModifiedOn,
             LastModifiedBy = null,
             History = null,
-            Firstname = "null",
-            Lastname = "null",
-            Email = "null",
-            ConnectedOrganizations = new OrganizationConnection[]
-            {
-            },
-            PasswordHash = "null"
-        }); //x.ToUser());
+            Firstname = dbUser.Firstname,
+            Lastname = dbUser.Lastname,
+            Email = dbUser.Email,
+            PasswordHash = dbUser.PasswordHash,
+            Active = dbUser.Active,
+            Roles = roles.Where(x => x.UserId == dbUser.EntityId).Select(x => x.Role).ToArray()
+        }).ToArray();
     }
 }

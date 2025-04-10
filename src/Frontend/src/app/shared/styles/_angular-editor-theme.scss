@@ -1,0 +1,43 @@
+@use 'vars';
+
+:root {
+    --ae-gap: .2rem;
+    --ae-text-area-border: 1px solid #ddd;
+    --ae-text-area-border-radius: 2rem;
+    --ae-focus-outline-color: #aa2727 auto 1px;
+    --ae-toolbar-padding: 0;
+    --ae-toolbar-bg-color: white;
+    --ae-toolbar-border-radius: none;
+    --ae-button-bg-color: #{vars.$button-secondary};
+    --ae-button-border: none;
+    --ae-button-radius: 1rem;
+    --ae-button-hover-bg-color: #{vars.$button-secondary-hover};
+    --ae-button-active-bg-color: #{vars.$button-secondary};
+    --ae-button-active-hover-bg-color:  #{vars.$button-secondary-hover};
+    --ae-button-disabled-bg-color: #{vars.$button-secondary-disabled};
+    --ae-picker-label-color: #{vars.$button-secondary};
+    --ae-picker-icon-bg-color: #{vars.$button-secondary};
+    --ae-picker-option-bg-color: #{vars.$button-secondary};
+    --ae-picker-option-active-bg-color: #{vars.$button-secondary-hover};
+    --ae-picker-option-focused-bg-color: #{vars.$button-secondary-hover};  
+    --ae-picker-option-hover-bg-color: #{vars.$button-secondary-hover};
+}
+
+.ae-picker-item.selected{
+color: white !important;
+}
+.ae-picker-label:hover{
+    background-color: vars.$button-secondary-hover !important;
+
+    &:before{
+        background: vars.$button-secondary-hover !important;
+    }
+}
+ae-select:hover{
+    background: none !important;
+}
+.ae-picker-label {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+  

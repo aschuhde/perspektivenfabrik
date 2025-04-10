@@ -7,5 +7,13 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbFormattedContent
 {
     [MaxLength(Constants.StringLengths.Largest)]
-    public required string RawContentString { get; init; }
+    public required string RawContentString { get; set; }
+
+    public void Update(DbFormattedContent descriptionSpecificationContent)
+    {
+      if (this.RawContentString != descriptionSpecificationContent.RawContentString)
+      {
+        this.RawContentString = descriptionSpecificationContent.RawContentString;
+      }
+    }
 }

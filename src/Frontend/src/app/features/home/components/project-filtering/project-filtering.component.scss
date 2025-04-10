@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+.filter-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+}
+.filter-item{
+  margin: 0 1rem;
+}
+mat-form-field.filter-item{
+  --mat-sys-primary: white;
+  --mat-sys-on-surface: white;
+  --mat-sys-on-surface-variant: white;
+  --mat-sys-outline: white;
+  --mat-sys-corner-extra-small: 2rem;
+}
+.filter-available-soon{
+  color: white;
+  font-size: .8rem;
+  vertical-align: middle;
+}

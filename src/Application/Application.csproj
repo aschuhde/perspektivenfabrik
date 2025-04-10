@@ -3,14 +3,20 @@
     <ItemGroup>
       <PackageReference Include="FastEndpoints.Attributes" />
       <PackageReference Include="FastEndpoints.Messaging.Core"/>
+      <PackageReference Include="FluentValidation" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Riok.Mapperly" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Common\Common.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\ServiceModels\" />
     </ItemGroup>
 </Project>

@@ -1,4 +1,3 @@
-using Application.Tools;
 using Infrastructure.Data.DbEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,29 +52,30 @@ public sealed class ApplicationDbContextInitializer(
 
     public async Task TrySeedAsync()
     {
-        #if DEBUG
-                await using var transaction = await context.Database.BeginTransactionAsync();
-                try
-                {
-                    await context.SaveChangesAsync();
-                    context.Users.Add(new DbUser()
-                    {
-                        Email = "root@test.test",
-                        Firstname = "root",
-                        Lastname = "test",
-                        PasswordHash = "test",
-                        History = null
-                    });
-                    await context.SaveChangesAsync();
-                    await transaction.CommitAsync();
-                }
-                catch
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
-        #endif
-        
+        // #if DEBUG
+        //         await using var transaction = await context.Database.BeginTransactionAsync();
+        //         try
+        //         {
+        //             await context.SaveChangesAsync();
+        //             context.Users.Add(new DbUser()
+        //             {
+        //                 Email = "root@test.test",
+        //                 Firstname = "root",
+        //                 Lastname = "test",
+        //                 PasswordHash = "test",
+        //                 History = null,
+        //                 Active = true
+        //             });
+        //             await context.SaveChangesAsync();
+        //             await transaction.CommitAsync();
+        //         }
+        //         catch
+        //         {
+        //             await transaction.RollbackAsync();
+        //             throw;
+        //         }
+        // #endif
+        //
         await Task.Yield();
     }
 }

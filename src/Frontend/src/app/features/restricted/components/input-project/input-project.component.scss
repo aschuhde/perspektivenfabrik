@@ -1,0 +1,119 @@
+.step {
+    padding: 1rem .5rem 1rem 1rem;
+    cursor: pointer;
+    border-radius: .5rem;
+    transition: background-color .2s ease;
+    white-space: nowrap;
+}
+
+.step-number {
+    border-radius: 1rem;
+    background-color: #B497E5;
+    display: inline-block;
+    width: 2rem;
+    height: 1.8rem;
+    margin-right: .5rem;
+    text-align: center;
+    padding-top: .2rem;
+    color: white;
+}
+
+.step-label {
+    white-space: nowrap;
+}
+
+.step.active .step-number {
+    background-color: #EA6A31;
+}
+
+.step:hover {
+    background-color: #115e61;
+}
+
+.step.active {background-color: #0d777b;}
+
+.step-list-container{
+    padding-right: 1rem;
+    background-color: #175153;
+    color: white;
+    padding-left: 1rem;
+    height: calc(100% - 1rem);
+    padding-top: 1rem;
+}
+
+.step-question{
+    margin: 0 0 0rem -1rem;
+    background-color: #EA6A31;
+    padding: 2rem 1rem;
+    color: white;
+
+    .help-icon{
+        color: #d5c4f3;
+    }
+}
+.btn-next{
+    margin-top: 1rem;
+    width: 10rem;
+}
+.btn-large{
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+}
+.uploaded-image-container{
+    display: flex;
+}
+.uploaded-image-list-item{
+    > div{
+        border: 1px solid #175153;
+        border-radius: 1rem;
+        padding: .5rem;
+        height: calc(100% - 1rem);
+    }
+    min-width: 17rem;
+    padding: .5rem;
+    display: block;
+}
+.input-content-container{
+    display: flex;
+    min-height: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: max-content;
+}
+.center-area{
+    flex-grow: 1;
+    padding: 1rem 1rem 1rem 0;
+    overflow-y: auto;
+}
+.right-bar{
+    width: 20rem;
+    flex-shrink: 0;
+    background-color: #B497E5;
+    height: calc(100% - 2rem);
+    flex-grow: 0;
+    padding: 1rem;
+    color: white;
+}
+.container-with-title{
+    padding-left: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.title-container{
+    flex-shrink: 0;
+}
+.uploaded-image-list-item-close-button-container{
+    text-align: right;
+    cursor: pointer;
+    
+    mat-icon {
+        transition: transform .2s ease;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    
+}

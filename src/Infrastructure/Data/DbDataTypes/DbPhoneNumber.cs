@@ -7,5 +7,13 @@ namespace Infrastructure.Data.DbDataTypes;
 public sealed class DbPhoneNumber
 {
     [MaxLength(Constants.StringLengths.Medium)]
-    public required string PhoneNumberText { get; init; }
+    public required string PhoneNumberText { get; set; }
+
+    public void Update(DbPhoneNumber targetEntity)
+    {
+      if (this.PhoneNumberText != targetEntity.PhoneNumberText)
+      {
+        this.PhoneNumberText = targetEntity.PhoneNumberText;
+      }
+    }
 }

@@ -1,7 +1,7 @@
 ﻿import {Routes} from "@angular/router";
 import { LoginComponent } from "./pages/login/login.component";
 import { TestComponent } from "./pages/test/test.component";
-import { AppRouteNames }  from "../../app.routes";
+import { AppRouteNames }  from "../../app.routes.names";
 
 export class AuthorizationRouteNames{
     public static readonly LoginName = "";

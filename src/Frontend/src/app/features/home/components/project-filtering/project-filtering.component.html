@@ -1,0 +1,35 @@
+<div class="filter-container">
+    <mat-form-field appearance="outline" class="filter-item">
+        <mat-label>Projektart</mat-label>
+        <mat-select disabled>
+    
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filter-item">
+        <mat-label><mat-icon fontIcon="location_on"></mat-icon> Region</mat-label>
+        <mat-select disabled>
+    
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filter-item">
+        <mat-label><mat-icon fontIcon="date_range"></mat-icon> Zeitraum</mat-label>
+        <mat-select disabled>
+    
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filter-item">
+        <mat-label>Anforderungen</mat-label>
+        <mat-select disabled>
+    
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="flex-grow: 1;" class="filter-item">
+        <mat-label><mat-icon fontIcon="search"></mat-icon> Stichwort...</mat-label>
+        <input disabled type="text" matInput />
+    </mat-form-field>
+    <div style="margin-bottom: 20px" class="filter-available-soon filter-item">
+        <mat-icon fontIcon="info" style="vertical-align: middle; margin-right: .5rem"></mat-icon>
+        <span style="vertical-align: middle">Filter bald verfügbar!</span>
+    </div>
+    <a class="filter-item" style="margin-bottom: 20px" href="{{newProjectUrl}}"><button class="secondary"><mat-icon fontIcon="add"></mat-icon> hinzufügen</button></a>
+</div>

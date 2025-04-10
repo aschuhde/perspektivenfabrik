@@ -17,12 +17,28 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ApplicationDeleteProjectDeleteProjectDeleteProjectRequest } from '../model/applicationDeleteProjectDeleteProjectDeleteProjectRequest';
+import { ApplicationDeleteProjectDeleteProjectDeleteProjectResponse } from '../model/applicationDeleteProjectDeleteProjectDeleteProjectResponse';
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
+import { ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse } from '../model/applicationGetInternalProjectGetInternalProjectGetInternalProjectResponse';
+import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
+import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
+import { ApplicationGetProjectsGetProjectsGetProjectsResponse } from '../model/applicationGetProjectsGetProjectsGetProjectsResponse';
+import { ApplicationGetUsersProjectGetUsersProjectGetUsersProjectResponse } from '../model/applicationGetUsersProjectGetUsersProjectGetUsersProjectResponse';
+import { ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse } from '../model/applicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest';
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse';
 import { ApplicationJwtTokenJwtTokenRequest } from '../model/applicationJwtTokenJwtTokenRequest';
 import { ApplicationJwtTokenJwtTokenResponse } from '../model/applicationJwtTokenJwtTokenResponse';
+import { ApplicationPostProjectPostProjectPostProjectRequest } from '../model/applicationPostProjectPostProjectPostProjectRequest';
+import { ApplicationPostProjectPostProjectPostProjectResponse } from '../model/applicationPostProjectPostProjectPostProjectResponse';
+import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
+import { ApplicationPutProjectPutProjectPutProjectResponse } from '../model/applicationPutProjectPutProjectPutProjectResponse';
+import { Filter } from '../model/filter';
+import { Filter1 } from '../model/filter1';
+import { Selector } from '../model/selector';
+import { Selector1 } from '../model/selector1';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -59,6 +75,66 @@ export class ApiService {
         return false;
     }
 
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param projectIdentifier 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>>;
+    public webApiEndpointsDeleteProject(body: ApplicationDeleteProjectDeleteProjectDeleteProjectRequest, projectIdentifier: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsDeleteProject.');
+        }
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsDeleteProject.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            '*/*',
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>('delete',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 
@@ -168,6 +244,326 @@ export class ApiService {
     /**
      * 
      * 
+     * @param projectIdentifier 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetInternalProject(projectIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse>;
+    public webApiEndpointsGetInternalProject(projectIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse>>;
+    public webApiEndpointsGetInternalProject(projectIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse>>;
+    public webApiEndpointsGetInternalProject(projectIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetInternalProject.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse>('get',`${this.basePath}/api/shared/projects/${encodeURIComponent(String(projectIdentifier))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetJsonTypeDiscriminatorNames(u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse>;
+    public webApiEndpointsGetJsonTypeDiscriminatorNames(u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse>>;
+    public webApiEndpointsGetJsonTypeDiscriminatorNames(u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse>>;
+    public webApiEndpointsGetJsonTypeDiscriminatorNames(u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse>('get',`${this.basePath}/api/json-type-discriminator-names`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param projectIdentifier 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectGetProjectGetProjectResponse>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectGetProjectGetProjectResponse>>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectGetProjectGetProjectResponse>>;
+    public webApiEndpointsGetProject(projectIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetProject.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetProjectGetProjectGetProjectResponse>('get',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param filter 
+     * @param selector 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectsGetProjectsGetProjectsResponse>;
+    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
+    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
+    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filter !== undefined && filter !== null) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+        if (selector !== undefined && selector !== null) {
+            queryParameters = queryParameters.set('selector', <any>selector);
+        }
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetProjectsGetProjectsGetProjectsResponse>('get',`${this.basePath}/api/projects`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param projectIdentifier 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetUsersProject(projectIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetUsersProjectGetUsersProjectGetUsersProjectResponse>;
+    public webApiEndpointsGetUsersProject(projectIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetUsersProjectGetUsersProjectGetUsersProjectResponse>>;
+    public webApiEndpointsGetUsersProject(projectIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetUsersProjectGetUsersProjectGetUsersProjectResponse>>;
+    public webApiEndpointsGetUsersProject(projectIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetUsersProject.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetUsersProjectGetUsersProjectGetUsersProjectResponse>('get',`${this.basePath}/api/my/projects/${encodeURIComponent(String(projectIdentifier))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param filter 
+     * @param selector 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filter !== undefined && filter !== null) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+        if (selector !== undefined && selector !== null) {
+            queryParameters = queryParameters.set('selector', <any>selector);
+        }
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>('get',`${this.basePath}/api/my/projects`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -249,6 +645,119 @@ export class ApiService {
         }
 
         return this.httpClient.request<ApplicationJwtTokenJwtTokenResponse>('post',`${this.basePath}/api/token`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostProject(body: ApplicationPostProjectPostProjectPostProjectRequest, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostProjectPostProjectPostProjectResponse>;
+    public webApiEndpointsPostProject(body: ApplicationPostProjectPostProjectPostProjectRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostProjectPostProjectPostProjectResponse>>;
+    public webApiEndpointsPostProject(body: ApplicationPostProjectPostProjectPostProjectRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostProjectPostProjectPostProjectResponse>>;
+    public webApiEndpointsPostProject(body: ApplicationPostProjectPostProjectPostProjectRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostProject.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostProjectPostProjectPostProjectResponse>('post',`${this.basePath}/api/projects`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param entityId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPutProject(body: ApplicationPutProjectPutProjectPutProjectRequest, entityId: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPutProjectPutProjectPutProjectResponse>;
+    public webApiEndpointsPutProject(body: ApplicationPutProjectPutProjectPutProjectRequest, entityId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPutProjectPutProjectPutProjectResponse>>;
+    public webApiEndpointsPutProject(body: ApplicationPutProjectPutProjectPutProjectRequest, entityId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPutProjectPutProjectPutProjectResponse>>;
+    public webApiEndpointsPutProject(body: ApplicationPutProjectPutProjectPutProjectRequest, entityId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPutProject.');
+        }
+
+        if (entityId === null || entityId === undefined) {
+            throw new Error('Required parameter entityId was null or undefined when calling webApiEndpointsPutProject.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPutProjectPutProjectPutProjectResponse>('put',`${this.basePath}/api/projects/${encodeURIComponent(String(entityId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

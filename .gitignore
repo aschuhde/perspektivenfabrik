@@ -55,3 +55,4 @@ appsettings.override.json
 .angular/
 cert.env
 global-access-token.env
+.codegpt

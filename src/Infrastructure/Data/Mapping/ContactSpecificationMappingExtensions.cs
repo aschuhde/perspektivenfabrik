@@ -8,42 +8,72 @@ namespace Infrastructure.Data.Mapping;
 public static partial class MappingExtensions
 {
     // From DB
-    internal static partial ContactSpecification ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
-    public static partial ContactSpecificationPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
-    public static partial ContactSpecificationMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
-    public static partial ContactSpecificationPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
+    internal static partial ContactSpecificationDto ToContactSpecificationInner(this DbContactSpecification dbContactSpecification);
+    public static partial ContactSpecificationDtoPhoneNumber ToContactSpecificationPhoneNumber(this DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber);
+    public static partial ContactSpecificationDtoPersonalName ToContactSpecificationPersonalName(this DbContactSpecificationPersonalName dbContactSpecificationPersonalName);
+    public static partial ContactSpecificationDtoOrganisationName ToContactSpecificationOrganisationName(this DbContactSpecificationOrganisationName dbContactSpecificationOrganisationName);
+    public static partial ContactSpecificationDtoMailAddress ToContactSpecificationMailAddress(this DbContactSpecificationMailAddress dbContactSpecificationMailAddress);
+    public static partial ContactSpecificationDtoPostalAddress ToContactSpecificationPostalAddress(this DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress);
+    public static partial ContactSpecificationDtoBankAccount ToContactSpecificationBankAccount(this DbContactSpecificationBankAccount dbContactSpecificationBankAccount);
+    public static partial ContactSpecificationDtoWebsite ToContactSpecificationWebsite(this DbContactSpecificationWebsite dbContactSpecificationWebsite);
+    public static partial ContactSpecificationDtoPaypal ToContactSpecificationPaypal(this DbContactSpecificationPaypal dbContactSpecificationPaypal);
 
     [UserMapping(Default = true)]
-    public static ContactSpecification ToContactSpecification(
+    public static ContactSpecificationDto ToContactSpecification(
         this DbContactSpecification dbContactSpecification) =>
         dbContactSpecification switch
         {
             DbContactSpecificationPhoneNumber dbContactSpecificationPhoneNumber => dbContactSpecificationPhoneNumber
                 .ToContactSpecificationPhoneNumber(),
+            DbContactSpecificationPersonalName dbContactSpecificationPersonalName => dbContactSpecificationPersonalName
+                .ToContactSpecificationPersonalName(),
+            DbContactSpecificationOrganisationName dbContactSpecificationOrganisationName => dbContactSpecificationOrganisationName
+                .ToContactSpecificationOrganisationName(),
             DbContactSpecificationMailAddress dbContactSpecificationMailAddress => dbContactSpecificationMailAddress
                 .ToContactSpecificationMailAddress(),
             DbContactSpecificationPostalAddress dbContactSpecificationPostalAddress =>
                 dbContactSpecificationPostalAddress.ToContactSpecificationPostalAddress(),
+            DbContactSpecificationBankAccount dbContactSpecificationBankAccount =>
+              dbContactSpecificationBankAccount.ToContactSpecificationBankAccount(),
+            DbContactSpecificationWebsite dbContactSpecificationWebsite =>
+              dbContactSpecificationWebsite.ToContactSpecificationWebsite(),
+            DbContactSpecificationPaypal dbContactSpecificationPaypal =>
+              dbContactSpecificationPaypal.ToContactSpecificationPaypal(),
             _ => dbContactSpecification.ToContactSpecificationInner()
         };
 
     // To DB
-    internal static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecification contactSpecification);
-    public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationPhoneNumber contactSpecificationPhoneNumber);
-    public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationMailAddress contactSpecificationMailAddress);
-    public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationPostalAddress contactSpecificationPostalAddress);
+    internal static partial DbContactSpecification ToDbContactSpecificationInner(this ContactSpecificationDto contactSpecificationDto);
+    public static partial DbContactSpecificationPhoneNumber ToDbContactSpecificationPhoneNumber(this ContactSpecificationDtoPhoneNumber contactSpecificationDtoPhoneNumber);
+    public static partial DbContactSpecificationPersonalName ToDbContactSpecificationPersonalName(this ContactSpecificationDtoPersonalName contactSpecificationDtoPersonalName);
+    public static partial DbContactSpecificationOrganisationName ToDbContactSpecificationOrganisationName(this ContactSpecificationDtoOrganisationName contactSpecificationDtoOrganisationName);
+    public static partial DbContactSpecificationMailAddress ToDbContactSpecificationMailAddress(this ContactSpecificationDtoMailAddress contactSpecificationDtoMailAddress);
+    public static partial DbContactSpecificationPostalAddress ToDbContactSpecificationPostalAddress(this ContactSpecificationDtoPostalAddress contactSpecificationDtoPostalAddress);
+    public static partial DbContactSpecificationBankAccount ToDbContactSpecificationBankAccount(this ContactSpecificationDtoBankAccount contactSpecificationDtoBankAccount);
+    public static partial DbContactSpecificationWebsite ToDbContactSpecificationWebsite(this ContactSpecificationDtoWebsite contactSpecificationDtoWebsite);
+    public static partial DbContactSpecificationPaypal ToDbContactSpecificationPaypal(this ContactSpecificationDtoPaypal contactSpecificationDtoPaypal);
 
     [UserMapping(Default = true)]
     public static DbContactSpecification ToDbContactSpecification(
-        this ContactSpecification contactSpecification) =>
-        contactSpecification switch
+        this ContactSpecificationDto contactSpecificationDto) =>
+        contactSpecificationDto switch
         {
-            ContactSpecificationPhoneNumber contactSpecificationPhoneNumber => contactSpecificationPhoneNumber
+            ContactSpecificationDtoPhoneNumber contactSpecificationPhoneNumber => contactSpecificationPhoneNumber
                 .ToDbContactSpecificationPhoneNumber(),
-            ContactSpecificationMailAddress contactSpecificationMailAddress => contactSpecificationMailAddress
+            ContactSpecificationDtoPersonalName contactSpecificationPersonalName => contactSpecificationPersonalName
+                .ToDbContactSpecificationPersonalName(),
+            ContactSpecificationDtoOrganisationName contactSpecificationOrganisationName => contactSpecificationOrganisationName
+                .ToDbContactSpecificationOrganisationName(),
+            ContactSpecificationDtoMailAddress contactSpecificationMailAddress => contactSpecificationMailAddress
                 .ToDbContactSpecificationMailAddress(),
-            ContactSpecificationPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress
+            ContactSpecificationDtoPostalAddress contactSpecificationPostalAddress => contactSpecificationPostalAddress
                 .ToDbContactSpecificationPostalAddress(),
-            _ => contactSpecification.ToDbContactSpecificationInner()
+            ContactSpecificationDtoBankAccount contactSpecificationBankAccount => contactSpecificationBankAccount
+              .ToDbContactSpecificationBankAccount(),
+            ContactSpecificationDtoWebsite contactSpecificationWebsite => contactSpecificationWebsite
+              .ToDbContactSpecificationWebsite(),
+            ContactSpecificationDtoPaypal contactSpecificationPaypal => contactSpecificationPaypal
+              .ToDbContactSpecificationPaypal(),
+            _ => contactSpecificationDto.ToDbContactSpecificationInner()
         };
 }

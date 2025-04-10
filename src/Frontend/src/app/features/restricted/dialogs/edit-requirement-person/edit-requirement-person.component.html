@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>Helfer*innengruppe {{ requirementNumber }}</h2>
+<mat-dialog-content>            
+    <div>
+        <p>Welche Skills sollten die Helfer*innen mit sich bringen?</p>
+        <mat-form-field class="w-100">
+            <mat-label>Skill</mat-label>
+            <input type="text"
+                    placeholder="Skill"
+                    aria-label="Skill"
+                    matInput
+                    (matChipInputTokenEnd)="addSelectedSkill($event)"               
+                    [matChipInputFor]="chipGridSelectedSkills"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"               
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    [matAutocomplete]="autoSkill"
+                    [(ngModel)]="skillAutocompleteValue"/>
+            <mat-autocomplete (optionSelected)="skillSelected($event)" #autoSkill="matAutocomplete">
+            @for (option of skillOptions; track option) {
+                <mat-option [value]="option.value">{{option.text}}</mat-option>
+            }
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-chip-grid #chipGridSelectedSkills aria-label="Selected Skills">
+        @for (selectedSkill of selectedSkills; track selectedSkill) {
+            <mat-chip-row (removed)="removeSelectedSkill(selectedSkill)">
+            {{ selectedSkill.text }}
+            <button matChipRemove [attr.aria-label]="'remove ' + selectedSkill.text">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            </mat-chip-row>
+        }
+        </mat-chip-grid>
+        <p>Wie viele Personen brauchst du?</p>
+        <mat-form-field class="w-100">
+            <mat-label>Anzahl Personen</mat-label>
+            <input type="text"
+                    aria-label="Number of persons"
+                    matInput
+                    [(ngModel)]="numberOfPersons"/>
+        </mat-form-field>
+        <p>Welcher Arbeitsaufwand ist von jeder Person zu bewältigen?</p>
+        <div class="prefix-suffix-container">
+            <mat-form-field class="prefix prefix-50">
+                <mat-label>Stunden</mat-label>
+                <input type="text"
+                        aria-label="Hours"
+                        matInput
+                        [(ngModel)]="hours"/>
+            </mat-form-field> 
+            <mat-form-field class="suffix suffix-50">
+                <mat-label>Aufwandstyp</mat-label>
+                <mat-select [(value)]="effortHoursType">
+                <mat-option value="perWeek">pro Woche</mat-option>
+                <mat-option value="total">insgesamt</mat-option>          
+                </mat-select>
+            </mat-form-field>
+        </div>        
+        <p>In welchem Zeitraum benötigst du die Helfer*innen?</p> 
+        <div>
+            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+        </div>
+        <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">        
+            @for(requirementTime of requirementTimes; track requirementTime){
+                <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
+            }        
+            <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+        </div>
+        <p>An welchem Ort benötigst du die Helfer*innen?</p> 
+        <div>
+            <mat-slide-toggle [(ngModel)]="requirementLocationIsIdenticalToProjectLocation">Identisch mit dem Projektort</mat-slide-toggle>
+        </div>
+        <div [class.hidden]="requirementLocationIsIdenticalToProjectLocation">        
+            @for(requirementLocation of requirementLocations; track requirementLocation){
+                <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
+            }        
+            <button aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+        </div>
+    </div>    
+</mat-dialog-content>
+<mat-dialog-actions>    
+  <button mat-dialog-close>Schließen</button>
+</mat-dialog-actions>

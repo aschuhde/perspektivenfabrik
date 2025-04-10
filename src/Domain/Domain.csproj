@@ -1,1 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <MapperlyAbstractionsScope>runtime</MapperlyAbstractionsScope>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Riok.Mapperly" />
+  </ItemGroup>
+</Project>

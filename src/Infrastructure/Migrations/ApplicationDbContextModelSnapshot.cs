@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -28,19 +28,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("DbContactSpecification_type")
                         .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("character varying(55)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("EntityId");
 
@@ -77,15 +68,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("TypeEntityId")
                         .HasColumnType("uuid");
@@ -124,15 +106,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -147,15 +120,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -192,19 +156,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("DbLocationSpecification_type")
                         .IsRequired()
                         .HasMaxLength(34)
                         .HasColumnType("character varying(34)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("EntityId");
 
@@ -236,20 +191,53 @@ namespace Infrastructure.Migrations
                     b.ToTable("LocationSpecificationProjectConnections");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationRequirementConnection", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DbRequirementSpecificationMaterialEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DbRequirementSpecificationPersonEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("LocationSpecificationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RequirementSpecificationId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EntityId");
+
+                    b.HasIndex("DbRequirementSpecificationMaterialEntityId");
+
+                    b.HasIndex("DbRequirementSpecificationPersonEntityId")
+                        .HasDatabaseName("IX_LocationSpecificationRequirementConnections_DbRequirementS~1");
+
+                    b.HasIndex("LocationSpecificationId");
+
+                    b.HasIndex("RequirementSpecificationId");
+
+                    b.ToTable("LocationSpecificationRequirementConnections");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbMaterialSpecification", b =>
                 {
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
+                    b.Property<string>("AmountValue")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("EntityId");
 
@@ -265,9 +253,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("DbRequirementSpecificationMaterialEntityId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("DbRequirementSpecificationMoneyEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("MaterialSpecificationId")
                         .HasColumnType("uuid");
 
@@ -277,9 +262,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("EntityId");
 
                     b.HasIndex("DbRequirementSpecificationMaterialEntityId");
-
-                    b.HasIndex("DbRequirementSpecificationMoneyEntityId")
-                        .HasDatabaseName("IX_MaterialSpecificationRequirementConnections_DbRequirementS~1");
 
                     b.HasIndex("MaterialSpecificationId");
 
@@ -299,14 +281,39 @@ namespace Infrastructure.Migrations
                     b.ToTable("Histories");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbOrganization", b =>
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbModificationHistoryItem", b =>
                 {
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
+                    b.Property<string>("HistoryEntryType")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("HistoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(50000)
+                        .HasColumnType("character varying(50000)");
+
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("EntityId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.ToTable("HistoryItems");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbOrganization", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -346,17 +353,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("DbOrganizationConnectionEntityId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid");
@@ -396,9 +394,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -484,14 +479,14 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("ConnectedOrganizationsSameAsOwner")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsSoftDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
@@ -545,14 +540,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("EntityId");
 
@@ -586,14 +576,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("EntityId");
 
@@ -628,19 +614,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("DbRequirementSpecification_type")
                         .IsRequired()
                         .HasMaxLength(34)
                         .HasColumnType("character varying(34)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("TimeSpecificationSameAsProject")
                         .HasColumnType("boolean");
@@ -681,14 +658,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("EntityId");
 
@@ -727,19 +700,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("DbTimeSpecification_type")
                         .IsRequired()
                         .HasMaxLength(34)
                         .HasColumnType("character varying(34)");
-
-                    b.Property<DateTimeOffset>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("EntityId");
 
@@ -823,20 +787,41 @@ namespace Infrastructure.Migrations
                     b.ToTable("UserRefreshTokens");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecification", b =>
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbUserRoles", b =>
                 {
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset>("LastModifiedOn")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecification", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("EntityId");
 
@@ -849,10 +834,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("DbRequirementSpecificationPersonEntityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RequirementSpecificationId")
+                    b.Property<Guid>("RequirementSpecificationPersonId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("WorkAmountSpecificationId")
@@ -860,13 +842,21 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("EntityId");
 
-                    b.HasIndex("DbRequirementSpecificationPersonEntityId");
-
-                    b.HasIndex("RequirementSpecificationId");
+                    b.HasIndex("RequirementSpecificationPersonId")
+                        .IsUnique();
 
                     b.HasIndex("WorkAmountSpecificationId");
 
                     b.ToTable("WorkAmountSpecificationRequirementConnections");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationBankAccount", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbContactSpecification");
+
+                    b.ToTable("ContactSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbContactSpecificationBankAccount");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationMailAddress", b =>
@@ -876,6 +866,41 @@ namespace Infrastructure.Migrations
                     b.ToTable("ContactSpecifications");
 
                     b.HasDiscriminator().HasValue("DbContactSpecificationMailAddress");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationOrganisationName", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbContactSpecification");
+
+                    b.Property<string>("OrganisationName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable("ContactSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbContactSpecificationOrganisationName");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationPaypal", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbContactSpecification");
+
+                    b.ToTable("ContactSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbContactSpecificationPaypal");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationPersonalName", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbContactSpecification");
+
+                    b.Property<string>("PersonalName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable("ContactSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbContactSpecificationPersonalName");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationPhoneNumber", b =>
@@ -894,6 +919,15 @@ namespace Infrastructure.Migrations
                     b.ToTable("ContactSpecifications");
 
                     b.HasDiscriminator().HasValue("DbContactSpecificationPostalAddress");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationWebsite", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbContactSpecification");
+
+                    b.ToTable("ContactSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbContactSpecificationWebsite");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationAddress", b =>
@@ -936,6 +970,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Infrastructure.Data.DbEntities.DbPerson");
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -949,6 +986,9 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationMaterial", b =>
                 {
                     b.HasBaseType("Infrastructure.Data.DbEntities.DbRequirementSpecification");
+
+                    b.Property<bool>("LocationSpecificationsSameAsProject")
+                        .HasColumnType("boolean");
 
                     b.ToTable("RequirementSpecifications");
 
@@ -968,7 +1008,14 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Infrastructure.Data.DbEntities.DbRequirementSpecification");
 
-                    b.ToTable("RequirementSpecifications");
+                    b.Property<bool>("LocationSpecificationsSameAsProject")
+                        .HasColumnType("boolean");
+
+                    b.ToTable("RequirementSpecifications", t =>
+                        {
+                            t.Property("LocationSpecificationsSameAsProject")
+                                .HasColumnName("DbRequirementSpecificationPerson_LocationSpecificationsSameAsP~");
+                        });
 
                     b.HasDiscriminator().HasValue("DbRequirementSpecificationPerson");
                 });
@@ -1028,103 +1075,18 @@ namespace Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("DbTimeSpecificationMonth");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbContactSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbContactSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("ContactSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbContactSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbContactSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbContactSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("ContactSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbContactSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbContactSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbContactSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("ContactSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbContactSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationProjectConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbContactSpecification", "ContactSpecification")
                         .WithMany()
                         .HasForeignKey("ContactSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("ContactSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ContactSpecification");
@@ -1137,7 +1099,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbDescriptionType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedContent", "Content", b1 =>
@@ -1158,90 +1120,8 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("DbDescriptionSpecificationEntityId");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("DescriptionSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("DescriptionSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("DescriptionSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
                     b.Navigation("Content")
                         .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
 
                     b.Navigation("Type");
                 });
@@ -1251,13 +1131,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbDescriptionSpecification", "DescriptionSpecification")
                         .WithMany()
                         .HasForeignKey("DescriptionSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("DescriptionSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("DescriptionSpecification");
@@ -1267,32 +1147,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionType", b =>
                 {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionTypeEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionTypeEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("DescriptionTypes");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionTypeEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
                     b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedTitle", "DescriptionTitle", b1 =>
                         {
                             b1.Property<Guid>("DbDescriptionTypeEntityId")
@@ -1311,64 +1165,8 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("DbDescriptionTypeEntityId");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionTypeEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionTypeEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("DescriptionTypes");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionTypeEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionTypeEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbDescriptionTypeEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("DescriptionTypes");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionTypeEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
                     b.Navigation("DescriptionTitle")
                         .IsRequired();
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbGraphicsSpecification", b =>
@@ -1390,90 +1188,8 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("DbGraphicsSpecificationEntityId");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbGraphicsSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("GraphicsSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbGraphicsSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("GraphicsSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbGraphicsSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("GraphicsSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbGraphicsSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
                     b.Navigation("Content")
                         .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbGraphicsSpecificationProjectConnection", b =>
@@ -1481,13 +1197,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbGraphicsSpecification", "GraphicsSpecification")
                         .WithMany()
                         .HasForeignKey("GraphicsSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("GraphicsSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("GraphicsSpecification");
@@ -1495,103 +1211,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbLocationSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbLocationSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("LocationSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbLocationSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbLocationSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbLocationSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("LocationSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbLocationSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbLocationSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbLocationSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("LocationSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbLocationSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationProjectConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbLocationSpecification", "LocationSpecification")
                         .WithMany()
                         .HasForeignKey("LocationSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("LocationSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("LocationSpecification");
@@ -1599,118 +1230,116 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationRequirementConnection", b =>
+                {
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationMaterial", null)
+                        .WithMany("LocationSpecifications")
+                        .HasForeignKey("DbRequirementSpecificationMaterialEntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", null)
+                        .WithMany("LocationSpecifications")
+                        .HasForeignKey("DbRequirementSpecificationPersonEntityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasConstraintName("FK_LocationSpecificationRequirementConnections_RequirementSpe~1");
+
+                    b.HasOne("Infrastructure.Data.DbEntities.DbLocationSpecification", "LocationSpecification")
+                        .WithMany()
+                        .HasForeignKey("LocationSpecificationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
+                        .WithMany()
+                        .HasForeignKey("RequirementSpecificationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("FK_LocationSpecificationRequirementConnections_RequirementSpe~2");
+
+                    b.Navigation("LocationSpecification");
+
+                    b.Navigation("RequirementSpecification");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbMaterialSpecification", b =>
                 {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedContent", "Description", b1 =>
                         {
                             b1.Property<Guid>("DbMaterialSpecificationEntityId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("RawContentString")
+                                .IsRequired()
+                                .HasMaxLength(50000)
+                                .HasColumnType("character varying(50000)");
 
                             b1.HasKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
 
                             b1.ToTable("MaterialSpecifications");
 
                             b1.WithOwner()
                                 .HasForeignKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedContent", "Title", b1 =>
                         {
                             b1.Property<Guid>("DbMaterialSpecificationEntityId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("RawContentString")
+                                .IsRequired()
+                                .HasMaxLength(50000)
+                                .HasColumnType("character varying(50000)");
 
                             b1.HasKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
 
                             b1.ToTable("MaterialSpecifications");
 
                             b1.WithOwner()
                                 .HasForeignKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbMaterialSpecificationEntityId")
-                                .HasColumnType("uuid");
+                    b.Navigation("Description")
+                        .IsRequired();
 
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("MaterialSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbMaterialSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
+                    b.Navigation("Title")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbMaterialSpecificationRequirementConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationMaterial", null)
                         .WithMany("MaterialSpecifications")
-                        .HasForeignKey("DbRequirementSpecificationMaterialEntityId");
-
-                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationMoney", null)
-                        .WithMany("MaterialSpecifications")
-                        .HasForeignKey("DbRequirementSpecificationMoneyEntityId")
-                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~1");
+                        .HasForeignKey("DbRequirementSpecificationMaterialEntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbMaterialSpecification", "MaterialSpecification")
                         .WithMany()
                         .HasForeignKey("MaterialSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
                         .WithMany()
                         .HasForeignKey("RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~2");
+                        .HasConstraintName("FK_MaterialSpecificationRequirementConnections_RequirementSpe~1");
 
                     b.Navigation("MaterialSpecification");
 
                     b.Navigation("RequirementSpecification");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbModificationHistoryItem", b =>
+                {
+                    b.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
+                        .WithMany("HistoryItems")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("History");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbOrganization", b =>
@@ -1735,7 +1364,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1760,7 +1389,8 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId");
+                                .HasForeignKey("HistoryId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("History");
                         });
@@ -1785,7 +1415,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -1803,7 +1433,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbOrganization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Organization");
@@ -1813,12 +1443,13 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbOrganizationConnection", null)
                         .WithMany("OrganizationPositions")
-                        .HasForeignKey("DbOrganizationConnectionEntityId");
+                        .HasForeignKey("DbOrganizationConnectionEntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbOrganization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("Infrastructure.Data.DbDataTypes.DbOrganizationPosition", "OrganizationPosition", b1 =>
@@ -1839,88 +1470,6 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("DbOrganizationPositionConnectionEntityId");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbOrganizationPositionConnectionEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("OrganizationPositionConnections");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbOrganizationPositionConnectionEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("OrganizationPositionConnections");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbOrganizationPositionConnectionEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("OrganizationPositionConnections");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbOrganizationPositionConnectionEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-
                     b.Navigation("Organization");
 
                     b.Navigation("OrganizationPosition")
@@ -1932,13 +1481,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbOrganization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("ConnectedOrganizations")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Organization");
@@ -1948,6 +1497,32 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbPerson", b =>
                 {
+                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
+                        {
+                            b1.Property<Guid>("DbPersonEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("DbPersonEntityId");
+
+                            b1.HasIndex("PersonId")
+                                .IsUnique();
+
+                            b1.ToTable("Persons");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbPersonEntityId");
+
+                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
+                                .WithOne()
+                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.CreatedBy#Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "PersonId")
+                                .OnDelete(DeleteBehavior.NoAction);
+
+                            b1.Navigation("Person");
+                        });
+
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
                         {
                             b1.Property<Guid>("DbPersonEntityId")
@@ -1967,51 +1542,21 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId");
+                                .HasForeignKey("HistoryId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("History");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbPersonEntityId1")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("DbPersonEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbPersonEntityId1");
-
-                            b1.HasIndex("PersonId")
-                                .IsUnique();
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbPersonEntityId1");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithOne()
-                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.CreatedBy#Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "PersonId");
-
-                            b1.Navigation("Person");
-                        });
-
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
                         {
-                            b1.Property<Guid>("DbPersonEntityId1")
-                                .HasColumnType("uuid");
-
                             b1.Property<Guid>("DbPersonEntityId")
                                 .HasColumnType("uuid");
 
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("DbPersonEntityId1");
+                            b1.HasKey("DbPersonEntityId");
 
                             b1.HasIndex("PersonId")
                                 .IsUnique();
@@ -2019,11 +1564,12 @@ namespace Infrastructure.Migrations
                             b1.ToTable("Persons");
 
                             b1.WithOwner()
-                                .HasForeignKey("DbPersonEntityId1");
+                                .HasForeignKey("DbPersonEntityId");
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithOne()
-                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.LastModifiedBy#Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "PersonId");
+                                .HasForeignKey("Infrastructure.Data.DbEntities.DbPerson.LastModifiedBy#Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "PersonId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("Person");
                         });
@@ -2040,13 +1586,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("Contributors")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -2059,13 +1605,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithOne("Owner")
                         .HasForeignKey("Infrastructure.Data.DbEntities.DbPersonProjectOwnerConnection", "ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -2095,7 +1641,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2120,7 +1666,8 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId");
+                                .HasForeignKey("HistoryId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("History");
                         });
@@ -2145,7 +1692,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2184,13 +1731,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("RelatedProjects")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "RelatedProject")
                         .WithMany()
                         .HasForeignKey("RelatedProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -2198,103 +1745,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("RelatedProject");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectTag", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbProjectTagEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbProjectTagEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("ProjectTags");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbProjectTagEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbProjectTagEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbProjectTagEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("ProjectTags");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbProjectTagEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbProjectTagEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbProjectTagEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("ProjectTags");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbProjectTagEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectTagConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("ProjectTags")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbProjectTag", "ProjectTag")
                         .WithMany()
                         .HasForeignKey("ProjectTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -2302,103 +1764,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProjectTag");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbQuantitySpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbQuantitySpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("QuantitySpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbQuantitySpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("QuantitySpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbQuantitySpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("QuantitySpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbQuantitySpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbQuantitySpecificationRequirementConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbQuantitySpecification", "QuantitySpecification")
                         .WithMany()
                         .HasForeignKey("QuantitySpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
                         .WithOne("QuantitySpecification")
                         .HasForeignKey("Infrastructure.Data.DbEntities.DbQuantitySpecificationRequirementConnection", "RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("QuantitySpecification");
@@ -2406,103 +1783,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("RequirementSpecification");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbRequirementSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("RequirementSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbRequirementSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("RequirementSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbRequirementSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("RequirementSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbRequirementSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationProjectConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("RequirementSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
                         .WithMany()
                         .HasForeignKey("RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -2512,106 +1804,46 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbSkillSpecification", b =>
                 {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbFormattedContent", "Title", b1 =>
                         {
                             b1.Property<Guid>("DbSkillSpecificationEntityId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("RawContentString")
+                                .IsRequired()
+                                .HasMaxLength(50000)
+                                .HasColumnType("character varying(50000)");
 
                             b1.HasKey("DbSkillSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
 
                             b1.ToTable("SkillSpecifications");
 
                             b1.WithOwner()
                                 .HasForeignKey("DbSkillSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
                         });
 
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbSkillSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbSkillSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("SkillSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbSkillSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbSkillSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbSkillSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("SkillSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbSkillSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
+                    b.Navigation("Title")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbSkillSpecificationRequirementConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", null)
                         .WithMany("SkillSpecifications")
-                        .HasForeignKey("DbRequirementSpecificationPersonEntityId");
+                        .HasForeignKey("DbRequirementSpecificationPersonEntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
                         .WithMany()
                         .HasForeignKey("RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_SkillSpecificationRequirementConnections_RequirementSpecif~1");
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbSkillSpecification", "SkillSpecification")
                         .WithMany()
                         .HasForeignKey("SkillSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("RequirementSpecification");
@@ -2619,103 +1851,18 @@ namespace Infrastructure.Migrations
                     b.Navigation("SkillSpecification");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbTimeSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbTimeSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("TimeSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbTimeSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
-                        {
-                            b1.Property<Guid>("DbTimeSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid?>("HistoryId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbTimeSpecificationEntityId");
-
-                            b1.HasIndex("HistoryId");
-
-                            b1.ToTable("TimeSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbTimeSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
-                                .WithMany()
-                                .HasForeignKey("HistoryId");
-
-                            b1.Navigation("History");
-                        });
-
-                    b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
-                        {
-                            b1.Property<Guid>("DbTimeSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("DbTimeSpecificationEntityId");
-
-                            b1.HasIndex("PersonId");
-
-                            b1.ToTable("TimeSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbTimeSpecificationEntityId");
-
-                            b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
-                                .WithMany()
-                                .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b1.Navigation("Person");
-                        });
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("History");
-
-                    b.Navigation("LastModifiedBy");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecificationProjectConnection", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
                         .WithMany("TimeSpecifications")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbTimeSpecification", "TimeSpecification")
                         .WithMany()
                         .HasForeignKey("TimeSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -2728,13 +1875,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
                         .WithMany("TimeSpecifications")
                         .HasForeignKey("RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbTimeSpecification", "TimeSpecification")
                         .WithMany()
                         .HasForeignKey("TimeSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("RequirementSpecification");
@@ -2764,7 +1911,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2789,7 +1936,8 @@ namespace Infrastructure.Migrations
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId");
+                                .HasForeignKey("HistoryId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("History");
                         });
@@ -2814,7 +1962,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2827,29 +1975,29 @@ namespace Infrastructure.Migrations
                     b.Navigation("LastModifiedBy");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecification", b =>
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbUserRoles", b =>
                 {
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonCreatedByConnection", "CreatedBy", b1 =>
                         {
-                            b1.Property<Guid>("DbWorkAmountSpecificationEntityId")
+                            b1.Property<Guid>("DbUserRolesEntityId")
                                 .HasColumnType("uuid");
 
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("DbWorkAmountSpecificationEntityId");
+                            b1.HasKey("DbUserRolesEntityId");
 
                             b1.HasIndex("PersonId");
 
-                            b1.ToTable("WorkAmountSpecifications");
+                            b1.ToTable("UserRoles");
 
                             b1.WithOwner()
-                                .HasForeignKey("DbWorkAmountSpecificationEntityId");
+                                .HasForeignKey("DbUserRolesEntityId");
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2857,49 +2005,50 @@ namespace Infrastructure.Migrations
 
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbModificationHistoryConnection", "History", b1 =>
                         {
-                            b1.Property<Guid>("DbWorkAmountSpecificationEntityId")
+                            b1.Property<Guid>("DbUserRolesEntityId")
                                 .HasColumnType("uuid");
 
                             b1.Property<Guid?>("HistoryId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("DbWorkAmountSpecificationEntityId");
+                            b1.HasKey("DbUserRolesEntityId");
 
                             b1.HasIndex("HistoryId");
 
-                            b1.ToTable("WorkAmountSpecifications");
+                            b1.ToTable("UserRoles");
 
                             b1.WithOwner()
-                                .HasForeignKey("DbWorkAmountSpecificationEntityId");
+                                .HasForeignKey("DbUserRolesEntityId");
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbModificationHistory", "History")
                                 .WithMany()
-                                .HasForeignKey("HistoryId");
+                                .HasForeignKey("HistoryId")
+                                .OnDelete(DeleteBehavior.NoAction);
 
                             b1.Navigation("History");
                         });
 
                     b.OwnsOne("Infrastructure.Data.DbEntities.DbEntityPersonLastModifiedByConnection", "LastModifiedBy", b1 =>
                         {
-                            b1.Property<Guid>("DbWorkAmountSpecificationEntityId")
+                            b1.Property<Guid>("DbUserRolesEntityId")
                                 .HasColumnType("uuid");
 
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("DbWorkAmountSpecificationEntityId");
+                            b1.HasKey("DbUserRolesEntityId");
 
                             b1.HasIndex("PersonId");
 
-                            b1.ToTable("WorkAmountSpecifications");
+                            b1.ToTable("UserRoles");
 
                             b1.WithOwner()
-                                .HasForeignKey("DbWorkAmountSpecificationEntityId");
+                                .HasForeignKey("DbUserRolesEntityId");
 
                             b1.HasOne("Infrastructure.Data.DbEntities.DbPerson", "Person")
                                 .WithMany()
                                 .HasForeignKey("PersonId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Person");
@@ -2914,26 +2063,92 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", b =>
                 {
-                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", null)
-                        .WithMany("WorkAmountSpecifications")
-                        .HasForeignKey("DbRequirementSpecificationPersonEntityId");
-
-                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecification", "RequirementSpecification")
-                        .WithMany()
-                        .HasForeignKey("RequirementSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_WorkAmountSpecificationRequirementConnections_RequirementS~1");
+                    b.HasOne("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", "RequirementSpecificationPerson")
+                        .WithOne("WorkAmountSpecification")
+                        .HasForeignKey("Infrastructure.Data.DbEntities.DbWorkAmountSpecificationRequirementConnection", "RequirementSpecificationPersonId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Infrastructure.Data.DbEntities.DbWorkAmountSpecification", "WorkAmountSpecification")
                         .WithMany()
                         .HasForeignKey("WorkAmountSpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("RequirementSpecification");
+                    b.Navigation("RequirementSpecificationPerson");
 
                     b.Navigation("WorkAmountSpecification");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationBankAccount", b =>
+                {
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbBankAccount", "BankAccount", b1 =>
+                        {
+                            b1.Property<Guid>("DbContactSpecificationBankAccountEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AccountName")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.Property<string>("Reference")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("DbContactSpecificationBankAccountEntityId");
+
+                            b1.ToTable("ContactSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbContactSpecificationBankAccountEntityId");
+
+                            b1.OwnsOne("Infrastructure.Data.DbDataTypes.DbBic", "Bic", b2 =>
+                                {
+                                    b2.Property<Guid>("DbBankAccountDbContactSpecificationBankAccountEntityId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<string>("BicName")
+                                        .IsRequired()
+                                        .HasMaxLength(500)
+                                        .HasColumnType("character varying(500)");
+
+                                    b2.HasKey("DbBankAccountDbContactSpecificationBankAccountEntityId");
+
+                                    b2.ToTable("ContactSpecifications");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("DbBankAccountDbContactSpecificationBankAccountEntityId");
+                                });
+
+                            b1.OwnsOne("Infrastructure.Data.DbDataTypes.DbIban", "Iban", b2 =>
+                                {
+                                    b2.Property<Guid>("DbBankAccountDbContactSpecificationBankAccountEntityId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<string>("IbanName")
+                                        .IsRequired()
+                                        .HasMaxLength(500)
+                                        .HasColumnType("character varying(500)");
+
+                                    b2.HasKey("DbBankAccountDbContactSpecificationBankAccountEntityId");
+
+                                    b2.ToTable("ContactSpecifications");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("DbBankAccountDbContactSpecificationBankAccountEntityId");
+                                });
+
+                            b1.Navigation("Bic")
+                                .IsRequired();
+
+                            b1.Navigation("Iban")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("BankAccount")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationMailAddress", b =>
@@ -2956,6 +2171,50 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("MailAddress")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationPaypal", b =>
+                {
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbMailAddress", "PaypalAddress", b1 =>
+                        {
+                            b1.Property<Guid>("DbContactSpecificationPaypalEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Mail")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("DbContactSpecificationPaypalEntityId");
+
+                            b1.ToTable("ContactSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbContactSpecificationPaypalEntityId");
+                        });
+
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbUrl", "PaypalMeAddress", b1 =>
+                        {
+                            b1.Property<Guid>("DbContactSpecificationPaypalEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("RawUrl")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("DbContactSpecificationPaypalEntityId");
+
+                            b1.ToTable("ContactSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbContactSpecificationPaypalEntityId");
+                        });
+
+                    b.Navigation("PaypalAddress")
+                        .IsRequired();
+
+                    b.Navigation("PaypalMeAddress")
                         .IsRequired();
                 });
 
@@ -2990,32 +2249,12 @@ namespace Infrastructure.Migrations
                             b1.Property<Guid>("DbContactSpecificationPostalAddressEntityId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("AddressLine1")
+                            b1.Property<string>("AddressDisplayName")
                                 .IsRequired()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
 
-                            b1.Property<string>("AddressLine2")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine3")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine4")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine5")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine6")
+                            b1.Property<string>("AddressText")
                                 .IsRequired()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
@@ -3032,6 +2271,30 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbContactSpecificationWebsite", b =>
+                {
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbUrl", "Website", b1 =>
+                        {
+                            b1.Property<Guid>("DbContactSpecificationWebsiteEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("RawUrl")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("DbContactSpecificationWebsiteEntityId");
+
+                            b1.ToTable("ContactSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbContactSpecificationWebsiteEntityId");
+                        });
+
+                    b.Navigation("Website")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationAddress", b =>
                 {
                     b.OwnsOne("Infrastructure.Data.DbDataTypes.DbPostalAddress", "PostalAddress", b1 =>
@@ -3039,32 +2302,12 @@ namespace Infrastructure.Migrations
                             b1.Property<Guid>("DbLocationSpecificationAddressEntityId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("AddressLine1")
+                            b1.Property<string>("AddressDisplayName")
                                 .IsRequired()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
 
-                            b1.Property<string>("AddressLine2")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine3")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine4")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine5")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.Property<string>("AddressLine6")
+                            b1.Property<string>("AddressText")
                                 .IsRequired()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
@@ -3113,6 +2356,11 @@ namespace Infrastructure.Migrations
                             b1.Property<Guid>("DbLocationSpecificationRegionEntityId")
                                 .HasColumnType("uuid");
 
+                            b1.Property<string>("AddressText")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
                             b1.Property<string>("RegionName")
                                 .IsRequired()
                                 .HasMaxLength(500)
@@ -3127,6 +2375,30 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("Region")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationRemote", b =>
+                {
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbUrl", "Link", b1 =>
+                        {
+                            b1.Property<Guid>("DbLocationSpecificationRemoteEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("RawUrl")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("DbLocationSpecificationRemoteEntityId");
+
+                            b1.ToTable("LocationSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbLocationSpecificationRemoteEntityId");
+                        });
+
+                    b.Navigation("Link")
                         .IsRequired();
                 });
 
@@ -3152,7 +2424,7 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbTimeSpecificationMoment", "Moment")
                                 .WithMany()
                                 .HasForeignKey("MomentId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Moment");
@@ -3178,17 +2450,15 @@ namespace Infrastructure.Migrations
                             b1.HasOne("Infrastructure.Data.DbEntities.DbTimeSpecificationMoment", "Moment")
                                 .WithMany()
                                 .HasForeignKey("MomentId")
-                                .OnDelete(DeleteBehavior.Cascade)
+                                .OnDelete(DeleteBehavior.NoAction)
                                 .IsRequired();
 
                             b1.Navigation("Moment");
                         });
 
-                    b.Navigation("End")
-                        .IsRequired();
+                    b.Navigation("End");
 
-                    b.Navigation("Start")
-                        .IsRequired();
+                    b.Navigation("Start");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecificationMonth", b =>
@@ -3232,6 +2502,11 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbModificationHistory", b =>
+                {
+                    b.Navigation("HistoryItems");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbOrganizationConnection", b =>
                 {
                     b.Navigation("OrganizationPositions");
@@ -3271,19 +2546,18 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationMaterial", b =>
                 {
-                    b.Navigation("MaterialSpecifications");
-                });
+                    b.Navigation("LocationSpecifications");
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationMoney", b =>
-                {
                     b.Navigation("MaterialSpecifications");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbRequirementSpecificationPerson", b =>
                 {
+                    b.Navigation("LocationSpecifications");
+
                     b.Navigation("SkillSpecifications");
 
-                    b.Navigation("WorkAmountSpecifications");
+                    b.Navigation("WorkAmountSpecification");
                 });
 #pragma warning restore 612, 618
         }

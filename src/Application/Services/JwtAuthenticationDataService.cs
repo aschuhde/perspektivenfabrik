@@ -21,7 +21,7 @@ public sealed class JwtAuthenticationDataService(IConfiguration configuration)
 
     private DateTimeOffset GetExpirationFromNow() => DateTimeOffset.UtcNow.AddMinutes(ExpirationMinutes);
     
-    public (string, DateTimeOffset) GenerateJwtToken(User user)
+    public (string, DateTimeOffset) GenerateJwtToken(UserDto user)
     {
         var expiration = GetExpirationFromNow();
         var signingKey = SigningKey;

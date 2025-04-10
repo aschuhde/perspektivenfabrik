@@ -1,0 +1,17 @@
+@for (requirement of requirements(); track requirement){
+    <div class="group-outer">
+        <div class="group">
+            <h4><mat-icon fontIcon="groups"></mat-icon> Helfer*innengruppe {{ $index + 1}}</h4>
+            <p class="question">Wie viele Personen?</p>
+            <p class="answer">{{ quantityText(requirement) }}</p>
+            <p class="question">Mit welchen Skills?</p>
+            <p class="answer">{{ skillText(requirement) }}</p>
+            <p class="question">Welcher Arbeitsaufwand?</p>
+            <p class="answer">{{ workloadText(requirement) }}</p>
+            <p class="question"><mat-icon fontIcon="date_range"></mat-icon> Wann?</p>
+            <p class="answer">{{ periodText(requirement) }}</p>
+            <p class="question"><mat-icon fontIcon="location_on"></mat-icon> Wo?</p>
+            <p class="answer">{{ locationText(requirement) }}</p>
+        </div>
+    </div>
+}
