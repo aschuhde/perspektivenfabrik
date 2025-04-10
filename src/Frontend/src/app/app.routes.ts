@@ -6,8 +6,7 @@ import { authenticationGuard } from './core/guards/authorize.guard';
 import { HomeRoutes } from './features/home/home.routes';
 
 
-export const routes: Routes = [
-    {path: AppRouteNames.RootName, redirectTo: "home", pathMatch: "full"},
+export const routes: Routes = [   
     {path: AppRouteNames.HomeName, loadChildren: () => HomeRoutes },
     {path: AppRouteNames.UserName, loadChildren: () => AuthorizationRoutes },
     {path: AppRouteNames.RestrictedName, loadChildren: () => RestrictedRoutes, canActivateChild: [authenticationGuard] }

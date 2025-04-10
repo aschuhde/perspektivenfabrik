@@ -1,6 +1,7 @@
 using Application.Common;
 using Application.Mapping;
 using Application.Services;
+using Domain.Enums;
 
 namespace Application.GetProject.GetProject;
 
@@ -13,6 +14,11 @@ public class GetProjectHandler(IServiceProvider serviceProvider, IProjectService
         if (project == null)
         {
             return new GetProjectResponseNotFound();
+        }
+
+        if (project.Visibility != ProjectVisibility.Public)
+        {
+            return new GetProjectResponseForbidden();
         }
         return new GetProjectResponseSuccess()
         {

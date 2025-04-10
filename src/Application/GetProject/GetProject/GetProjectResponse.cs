@@ -17,6 +17,14 @@ public class GetProjectResponseNotFound : GetProjectResponse
     }
 }
 
+public class GetProjectResponseForbidden : GetProjectResponse
+{
+    public GetProjectResponseForbidden()
+    {
+        StatusCode = HttpStatusCode.Forbidden;
+    }
+}
+
 public class GetProjectResponseSuccess : GetProjectResponse
 {
     public required ApiProject Project { get; init; }

@@ -15,7 +15,7 @@ import {RequirementPersonsComponent} from "../../components/requirement-persons/
 
 @Component({
   selector: 'app-requirement-materials-dialog',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementMaterialsComponent, RequirementPersonsComponent],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementMaterialsComponent],
   templateUrl: './requirement-materials-dialog.component.html',
   styleUrl: './requirement-materials-dialog.component.scss'
 })
