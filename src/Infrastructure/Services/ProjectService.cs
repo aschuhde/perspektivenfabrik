@@ -556,4 +556,17 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         await dbContext.Projects.Where(x => x.EntityId == entityId).ExecuteUpdateAsync(x => x.SetProperty(y => y.IsSoftDeleted, true), ct);
     }
+
+    public async Task<TagDto[]> GetTags(CancellationToken ct)
+    {
+        return (await dbContext.Tags.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToTag()).ToArray(); 
+    }
+    public async Task<MaterialDto[]> GetMaterials(CancellationToken ct)
+    {
+        return (await dbContext.Materials.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToMaterial()).ToArray(); 
+    }
+    public async Task<SkillDto[]> GetSkills(CancellationToken ct)
+    {
+        return (await dbContext.Skills.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToSkill()).ToArray(); 
+    }
 }

@@ -46,6 +46,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbTimeSpecificationRequirementConnection> TimeSpecificationRequirementConnections { get; init; }
     public required DbSet<DbWorkAmountSpecification> WorkAmountSpecifications { get; init; }
     public required DbSet<DbWorkAmountSpecificationRequirementConnection> WorkAmountSpecificationRequirementConnections { get; init; }
+    public required DbSet<DbTag> Tags { get; init; }
+    public required DbSet<DbMaterial> Materials { get; init; }
+    public required DbSet<DbSkill> Skills { get; init; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

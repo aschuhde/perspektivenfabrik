@@ -17,4 +17,5 @@ public static class Routes
     public const string GetUsersProject = $"{ApiRoute}/my/projects/{{ProjectIdentifier}}";
     public const string DeleteProject = $"{ApiRoute}/projects/{{ProjectIdentifier}}";
     public const string GetInternalProject = $"{ApiRoute}/shared/projects/{{ProjectIdentifier}}";
+    public const string GetAutocompleteEntries = $"{ApiRoute}/autocomplete-entries";
 }
