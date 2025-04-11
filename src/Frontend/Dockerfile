@@ -8,6 +8,7 @@ COPY angular.json angular.json
 COPY server.ts server.ts
 COPY tsconfig.json tsconfig.json
 COPY tsconfig.app.json tsconfig.app.json
+COPY ./public ./public
 RUN npm run build
 
 FROM node:lts-alpine AS ssr-server
