@@ -20,7 +20,7 @@ import {RequirementMoneyInput} from '../../models/requirement-money-input';
 import {InputRequirementMaterialComponent} from '../input-requirement-material/input-requirement-material.component';
 import {InputRequirementMoneyComponent} from '../input-requirement-money/input-requirement-money.component';
 import {InputRequirementPersonComponent} from '../input-requirement-person/input-requirement-person.component';
-import {AngularEditorModule} from '@kolkov/angular-editor';
+import {AngularEditorConfig, AngularEditorModule} from '@kolkov/angular-editor';
 import {UploadedImage} from '../../../../shared/models/uploaded-image';
 import {ProjectInput, ProjectType} from '../../models/project-input';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
@@ -37,6 +37,11 @@ import {RestrictedRouteNames} from "../../restricted-route-names";
 import {HomeRouteNames} from "../../../home/home-route-names";
 import { ShareLinkDialogComponent } from '../../dialogs/share-link-dialog/share-link-dialog.component';
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
+import {ApiService} from "../../../../server/api/api.service";
+import {Observable} from "rxjs";
+import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
+import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
+import {BASE_PATH} from "../../../../server/variables";
 
 @Component({
     selector: 'app-input-project',
@@ -61,8 +66,9 @@ import {AutocompleteDataService} from "../../../../shared/services/autocomplete-
     styleUrl: './input-project.component.scss'
 })
 export class InputProjectComponent {
-  readonly dialog = inject(MatDialog);
-    
+    apiBasePath = inject(BASE_PATH);
+    readonly dialog = inject(MatDialog);
+    apiService = inject(ApiService);
     isLoading = input(false); 
     readonly addOnBlur = false;
     readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
@@ -80,7 +86,70 @@ export class InputProjectComponent {
     localeDataProvider = inject(LocaleDataProvider);
     static IgnoreUnloadEvent = false;
     autoCompleteDataService = inject(AutocompleteDataService);
-
+    angularEditorConfig: AngularEditorConfig = {
+      editable: true,
+      spellcheck: true,
+      enableToolbar: true,
+      showToolbar: true,
+      upload: (file: File) => {
+        if(!this.projectInput().entityId){
+          this.showMessageDialog({
+            message: "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich.",
+            title: "Bitte zuerst speichern",
+            buttonText: "Ok"
+          });
+          return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
+            subscriber.error();
+          });
+        }
+        if(file.size >= 1024 * 1024 * 5) {
+          this.showMessageDialog({
+            message: "Die Bild ist zu groß. Bitte wähle nur Bilder mit weniger als 5MB.",
+            title: "Dateigröße überschritten",
+            buttonText: "Ok"
+          });
+          return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
+            subscriber.error();
+          });
+        }
+        return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
+          new UploadedImage(file).getBase64().then(x => {
+            this.apiService.webApiEndpointsPostDescriptionImage({
+              image: {
+                content: x
+              }
+            }, this.projectInput().entityId!).subscribe(y => {
+              if(!y.imageIdentifier){
+                //todo error
+                this.showMessageDialog({
+                  message: "Todo: Error",
+                  title: "Todo: Error",
+                  buttonText: "Ok"
+                });
+                return subscriber.error();
+              }
+              subscriber.next(new HttpResponse<UploadResponse>({
+                body: {
+                  imageUrl: `${this.apiBasePath}/api/projects/${this.projectInput().entityId}/description-images/${y.imageIdentifier}`
+                },
+                status: 200
+              }));
+              subscriber.complete();
+            })
+          })
+        });
+      },
+      uploadWithCredentials: false,
+      sanitize: true,
+      fonts: [{class: "DM Sans", name: "DM Sans"}],
+      toolbarHiddenButtons: [[
+        'fontName',
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'insertVideo',
+        'insertHorizontalRule']]
+    }
     ngOnInit(){
       this.autoCompleteDataService.getTags().then(x => {
         this.tagOptions = x?.filter(y => !!y).map(y => new SelectOption(y.name ?? "")) ?? [];

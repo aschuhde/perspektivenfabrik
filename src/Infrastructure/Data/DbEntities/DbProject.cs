@@ -44,6 +44,9 @@ public sealed class DbProject : DbEntity
     [InverseProperty(nameof(DbProjectConnection.Project))]
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public List<DbProjectConnection>? RelatedProjects { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
+    [MapperIgnore]
+    public List<DbDescriptionImage>? DescriptionImages { get; set; }
 
     public override void UpdateToTarget(DbEntityWithId target)
     {

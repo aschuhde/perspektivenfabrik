@@ -146,6 +146,21 @@ public class FileInfoResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TReque
     }
 }
 
+public class FileBytesResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequest, TResponse> 
+    where TRequest : BaseRequest<TResponse>
+    where TResponse : FileBytesResponse
+{
+    protected override Task HandleResult(TResponse response, CancellationToken ct)
+    {
+        if (response.IsInline)
+        {
+            this.HttpContext.Response.Headers.Append("Content-Disposition", $"inline; filename=\"{response.FileName}\"");
+        }
+
+        return SendBytesAsync(response.Content ?? [], response.IsInline ? null : response.FileName, response.ContentType ?? "application/octet-stream", response.LastModified, cancellation: ct);
+    }
+}
+
 public class JsonResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequest, TResponse> 
     where TRequest : BaseRequest<TResponse>
     where TResponse : JsonResponse

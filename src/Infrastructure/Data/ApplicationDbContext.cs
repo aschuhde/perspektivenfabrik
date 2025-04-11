@@ -49,6 +49,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbTag> Tags { get; init; }
     public required DbSet<DbMaterial> Materials { get; init; }
     public required DbSet<DbSkill> Skills { get; init; }
+    public required DbSet<DbDescriptionImage> DbDescriptionImages { get; init; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

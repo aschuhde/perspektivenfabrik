@@ -22,6 +22,8 @@ import { ApplicationDeleteProjectDeleteProjectDeleteProjectResponse } from '../m
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
 import { ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse } from '../model/applicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse';
+import { ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest } from '../model/applicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest';
+import { ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse } from '../model/applicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse';
 import { ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse } from '../model/applicationGetInternalProjectGetInternalProjectGetInternalProjectResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
 import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
@@ -32,6 +34,8 @@ import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest } from 
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse';
 import { ApplicationJwtTokenJwtTokenRequest } from '../model/applicationJwtTokenJwtTokenRequest';
 import { ApplicationJwtTokenJwtTokenResponse } from '../model/applicationJwtTokenJwtTokenResponse';
+import { ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest } from '../model/applicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest';
+import { ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse } from '../model/applicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse';
 import { ApplicationPostProjectPostProjectPostProjectRequest } from '../model/applicationPostProjectPostProjectPostProjectRequest';
 import { ApplicationPostProjectPostProjectPostProjectResponse } from '../model/applicationPostProjectPostProjectPostProjectResponse';
 import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
@@ -173,6 +177,63 @@ export class ApiService {
         return this.httpClient.request<ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse>('get',`${this.basePath}/api/autocomplete-entries`,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param projectIdentifier 
+     * @param imageIdentifier 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>;
+    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
+    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
+    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsGetDescriptionImage.');
+        }
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetDescriptionImage.');
+        }
+
+        if (imageIdentifier === null || imageIdentifier === undefined) {
+            throw new Error('Required parameter imageIdentifier was null or undefined when calling webApiEndpointsGetDescriptionImage.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}/description-images/${encodeURIComponent(String(imageIdentifier))}`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -690,6 +751,65 @@ export class ApiService {
         }
 
         return this.httpClient.request<ApplicationJwtTokenJwtTokenResponse>('post',`${this.basePath}/api/token`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param projectIdentifier 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostDescriptionImage(body: ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest, projectIdentifier: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse>;
+    public webApiEndpointsPostDescriptionImage(body: ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest, projectIdentifier: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse>>;
+    public webApiEndpointsPostDescriptionImage(body: ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest, projectIdentifier: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse>>;
+    public webApiEndpointsPostDescriptionImage(body: ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageRequest, projectIdentifier: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostDescriptionImage.');
+        }
+
+        if (projectIdentifier === null || projectIdentifier === undefined) {
+            throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsPostDescriptionImage.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostDescriptionImagePostDescriptionImagePostDescriptionImageResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}/description-images`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

@@ -266,11 +266,11 @@
                     <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
                         <h4>Kurzbeschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
                         <div>
-                            <angular-editor [placeholder]="'Kurzbeschreibung'" [(ngModel)]="shortDescription"></angular-editor>
+                            <angular-editor [placeholder]="'Kurzbeschreibung'" [(ngModel)]="shortDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <h4>Ausführliche Beschreibung: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
                         <div>
-                            <angular-editor [placeholder]="'Ausführliche Beschreibung'" [(ngModel)]="longDescription"></angular-editor>
+                            <angular-editor [placeholder]="'Ausführliche Beschreibung'" [(ngModel)]="longDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div>
                             <button (click)="currentGroup = 'projectImages'" class="btn-next" >Weiter</button>

@@ -7,6 +7,7 @@ using Application.Updaters;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
+using Infrastructure.Data.DbDataTypes;
 using Infrastructure.Data.DbEntities;
 using Infrastructure.Data.DbLoading;
 using Infrastructure.Data.Mapping;
@@ -568,5 +569,41 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     public async Task<SkillDto[]> GetSkills(CancellationToken ct)
     {
         return (await dbContext.Skills.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToSkill()).ToArray(); 
+    }
+
+    public async Task<Guid> AddDescriptionImage(Guid projectId, byte[] image, CancellationToken ct)
+    {
+        var guid = Guid.NewGuid();
+        dbContext.DbDescriptionImages.Add(new DbDescriptionImage()
+        {
+            Content = new DbGraphicsContent()
+            {
+                Content = image
+            },
+            ProjectId = projectId,
+            EntityId = guid
+        });
+        await dbContext.SaveChangesAsync(ct);
+        return guid;
+    }
+    
+    public async Task<DescriptionImageDto?> GetDescriptionImage(Guid projectId, Guid imageId, CancellationToken ct)
+    {
+        return (await dbContext.DbDescriptionImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToDescriptionImage();
+    }
+    
+    public async Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct)
+    {
+        return (await dbContext.PersonProjectOwnerConnections.Where(x => x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.PersonId;
+    }
+    
+    public async Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct)
+    {
+        return (await dbContext.PersonProjectContributorConnections.Where(x => x.ProjectId == projectId).ToArrayAsync(ct))?.Select(x => x.PersonId).ToArray();
+    }
+
+    public async Task<bool> ProjectExists(Guid projectId, CancellationToken ct)
+    {
+        return await dbContext.Projects.AnyAsync(x => x.EntityId == projectId, ct);
     }
 }
