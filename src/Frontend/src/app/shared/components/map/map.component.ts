@@ -32,13 +32,13 @@ export class MapComponent {
 
     import("leaflet").then(L => {
       import("leaflet-control-geocoder").then(C => {
-        L.Icon.Default.imagePath = 'leaflet/';
+        L.default.Icon.Default.imagePath = 'leaflet/';
         this.map.nativeElement.id = this.mapId;              
-        const map = L.map(this.mapId);
-        L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        const map = L.default.map(this.mapId);
+        L.default.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        const bounds = L.latLngBounds([47.081, 10.398], [46.155, 12.543]);
+        const bounds = L.default.latLngBounds([47.081, 10.398], [46.155, 12.543]);
   
         // Fit the map view to the bounds
         map.fitBounds(bounds);
@@ -51,14 +51,14 @@ export class MapComponent {
           if (this.lookupMode() === "latLon") {
             const coordinates = CoordinatesConverter.TransformCoordinatesStringToApiCoordinates(this.startPoint());
             if(!coordinates || !coordinates.lat || !coordinates.lon) return;
-            marker = L.marker({lat: coordinates.lat, lng: coordinates.lon}).bindPopup(formatCoordinates(coordinates, this.localeDataProvider.locale)).addTo(map);
+            marker = L.default.marker({lat: coordinates.lat, lng: coordinates.lon}).bindPopup(formatCoordinates(coordinates, this.localeDataProvider.locale)).addTo(map);
             return;
           }
           geocoder.geocode(this.startPoint()).then(results => {
             if(results.length === 0) return;
             
             const r = results[0];
-            marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+            marker = L.default.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
           })
         }
         
@@ -87,7 +87,7 @@ export class MapComponent {
                   .setLatLng(e.latlng)
                   .setPopupContent(`${e.latlng.lat}, ${e.latlng.lng}`);
               } else {
-                marker = L.marker(e.latlng).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`).addTo(map);
+                marker = L.default.marker(e.latlng).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`).addTo(map);
               }
               this.onRetrievedPoint.emit({value: `${e.latlng.lat}, ${e.latlng.lng}`, displayName: ""});
               return;
@@ -101,7 +101,7 @@ export class MapComponent {
                   .setLatLng(r.center)
                   .setPopupContent(r.name).openPopup();
               } else {
-                marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+                marker = L.default.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
               }
               this.onRetrievedPoint.emit({value: r.name, displayName: this.getDisplayName(r)});
             });
