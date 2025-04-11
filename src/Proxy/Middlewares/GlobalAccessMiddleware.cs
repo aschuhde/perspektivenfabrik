@@ -47,7 +47,7 @@ public sealed class GlobalAccessMiddleware(RequestDelegate next)
                 return;
             }
             SaveCookie(CookieName, token, context);
-            context.Response.Redirect("/home");
+            context.Response.Redirect("/");
             return;
         }
         
