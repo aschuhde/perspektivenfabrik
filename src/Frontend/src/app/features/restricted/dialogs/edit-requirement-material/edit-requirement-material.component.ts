@@ -15,6 +15,8 @@ import { InputProjectTimeComponent } from '../../components/input-project-time/i
 import { LocationInput } from '../../models/location-input';
 import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementMaterialInput } from '../../models/requirement-material-input';
+import {SelectOption} from "../../../../shared/models/select-option";
+import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 
 @Component({
   selector: 'app-edit-requirement-material',
@@ -28,12 +30,19 @@ export class EditRequirementMaterialComponent {
   readonly addOnBlur = false;
   readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
   requirementMaterial: RequirementMaterialInput = this.data?.requirementMaterial;
+  autoCompleteDataService = inject(AutocompleteDataService);
 
   materialAutocompleteValue = model("");
-  materialOptions: SelectOptionMaterial[] = [new SelectOptionMaterial("Holz"), new SelectOptionMaterial("Biertischganituren"), new SelectOptionMaterial("Elektroschrott")];
+  materialOptions: SelectOptionMaterial[] = [];
   requirementIndex: number = this.data?.requirementIndex;
     onChanged: () => void = this.data?.onChanged;
 
+  ngOnInit(){
+    this.autoCompleteDataService.getMaterials().then(x => {
+      this.materialOptions = x?.filter(y => !!y).map(y => new SelectOptionMaterial(y.name ?? "")) ?? [];
+    })
+  }
+  
   get requirementNumber(){
     return this.requirementIndex + 1;
   }

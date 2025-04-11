@@ -36,6 +36,7 @@ import { ConfirmDialogComponent } from '../../../../shared/dialogs/confirm-dialo
 import {RestrictedRouteNames} from "../../restricted-route-names";
 import {HomeRouteNames} from "../../../home/home-route-names";
 import { ShareLinkDialogComponent } from '../../dialogs/share-link-dialog/share-link-dialog.component';
+import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 
 @Component({
     selector: 'app-input-project',
@@ -73,12 +74,19 @@ export class InputProjectComponent {
     fileUpload!: ElementRef;
     currentRequirementGroup: "person" | "material" | "money" = "person";
     tagAutocompleteValue = model("");
-    tagOptions: SelectOption[] = [new SelectOption("Landwirtschaft"), new SelectOption("Tourismus"), new SelectOption("Sozial"), new SelectOption("Kommunikation"), new SelectOption("Migration"), new SelectOption("Mobilität")];
+    tagOptions: SelectOption[] = [];
     isSaving: boolean = false
     projectSaveContext = input<ProjectSaveContext | null>(null);
     localeDataProvider = inject(LocaleDataProvider);
     static IgnoreUnloadEvent = false;
-    
+    autoCompleteDataService = inject(AutocompleteDataService);
+
+    ngOnInit(){
+      this.autoCompleteDataService.getTags().then(x => {
+        this.tagOptions = x?.filter(y => !!y).map(y => new SelectOption(y.name ?? "")) ?? [];
+      })
+    }
+  
     constructor() {
       window.addEventListener("beforeunload", (event) => {
         if(InputProjectComponent.IgnoreUnloadEvent){
