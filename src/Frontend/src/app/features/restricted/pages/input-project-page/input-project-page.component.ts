@@ -16,6 +16,7 @@ export class InputProjectPageComponent {
   projectInput: ProjectInput = new ProjectInput();
   apiService = inject(ApiService)
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
+  
   constructor() { 
     this.projectSaveContext.hasChanges = true;
   }
@@ -24,6 +25,7 @@ export class InputProjectPageComponent {
       project: await this.projectInput.buildRequest()
     }).subscribe(x => {
       if((x as any).project){
+        InputProjectComponent.IgnoreUnloadEvent = true;
         window.location.href = `${RestrictedRouteNames.UpdateProjectUrl((x as any).project.entityId)}${window.location.search}`;
       }
     });

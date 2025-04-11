@@ -77,9 +77,13 @@ export class InputProjectComponent {
     isSaving: boolean = false
     projectSaveContext = input<ProjectSaveContext | null>(null);
     localeDataProvider = inject(LocaleDataProvider);
+    static IgnoreUnloadEvent = false;
     
     constructor() {
       window.addEventListener("beforeunload", (event) => {
+        if(InputProjectComponent.IgnoreUnloadEvent){
+          return;
+        }
         if(this.projectSaveContext()?.hasChanges ?? false){
           event.preventDefault();
           event.returnValue = true;
