@@ -21,6 +21,7 @@ import { ApplicationDeleteProjectDeleteProjectDeleteProjectRequest } from '../mo
 import { ApplicationDeleteProjectDeleteProjectDeleteProjectResponse } from '../model/applicationDeleteProjectDeleteProjectDeleteProjectResponse';
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
+import { ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse } from '../model/applicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse';
 import { ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse } from '../model/applicationGetInternalProjectGetInternalProjectGetInternalProjectResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
 import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
@@ -128,6 +129,50 @@ export class ApiService {
         return this.httpClient.request<ApplicationDeleteProjectDeleteProjectDeleteProjectResponse>('delete',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetAutocompleteEntries(u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse>;
+    public webApiEndpointsGetAutocompleteEntries(u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse>>;
+    public webApiEndpointsGetAutocompleteEntries(u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse>>;
+    public webApiEndpointsGetAutocompleteEntries(u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse>('get',`${this.basePath}/api/autocomplete-entries`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
