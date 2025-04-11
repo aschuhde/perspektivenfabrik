@@ -155,6 +155,9 @@ export class ApiProjectModel {
       },
       timeSpecifications: []
     });
+    if((parseMoneyWithFallback(this.requirementSpecificationMoneySummed.quantitySpecification?.value, 0) ?? 0) <= 0){
+      this.requirementSpecificationMoneySummed = null;
+    }
     this.contactPersonalName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName)?.personalName ?? "";
     this.contactOrganisationName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName)?.organisationName ?? "";
     this.contactPhone = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber)?.phoneNumber?.phoneNumberText ?? "";
