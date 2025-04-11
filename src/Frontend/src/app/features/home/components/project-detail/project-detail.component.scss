@@ -1,9 +1,9 @@
 .top{
-    height: calc(100% - 10rem);
+    min-height: calc(100% - 10rem);
     display: flex;
 }
 .left{
-    height: 100%;
+    min-height: 100%;
     width: 40rem;
     background-color: #EA6A31;
     color: white;

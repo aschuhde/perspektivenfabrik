@@ -63,6 +63,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("ContactSpecificationConnections");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EntityId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("DescriptionImage");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionSpecification", b =>
                 {
                     b.Property<Guid>("EntityId")
@@ -221,6 +237,22 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RequirementSpecificationId");
 
                     b.ToTable("LocationSpecificationRequirementConnections");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbMaterial", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("Material");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbMaterialSpecification", b =>
@@ -652,6 +684,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("RequirementSpecificationConnections");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbSkill", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("Skill");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbSkillSpecification", b =>
                 {
                     b.Property<Guid>("EntityId")
@@ -692,6 +740,22 @@ namespace Infrastructure.Migrations
                     b.HasIndex("SkillSpecificationId");
 
                     b.ToTable("SkillSpecificationRequirementConnections");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTag", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecification", b =>
@@ -1090,6 +1154,37 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ContactSpecification");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
+                {
+                    b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
+                        .WithMany("DescriptionImages")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbGraphicsContent", "Content", b1 =>
+                        {
+                            b1.Property<Guid>("DbDescriptionImageEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<byte[]>("Content")
+                                .IsRequired()
+                                .HasColumnType("bytea");
+
+                            b1.HasKey("DbDescriptionImageEntityId");
+
+                            b1.ToTable("DescriptionImage");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbDescriptionImageEntityId");
+                        });
+
+                    b.Navigation("Content")
+                        .IsRequired();
 
                     b.Navigation("Project");
                 });
@@ -2519,6 +2614,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("ContactSpecifications");
 
                     b.Navigation("Contributors");
+
+                    b.Navigation("DescriptionImages");
 
                     b.Navigation("DescriptionSpecifications");
 

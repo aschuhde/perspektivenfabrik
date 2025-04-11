@@ -10,15 +10,18 @@ services:
       - global-access-token.env
       - cert.env
       - ports.env
-      - proxy.env            
+      - proxy.env   
+    pull_policy: always
   nginx:
     image: "ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main"
     env_file:
       - ports.env
+    pull_policy: always
   angular:
     image: "ghcr.io/aschuhde/perspektivenfabrik-frontend:main"
     env_file:
       - ports.env
+    pull_policy: always
   api:
     image: "ghcr.io/aschuhde/perspektivenfabrik-api:main"
     env_file:
@@ -28,6 +31,7 @@ services:
       - jwt.env
     environment:
       - CONFIG_Serilog__MinimumLevel__Default=Debug      
+    pull_policy: always
   postgres:    
     image: postgres
     volumes:
@@ -37,6 +41,7 @@ services:
       - db-connection.env
     ports:
       - "5432:5432"
+    pull_policy: always
 volumes:
   postgres_db:
     driver: local

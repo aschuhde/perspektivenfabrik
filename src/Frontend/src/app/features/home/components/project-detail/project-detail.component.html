@@ -34,7 +34,7 @@
                     }
                 </div>
             }
-             
+            @if (requirementSpecificationPersonsFlat.length > 0){
                 <div class="stat-grid">
                     <div class="split-left-right w-100">
                         <p class="stat-label" data-clickable="true" (click)="showRequirementPersonsDialog()">
@@ -47,7 +47,7 @@
                     }
                     
                 </div>
-            
+            }
             @if (requirementSpecificationMaterialsFlat.length > 0 || requirementSpecificationMoneySummed){
                 <div class="stat-grid">
                     <p class="stat-label" data-clickable="true" (click)="showRequirementMaterialsDialog()">

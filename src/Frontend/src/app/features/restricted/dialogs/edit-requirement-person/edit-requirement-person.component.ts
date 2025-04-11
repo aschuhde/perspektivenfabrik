@@ -19,6 +19,7 @@ import { InputProjectTimeComponent } from '../../components/input-project-time/i
 import { LocationInput } from '../../models/location-input';
 import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementPersonInput, EffortHoursType } from '../../models/requirement-person-input';
+import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 
 @Component({
   selector: 'app-edit-requirement-person',
@@ -32,13 +33,19 @@ export class EditRequirementPersonComponent {
   readonly addOnBlur = false;
   readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
   requirementPerson: RequirementPersonInput = this.data?.requirementPerson;
+  autoCompleteDataService = inject(AutocompleteDataService);
   
   skillAutocompleteValue = model("");
-  skillOptions: SelectOption[] = [new SelectOption("Designer*in"), new SelectOption("Softwareentwickler*in"), new SelectOption("Projektorganisator*in")];
+  skillOptions: SelectOption[] = [];
   requirementIndex: number = this.data?.requirementIndex;
   onChanged: () => void = this.data?.onChanged;
-  
 
+  ngOnInit(){
+    this.autoCompleteDataService.getSkills().then(x => {
+      this.skillOptions = x?.filter(y => !!y).map(y => new SelectOption(y.name ?? "")) ?? [];
+    })  
+  }
+  
   get requirementNumber(){
     return this.requirementIndex + 1;
   }
