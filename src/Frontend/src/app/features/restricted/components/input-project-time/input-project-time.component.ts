@@ -12,7 +12,8 @@ import { DateTime } from "luxon";
 import { DatePickerComponent } from '../../../../shared/components/date-picker/date-picker.component';
 import { MonthPickerComponent } from '../../../../shared/components/month-picker/month-picker.component';
 import { DatePickerRangeComponent } from '../../../../shared/components/date-picker-range/date-picker-range.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {Language} from "../../../../core/types/general-types";
 
 export const DATE_FORMAT_MONTH = {
   parse: {
@@ -39,11 +40,25 @@ export class InputProjectTimeComponent {
   projectTime = model.required<ProjectTimeInput>();
   remove = output<ProjectTimeInput>();
     onChanged = output();
-
+  translateService = inject(TranslateService)
+  
   get timeNumber(){
     return this.timeIndex() + 1;
   }
+  get currentLanguage(){
+    return this.translateService.currentLang as Language;
+  }
   get typeName(){
+    if(this.currentLanguage === "it") {
+      if (this.projectTimeType === "range") {
+        return "Periodo";
+      }
+      if (this.projectTimeType === "month") {
+        return "Mese";
+      }
+      return "Giorno";
+    }
+    
     if(this.projectTimeType === "range"){
       return "Zeitraum";
     }

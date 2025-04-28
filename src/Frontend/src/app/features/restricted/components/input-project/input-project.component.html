@@ -110,7 +110,7 @@
                     <div class="step-content" [class.hidden]="currentGroup != 'projectName'">
                         <div class="prefix-suffix-container">
                             <mat-form-field class="prefix w-100-mobile">
-                                <mat-label>{{ "input-project.project-titel" | translate }}</mat-label>
+                                <mat-label>{{ "input-project.project-title" | translate }}</mat-label>
                                 <input matInput [(ngModel)]="projectTitle" />
                             </mat-form-field>
                             <mat-form-field class="suffix w-100-mobile">
@@ -214,7 +214,7 @@
                                        matInput
                                        [(ngModel)]="contactMail"/>
                             </mat-form-field>
-                            <span> und/oder </span>
+                            <span> {{ "general.and-or" | translate }} </span>
                             <mat-form-field class="field-min-width-medium w-100-mobile">
                                 <mat-label>{{ "input-project.phone-number" | translate }}</mat-label>
                                 <input type="text"

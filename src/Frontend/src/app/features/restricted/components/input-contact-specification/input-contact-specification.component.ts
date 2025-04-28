@@ -1,4 +1,4 @@
-import { Component, model, output } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { ContactSpecificationType, ContactSpecification } from '../../models/contact-specification';
 import { FormsModule } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
@@ -6,7 +6,8 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-input-contact-specification',
@@ -19,6 +20,7 @@ export class InputContactSpecificationComponent {
   contactSpecificationIndex = model.required<number>();
   remove = output<ContactSpecification>();
     onChanged = output();
+  translateService = inject(TranslateService)
   
   get contactSpecificationType(): ContactSpecificationType{
     return this.contactSpecification().contactSpecificationType;
@@ -28,7 +30,21 @@ export class InputContactSpecificationComponent {
     this.onChanged.emit();
   }
 
+  get currentLanguage(){
+    return this.translateService.currentLang as Language;
+  }
+  
   get contactSpecificationTypeName(){
+    if(this.currentLanguage === "it"){
+      switch(this.contactSpecificationType){
+        case "bankAccount":
+          return "Conto bancario";
+        case "paypalAccount":
+          return "Conto Paypal";
+        case "website":
+          return "Sito web";
+      }
+    }
     switch(this.contactSpecificationType){
       case "bankAccount":
         return "Bankkonto";

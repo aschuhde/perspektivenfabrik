@@ -89,6 +89,7 @@
       "address-name-poi": "Adresse / Name / POI"
     },
     "input-material-group": {
+      "material": "Material",
       "material-group": "Materialgruppe",
       "edit-entry": "Eintrag bearbeiten",
       "remove-entry": "Eintrag entfernen"
