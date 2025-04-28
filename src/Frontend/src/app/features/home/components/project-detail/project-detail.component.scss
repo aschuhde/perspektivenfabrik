@@ -85,10 +85,6 @@
     flex-grow: 1;
     flex-basis: 50%;
 }
-.show-more-details{
-    font-size: 14px;
-    text-decoration: underline;
-}
 
 @include responsive.mobile {
   .top {
