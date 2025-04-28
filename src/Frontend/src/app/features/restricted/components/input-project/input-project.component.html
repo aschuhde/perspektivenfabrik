@@ -73,7 +73,7 @@
                 <h2 class="step-question">{{ "input-project.in-which-phase-is-your-project" | translate:{yourDeclination: yourDeclination, typeName: typeName} }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectPhase)"></mat-icon></h2>
             </div>
             <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
-                <h2 class="step-question">{{ "input-project.what-to-say-about-the-location" | translate:{yoursDeclination: yoursDeclination, typeNameGentitive: typeNameGenitive} }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></h2>
+                <h2 class="step-question">{{ "input-project.what-to-say-about-the-location" | translate:{yoursDeclination: yoursDeclination, typeNameGenitive: typeNameGenitive} }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectLocation)"></mat-icon></h2>
             </div>
             <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
                 <h2 class="step-question">{{ "input-project.when-does-your-project-take-place" | translate:{yourDeclination: yourDeclination, typeName: typeName} }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpProjectTime)"></mat-icon></h2>

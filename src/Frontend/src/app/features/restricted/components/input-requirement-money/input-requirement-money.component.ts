@@ -11,10 +11,11 @@ import { ProjectTimeInput } from '../../models/project-time-input';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { InputProjectTimeComponent } from '../input-project-time/input-project-time.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-requirement-money',
-    imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSlideToggle, InputProjectTimeComponent],
+    imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSlideToggle, InputProjectTimeComponent, TranslateModule],
   templateUrl: './input-requirement-money.component.html',
   styleUrl: './input-requirement-money.component.scss'
 })

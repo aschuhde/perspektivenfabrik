@@ -4,10 +4,11 @@ import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { RequirementMaterialInput } from '../../models/requirement-material-input';
 import { EditRequirementMaterialComponent } from '../../dialogs/edit-requirement-material/edit-requirement-material.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-requirement-material',
-  imports: [FormsModule, MatIcon],
+  imports: [FormsModule, MatIcon, TranslateModule],
   templateUrl: './input-requirement-material.component.html',
   styleUrl: './input-requirement-material.component.scss'
 })

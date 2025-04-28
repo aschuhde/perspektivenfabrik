@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>Materialgruppe {{ requirementNumber }}</h2>
+<h2 mat-dialog-title>{{"input-requirement-material.material-group" | translate}} {{ requirementNumber }}</h2>
 <mat-dialog-content>            
     <div>
-        <p>Was für Material benötigst du?</p>
+        <p>{{"input-requirement-material.what-material-do-you-need" | translate}}</p>
         <mat-form-field class="w-100">
-            <mat-label>Material</mat-label>
+            <mat-label>{{"input-requirement-material.material" | translate}}</mat-label>
             <input type="text"
-                   placeholder="Material"
+                   placeholder="'input-requirement-material.material' | translate"
                    aria-label="Material"
                    matInput
                    (matChipInputTokenEnd)="addSelectedMaterial($event)"               
@@ -28,11 +28,11 @@
                 <div class="selected-material">
                     <div>
                         <h4 class="split-left-right mt-0"><span>{{ $index + 1}}. {{ selectedMaterial.text }}</span><button class="secondary" (click)="removeSelectedMaterial(selectedMaterial)" [attr.aria-label]="'remove ' + selectedMaterial.text">
-                            <mat-icon>cancel</mat-icon><span class="only-desktop"> Material entfernen</span>
+                            <mat-icon>cancel</mat-icon><span class="only-desktop">{{"input-requirement-material.remove-material" | translate}}</span>
                         </button></h4>
                         <div>
                             <mat-form-field class="w-100">
-                                <mat-label>Menge</mat-label>
+                                <mat-label>{{"input-requirement-material.amount" | translate}}</mat-label>
                                 <input type="text"
                                     aria-label="Amount of Material"
                                     matInput
@@ -41,7 +41,7 @@
                         </div>
                         <div>
                             <mat-form-field class="w-100">
-                                <mat-label>Beschreibung</mat-label>
+                                <mat-label>{{"input-requirement-material." | translate}}</mat-label>
                                 <textarea
                                     rows = "1"
                                     aria-label="Description of Material"
@@ -55,28 +55,28 @@
           </div>
     
     
-          <p>In welchem Zeitraum benötigst du das Material?</p> 
+          <p>{{"input-requirement-material.in-which-period-do-you-need-the-material" | translate}}</p> 
           <div>
-            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">{{"input-requirement-material.identical-to-project-period" | translate}}</mat-slide-toggle>
           </div>
           <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">            
             @for(requirementTime of requirementTimes; track requirementTime){
                 <app-input-project-time (onChanged)="onUpdated()"  [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
             }        
-            <button class="w-100-mobile" aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> {{"input-requirement-material.add-another-period" | translate}}</button>
           </div>
-          <p>An welchem Ort benötigst du das Material?</p> 
+          <p>{{"input-requirement-material.where-do-you-need-the-material" | translate}}</p> 
           <div>
-            <mat-slide-toggle [(ngModel)]="requirementLocationIsIdenticalToProjectLocation">Identisch mit dem Projektort</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="requirementLocationIsIdenticalToProjectLocation">{{"input-requirement-material.identical-to-project-location" | translate}}</mat-slide-toggle>
           </div>
           <div [class.hidden]="requirementLocationIsIdenticalToProjectLocation">            
             @for(requirementLocation of requirementLocations; track requirementLocation){
                 <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
             }        
-            <button class="w-100-mobile" aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> {{"input-requirement-material.add-another-location" | translate}}</button>
           </div>
     </div>    
 </mat-dialog-content>
 <mat-dialog-actions>    
-  <button mat-dialog-close>Schließen</button>
+  <button mat-dialog-close>{{"input-requirement-material.close" | translate}}</button>
 </mat-dialog-actions>

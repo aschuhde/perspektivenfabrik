@@ -2,7 +2,6 @@ import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
 import { Component, inject, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { MatOption } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -20,10 +19,11 @@ import { LocationInput } from '../../models/location-input';
 import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementPersonInput, EffortHoursType } from '../../models/requirement-person-input';
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-requirement-person',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSelect, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSelect, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, TranslateModule],
   templateUrl: './edit-requirement-person.component.html',
   styleUrl: './edit-requirement-person.component.scss'
 })

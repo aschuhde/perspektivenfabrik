@@ -94,6 +94,42 @@
       "amount-in-eur": "Menge in EUR",
       "until-when-do-you-need-the-money": "Bis wann benötigst du das Geld?",
       "identical-with-project-period": "Identisch mit dem Projektzeitraum",
+      "add-another-period": "Weiteren Zeitpunkt/Zeitraum hinzufügen"
+    },
+    "input-requirement-person": {
+      "helping-hands-group": "Helfer*innengruppe",
+      "remove-entry": "Eintrag entfernen",
+      "edit-entry": "Eintrag bearbeiten",
+      "what-skills": "Welche Skills sollten die Helfer*innen mit sich bringen?",
+      "skill": "Skill",
+      "how-many-persons": "Wie viele Personen brauchst du?",
+      "number-of-persons": "Anzahl Personen",
+      "what-workload": "Welcher Arbeitsaufwand ist von jeder Person zu bewältigen?",
+      "hours": "Stunden",
+      "workload-type": "Aufwandstyp",
+      "per-week": "pro Woche",
+      "total": "insgesamt",
+      "in-what-period": "In welchem Zeitraum benötigst du die Helfer*innen?",
+      "identical-to-project-period": "Identisch mit dem Projektzeitraum",
       "add-another-period": "Weiteren Zeitpunkt/Zeitraum hinzufügen",
+      "in-which-location": "An welchem Ort benötigst du die Helfer*innen?",
+      "identical-to-project-location": "Identisch mit dem Projektort",
+      "add-another-location": "Weiteren Ort hinzufügen",
+      "close": "Schließen"
+    },
+    "input-requirement-material": {
+      "material-group": "Materialgruppe",
+      "what-material-do-you-need": "Was für Material benötigst du?",
+      "material": "Material",
+      "remove-material": "Material entfernen",
+      "amount": "Menge",
+      "description": "Beschreibung",
+      "in-which-period-do-you-need-the-material": "In welchem Zeitraum benötigst du das Material?",
+      "identical-to-project-period": "Identisch mit dem Projektzeitraum",
+      "add-another-period": "Weiteren Zeitpunkt/Zeitraum hinzufügen",
+      "where-do-you-need-the-material": "An welchem Ort benötigst du das Material?",
+      "identical-to-project-location": "Identisch mit dem Projektort",
+      "add-another-location": "Weiteren Ort hinzufügen",
+      "close": "Schließen"
     }
 }
