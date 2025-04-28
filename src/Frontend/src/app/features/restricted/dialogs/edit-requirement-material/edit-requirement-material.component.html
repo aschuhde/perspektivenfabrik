@@ -28,7 +28,7 @@
                 <div class="selected-material">
                     <div>
                         <h4 class="split-left-right mt-0"><span>{{ $index + 1}}. {{ selectedMaterial.text }}</span><button class="secondary" (click)="removeSelectedMaterial(selectedMaterial)" [attr.aria-label]="'remove ' + selectedMaterial.text">
-                            <mat-icon>cancel</mat-icon> Material entfernen
+                            <mat-icon>cancel</mat-icon><span class="only-desktop"> Material entfernen</span>
                         </button></h4>
                         <div>
                             <mat-form-field class="w-100">
@@ -63,7 +63,7 @@
             @for(requirementTime of requirementTimes; track requirementTime){
                 <app-input-project-time (onChanged)="onUpdated()"  [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
             }        
-            <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
           </div>
           <p>An welchem Ort benötigst du das Material?</p> 
           <div>
@@ -73,7 +73,7 @@
             @for(requirementLocation of requirementLocations; track requirementLocation){
                 <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
             }        
-            <button aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
           </div>
     </div>    
 </mat-dialog-content>

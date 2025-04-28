@@ -1,6 +1,9 @@
 <div class="h-100" style="display: flex; flex-wrap: nowrap; justify-content: stretch;">
 <div class="step-list-container h-100">
 <div [class.hidden]="isLoading()">
+    <div class="step-previous only-mobile">
+        <button class="secondary" (click)="selectPrevious()"><mat-icon fontIcon="chevron_left"></mat-icon></button>
+    </div>
     <div class="step" [class.active]="currentGroup == 'projectType'" (click)="select('projectType')">
         <span class="step-number">{{ stepNumber(1) }}</span>
         <span class="step-label">Um was geht es?</span>
@@ -30,20 +33,23 @@
       <span class="step-label">Deine Kontaktdaten</span>      
     </div>
     <div class="step" [class.active]="currentGroup == 'projectTags'" (click)="select('projectTags')">
-        <span class="step-number">{{ stepNumber(9) }}</span>
+        <span class="step-number">{{ stepNumber(8) }}</span>
         <span class="step-label">Tags zu {{ yoursDeclinationDative }} {{ typeName }}</span>
     </div>
     <div class="step" [class.active]="currentGroup == 'projectDescription'" (click)="select('projectDescription')">
-      <span class="step-number">{{ stepNumber(10) }}</span>
-      <span class="step-label">Beschreibung {{ yoursDeclination }} {{ typeNameGenitive }}</span>      
+      <span class="step-number">{{ stepNumber(9) }}</span>
+      <span class="step-label">Projektbeschreibung</span>      
     </div>
     <div class="step" [class.active]="currentGroup == 'projectImages'" (click)="select('projectImages')">
-      <span class="step-number">{{ stepNumber(11) }}</span>
+      <span class="step-number">{{ stepNumber(10) }}</span>
       <span class="step-label">Bilder</span>      
     </div>
     <div class="step" [class.active]="currentGroup == 'projectVisibility'" (click)="select('projectVisibility')">
-      <span class="step-number">{{ stepNumber(12) }}</span>
+      <span class="step-number">{{ stepNumber(11) }}</span>
       <span class="step-label">Sichtbarkeit</span>          
+    </div>
+    <div class="step-next only-mobile">
+        <button class="secondary"(click)="selectNext()"><mat-icon fontIcon="chevron_right"></mat-icon></button>
     </div>
   </div>
     <div [class.hidden]="!isLoading()" style="width: 20rem">
@@ -96,28 +102,28 @@
                 <div [class.hidden]="isLoading()">
                     <div class="step-content" [class.hidden]="currentGroup != 'projectType'">
                         <p>
-                            <button class="btn-large" [class.secondary]="projectType !== 'project'" (click)="changeProjectType('project')"><span>Ein Projekt </span><mat-icon [class.hidden]="projectType !== 'project'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>,
-                            <button class="btn-large" [class.secondary]="projectType !== 'idea'" (click)="changeProjectType('idea')">eine Idee <mat-icon [class.hidden]="projectType !== 'idea'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button> oder
-                            <button class="btn-large" [class.secondary]="projectType !== 'inspiration'" (click)="changeProjectType('inspiration')">eine Inspiration <mat-icon [class.hidden]="projectType !== 'inspiration'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="btn-large w-100-mobile" [class.secondary]="projectType !== 'project'" (click)="changeProjectType('project')"><span>Ein Projekt </span><mat-icon [class.hidden]="projectType !== 'project'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>,
+                            <button class="btn-large w-100-mobile" [class.secondary]="projectType !== 'idea'" (click)="changeProjectType('idea')">eine Idee <mat-icon [class.hidden]="projectType !== 'idea'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button> oder
+                            <button class="btn-large w-100-mobile" [class.secondary]="projectType !== 'inspiration'" (click)="changeProjectType('inspiration')">eine Inspiration <mat-icon [class.hidden]="projectType !== 'inspiration'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
                         </p>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectName'">
                         <div class="prefix-suffix-container">
-                            <mat-form-field class="prefix">
+                            <mat-form-field class="prefix w-100-mobile">
                                 <mat-label>Projekttitel?</mat-label>
                                 <input matInput [(ngModel)]="projectTitle" />
                             </mat-form-field>
-                            <mat-form-field class="suffix">
+                            <mat-form-field class="suffix w-100-mobile">
                                 <mat-label>Interner Projektname</mat-label>
                                 <input matInput disabled [(ngModel)]="projectName" />
                             </mat-form-field>
                         </div>
                         <div>
-                            <button (click)="currentGroup = projectType === 'project' ? 'projectPhase' : 'projectLocation'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectPhase'">
-                        <mat-form-field>
+                        <mat-form-field class="w-100-mobile">
                             <mat-label>Projektphase</mat-label>
                             <mat-select [(value)]="projectPhase">
                                 <mat-option value="unkown">Nicht festgelegt</mat-option>
@@ -128,7 +134,7 @@
                             </mat-select>
                         </mat-form-field>
                         <div>
-                            <button (click)="currentGroup = 'projectLocation'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectLocation'">
@@ -137,9 +143,9 @@
                                 <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="location" (remove)="removeLocation($event)"></app-input-location>
                             }
                         </div>
-                        <button aria-label="Add another location" (click)="addLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+                        <button class="w-100-mobile" aria-label="Add another location" (click)="addLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
                         <div>
-                            <button (click)="currentGroup = 'projectTime'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectTime'">
@@ -150,40 +156,41 @@
                         </div>
                         <div>
                             <button aria-label="Add project time" (click)="addProjectTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
-                            <button (click)="currentGroup = 'projectRequirements'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectRequirements'">
-                        <div class="prefix-suffix-container">
+                        <div class="prefix-suffix-container-with-mobile">
                             <button [class.secondary]="currentRequirementGroup !== 'person'" (click)="currentRequirementGroup = 'person'" class="prefix">Helfer*innen</button>
                             <button [class.secondary]="currentRequirementGroup !== 'material'" (click)="currentRequirementGroup = 'material'" class="middle">Material</button>
                             <button [class.secondary]="currentRequirementGroup !== 'money'" (click)="currentRequirementGroup = 'money'" class="suffix">Finanzielle Unterstützung</button>
                         </div>
+                        <hr>
                         <div [class.hidden]="currentRequirementGroup !== 'person'">
                             @for(requirementPerson of requirementPersons; track requirementPerson){
                                 <app-input-requirement-person (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
                             }
-                            <button aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> Helfer*innen hinzufügen</button>
+                            <button class="w-100-mobile" aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> Helfer*innen hinzufügen</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'material'">
                             @for(requirementMaterial of requirementMaterials; track requirementMaterial){
                                 <app-input-requirement-material (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
                             }
-                            <button aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> Material</button>
+                            <button class="w-100-mobile" aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> Material</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'money'">
                             @for(requirementMoney of requirementsMoney; track requirementMoney){
                                 <app-input-requirement-money (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
                             }
-                            <button aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> Finanzielle unterstützung</button>
+                            <button class="w-100-mobile" aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> Finanzielle unterstützung</button>
                         </div>
                         <div>
-                            <button (click)="currentGroup = 'projectContact'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectContact'">
                         <div>
-                            <mat-form-field class="field-min-width-medium">
+                            <mat-form-field class="field-min-width-medium w-100-mobile">
                                 <mat-label>Dein Name</mat-label>
                                 <input type="text"
                                        aria-label="Contact Personal Name"
@@ -191,7 +198,7 @@
                                        [(ngModel)]="contactName"/>
                             </mat-form-field>
                             <span> und/oder </span>
-                            <mat-form-field class="field-min-width-medium">
+                            <mat-form-field class="field-min-width-medium w-100-mobile">
                                 <mat-label>Name der Organisation</mat-label>
                                 <input type="text"
                                        aria-label="Contact Organisation Name"
@@ -200,7 +207,7 @@
                             </mat-form-field>
                         </div>
                         <div>
-                            <mat-form-field class="field-min-width-medium">
+                            <mat-form-field class="field-min-width-medium w-100-mobile">
                                 <mat-label>E-Mail</mat-label>
                                 <input type="text"
                                        aria-label="Contact E-Mail"
@@ -208,7 +215,7 @@
                                        [(ngModel)]="contactMail"/>
                             </mat-form-field>
                             <span> und/oder </span>
-                            <mat-form-field class="field-min-width-medium">
+                            <mat-form-field class="field-min-width-medium w-100-mobile">
                                 <mat-label>Telefonnummer</mat-label>
                                 <input type="text"
                                        aria-label="Contact Phone Number"
@@ -225,7 +232,7 @@
                             </div>
                         </div>
                         <div>
-                            <button (click)="currentGroup = 'projectTags'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectTags'">
@@ -260,7 +267,7 @@
                             </mat-chip-grid>
                         </div>
                         <div>
-                            <button (click)="currentGroup = 'projectDescription'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
@@ -273,13 +280,13 @@
                             <angular-editor [placeholder]="'Ausführliche Beschreibung'" [(ngModel)]="longDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div>
-                            <button (click)="currentGroup = 'projectImages'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectImages'">
                         <div>
                             <input multiple accept="image/*" class="hidden" #fileUpload type="file" (change)="onFileUpload($event)">
-                            <button class="btn-large" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>Bilder hochladen</span></button>
+                            <button class="btn-large w-100-mobile" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>Bilder hochladen</span></button>
                         </div>
                         <div class="uploaded-image-container">
                             @for(image of uploadedImages; track image){
@@ -289,7 +296,7 @@
                                             <mat-icon style="font-size: 1.2rem;" fontIcon="close" (click)="removeUploadedImage(image)"></mat-icon>
                                         </div>
                                         <div style="text-align: center;">
-                                            <img src="{{ image.src }}" style="height: 10rem;" />
+                                            <img class="uploaded-image" src="{{ image.src }}" style="height: 10rem;" />
                                         </div>
                                         <div>
                                             <button class="w-100" [class.secondary]="!image.isLogo" (click)="setLogo(image)"><span>Als Logo verwenden </span><mat-icon [class.hidden]="!image.isLogo" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
@@ -302,14 +309,14 @@
                             }
                         </div>
                         <div>
-                            <button (click)="currentGroup = 'projectVisibility'" class="btn-next" >Weiter</button>
+                            <button (click)="selectNext()" class="btn-next w-100-mobile" >Weiter</button>
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectVisibility'">
                         <p class="prefix-suffix-container">
-                            <button class="prefix" [class.secondary]="projectVisibility !== 'draft'" (click)="projectVisibility = 'draft'"><span>Entwurf (nur du) </span><mat-icon [class.hidden]="projectVisibility !== 'draft'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
-                            <button class="middle" [class.secondary]="projectVisibility !== 'internal'" (click)="projectVisibility = 'internal'">Nur Personen mit Link <mat-icon [class.hidden]="projectVisibility !== 'internal'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
-                            <button class="suffix" [class.secondary]="projectVisibility !== 'public'" (click)="projectVisibility = 'public'">Öffentlich sichtbar <mat-icon [class.hidden]="projectVisibility !== 'public'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="prefix w-100-mobile" [class.secondary]="projectVisibility !== 'draft'" (click)="projectVisibility = 'draft'"><span>Entwurf (nur du) </span><mat-icon [class.hidden]="projectVisibility !== 'draft'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="middle w-100-mobile" [class.secondary]="projectVisibility !== 'internal'" (click)="projectVisibility = 'internal'">Nur Personen mit Link <mat-icon [class.hidden]="projectVisibility !== 'internal'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
+                            <button class="suffix w-100-mobile" [class.secondary]="projectVisibility !== 'public'" (click)="projectVisibility = 'public'">Öffentlich sichtbar <mat-icon [class.hidden]="projectVisibility !== 'public'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
                         </p>
                     </div>
                 </div>

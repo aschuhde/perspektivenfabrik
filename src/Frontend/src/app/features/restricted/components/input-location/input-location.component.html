@@ -1,5 +1,5 @@
 <div>
-    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="location_on"></mat-icon> Ort {{ locationNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Ort entfernen</button></h4>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="location_on"></mat-icon> Ort {{ locationNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> Ort entfernen</span></button></h4>
     <mat-form-field class="w-100">
         <mat-label>Ortstyp</mat-label>
         <mat-select [(value)]="locationType">
@@ -28,7 +28,7 @@
                 <mat-label>Name des Ortes</mat-label>
                 <input type="text" matInput [(ngModel)]="locationDisplayName" />
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile"> auf Karte auswählen</span></button>
         </div>
     }
     @if (locationType === "address"){
@@ -42,7 +42,7 @@
                 <mat-label>Name des Ortes</mat-label>
                 <input type="text" matInput [(ngModel)]="locationAddressDisplayName" />
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile"> auf Karte auswählen</span></button>
         </div>
     }
     @if (locationType === "coordinates"){
@@ -52,7 +52,7 @@
                 <mat-label>Lat, Lon</mat-label>
                 <input type="text" matInput [(ngModel)]="locationCoordinates" />            
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile"> auf Karte auswählen</span></button>
         </div>
     }     
 </div>

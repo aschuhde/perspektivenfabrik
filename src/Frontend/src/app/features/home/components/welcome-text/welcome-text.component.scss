@@ -1,4 +1,6 @@
 @use 'vars';
+@use 'responsive';
+
 #welcome-text-content{
     font-size: 1.8rem;   
     text-align: left;
@@ -29,4 +31,10 @@
     top: 0;
     border: 1px solid vars.$bg-orange;
     border-radius: .5rem;
+}
+
+@include responsive.mobile {
+  .container{
+    width: 80%;
+  }
 }

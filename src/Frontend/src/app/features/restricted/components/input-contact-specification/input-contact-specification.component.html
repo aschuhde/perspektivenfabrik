@@ -1,5 +1,5 @@
 <div>
-    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="wallet"></mat-icon> {{ contactSpecificationTypeName }} {{ bankAccountNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> {{ contactSpecificationTypeName }} entfernen</button></h4>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="wallet"></mat-icon> {{ contactSpecificationTypeName }} {{ bankAccountNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> {{ contactSpecificationTypeName }} entfernen</span></button></h4>
     <mat-form-field class="w-100">
         <mat-label>Kontotyp</mat-label>
         <mat-select [(value)]="contactSpecificationType">

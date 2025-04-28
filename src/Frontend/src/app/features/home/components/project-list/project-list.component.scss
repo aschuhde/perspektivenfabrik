@@ -1,3 +1,5 @@
+@use 'responsive';
+
 .project-list{
   display: flex;
   width: calc(100% - 6rem);
@@ -46,4 +48,15 @@
   left: 0;
   width: 100%;
   text-align: center;
+}
+
+@include responsive.mobile {
+  .project-list{
+    width: calc(100% - 2rem);
+    padding: 0 1rem;
+  }
+  
+  .project-list-item{
+    width: 100%;
+  }
 }

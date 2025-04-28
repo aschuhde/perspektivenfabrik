@@ -540,11 +540,49 @@ get typeNameGenitive(){
   }
 
   select(groupName: string){
+    if(groupName === this.currentGroup) return;
     this.currentGroup = groupName;
     
     const url = new URL(window.location.href);
     url.searchParams.set("group", groupName);
     window.history.replaceState({}, '', url.toString());
+  }
+  
+  getGroups(){
+        return ['projectType', 'projectName', 'projectPhase', 'projectLocation', 'projectTime', 'projectRequirements'
+            , 'projectContact', 'projectTags', 'projectDescription', 'projectImages', 'projectVisibility']
+  }
+  
+  selectNext(){
+    const groups = this.getGroups();
+    const currentGroupIndex = groups.indexOf(this.currentGroup);
+    if(currentGroupIndex < 0) {
+        this.select(groups[0]);
+    }
+    if(currentGroupIndex >= groups.length - 1){
+        return;
+    }
+    let nextGroup = groups[currentGroupIndex+1];
+    if(nextGroup === 'projectPhase' && this.projectType !== "project"){
+        nextGroup = groups[currentGroupIndex+2];
+    }
+    this.select(nextGroup);
+  }
+  
+  selectPrevious(){
+    const groups = this.getGroups();
+    const currentGroupIndex = groups.indexOf(this.currentGroup);
+    if(currentGroupIndex < 0) {
+        this.select(groups[0]);
+    }
+    if(currentGroupIndex === 0){
+        return;
+    }
+    let prevGroup = groups[currentGroupIndex-1];
+    if(prevGroup === 'projectPhase' && this.projectType !== "project"){
+        prevGroup = groups[currentGroupIndex-2];
+    }
+    this.select(prevGroup);
   }
 
   stepNumber(baseNumber: number){    

@@ -1,3 +1,5 @@
+@use 'responsive';
+
 .step {
     padding: 1rem .5rem 1rem 1rem;
     cursor: pointer;
@@ -116,4 +118,67 @@
         }
     }
     
+}
+
+@include responsive.mobile {
+  .step-list-container{
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    width: 100vw;
+    height: auto;
+    overflow: hidden;
+    padding: 0;
+    
+    > div:first-child{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1rem;
+    }
+    
+    .step{
+      display: none;
+      
+      &.active{
+        display: block;
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+  }
+
+  .uploaded-image-list-item {
+    width: 100%;
+  }
+
+  img.uploaded-image {
+    height: auto !important;
+  }
+  
+  .uploaded-image-container{
+    flex-wrap: wrap;
+  }
+  
+  .uploaded-image{
+    width: 100%;
+  }
+  
+  .container-with-title{
+    padding: 0;
+    width: 100%;
+  }
+  
+  .step-question{
+    margin: 0;
+    padding: 5.3rem 1rem 1rem 1rem;
+  }
+  
+  .center-area{
+    padding: 1rem;
+  }
+  
+  .right-bar{
+    display: none;
+  }
 }

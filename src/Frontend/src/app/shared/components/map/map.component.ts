@@ -5,6 +5,7 @@ import idGenerator from '../../tools/id-generator';
 import {CoordinatesConverter} from "../../tools/coordinates-converter";
 import {formatCoordinates} from "../../tools/formatting";
 import {LocaleDataProvider} from "../../../core/services/locale-data.service";
+import {MobileScreenWidthBreakpoint} from "../../tools/responsive";
 
 
 @Component({
@@ -30,6 +31,12 @@ export class MapComponent {
     if(!this.canUseLeaflet)
       return;
 
+    const screenWidth = window.screen.width;
+    
+    if(screenWidth <= MobileScreenWidthBreakpoint){
+     this.map.nativeElement.style.width = `${screenWidth-60}px`; 
+    }
+    
     import("leaflet").then(L => {
       import("leaflet-control-geocoder").then(C => {
         L.default.Icon.Default.imagePath = 'leaflet/';
