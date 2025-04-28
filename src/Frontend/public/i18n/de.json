@@ -6,7 +6,12 @@
       "Continue": "Weiter",
       "apply": "Übernehmen",
       "cancel": "Abbrechen",
-      "close": "Schließen"
+      "close": "Schließen",
+      "dateFormat": "DD.MM.YYYY",
+      "date": "Datum",
+      "date-range": "Zeitraum",
+      "month-format": "MM YYYY",
+      "month": "Monat"
     },
     "nav": {
         "about us": "über uns",
@@ -131,5 +136,101 @@
       "identical-to-project-location": "Identisch mit dem Projektort",
       "add-another-location": "Weiteren Ort hinzufügen",
       "close": "Schließen"
+    },
+    "input-contact-specs": {
+      "remove-entry": "{{ contactSpecificationTypeName }} entfernen",
+      "account-type": "Kontotyp",
+      "bank-account": "Bankkonto",
+      "paypal-account": "Paypalkonto",
+      "website": "Website",
+      "account-name": "Kontoname",
+      "iban": "IBAN",
+      "bic": "BIC (optional)",
+      "bank-reference": "Verwendungszweck (optional)",
+      "paypal-e-mail-address": "Paypal E-Mail Adresse",
+      "paypal-me-url": "Paypal-Me Url"
+    },
+    "input-location": {
+      "location": "Ort",
+      "location-type": "Ortstyp",
+      "not-defined": "Nicht festgelegt",
+      "remote": "Remote/Digital",
+      "name-of-a-location": "Name eines Ortes",
+      "address": "Adresse",
+      "coordinates": "Koordinaten",
+      "do-you-want-to-add-a-link": "Möchtest du noch einen Link hinterlegen?",
+      "what-is-the-locations-name": "Wie heißt der Ort, den du angeben möchtest?",
+      "location-address": "Addresse des Ortes",
+      "location-name": "Name des Ortes",
+      "select-on-map": "auf Karte auswählen",
+      "what-is-the-address": "Wie ist die Adresse, die du angeben möchtest?",
+      "what-are-the-coordinates": "Wie sind die Koordinaten in \"Lat, Lon\",<br>die du angeben möchtest?",
+      "lat-lon": "Lat, Lon",
+      "remove-entry": "{{typeName}} entfernen"
+    },
+    "input-project-time": {
+      "type": "Zeittyp",
+      "remove-entry": "{{typeName}} entfernen",
+      "period": "Zeitraum",
+      "date": "Datum",
+      "month": "Monat"
+    },
+    "share-link-dialog": {
+      "internal-link-for-sharing": "Interner Link zum Teilen",
+      "copy-to-clipboard": "In Zwischenablage kopieren",
+      "link": "link",
+      "copied-to-clipboard": "Link in Zwischenablage kopiert"
+    },
+    "login": {
+      "login": "Anmelden",
+      "e-mail": "E-Mail",
+      "password": "Password"
+    },
+    "home": {
+      "motivation-text": "Du würdest gerne anpacken, aber weißt nicht wie und wo? Du hast ein Projekt und brauchst helfende Hände? Du hast eine Idee, die du gerne mit anderen teilen möchtest? Dann bist du hier genau richtig!",
+      "explore": "entdecken",
+      "add": "hinzufügen",
+      "to-project": "zum Projekt",
+      "edit": "bearbeiten",
+      "my-projects": "Meine Projekte",
+      "welcome-text": "Die Perspektivenfabrik sammelt, präsentiert und vernetzt <span class=\"with-border\">nachhaltige</span> Lösungen, <span class=\"with-border\">visionäre</span> Persönlichkeiten und <span class=\"with-border\">zukunftsweisende</span> Initiativen in <span class=\"with-border\">Südtirol.</span>",
+      "do-you-wanna-help": "Willst du auch anpacken?",
+      "lets-go": "Pack mas!",
+      "we-need": "Wir benötigen",
+      "we-search": "Wir suchen"
+    },
+    "project-detail": {
+      "location": "Ort",
+      "period": "Zeitraum",
+      "tags": "Tags",
+      "we-search-with-details": "Wir suchen <a class=\"show-more-details\">(Details anzeigen)</a>",
+      "we-need-with-details": "Wir benötigen <a class=\"show-more-details\">(Details anzeigen)</a>",
+      "contact": "Kontakt",
+      "send-us-a-message": "Schreib uns eine Nachricht!"
+    },
+    "project-filter": {
+      "project-type": "Projektart",
+      "region": "Region",
+      "period": "Zeitraum",
+      "requirements": "Anforderungen",
+      "keyword": "Stichwort...",
+      "filter": "Filter",
+      "filter-available-soon": "Filter bald verfügbar!",
+      "add": "hinzufügen"
+    },
+    "materials": {
+      "material-group": "Materialgruppe",
+      "what": "Was?",
+      "where": "Wo?",
+      "when": "Wer?",
+      "financial-support": "Finanzielle Unterstützung"
+    },
+    "persons": {
+      "how-many": "Wie viele Personen?",
+      "what-skills": "Mit welchen Skills?",
+      "what-workload": "Welcher Arbeitsaufwand?",
+      "when": "Wann?",
+      "where": "Wo?",
+      "helping-hands-group": "Helfer*innengruppe"
     }
 }

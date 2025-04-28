@@ -10,6 +10,7 @@ import {
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-share-link-dialog',
@@ -23,7 +24,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatLabel,
     MatFormField,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './share-link-dialog.component.html',
   styleUrl: './share-link-dialog.component.scss'

@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>Wir benötigen:</h2>
+<h2 mat-dialog-title>{{ "home.we-need" | translate }}:</h2>
 <mat-dialog-content>
     <app-requirement-materials [requirements]="requirementMaterials" [requirementsMoney]="requirementsMoney"></app-requirement-materials>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-dialog-close>Schließen</button>
+    <button mat-dialog-close>{{ "general.close" | translate }}</button>
 </mat-dialog-actions>

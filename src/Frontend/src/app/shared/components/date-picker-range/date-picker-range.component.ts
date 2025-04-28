@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DateTime } from 'luxon';
 import {provideNativeDateAdapter} from "@angular/material/core";
+import { TranslateModule } from '@ngx-translate/core';
 
 export const DATE_FORMAT_DATE = {
   parse: {
@@ -21,7 +22,7 @@ export const DATE_FORMAT_DATE = {
 
 @Component({
   selector: 'app-date-picker-range',
-  imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './date-picker-range.component.html',
   styleUrl: './date-picker-range.component.scss',
   providers: [provideLuxonDateAdapter(DATE_FORMAT_DATE)]

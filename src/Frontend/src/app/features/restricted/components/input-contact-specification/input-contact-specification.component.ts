@@ -6,10 +6,11 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-contact-specification',
-  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule],
+  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule],
   templateUrl: './input-contact-specification.component.html',
   styleUrl: './input-contact-specification.component.scss'
 })

@@ -12,10 +12,11 @@ import {
 import { ApplicationModelsApiModelsApiRequirementSpecificationMoney } from '../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMoney';
 import {formatMoney} from "../../../../shared/tools/formatting";
 import {MatIconModule} from "@angular/material/icon";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-requirement-materials',
-  imports: [MatIconModule],
+  imports: [MatIconModule, TranslateModule],
   templateUrl: './requirement-materials.component.html',
   styleUrl: './requirement-materials.component.scss'
 })

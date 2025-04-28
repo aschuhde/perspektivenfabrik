@@ -1,6 +1,6 @@
 <div>
     <mat-form-field class="w-100">
-        <mat-label>Zeitraum:</mat-label>
+        <mat-label>{{ "general.date-range" | translate }}:</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="dateRange">
           <input  (dateChange)="changed()" formControlName="start" matStartDate placeholder="Startdatum">
           <input (dateChange)="changed()" formControlName="end" matEndDate placeholder="Enddatum">

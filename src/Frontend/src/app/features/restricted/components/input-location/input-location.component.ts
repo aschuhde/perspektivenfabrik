@@ -9,10 +9,11 @@ import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialo
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MapDialogComponent } from '../../../../shared/dialogs/map-dialog/map-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-location',
-  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule],
+  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule],
   templateUrl: './input-location.component.html',
   styleUrl: './input-location.component.scss'
 })

@@ -12,6 +12,7 @@ import { DateTime } from "luxon";
 import { DatePickerComponent } from '../../../../shared/components/date-picker/date-picker.component';
 import { MonthPickerComponent } from '../../../../shared/components/month-picker/month-picker.component';
 import { DatePickerRangeComponent } from '../../../../shared/components/date-picker-range/date-picker-range.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const DATE_FORMAT_MONTH = {
   parse: {
@@ -27,7 +28,7 @@ export const DATE_FORMAT_MONTH = {
 
 @Component({
   selector: 'app-input-project-time',
-  imports: [MatFormFieldModule, MatInputModule, MatIcon, MatSelect, MatOption, DatePickerComponent, MonthPickerComponent, DatePickerRangeComponent],
+  imports: [MatFormFieldModule, MatInputModule, MatIcon, MatSelect, MatOption, DatePickerComponent, MonthPickerComponent, DatePickerRangeComponent, TranslateModule],
   templateUrl: './input-project-time.component.html',
   styleUrl: './input-project-time.component.scss',
   providers: [provideLuxonDateAdapter(DATE_FORMAT_MONTH)]

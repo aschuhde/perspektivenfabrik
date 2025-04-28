@@ -7,7 +7,7 @@
         <div class="stats font-smaller">
             @if (locationSpecifications.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label"><mat-icon fontIcon="location_on"></mat-icon> Ort</p>
+                    <p class="stat-label"><mat-icon fontIcon="location_on"></mat-icon> {{ "project-detail.location" | translate }}</p>
                     @for (locationSpecification of locationSpecifications; track locationSpecification){
                         <div class="stat-grid-item" (click)="locationClicked(locationSpecification)" [attr.data-clickable]="isLocationClickable(locationSpecification)">
                             <span>{{ getLocationSpecificationShortName(locationSpecification) }}</span>
@@ -20,7 +20,7 @@
             }
             @if (timeSpecifications.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label"><mat-icon fontIcon="date_range"></mat-icon> Zeitraum</p>
+                    <p class="stat-label"><mat-icon fontIcon="date_range"></mat-icon> {{ "project-detail.period" | translate }}</p>
                     @for (timeSpecification of timeSpecifications; track timeSpecification){
                         <div class="stat-grid-item" data-clickable="false">{{ getTimeSpecificationShortName(timeSpecification) }}</div>
                     }
@@ -28,7 +28,7 @@
             }
             @if (tags.length > 0){
                 <div class="stat-grid">
-                    <p class="stat-label"><mat-icon fontIcon="bookmark"></mat-icon> Tags</p>
+                    <p class="stat-label"><mat-icon fontIcon="bookmark"></mat-icon> {{ "project-detail.tags" | translate }}</p>
                     @for (tag of tags; track tag){
                         <div class="stat-grid-item" data-clickable="false">{{ getTagShortName(tag) }}</div>
                     }
@@ -38,7 +38,7 @@
                 <div class="stat-grid">
                     <div class="split-left-right w-100">
                         <p class="stat-label" data-clickable="true" (click)="showRequirementPersonsDialog()">
-                            <span><mat-icon fontIcon="groups"></mat-icon> Wir suchen <a class="show-more-details">(Details anzeigen)</a></span>
+                            <span><mat-icon fontIcon="groups"></mat-icon> <span [innerHTML]="'project-detail.we-search-with-details' | translate"></span></span>
                         </p>
                     </div>
                     
@@ -51,7 +51,7 @@
             @if (requirementSpecificationMaterialsFlat.length > 0 || requirementSpecificationMoneySummed){
                 <div class="stat-grid">
                     <p class="stat-label" data-clickable="true" (click)="showRequirementMaterialsDialog()">
-                        <span><mat-icon fontIcon="construction"></mat-icon>/<mat-icon fontIcon="savings"></mat-icon> Wir benötigen <a class="show-more-details">(Details anzeigen)</a></span>
+                        <span><mat-icon fontIcon="construction"></mat-icon>/<mat-icon fontIcon="savings"></mat-icon><span [innerHTML]="'project-detail.we-need-with-details' | translate"></span></span>
                     </p>
                     @for (requirementSpecificationMaterial of requirementSpecificationMaterialsFlat; track requirementSpecificationMaterial){
                         <div class="stat-grid-item" data-clickable="true" (click)="requirementSpecificationMaterialClicked()">{{ getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial) }}</div>
@@ -74,12 +74,12 @@
 <div class="bottom">
     <div class="bottom-left">
         <div>
-            <h3>Kontakt</h3>
+            <h3>{{ "project-detail.contact" | translate }}</h3>
         </div>
     </div>
     <div class="bottom-right">
         <div>
-            <p class="contact-text">Schreib uns eine Nachricht!</p>
+            <p class="contact-text">{{ "project-detail.send-us-a-message" | translate }}</p>
             <div style="display: flex; justify-content: space-between;flex-wrap: wrap;">
             @if(contactPersonalName){
                 <p class="contact-text"><mat-icon fontIcon="person"></mat-icon> {{ contactPersonalName }}</p>

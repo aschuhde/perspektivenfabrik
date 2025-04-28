@@ -1,12 +1,12 @@
 <div>
-    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="calendar_month"></mat-icon> {{typeName}} {{ timeNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> {{typeName}} entfernen</span></button></h4>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="calendar_month"></mat-icon> {{typeName}} {{ timeNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> {{ "input-project-time.remove-entry" | translate:{typeName: typeName} }}</span></button></h4>
     <div class="prefix-suffix-container">
         <mat-form-field class="prefix prefix-50 w-100-mobile">
-            <mat-label>Zeittyp</mat-label>
+            <mat-label>{{ "input-project-time.type" | translate }}</mat-label>
             <mat-select [(value)]="projectTimeType">
-            <mat-option value="range">Zeitraum</mat-option>
-            <mat-option value="date">Datum</mat-option>
-            <mat-option value="month">Monat</mat-option>        
+            <mat-option value="range">{{ "input-project-time.period" | translate }}</mat-option>
+            <mat-option value="date">{{ "input-project-time.date" | translate }}</mat-option>
+            <mat-option value="month">{{ "input-project-time.month" | translate }}</mat-option>        
             </mat-select>
         </mat-form-field>
         @if (projectTimeType === "range"){

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateTime } from "luxon";
+import { TranslateModule } from '@ngx-translate/core';
 
 export const DATE_FORMAT_MONTH = {
   parse: {
@@ -20,7 +21,7 @@ export const DATE_FORMAT_MONTH = {
 
 @Component({
   selector: 'app-month-picker',
-  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule],
+  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule, TranslateModule],
   templateUrl: './month-picker.component.html',
   styleUrl: './month-picker.component.scss',
   providers: [provideLuxonDateAdapter(DATE_FORMAT_MONTH)]
