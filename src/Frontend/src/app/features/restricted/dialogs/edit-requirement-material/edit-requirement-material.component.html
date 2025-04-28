@@ -5,7 +5,7 @@
         <mat-form-field class="w-100">
             <mat-label>{{"input-requirement-material.material" | translate}}</mat-label>
             <input type="text"
-                   placeholder="'input-requirement-material.material' | translate"
+                   [placeholder]="'input-requirement-material.material' | translate"
                    aria-label="Material"
                    matInput
                    (matChipInputTokenEnd)="addSelectedMaterial($event)"               
@@ -41,7 +41,7 @@
                         </div>
                         <div>
                             <mat-form-field class="w-100">
-                                <mat-label>{{"input-requirement-material." | translate}}</mat-label>
+                                <mat-label>{{"input-requirement-material.material-description" | translate}}</mat-label>
                                 <textarea
                                     rows = "1"
                                     aria-label="Description of Material"

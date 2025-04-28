@@ -240,7 +240,7 @@
                             <mat-form-field class="w-100">
                                 <mat-label>{{ "input-project.tags-short" | translate }}</mat-label>
                                 <input type="text"
-                                       placeholder="Tags"
+                                       [placeholder]="'input-project.tags-short' | translate"
                                        aria-label="Tags"
                                        matInput
                                        (matChipInputTokenEnd)="addSelectedTag($event)"

@@ -11,7 +11,9 @@
     "date": "Data",
     "date-range": "Periodo",
     "month-format": "MM YYYY",
-    "month": "Mese"
+    "month": "Mese",
+    "start-date": "Data di inizio",
+    "end-date": "Data di fine"
   },
   "nav": {
     "about us": "chi siamo",
@@ -136,7 +138,8 @@
     "where-do-you-need-the-material": "Dove hai bisogno del materiale?",
     "identical-to-project-location": "Identico al luogo del progetto",
     "add-another-location": "Aggiungi un'altra località",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "material-description": "Descrizione del materiale"
   },
   "input-contact-specs": {
     "remove-entry": "Rimuovi {{ contactSpecificationTypeName }}",

@@ -11,7 +11,9 @@
       "date": "Datum",
       "date-range": "Zeitraum",
       "month-format": "MM YYYY",
-      "month": "Monat"
+      "month": "Monat",
+      "start-date": "Startdatum",
+      "end-date": "Enddatum"
     },
     "nav": {
         "about us": "über uns",
@@ -136,7 +138,8 @@
       "where-do-you-need-the-material": "An welchem Ort benötigst du das Material?",
       "identical-to-project-location": "Identisch mit dem Projektort",
       "add-another-location": "Weiteren Ort hinzufügen",
-      "close": "Schließen"
+      "close": "Schließen",
+      "material-description": "Beschreibung des Materials"
     },
     "input-contact-specs": {
       "remove-entry": "{{ contactSpecificationTypeName }} entfernen",

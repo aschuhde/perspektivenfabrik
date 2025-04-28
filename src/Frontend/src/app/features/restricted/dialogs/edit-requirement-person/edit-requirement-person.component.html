@@ -5,7 +5,7 @@
         <mat-form-field class="w-100">
             <mat-label>{{"input-requirement-person.skill" | translate}}</mat-label>
             <input type="text"
-                    placeholder="'input-requirement-person.skill' | translate"
+                    [placeholder]="'input-requirement-person.skill' | translate"
                     aria-label="Skill"
                     matInput
                     (matChipInputTokenEnd)="addSelectedSkill($event)"               
