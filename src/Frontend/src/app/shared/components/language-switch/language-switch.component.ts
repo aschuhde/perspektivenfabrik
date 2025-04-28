@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
-declare type Language = "en" | "it" | "de";
+import {Language} from "../../../core/types/general-types";
 
 @Component({
   selector: 'app-language-switch',

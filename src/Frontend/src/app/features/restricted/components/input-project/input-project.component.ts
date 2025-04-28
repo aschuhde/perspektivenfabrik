@@ -42,7 +42,8 @@ import {Observable} from "rxjs";
 import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
 import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
 import {BASE_PATH} from "../../../../server/variables";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
     selector: 'app-input-project',
@@ -88,6 +89,7 @@ export class InputProjectComponent {
     localeDataProvider = inject(LocaleDataProvider);
     static IgnoreUnloadEvent = false;
     autoCompleteDataService = inject(AutocompleteDataService);
+    translateService = inject(TranslateService);
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
       spellcheck: true,
@@ -327,6 +329,17 @@ export class InputProjectComponent {
   }
   
   get typeName(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "progetto";
+        case "idea":
+          return "idea";
+        case "inspiration":
+          return "ispirazione";
+      }
+    }
     switch(this.projectType){
       case "project":
       case "none":
@@ -338,6 +351,9 @@ export class InputProjectComponent {
     }
   }
 get typeNameGenitive(){
+  if(this.currentLanguage === "it"){
+    return this.typeName;
+  }
     switch(this.projectType){
         case "project":
         case "none":
@@ -348,7 +364,22 @@ get typeNameGenitive(){
             return "Inspiration";
     }
 }
+  get currentLanguage(){
+      return this.translateService.currentLang as Language;
+  }
   get yourDeclination(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "il tuo";
+        case "idea":
+          return "la tua";
+        case "inspiration":
+          return "la tua";
+      }  
+    }
+      
     switch(this.projectType){
       case "project":
       case "none":
@@ -360,6 +391,17 @@ get typeNameGenitive(){
     }
   }
   get yoursDeclination(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "del tuo";
+        case "idea":
+          return "della tua";
+        case "inspiration":
+          return "della tua";
+      }
+    }
     switch(this.projectType){
       case "project":
       case "none":
@@ -372,6 +414,17 @@ get typeNameGenitive(){
   }
 
     get yoursDeclinationDative(){
+      if(this.currentLanguage === "it"){
+        switch(this.projectType){
+          case "project":
+          case "none":
+            return "del tuo";
+          case "idea":
+            return "della tua";
+          case "inspiration":
+            return "della tua";
+        }
+      }
         switch(this.projectType){
             case "project":
             case "none":
@@ -382,6 +435,21 @@ get typeNameGenitive(){
                 return "deiner";
         }
     }
+
+  get yoursDeclinationDativeTo(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "al tuo";
+        case "idea":
+          return "alla tua";
+        case "inspiration":
+          return "alla tua";
+      }
+    }
+    return this.yoursDeclinationDative;
+  }
 
 
   get messageDialogs(){

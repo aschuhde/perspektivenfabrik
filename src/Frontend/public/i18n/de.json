@@ -38,7 +38,7 @@
       "when-does-your-project-take-place": "Zu welchem Zeitpunkt oder in welchem Zeitraum findet {{ yourDeclination }} {{ typeName }} statt?",
       "what-requirements-do-you-need": "Was benötigst du um {{ yourDeclination }} {{ typeName }} umzusetzen?",
       "how-can-we-contact-you": "Wie kann man dich oder deine Organisation kontaktieren?",
-      "select-tags-that-fit-your-project": "Wähle Tags aus, die zu {{ yoursDeclinationDative }} {{ typeName }} passen oder füge neue Tags hinzu.",
+      "select-tags-that-fit-your-project": "Wähle Tags aus, die zu {{ yoursDeclinationDativeTo }} {{ typeName }} passen oder füge neue Tags hinzu.",
       "add-a-description": "Wie würdest du {{ yourDeclination }} {{ typeName }} beschreiben?",
       "add-pictures": "Möchtest du ein Hintergrundbild und noch weitere Bilder hochladen?",
       "who-is-allowed-to-see-your-project": "Wer darf {{ yourDeclination }} {{ typeName }} sehen?",
