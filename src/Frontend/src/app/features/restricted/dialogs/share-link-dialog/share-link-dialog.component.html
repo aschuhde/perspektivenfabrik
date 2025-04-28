@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Interner Link zum Teilen</h2>
 <mat-dialog-content>
-    <div style="cursor: pointer; width: 45rem; text-align: center" (click)="copyToClipboard()">
+    <div class="input-container" (click)="copyToClipboard()">
         <mat-form-field class="w-100">
             <mat-label style="cursor: pointer">Link</mat-label>
             <input type="text"
@@ -18,5 +18,5 @@
     }
 </mat-dialog-content>
 <mat-dialog-actions>
-        <button class="secondary" mat-dialog-close>Schließen</button>
+        <button class="secondary w-100-mobile" mat-dialog-close>Schließen</button>
 </mat-dialog-actions>

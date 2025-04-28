@@ -322,49 +322,52 @@
                 </div>
             </div>
             <div class="right-bar">
-                <div [class.hidden]="isLoading()" class="split-top-bottom">
-                    <div style="text-align: center;">
+                <div [class.hidden]="isLoading()" class="split-top-bottom right-bar-container">
+                    <div class="right-bar-container-first" style="text-align: center;">
                         
                         @if(projectSaveContext()?.hasChanges ?? false){
                             @if(projectSaveContext()?.lastSave !== null){
-                                <mat-icon fontIcon="info"></mat-icon> <span>zuletzt gespeichert: {{ formatTime(projectSaveContext()?.lastSave ?? null) }}</span>
+                                <span class="only-desktop">
+                                    <mat-icon fontIcon="info"></mat-icon> <span>zuletzt gespeichert: {{ formatTime(projectSaveContext()?.lastSave ?? null) }}</span>
+                                </span>
                             }
                             @if(projectSaveContext()?.isSaving ?? false){
-                                <button class="w-100">
+                                <button class="w-100 btn-save">
                                     <mat-icon fontIcon="hourglass_empty"></mat-icon>
                                 </button>
                             } @else {
-                                <button class="w-100" (click)="save()">
+                                <button class="w-100 btn-save" (click)="save()">
                                     @if(projectVisibility === "draft"){
                                         <span>Speichern</span>
                                     }@else{
-                                        <span>Speichern und veröffentlichen</span>
+                                        <span>Speichern<span class="only-desktop"> und veröffentlichen</span></span>
                                     }
                                 </button>
                             }
                         } @else {
-                            <button class="w-100 secondary">
+                            <button class="w-100 secondary btn-save">
                                 @if(projectVisibility === "draft"){
-                                    <span>Als Entwurf gespeichert</span>
+                                    <span class="only-desktop">Als Entwurf gespeichert</span>
+                                    <span class="only-mobile">Gespeichert</span>
                                 } @else if (projectVisibility === "public"){
                                     <span>
-                                        Gespeichert und veröffentlicht
+                                        Gespeichert<span class="only-desktop"> und veröffentlicht</span>
                                     </span>
                                 } @else{
                                     <span>
-                                        Gespeichert und per Link einsehbar
+                                        Gespeichert<span class="only-desktop"> und per Link einsehbar</span>
                                     </span>
                                 }
                             </button>
                             @if(projectVisibility === "internal"){
-                                <button style="margin-top: 1rem" (click)="openShareLinkDialog()" class="w-100"><mat-icon fontIcon="share"></mat-icon> Interner Link zum Teilen</button>
+                                <button style="margin-top: 1rem" (click)="openShareLinkDialog()" class="w-100"><mat-icon fontIcon="share"></mat-icon><span class="only-desktop"> Interner Link zum Teilen</span></button>
                             }
-                            <a href="{{ previewLink }}" target="_blank"><button style="margin-top: 1rem" class="w-100"><mat-icon fontIcon="visibility"></mat-icon> Vorschau in neuem Tab öffnen</button></a>
+                            <a href="{{ previewLink }}" target="_blank"><button style="margin-top: 1rem" class="w-100"><mat-icon fontIcon="visibility"></mat-icon><span class="only-desktop"> Vorschau in neuem Tab öffnen</span></button></a>
                         }
                     </div>
                     <div>
                         @if(!this.isNewProject){
-                            <button (click)="deleteProject()" class="tertiary w-100"><mat-icon fontIcon="delete"></mat-icon> Löschen</button>
+                            <button (click)="deleteProject()" class="tertiary w-100"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> Löschen</span></button>
                         }
                     </div>
                 </div>

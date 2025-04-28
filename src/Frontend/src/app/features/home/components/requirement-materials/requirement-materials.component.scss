@@ -1,3 +1,5 @@
+@use "responsive";
+
 p{
   margin-bottom: .2rem;
   margin-top: 0;
@@ -23,4 +25,10 @@ p{
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
+}
+
+@include responsive.mobile{
+  .group-outer{
+    width: 100%;
+  }
 }

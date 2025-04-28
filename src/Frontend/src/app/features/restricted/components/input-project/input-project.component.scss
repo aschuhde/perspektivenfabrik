@@ -179,6 +179,37 @@
   }
   
   .right-bar{
-    display: none;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    height: auto;
+    
+    button, a {
+      margin-right: .5rem;
+      margin-top: 0 !important;
+      flex-grow: 0;
+      flex-basis: 0;
+    }
+    
+    .btn-save {
+      flex-grow: 1;
+    }
+  }
+  
+  .right-bar-container{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: stretch;
+  }
+  
+  .right-bar-container-first{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    margin-left: .5rem;
+    flex-grow: 1;
+  }
+  
+  .input-content-container{
+    flex-direction: column;
   }
 }

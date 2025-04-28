@@ -149,4 +149,7 @@ hr{
   .prefix-suffix-container-with-mobile{
     @include prefix-suffix-container
   }
+  .cdk-overlay-pane {
+    width: calc(100% - 1rem);
+  }
 }
