@@ -1,9 +1,9 @@
 <div>
-  <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="savings"></mat-icon> Finanzielle Unterstützung {{ requirementNumber }}: </span><span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> Eintrag entfernen</span></button></span></h4>    
+  <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="savings"></mat-icon> {{"input-money.financial-support" | translate}} {{ requirementNumber }}: </span><span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> {{"input-money.remove-entry" | translate}}</span></button></span></h4>    
   <div>
     <div class="d-inline-block w-100-mobile" style="vertical-align: top;">
       <mat-form-field class="w-100-mobile">
-          <mat-label>Menge in EUR</mat-label>
+          <mat-label>{{"input-money.amount-in-eur" | translate}}</mat-label>
           <input type="text"
                 aria-label="Amount of Money"
                 matInput
@@ -11,9 +11,9 @@
         </mat-form-field>
     </div>
     <div class="d-inline-block" style="vertical-align: top; padding-left: 1rem;">
-          <p class="mt-0">Bis wann benötigst du das Geld?</p> 
+          <p class="mt-0">{{"input-money.until-when-do-you-need-the-money" | translate}}</p> 
           <div>
-            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">{{"input-money.identical-with-project-period" | translate}}</mat-slide-toggle>
           </div>          
     </div>    
   </div>  
@@ -21,7 +21,7 @@
     @for(requirementTime of requirementTimes; track requirementTime){
         <app-input-project-time class="requirement-money-project-time" (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
     }        
-    <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+    <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> {{"input-money.add-another-period" | translate}}</button>
   </div>       
 </div>
 

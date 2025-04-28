@@ -42,6 +42,7 @@ import {Observable} from "rxjs";
 import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
 import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
 import {BASE_PATH} from "../../../../server/variables";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-input-project',
@@ -61,7 +62,8 @@ import {BASE_PATH} from "../../../../server/variables";
         MatAutocompleteModule,
         MatChipsModule,
         AngularEditorModule,
-        InputContactSpecificationComponent],
+        InputContactSpecificationComponent,
+        TranslateModule],
     templateUrl: './input-project.component.html',
     styleUrl: './input-project.component.scss'
 })
