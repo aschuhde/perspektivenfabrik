@@ -4,10 +4,12 @@ import { AuthorizationRoutes } from './features/authorization/authorization.rout
 import { RestrictedRoutes } from './features/restricted/restricted.routes';
 import { authenticationGuard } from './core/guards/authorize.guard';
 import { HomeRoutes } from './features/home/home.routes';
+import {VersionComponent} from "./shared/version/version.component";
 
 
 export const routes: Routes = [   
     {path: AppRouteNames.HomeName, loadChildren: () => HomeRoutes },
     {path: AppRouteNames.UserName, loadChildren: () => AuthorizationRoutes },
-    {path: AppRouteNames.RestrictedName, loadChildren: () => RestrictedRoutes, canActivateChild: [authenticationGuard] }
+    {path: AppRouteNames.RestrictedName, loadChildren: () => RestrictedRoutes, canActivateChild: [authenticationGuard] },
+    {path: AppRouteNames.VersionName, component: VersionComponent }
 ];
