@@ -3,6 +3,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from '@angular/c
 import { JWTTokenService } from '../services/jwt-token.service';
 import { RefreshTokenService } from '../services/refresh-token.service';
 import { Observable, from, switchMap } from 'rxjs';
+import {isServer} from "../../shared/tools/server-tools";
 
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
@@ -10,7 +11,9 @@ export class UniversalAppInterceptor implements HttpInterceptor {
     constructor( private jwtTokenService: JWTTokenService, private refreshTokenService: RefreshTokenService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        
+        if(isServer()){
+            return next.handle(req);
+        }
         const handle: (sendToken: boolean) => Observable<HttpEvent<any>> = (sendToken: boolean) => {
             if(!sendToken){
                 return next.handle(req);    

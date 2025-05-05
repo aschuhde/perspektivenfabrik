@@ -1,0 +1,12 @@
+﻿# api-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: perspektivenfabrik
+data:
+  ASPNETCORE_URLS: "http://*:8001/;"
+  ASPNETCORE_HTTP_PORTS: "8001"
+  ASPNETCORE_HTTPS_PORTS: ""
+  JWT-KEY: "replace this key. it should be long enough to have ASCII 512 bits. replace this key. it should be long enough to have ASCII 512 bits"  
+    

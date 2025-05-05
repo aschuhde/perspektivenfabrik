@@ -14,7 +14,7 @@ export class LanguageSwitchComponent {
   currentLanguageCode: Language = "de";
   
   ngOnInit(){
-    const preferredLanguage = window.localStorage.getItem("preferred-language");
+    const preferredLanguage = typeof window !== "undefined" ? window?.localStorage.getItem("preferred-language") : null;
     const currentLang = this.translateService.currentLang;
     const browserLang = this.translateService.getBrowserLang();
     if(currentLang === "it"){

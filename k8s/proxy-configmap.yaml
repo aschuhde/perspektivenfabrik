@@ -1,0 +1,21 @@
+﻿# proxy-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: proxy-config
+  namespace: perspektivenfabrik
+data:
+  ASPNETCORE_URLS: "http://*:9000/;https://*:9443/;"
+  ASPNETCORE_HTTP_PORTS: "9000"
+  ASPNETCORE_HTTPS_PORTS: "9443"
+  API_PORT: "8001"
+  API_HOST: "api-service.perspektivenfabrik.svc.cluster.local"
+  NGINX_PORT: "8002"
+  NGINX_HOST: "nginx-service.perspektivenfabrik.svc.cluster.local"
+  POSTGRES_PORT: "5432"
+  ANGULAR_NAME: "angular-service.perspektivenfabrik.svc.cluster.local"
+  ANGULAR_PORT: "8003"
+  PROXY_CERTIFICATE_PASSWORD: "to_replace"
+  PROXY_CERTIFICATE: "to_replace"
+  ASPNETCORE_Kestrel__Certificates__Default__Password: "to_replace"
+  GLOBAL_ACCESS_TOKEN: "to_replace"

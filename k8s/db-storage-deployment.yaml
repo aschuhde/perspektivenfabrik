@@ -1,0 +1,27 @@
+﻿apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+  namespace: perspektivenfabrik
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /data/postgres-pv
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: perspektivenfabrik
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi

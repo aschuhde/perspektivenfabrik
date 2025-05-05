@@ -17,6 +17,7 @@ import {
 import { HomeRouteNames } from '../../home-route-names';
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
 import { TranslateModule } from '@ngx-translate/core';
+import {isServer} from "../../../../shared/tools/server-tools";
 
 @Component({
   selector: 'app-project-list',
@@ -30,6 +31,8 @@ export class ProjectListComponent {
   localeDataProvider = inject(LocaleDataProvider)
   type = input<"home" | "user-area">("home")
   loadProjects(){
+    if(isServer()) return;
+    
     if(this.type() === "user-area"){
       const projectsResponse = this.apiService.webApiEndpointsGetUsersProjects();
 
