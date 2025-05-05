@@ -10,10 +10,11 @@ import {
   ApplicationModelsApiModelsApiRequirementSpecificationPerson
 } from "../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationPerson";
 import {RequirementPersonsComponent} from "../../components/requirement-persons/requirement-persons.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-requirement-persons-dialog',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementPersonsComponent],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementPersonsComponent, TranslateModule],
   templateUrl: './requirement-persons-dialog.component.html',
   styleUrl: './requirement-persons-dialog.component.scss'
 })

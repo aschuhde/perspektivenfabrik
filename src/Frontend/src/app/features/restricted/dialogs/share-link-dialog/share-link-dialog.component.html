@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Interner Link zum Teilen</h2>
+<h2 mat-dialog-title>{{ "share-link-dialog.internal-link-for-sharing" | translate }}</h2>
 <mat-dialog-content>
-    <div style="cursor: pointer; width: 45rem; text-align: center" (click)="copyToClipboard()">
+    <div class="input-container" (click)="copyToClipboard()">
         <mat-form-field class="w-100">
-            <mat-label style="cursor: pointer">Link</mat-label>
+            <mat-label style="cursor: pointer">{{ "share-link-dialog.link" | translate }}</mat-label>
             <input type="text"
                    aria-label="link"
                    matInput
@@ -12,11 +12,11 @@
         </mat-form-field>
     </div>
     @if(clipboardIsCopied){
-        <button class="w-100 secondary readonly" (click)="copyToClipboard()"><mat-icon fontIcon="rocket_launch"></mat-icon> Link in Zwischenablage kopiert <mat-icon fontIcon="rocket_launch"></mat-icon></button>
+        <button class="w-100 secondary readonly" (click)="copyToClipboard()"><mat-icon fontIcon="rocket_launch"></mat-icon> {{ "share-link-dialog.copied-to-clipboard" | translate }} <mat-icon fontIcon="rocket_launch"></mat-icon></button>
     } @else {
-        <button class="w-100" (click)="copyToClipboard()">In Zwischenablage kopieren</button>
+        <button class="w-100" (click)="copyToClipboard()">{{ "share-link-dialog.copy-to-clipboard" | translate }}</button>
     }
 </mat-dialog-content>
 <mat-dialog-actions>
-        <button class="secondary" mat-dialog-close>Schließen</button>
+        <button class="secondary w-100-mobile" mat-dialog-close>{{ "general.close" | translate }}</button>
 </mat-dialog-actions>

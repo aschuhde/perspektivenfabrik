@@ -5,10 +5,11 @@ import { RequirementPersonInput } from '../../models/requirement-person-input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { EditRequirementPersonComponent } from '../../dialogs/edit-requirement-person/edit-requirement-person.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-requirement-person',
-  imports: [FormsModule, MatIcon, MatAutocompleteModule],
+  imports: [FormsModule, MatIcon, MatAutocompleteModule, TranslateModule],
   templateUrl: './input-requirement-person.component.html',
   styleUrl: './input-requirement-person.component.scss'
 })

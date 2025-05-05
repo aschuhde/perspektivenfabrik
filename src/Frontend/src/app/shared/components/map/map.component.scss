@@ -1,4 +1,13 @@
+@use "responsive";
+
 .map{
     height: 550px;
     width: 800px;
+}
+
+@include responsive.mobile{
+  .map{
+    width: 100%;
+    height: 500px;
+  }  
 }

@@ -4,10 +4,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { AuthorizationService } from '../../services/auth.service';
 import {MatInput, MatLabel} from "@angular/material/input";
 import {MatFormField} from "@angular/material/form-field";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-login',
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     providers: [AuthorizationService]

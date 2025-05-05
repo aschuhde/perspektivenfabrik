@@ -15,12 +15,12 @@ import { InputProjectTimeComponent } from '../../components/input-project-time/i
 import { LocationInput } from '../../models/location-input';
 import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementMaterialInput } from '../../models/requirement-material-input';
-import {SelectOption} from "../../../../shared/models/select-option";
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-requirement-material',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, TranslateModule],
   templateUrl: './edit-requirement-material.component.html',
   styleUrl: './edit-requirement-material.component.scss'
 })

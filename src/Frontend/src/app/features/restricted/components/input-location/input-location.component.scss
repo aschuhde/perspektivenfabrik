@@ -1,3 +1,5 @@
+@use 'responsive';
+
 :host{
     > div{
         border: 1px solid #175153;
@@ -12,4 +14,11 @@
 
 .location-explanation{
     margin-top: 0;
+}
+
+@include responsive.mobile {
+  :host {
+    min-width: 0;
+    width: 100%;
+  }
 }

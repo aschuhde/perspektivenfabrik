@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-motivation-section',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './motivation-section.component.html',
   styleUrl: './motivation-section.component.scss'
 })

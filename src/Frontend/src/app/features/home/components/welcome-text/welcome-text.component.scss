@@ -1,4 +1,6 @@
 @use 'vars';
+@use 'responsive';
+
 #welcome-text-content{
     font-size: 1.8rem;   
     text-align: left;
@@ -16,17 +18,8 @@
     display: inline-block;
 }
 
-.with-border{
-    display: inline-block;
-    position: relative;
-}
-.with-border:after{
-    content: "";
-    position: absolute;
-    width: calc(100% + .4rem);
-    height: 100%;
-    left: -.2rem;
-    top: 0;
-    border: 1px solid vars.$bg-orange;
-    border-radius: .5rem;
+@include responsive.mobile {
+  .container{
+    width: 80%;
+  }
 }

@@ -3,19 +3,19 @@
         <fieldset>
             <div>
                 <mat-form-field style="width: 20rem">
-                    <mat-label>Email</mat-label>
+                    <mat-label>{{ "login.e-mail" | translate }}</mat-label>
                     <input type="email" matInput name="email" formControlName="email"/>
                 </mat-form-field>
             </div>
             <div>
                 <mat-form-field style="width: 20rem">
-                    <mat-label>Password</mat-label>
+                    <mat-label>{{ "login.password" | translate }}</mat-label>
                     <input type="password" matInput name="password" formControlName="password"/>
                 </mat-form-field>
             </div>
         </fieldset>
         <div class="form-buttons">
-            <button style="width: 20rem" type="submit">Login</button>
+            <button style="width: 20rem" type="submit">{{ "login.login" | translate }}</button>
         </div>
     </form>
 </div>

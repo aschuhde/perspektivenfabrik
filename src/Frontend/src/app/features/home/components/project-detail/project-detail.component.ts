@@ -28,10 +28,11 @@ import {
   RequirementMaterialsDialogComponent
 } from "../../dialogs/requirement-materials-dialog/requirement-materials-dialog.component";
 import { RequirementPersonsDialogComponent } from '../../dialogs/requirement-persons-dialog/requirement-persons-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-project-detail',
-    imports: [ImageGalleryComponent, MatIconModule],
+    imports: [ImageGalleryComponent, MatIconModule, TranslateModule],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })

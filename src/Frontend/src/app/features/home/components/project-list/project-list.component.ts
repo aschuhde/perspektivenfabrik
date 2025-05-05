@@ -16,10 +16,11 @@ import {
 } from "../../../../server/model/applicationModelsApiModelsApiProjectTag";
 import { HomeRouteNames } from '../../home-route-names';
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-project-list',
-  imports: [MoreIconComponent, MatIcon],
+  imports: [MoreIconComponent, MatIcon, TranslateModule],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss'
 })

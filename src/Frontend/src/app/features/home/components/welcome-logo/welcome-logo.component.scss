@@ -1,4 +1,6 @@
 @use 'vars';
+@use "responsive";
+
 :host {
     background-color: vars.$bg-orange;
     display: block;
@@ -7,4 +9,13 @@
     padding: 5rem 1rem 3rem 1rem;
     color: white;
     font-size: 4rem;
+}
+.temp-welcome-image {
+  width: 60%;
+}
+
+@include responsive.mobile {
+  .temp-welcome-image {
+    width: 100%;
+  }
 }

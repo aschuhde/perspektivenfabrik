@@ -1,22 +1,22 @@
 <div>
-    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="calendar_month"></mat-icon> {{typeName}} {{ timeNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> {{typeName}} entfernen</button></h4>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="calendar_month"></mat-icon> {{typeName}} {{ timeNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> {{ "input-project-time.remove-entry" | translate:{typeName: typeName} }}</span></button></h4>
     <div class="prefix-suffix-container">
-        <mat-form-field class="prefix prefix-50">
-            <mat-label>Zeittyp</mat-label>
+        <mat-form-field class="prefix prefix-50 w-100-mobile">
+            <mat-label>{{ "input-project-time.type" | translate }}</mat-label>
             <mat-select [(value)]="projectTimeType">
-            <mat-option value="range">Zeitraum</mat-option>
-            <mat-option value="date">Datum</mat-option>
-            <mat-option value="month">Monat</mat-option>        
+            <mat-option value="range">{{ "input-project-time.period" | translate }}</mat-option>
+            <mat-option value="date">{{ "input-project-time.date" | translate }}</mat-option>
+            <mat-option value="month">{{ "input-project-time.month" | translate }}</mat-option>        
             </mat-select>
         </mat-form-field>
         @if (projectTimeType === "range"){
-            <app-date-picker-range class="suffix suffix-50" [(startDate)]="startDate" [(endDate)]="endDate"></app-date-picker-range>
+            <app-date-picker-range class="suffix suffix-50 w-100-mobile" [(startDate)]="startDate" [(endDate)]="endDate"></app-date-picker-range>
         }
         @if (projectTimeType === "date"){
-            <app-date-picker class="suffix suffix-50" [(date)]="date"></app-date-picker>
+            <app-date-picker class="suffix suffix-50 w-100-mobile" [(date)]="date"></app-date-picker>
         }
         @if (projectTimeType === "month"){
-            <app-month-picker class="suffix suffix-50" [(month)]="month"></app-month-picker>
+            <app-month-picker class="suffix suffix-50 w-100-mobile" [(month)]="month"></app-month-picker>
         }
     </div>
 </div>

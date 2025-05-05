@@ -4,10 +4,11 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, Ma
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-map-dialog',
-  imports: [MatLabel, MatFormField, MatInput, FormsModule, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MapComponent],
+  imports: [MatLabel, MatFormField, MatInput, FormsModule, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MapComponent, TranslateModule],
   templateUrl: './map-dialog.component.html',
   styleUrl: './map-dialog.component.scss'
 })

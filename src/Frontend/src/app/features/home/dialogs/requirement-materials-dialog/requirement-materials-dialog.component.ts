@@ -11,11 +11,11 @@ import {
 } from "../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMaterial";
 import { ApplicationModelsApiModelsApiRequirementSpecificationMoney } from '../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMoney';
 import {RequirementMaterialsComponent} from "../../components/requirement-materials/requirement-materials.component";
-import {RequirementPersonsComponent} from "../../components/requirement-persons/requirement-persons.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-requirement-materials-dialog',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementMaterialsComponent],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, RequirementMaterialsComponent, TranslateModule],
   templateUrl: './requirement-materials-dialog.component.html',
   styleUrl: './requirement-materials-dialog.component.scss'
 })

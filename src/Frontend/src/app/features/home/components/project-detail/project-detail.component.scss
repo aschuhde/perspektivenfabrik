@@ -1,3 +1,4 @@
+@use "responsive";
 .top{
     min-height: calc(100% - 10rem);
     display: flex;
@@ -84,7 +85,56 @@
     flex-grow: 1;
     flex-basis: 50%;
 }
-.show-more-details{
-    font-size: 14px;
-    text-decoration: underline;
+
+@include responsive.mobile {
+  .top {
+    min-height: 0;
+    display: block;
+  }
+
+  .left {
+    min-height: 0;
+    width: 100%;
+    margin-top: 20rem;
+  }
+
+  .main {
+    width: 100%;
+    height: auto;
+
+    .content {
+      padding: 2rem 2rem;
+    }
+  }
+
+  .bottom {
+    height: auto;
+  }
+
+  .gallery {
+    position: absolute;
+    top: 3.5rem;
+    left: 0;
+    background-color: #EA6A31;
+  }
+
+  .bottom{
+    height: auto;
+    flex-direction: column;
+
+    .bottom-left{
+      width: 100%;
+
+      > div{
+        padding: 0 1rem;
+        text-align: center;
+      }
+    }
+    .bottom-right{
+      width: 100%;
+      > div{
+        padding: 1rem 2rem;
+      }
+    }
+  }
 }

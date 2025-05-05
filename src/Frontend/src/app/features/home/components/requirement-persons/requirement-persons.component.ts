@@ -7,10 +7,11 @@ import {LocaleDataProvider} from "../../../../core/services/locale-data.service"
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 import {ApiProjectModel} from "../../models/api-project-model";
 import {MatIconModule} from "@angular/material/icon";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-requirement-persons',
-  imports: [MatIconModule],
+  imports: [MatIconModule, TranslateModule],
   templateUrl: './requirement-persons.component.html',
   styleUrl: './requirement-persons.component.scss'
 })

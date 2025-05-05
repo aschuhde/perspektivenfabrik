@@ -1,58 +1,58 @@
 <div>
-    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="location_on"></mat-icon> Ort {{ locationNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon> Ort entfernen</button></h4>
+    <h4 class="split-left-right mt-0"><span><mat-icon fontIcon="location_on"></mat-icon> {{ "input-location.location" | translate}} {{ locationNumber }}: </span><button class="secondary" (click)="removeClicked()"><mat-icon fontIcon="delete"></mat-icon><span class="only-desktop"> Ort entfernen</span></button></h4>
     <mat-form-field class="w-100">
-        <mat-label>Ortstyp</mat-label>
+        <mat-label>{{ "input-location.location-type" | translate }}</mat-label>
         <mat-select [(value)]="locationType">
-        <mat-option value="unkown">Nicht festgelegt</mat-option>
-        <mat-option value="remote">Remote/Digital</mat-option>
-        <mat-option value="name">Name eines Ortes</mat-option>
-        <mat-option value="address">Adresse</mat-option>
-        <mat-option value="coordinates">Koordinaten</mat-option>
+        <mat-option value="unkown">{{ "input-location.not-defined" | translate }}</mat-option>
+        <mat-option value="remote">{{ "input-location.remote" | translate }}</mat-option>
+        <mat-option value="name">{{ "input-location.name-of-a-location" | translate }}</mat-option>
+        <mat-option value="address">{{ "input-location.address" | translate }}</mat-option>
+        <mat-option value="coordinates">{{ "input-location.coordinates" | translate }}</mat-option>
         </mat-select>
     </mat-form-field>
     @if (locationType === "remote"){
-        <p class="location-explanation">Möchtest du noch einen Link hinterlegen? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationLink)"></mat-icon></p>
+        <p class="location-explanation">{{ "input-location.do-you-want-to-add-a-link" | translate }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationLink)"></mat-icon></p>
         <mat-form-field class="w-100">
             <mat-label>Link</mat-label>
             <input type="text" matInput [(ngModel)]="locationLink" />
         </mat-form-field>
     }
     @if (locationType === "name"){
-        <p class="location-explanation">Wie heißt der Ort, den du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationName)"></mat-icon></p>
+        <p class="location-explanation">{{ "input-location.what-is-the-locations-name" | translate }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationName)"></mat-icon></p>
         <div class="prefix-suffix-container">
             <mat-form-field class="w-100 prefix">
-                <mat-label>Addresse des Ortes</mat-label>
+                <mat-label>{{ "input-location.location-address" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="locationName" />
             </mat-form-field>
             <mat-form-field class="w-100 middle">
-                <mat-label>Name des Ortes</mat-label>
+                <mat-label>{{ "input-location.location-name" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="locationDisplayName" />
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile"> {{ "input-location.select-on-map" | translate }}</span></button>
         </div>
     }
     @if (locationType === "address"){
-        <p class="location-explanation">Wie ist die Adresse, die du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationAddress)"></mat-icon></p>
+        <p class="location-explanation">{{ "input-location.what-is-the-address" | translate }} <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationAddress)"></mat-icon></p>
         <div class="prefix-suffix-container">
             <mat-form-field class="w-100 prefix">
-                <mat-label>Adresse</mat-label>
+                <mat-label>{{ "input-location.address" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="locationAddress" />
             </mat-form-field>
             <mat-form-field class="w-100 middle">
-                <mat-label>Name des Ortes</mat-label>
+                <mat-label>{{ "input-location.location-name" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="locationAddressDisplayName" />
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile">  {{ "input-location.select-on-map" | translate }}</span></button>
         </div>
     }
     @if (locationType === "coordinates"){
-        <p class="location-explanation">Wie sind die Koordinaten in "Lat, Lon",<br>die du angeben möchtest? <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationCoordinates)"></mat-icon></p>
+        <p class="location-explanation"><span [innerHTML]="'input-location.what-are-the-coordinates' | translate"></span> <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpLocationCoordinates)"></mat-icon></p>
         <div class="prefix-suffix-container">
             <mat-form-field class="w-100 prefix">
-                <mat-label>Lat, Lon</mat-label>
+                <mat-label>{{ "input-location.lat-lon" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="locationCoordinates" />            
             </mat-form-field>
-            <button class="suffix" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon></button>
+            <button class="suffix w-100-mobile" (click)="showMapDialog()"><mat-icon fontIcon="map"></mat-icon><span class="only-mobile"> {{ "input-location.select-on-map" | translate }}</span></button>
         </div>
     }     
 </div>

@@ -5,6 +5,7 @@ import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-project-filtering',
@@ -14,7 +15,8 @@ import { RestrictedRouteNames } from '../../../restricted/restricted-route-names
     MatSelect,
     FormsModule,
     MatInput,
-    MatIcon
+    MatIcon,
+    TranslateModule
   ],
   templateUrl: './project-filtering.component.html',
   styleUrl: './project-filtering.component.scss'

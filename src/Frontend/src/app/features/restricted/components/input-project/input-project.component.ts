@@ -42,6 +42,8 @@ import {Observable} from "rxjs";
 import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
 import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
 import {BASE_PATH} from "../../../../server/variables";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
     selector: 'app-input-project',
@@ -61,7 +63,8 @@ import {BASE_PATH} from "../../../../server/variables";
         MatAutocompleteModule,
         MatChipsModule,
         AngularEditorModule,
-        InputContactSpecificationComponent],
+        InputContactSpecificationComponent,
+        TranslateModule],
     templateUrl: './input-project.component.html',
     styleUrl: './input-project.component.scss'
 })
@@ -86,6 +89,7 @@ export class InputProjectComponent {
     localeDataProvider = inject(LocaleDataProvider);
     static IgnoreUnloadEvent = false;
     autoCompleteDataService = inject(AutocompleteDataService);
+    translateService = inject(TranslateService);
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
       spellcheck: true,
@@ -325,6 +329,17 @@ export class InputProjectComponent {
   }
   
   get typeName(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "progetto";
+        case "idea":
+          return "idea";
+        case "inspiration":
+          return "ispirazione";
+      }
+    }
     switch(this.projectType){
       case "project":
       case "none":
@@ -336,6 +351,9 @@ export class InputProjectComponent {
     }
   }
 get typeNameGenitive(){
+  if(this.currentLanguage === "it"){
+    return this.typeName;
+  }
     switch(this.projectType){
         case "project":
         case "none":
@@ -346,7 +364,22 @@ get typeNameGenitive(){
             return "Inspiration";
     }
 }
+  get currentLanguage(){
+      return this.translateService.currentLang as Language;
+  }
   get yourDeclination(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "il tuo";
+        case "idea":
+          return "la tua";
+        case "inspiration":
+          return "la tua";
+      }  
+    }
+      
     switch(this.projectType){
       case "project":
       case "none":
@@ -358,6 +391,17 @@ get typeNameGenitive(){
     }
   }
   get yoursDeclination(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "del tuo";
+        case "idea":
+          return "della tua";
+        case "inspiration":
+          return "della tua";
+      }
+    }
     switch(this.projectType){
       case "project":
       case "none":
@@ -370,6 +414,17 @@ get typeNameGenitive(){
   }
 
     get yoursDeclinationDative(){
+      if(this.currentLanguage === "it"){
+        switch(this.projectType){
+          case "project":
+          case "none":
+            return "del tuo";
+          case "idea":
+            return "della tua";
+          case "inspiration":
+            return "della tua";
+        }
+      }
         switch(this.projectType){
             case "project":
             case "none":
@@ -380,6 +435,21 @@ get typeNameGenitive(){
                 return "deiner";
         }
     }
+
+  get yoursDeclinationDativeTo(){
+    if(this.currentLanguage === "it"){
+      switch(this.projectType){
+        case "project":
+        case "none":
+          return "al tuo";
+        case "idea":
+          return "alla tua";
+        case "inspiration":
+          return "alla tua";
+      }
+    }
+    return this.yoursDeclinationDative;
+  }
 
 
   get messageDialogs(){
@@ -540,11 +610,49 @@ get typeNameGenitive(){
   }
 
   select(groupName: string){
+    if(groupName === this.currentGroup) return;
     this.currentGroup = groupName;
     
     const url = new URL(window.location.href);
     url.searchParams.set("group", groupName);
     window.history.replaceState({}, '', url.toString());
+  }
+  
+  getGroups(){
+        return ['projectType', 'projectName', 'projectPhase', 'projectLocation', 'projectTime', 'projectRequirements'
+            , 'projectContact', 'projectTags', 'projectDescription', 'projectImages', 'projectVisibility']
+  }
+  
+  selectNext(){
+    const groups = this.getGroups();
+    const currentGroupIndex = groups.indexOf(this.currentGroup);
+    if(currentGroupIndex < 0) {
+        this.select(groups[0]);
+    }
+    if(currentGroupIndex >= groups.length - 1){
+        return;
+    }
+    let nextGroup = groups[currentGroupIndex+1];
+    if(nextGroup === 'projectPhase' && this.projectType !== "project"){
+        nextGroup = groups[currentGroupIndex+2];
+    }
+    this.select(nextGroup);
+  }
+  
+  selectPrevious(){
+    const groups = this.getGroups();
+    const currentGroupIndex = groups.indexOf(this.currentGroup);
+    if(currentGroupIndex < 0) {
+        this.select(groups[0]);
+    }
+    if(currentGroupIndex === 0){
+        return;
+    }
+    let prevGroup = groups[currentGroupIndex-1];
+    if(prevGroup === 'projectPhase' && this.projectType !== "project"){
+        prevGroup = groups[currentGroupIndex-2];
+    }
+    this.select(prevGroup);
   }
 
   stepNumber(baseNumber: number){    

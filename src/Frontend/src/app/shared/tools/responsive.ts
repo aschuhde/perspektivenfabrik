@@ -1,0 +1,1 @@
+export const MobileScreenWidthBreakpoint = 1000;

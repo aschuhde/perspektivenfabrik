@@ -1,3 +1,5 @@
+@use "responsive";
+
 :host{
     > div{
         border: 1px solid #175153;
@@ -7,4 +9,13 @@
     }  
     padding: .5rem;
     display: block;
+}
+
+@include responsive.mobile{
+  :host{
+    width: 100%;
+  }
+  .requirement-money-project-time{
+    padding: 0;
+  }
 }

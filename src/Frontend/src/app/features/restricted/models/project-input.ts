@@ -65,40 +65,7 @@ export class ProjectInput{
     get projectName(){
         return this.projectTitle?.replaceAll(" ", ""); //todo: generate name
     }
-    get typeName(){
-        switch(this.projectType){
-          case "project":
-          case "none":
-            return "Projekt";
-          case "idea":
-            return "Idee";
-          case "inspiration":
-            return "Inspiration";
-        }
-      }
-      get yourDeclination(){
-        switch(this.projectType){
-          case "project":
-          case "none":
-            return "dein";
-          case "idea":
-            return "deine";
-          case "inspiration":
-            return "deine";
-        }
-      }
-      get yoursDeclination(){
-        switch(this.projectType){
-          case "project":
-          case "none":
-            return "deines";
-          case "idea":
-            return "deiner";
-          case "inspiration":
-            return "deiner";
-        }
-      }
-      
+    
     loadFromProject(project: ApplicationModelsApiModelsApiProjectBody){
       if (!project) {
         return;

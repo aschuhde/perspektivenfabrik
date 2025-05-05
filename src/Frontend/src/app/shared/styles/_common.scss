@@ -1,4 +1,12 @@
 @use 'vars';
+@use 'responsive';
+
+hr{
+  border-bottom: 1px solid black;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
 
 .text-center{
     text-align: center;
@@ -58,40 +66,54 @@
 .d-inline-block{
     display: inline-block;
 }
-.prefix-suffix-container{
+@mixin prefix-suffix-container {
+  display: flex;
+
+  .prefix, .suffix, .middle {
+    min-height: 3.5rem;
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+  .suffix, .middle {
+    .mdc-text-field {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .prefix, .middle {
+    .mdc-text-field {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .prefix-50 {
+    flex-basis: 50%;
+  }
+
+  .suffix-50 {
+    flex-basis: 50%;
+  }
+}
+@include responsive.desktop {
+  .prefix-suffix-container {
+   @include prefix-suffix-container
+  }
+  .split-left-right-desktop{
     display: flex;
-
-    .prefix, .suffix, .middle{
-        min-height: 3.5rem;
-
-        .mat-mdc-form-field-subscript-wrapper{
-            display: none;
-        }
-    }
-    .suffix, .middle{
-        .mdc-text-field {
-            border-top-left-radius: 0 !important;
-            border-bottom-left-radius: 0 !important;
-        }
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-    .prefix, .middle{
-        .mdc-text-field {
-            border-top-right-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-        }
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .prefix-50{
-        flex-basis: 50%;
-    }
-
-    .suffix-50{
-        flex-basis: 50%;
-    }
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .field-min-width-medium{
@@ -107,4 +129,27 @@
 }
 .flex-grow-1{
     flex-grow: 1;
+}
+
+.only-mobile{
+  display: none;
+}
+@include responsive.mobile {
+  .only-mobile{
+    display: unset;
+  }
+  .only-desktop{
+    display: none;
+  }
+  
+  .w-100-mobile{
+    width: 100% !important;
+  }
+
+  .prefix-suffix-container-with-mobile{
+    @include prefix-suffix-container
+  }
+  .cdk-overlay-pane {
+    width: calc(100% - 1rem);
+  }
 }

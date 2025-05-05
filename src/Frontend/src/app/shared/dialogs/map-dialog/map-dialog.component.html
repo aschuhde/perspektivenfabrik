@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Auf der Karte auswählen</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title>{{ "map.select-on-map" | translate }}</h2>
+<mat-dialog-content class="w-100-mobile">
     <div>
         <mat-form-field class="w-100">
-            <mat-label>Adresse / Name / POI</mat-label>
+            <mat-label>{{ "map.address-name-poi" | translate }}</mat-label>
             <input type="text" matInput [(ngModel)]="retrievedPoint" />
         </mat-form-field>
     </div>
@@ -10,9 +10,9 @@
 </mat-dialog-content>
 <mat-dialog-actions>    
     @if(type == "lookup"){
-      <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>Übernehmen</button>
-      <button class="secondary" mat-dialog-close>Abbrechen</button>
+      <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>{{ "general.apply" | translate }}</button>
+      <button class="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
     } @else {
-        <button class="secondary" mat-dialog-close>Schließen</button>
+        <button class="secondary" mat-dialog-close>{{ "general.close" | translate }}</button>
     }
 </mat-dialog-actions>

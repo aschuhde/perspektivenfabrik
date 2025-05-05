@@ -1,0 +1,14 @@
+@use "responsive";
+
+.input-container{
+  cursor: pointer;
+  width: 45rem;
+  text-align: center;
+}
+
+@include responsive.mobile {
+  .input-container{
+    width: 100%;
+  }
+}
+

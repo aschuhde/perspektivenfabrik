@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>Helfer*innengruppe {{ requirementNumber }}</h2>
+<h2 mat-dialog-title>{{"input-requirement-person.helping-hands-group" | translate}} {{ requirementNumber }}</h2>
 <mat-dialog-content>            
     <div>
-        <p>Welche Skills sollten die Helfer*innen mit sich bringen?</p>
+        <p>{{"input-requirement-person.what-skills" | translate}}</p>
         <mat-form-field class="w-100">
-            <mat-label>Skill</mat-label>
+            <mat-label>{{"input-requirement-person.skill" | translate}}</mat-label>
             <input type="text"
-                    placeholder="Skill"
+                    [placeholder]="'input-requirement-person.skill' | translate"
                     aria-label="Skill"
                     matInput
                     (matChipInputTokenEnd)="addSelectedSkill($event)"               
@@ -30,53 +30,53 @@
             </mat-chip-row>
         }
         </mat-chip-grid>
-        <p>Wie viele Personen brauchst du?</p>
+        <p>{{"input-requirement-person.how-many-persons" | translate}}</p>
         <mat-form-field class="w-100">
-            <mat-label>Anzahl Personen</mat-label>
+            <mat-label>{{"input-requirement-person.number-of-persons" | translate}}</mat-label>
             <input type="text"
                     aria-label="Number of persons"
                     matInput
                     [(ngModel)]="numberOfPersons"/>
         </mat-form-field>
-        <p>Welcher Arbeitsaufwand ist von jeder Person zu bewältigen?</p>
+        <p>{{"input-requirement-person.what-workload" | translate}}</p>
         <div class="prefix-suffix-container">
-            <mat-form-field class="prefix prefix-50">
-                <mat-label>Stunden</mat-label>
+            <mat-form-field class="prefix prefix-50 w-100-mobile">
+                <mat-label>{{"input-requirement-person.hours" | translate}}</mat-label>
                 <input type="text"
                         aria-label="Hours"
                         matInput
                         [(ngModel)]="hours"/>
             </mat-form-field> 
-            <mat-form-field class="suffix suffix-50">
-                <mat-label>Aufwandstyp</mat-label>
+            <mat-form-field class="suffix suffix-50 w-100-mobile">
+                <mat-label>{{"input-requirement-person.workload-type" | translate}}</mat-label>
                 <mat-select [(value)]="effortHoursType">
-                <mat-option value="perWeek">pro Woche</mat-option>
-                <mat-option value="total">insgesamt</mat-option>          
+                <mat-option value="perWeek">{{"input-requirement-person.per-week" | translate}}</mat-option>
+                <mat-option value="total">{{"input-requirement-person.total" | translate}}</mat-option>          
                 </mat-select>
             </mat-form-field>
         </div>        
-        <p>In welchem Zeitraum benötigst du die Helfer*innen?</p> 
+        <p>{{"input-requirement-person.in-what-period" | translate}}</p> 
         <div>
-            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">Identisch mit dem Projektzeitraum</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="requirementTimeIsIdenticalToProjectTime">{{"input-requirement-person.identical-to-project-period" | translate}}</mat-slide-toggle>
         </div>
         <div [class.hidden]="requirementTimeIsIdenticalToProjectTime">        
             @for(requirementTime of requirementTimes; track requirementTime){
                 <app-input-project-time (onChanged)="onUpdated()" [timeIndex]="$index" [projectTime]="requirementTime" (remove)="removeRequirementTime($event)"></app-input-project-time>
             }        
-            <button aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> Weiteren Zeitpunkt/Zeitraum hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement time" (click)="addRequirementTime()"><mat-icon fontIcon="add"></mat-icon> {{"input-requirement-person.add-another-period" | translate}}</button>
         </div>
-        <p>An welchem Ort benötigst du die Helfer*innen?</p> 
+        <p>{{"input-requirement-person.in-which-location" | translate}}</p> 
         <div>
-            <mat-slide-toggle [(ngModel)]="requirementLocationIsIdenticalToProjectLocation">Identisch mit dem Projektort</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="requirementLocationIsIdenticalToProjectLocation">{{"input-requirement-person.identical-to-project-location" | translate}}</mat-slide-toggle>
         </div>
         <div [class.hidden]="requirementLocationIsIdenticalToProjectLocation">        
             @for(requirementLocation of requirementLocations; track requirementLocation){
                 <app-input-location (onChanged)="onUpdated()" [locationIndex]="$index" [location]="requirementLocation" (remove)="removeRequirementLocation($event)"></app-input-location>
             }        
-            <button aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> Weiteren Ort hinzufügen</button>
+            <button class="w-100-mobile" aria-label="Add requirement location" (click)="addRequirementLocation()"><mat-icon fontIcon="add"></mat-icon> {{"input-requirement-person.add-another-location" | translate}}</button>
         </div>
     </div>    
 </mat-dialog-content>
 <mat-dialog-actions>    
-  <button mat-dialog-close>Schließen</button>
+  <button mat-dialog-close>{{"input-requirement-person.close" | translate}}</button>
 </mat-dialog-actions>

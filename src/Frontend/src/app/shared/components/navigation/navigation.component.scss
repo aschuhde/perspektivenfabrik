@@ -1,8 +1,21 @@
+@use "responsive";
+
 :host{
-    display: inline-block;
     width: 30rem;
     display: flex;
     justify-content: space-between;
     padding-right: 10rem;
     align-items: center;
+}
+
+@include responsive.mobile {
+  :host {
+    padding-right: 0;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+    background-color: white;
+  }
 }
