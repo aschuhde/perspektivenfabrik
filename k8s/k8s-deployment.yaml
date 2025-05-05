@@ -1,0 +1,211 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-deployment
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    matchLabels:
+      app: proxy-pod
+  template:
+    metadata:
+      labels:
+        app: proxy-pod
+    spec:
+      containers:
+        - name: proxy-container
+          image: ghcr.io/aschuhde/perspektivenfabrik-proxy:main
+          ports:
+            - containerPort: 9000
+            - containerPort: 9443
+          envFrom:
+            - configMapRef:
+                name: proxy-config
+          imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    matchLabels:
+      app: nginx-pod
+  template:
+    metadata:
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx-container
+          image: ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main
+          ports:
+            - containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: proxy-config
+          imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-deployment
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    matchLabels:
+      app: angular-pod
+  template:
+    metadata:
+      labels:
+        app: angular-pod
+    spec:
+      containers:
+        - name: angular-container
+          image: ghcr.io/aschuhde/perspektivenfabrik-frontend:main
+          ports:
+            - containerPort: 8003
+          envFrom:
+            - configMapRef:
+                name: proxy-config
+          imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    matchLabels:
+      app: api-pod
+  template:
+    metadata:
+      labels:
+        app: api-pod
+    spec:
+      containers:
+        - name: api-container
+          image: ghcr.io/aschuhde/perspektivenfabrik-api:main
+          ports:
+            - containerPort: 8001
+          env:
+            - name: CONFIG_Serilog__MinimumLevel__Default
+              value: Debug            
+          envFrom:
+            - configMapRef:
+                name: api-config
+            - configMapRef:
+                name: db-config
+          imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    matchLabels:
+      app: postgres-pod
+  template:
+    metadata:
+      labels:
+        app: postgres-pod
+    spec:
+      containers:
+        - name: postgres-container
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - configMapRef:
+                name: db-config
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+          imagePullPolicy: Always
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+# Service for Angular
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-service
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    app: angular-pod
+  ports:
+    - port: 8003
+      targetPort: 8003
+  type: ClusterIP
+---
+# Service for Nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    app: nginx-pod
+  ports:
+    - port: 8002
+      targetPort: 8002
+  type: ClusterIP
+---
+# Service for API
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    app: api-pod
+  ports:
+    - port: 8001
+      targetPort: 8001
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+  namespace: perspektivenfabrik
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: MC_main_aks1_germanywestcentral
+    service.beta.kubernetes.io/azure-pip-name: perspektivenfabrikPublicIP
+    service.beta.kubernetes.io/azure-dns-label-name: perspektivenfabrik-aks1
+spec:
+  selector:
+    app: proxy-pod
+  ports:
+    - name: http
+      port: 9000
+      targetPort: 9000
+    - name: https
+      port: 9443
+      targetPort: 9443
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: perspektivenfabrik
+spec:
+  selector:
+    app: postgres-pod
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
