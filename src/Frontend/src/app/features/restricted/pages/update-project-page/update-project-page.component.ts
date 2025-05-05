@@ -9,6 +9,7 @@ import {ApiService} from "../../../../server/api/api.service";
 import {ApplicationModelsApiModelsApiProject} from "../../../../server/model/applicationModelsApiModelsApiProject";
 import {ProjectSaveContext} from "../../models/project-save-context";
 import { RestrictedRouteNames } from '../../restricted-route-names';
+import {isServer} from "../../../../shared/tools/server-tools";
 
 @Component({
   selector: 'app-update-project-page',
@@ -24,6 +25,8 @@ export class UpdateProjectPageComponent {
   isLoading: boolean = true;
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
   loadProject(){
+    if(isServer()) return;
+    
     const projectResponse = this.apiService.webApiEndpointsGetUsersProject(this.projectIdentifier);
 
     projectResponse.subscribe(x => {

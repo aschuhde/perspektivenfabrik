@@ -4,6 +4,7 @@ import { ApiService } from '../../../../server/api/api.service';
 import { ApplicationModelsApiModelsApiProject } from '../../../../server/model/applicationModelsApiModelsApiProject';
 import { ProjectDetailComponent } from '../../components/project-detail/project-detail.component';
 import { NavigationBarFullComponent } from '../../../../shared/components/navigation-bar-full/navigation-bar-full.component';
+import {isServer} from "../../../../shared/tools/server-tools";
 
 @Component({
   selector: 'app-project-detail-page',
@@ -16,6 +17,8 @@ export class ProjectDetailPageComponent {
   apiService = inject(ApiService)
   project: ApplicationModelsApiModelsApiProject | null = null
   loadProject(){
+    if(isServer()) return;
+    
     const projectResponse = this.apiService.webApiEndpointsGetProject(this.projectIdentifier);
 
     projectResponse.subscribe(x => {
