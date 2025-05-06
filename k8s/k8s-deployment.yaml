@@ -126,7 +126,7 @@ spec:
             - configMapRef:
                 name: perspektivenfabrik-db-config
           volumeMounts:
-            - name: perspektivenfabrik-postgres-storage3
+            - name: perspektivenfabrik-postgres-storage
               mountPath: /var/lib/postgresql/data
           imagePullPolicy: Always
       volumes:
