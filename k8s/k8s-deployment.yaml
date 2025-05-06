@@ -1,92 +1,92 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: proxy-deployment
+  name: perspektivenfabrik-proxy-deployment
   namespace: perspektivenfabrik
 spec:
   selector:
     matchLabels:
-      app: proxy-pod
+      app: perspektivenfabrik-proxy-pod
   template:
     metadata:
       labels:
-        app: proxy-pod
+        app: perspektivenfabrik-proxy-pod
     spec:
       containers:
-        - name: proxy-container
+        - name: perspektivenfabrik-proxy-container
           image: ghcr.io/aschuhde/perspektivenfabrik-proxy:main
           ports:
             - containerPort: 9000
             - containerPort: 9443
           envFrom:
             - configMapRef:
-                name: proxy-config
+                name: perspektivenfabrik-proxy-config
           imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: perspektivenfabrik-nginx-deployment
   namespace: perspektivenfabrik
 spec:
   selector:
     matchLabels:
-      app: nginx-pod
+      app: perspektivenfabrik-nginx-pod
   template:
     metadata:
       labels:
-        app: nginx-pod
+        app: perspektivenfabrik-nginx-pod
     spec:
       containers:
-        - name: nginx-container
+        - name: perspektivenfabrik-nginx-container
           image: ghcr.io/aschuhde/perspektivenfabrik-frontend-container:main
           ports:
             - containerPort: 8002
           envFrom:
             - configMapRef:
-                name: proxy-config
+                name: perspektivenfabrik-proxy-config
           imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: angular-deployment
+  name: perspektivenfabrik-angular-deployment
   namespace: perspektivenfabrik
 spec:
   selector:
     matchLabels:
-      app: angular-pod
+      app: perspektivenfabrik-angular-pod
   template:
     metadata:
       labels:
-        app: angular-pod
+        app: perspektivenfabrik-angular-pod
     spec:
       containers:
-        - name: angular-container
+        - name: perspektivenfabrik-angular-container
           image: ghcr.io/aschuhde/perspektivenfabrik-frontend:main
           ports:
             - containerPort: 8003
           envFrom:
             - configMapRef:
-                name: proxy-config
+                name: perspektivenfabrik-proxy-config
           imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-deployment
+  name: perspektivenfabrik-api-deployment
   namespace: perspektivenfabrik
 spec:
   selector:
     matchLabels:
-      app: api-pod
+      app: perspektivenfabrik-api-pod
   template:
     metadata:
       labels:
-        app: api-pod
+        app: perspektivenfabrik-api-pod
     spec:
       containers:
-        - name: api-container
+        - name: perspektivenfabrik-api-container
           image: ghcr.io/aschuhde/perspektivenfabrik-api:main
           ports:
             - containerPort: 8001
@@ -95,27 +95,27 @@ spec:
               value: Debug            
           envFrom:
             - configMapRef:
-                name: api-config
+                name: perspektivenfabrik-api-config
             - configMapRef:
-                name: db-config
+                name: perspektivenfabrik-db-config
           imagePullPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-deployment
+  name: perspektivenfabrik-postgres-deployment
   namespace: perspektivenfabrik
 spec:
   selector:
     matchLabels:
-      app: postgres-pod
+      app: perspektivenfabrik-postgres-pod
   template:
     metadata:
       labels:
-        app: postgres-pod
+        app: perspektivenfabrik-postgres-pod
     spec:
       containers:
-        - name: postgres-container
+        - name: perspektivenfabrik-postgres-container
           image: postgres
           ports:
             - containerPort: 5432
@@ -124,25 +124,25 @@ spec:
               value: /var/lib/postgresql/data/pgdata
           envFrom:
             - configMapRef:
-                name: db-config
+                name: perspektivenfabrik-db-config
           volumeMounts:
-            - name: postgres-storage
+            - name: perspektivenfabrik-postgres-storage3
               mountPath: /var/lib/postgresql/data
           imagePullPolicy: Always
       volumes:
-        - name: postgres-storage
+        - name: perspektivenfabrik-postgres-storage
           persistentVolumeClaim:
-            claimName: postgres-pvc
+            claimName: perspektivenfabrik-postgres-pvc
 ---
 # Service for Angular
 apiVersion: v1
 kind: Service
 metadata:
-  name: angular-service
+  name: perspektivenfabrik-angular-service
   namespace: perspektivenfabrik
 spec:
   selector:
-    app: angular-pod
+    app: perspektivenfabrik-angular-pod
   ports:
     - port: 8003
       targetPort: 8003
@@ -152,11 +152,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: perspektivenfabrik-nginx-service
   namespace: perspektivenfabrik
 spec:
   selector:
-    app: nginx-pod
+    app: perspektivenfabrik-nginx-pod
   ports:
     - port: 8002
       targetPort: 8002
@@ -166,11 +166,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: perspektivenfabrik-api-service
   namespace: perspektivenfabrik
 spec:
   selector:
-    app: api-pod
+    app: perspektivenfabrik-api-pod
   ports:
     - port: 8001
       targetPort: 8001
@@ -179,7 +179,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: proxy-service
+  name: perspektivenfabrik-proxy-service
   namespace: perspektivenfabrik
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-resource-group: MC_main_aks1_germanywestcentral
@@ -187,7 +187,7 @@ metadata:
     service.beta.kubernetes.io/azure-dns-label-name: perspektivenfabrik-aks1
 spec:
   selector:
-    app: proxy-pod
+    app: perspektivenfabrik-proxy-pod
   ports:
     - name: http
       port: 9000
@@ -200,11 +200,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-service
+  name: perspektivenfabrik-postgres-service
   namespace: perspektivenfabrik
 spec:
   selector:
-    app: postgres-pod
+    app: perspektivenfabrik-postgres-pod
   ports:
     - port: 5432
       targetPort: 5432
