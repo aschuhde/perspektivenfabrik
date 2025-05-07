@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LanguageSwitchComponent } from '../language-switch/language-switch.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserAreaComponent } from '../user-area/user-area.component';
+import {HomeRouteNames} from "../../../features/home/home-route-names";
 
 @Component({
   selector: 'app-navigation',
@@ -10,6 +11,7 @@ import { UserAreaComponent } from '../user-area/user-area.component';
   styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent {
+  aboutUsUrl = HomeRouteNames.AboutUsUrl();
   constructor() {
     
   }

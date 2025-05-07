@@ -201,7 +201,10 @@
     "do-you-wanna-help": "Vuoi dare una mano anche tu?",
     "lets-go": "Cominciamo!",
     "we-need": "Abbiamo bisogno",
-    "we-search": "Cerchiamo"
+    "we-search": "Cerchiamo",
+    "projects": "Progetti",
+    "ideas": "Idee",
+    "inspirations": "Ispirazioni"
   },
   "project-detail": {
     "location": "Luogo",
@@ -236,5 +239,20 @@
     "when": "Quando?",
     "where": "Dove?",
     "helping-hands-group": "Gruppo aiutanti"
+  },
+  "aboutUs": {
+    "thePeopleBehindPerspektivenfabrik": "Le menti dietro Perspektivenfabrik",
+    "descriptionText": "Siamo un gruppo di 4 - 6 persone con background diversi, ma con una visione comune: l'Alto Adige deve diventare un luogo in cui l'azione sostenibile diventa visibile, tangibile e naturale. Perspektivenfabrik è il nostro spazio comune per promuovere proprio questo: <strong>scambio, ispirazione e soluzioni concrete per un futuro vivibile in Alto Adige.</strong>",
+    "thatsUs": "Siamo noi",
+    "aboutOurGoals": "Il cambiamento climatico è una questione seria, ma crediamo che la rassegnazione non ci porterà da nessuna parte. Ciò che ci spinge è la forza del positivo: progetti che danno coraggio. Persone che si mettono in moto. Soluzioni che funzionano. Perspektivenfabrik vuole dimostrare che la sostenibilità non significa rinuncia, ma gioia di vivere, creatività e comunità.",
+    "anton-software-developer": "Sviluppatore software",
+    "anna-designer": "Designer",
+    "dominik-social-media": "Social Media",
+    "fabian-social-media": "Social Media",
+    "simplicity": "Leggerezza",
+    "humor": "Umorismo",
+    "insteadOf": "invece di",
+    "ecoPessimism": "Ecopessimismo",
+    "onInsta": "La Perspektivenfabrik su Instagram"
   }
 }

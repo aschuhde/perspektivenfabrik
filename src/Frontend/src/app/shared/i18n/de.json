@@ -201,7 +201,10 @@
       "do-you-wanna-help": "Willst du auch anpacken?",
       "lets-go": "Pack mas!",
       "we-need": "Wir benötigen",
-      "we-search": "Wir suchen"
+      "we-search": "Wir suchen",
+      "projects": "Projekte",
+      "ideas": "Ideen",
+      "inspirations": "Inspirationen"
     },
     "project-detail": {
       "location": "Ort",
@@ -236,5 +239,20 @@
       "when": "Wann?",
       "where": "Wo?",
       "helping-hands-group": "Helfer*innengruppe"
+    },
+    "aboutUs": {
+      "thePeopleBehindPerspektivenfabrik": "Die Köpfe hinter der Perspektivenfabrik",
+      "descriptionText": "Wir sind eine Gruppe von 4 - 6 Menschen mit unterschiedlichen Hintergründen, aber einer gemeinsamen Vision: Südtirol soll ein Ort werden, an dem nachhaltiges Handeln sichtbar, greifbar und selbstverständlich wird. Die Perspektivenfabrik ist unser gemeinsamer Raum, um genau das zu fördern: <strong>Austausch, Inspiration und konkrete Lösungen für eine lebenswerte Zukunft in Südtirol.</strong>",
+      "thatsUs": "Das sind wir",
+      "aboutOurGoals": "Der Klimawandel ist eine ernste Sache – doch wir glauben, dass Resignation uns nicht weiterbringt. Was uns antreibt, ist die Kraft des Positiven: Projekte, die Mut machen. Menschen, die loslegen. Lösungen, die funktionieren. Die Perspektivenfabrik will zeigen, dass Nachhaltigkeit nicht Verzicht heißt, sondern Lebensfreude, Kreativität und Gemeinschaft.",
+      "anton-software-developer": "Softwareentwickler",
+      "anna-designer": "Designerin",
+      "dominik-social-media": "Social Media",
+      "fabian-social-media": "Social Media",
+      "simplicity": "Leichtigkeit",
+      "humor": "Humor",
+      "insteadOf": "anstatt",
+      "ecoPessimism": "Ökopessimismus",
+      "onInsta": "Die Perspektivenfabrik auf Instagram"
     }
 }

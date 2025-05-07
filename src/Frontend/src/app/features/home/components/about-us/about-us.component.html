@@ -1,0 +1,56 @@
+<div class="top">
+    <div class="left">
+        <div class="left-content">
+            <h2 class="title">{{ "aboutUs.thePeopleBehindPerspektivenfabrik" | translate }}</h2>
+        </div>
+    </div>
+    <div class="right">
+        <div class="right-content">
+            <p [innerHTML]=" 'aboutUs.descriptionText' | translate"></p>
+            <a><button>{{ "aboutUs.thatsUs" | translate }} <mat-icon fontIcon="arrow_downward"></mat-icon></button></a>
+        </div>
+    </div>
+</div>
+<div class="people-container">
+    @for (person of people; track person){
+        <div class="person-container">
+            <div class="person-inner">
+                <img src="{{ person.imagePath }}" />
+                <div class="person-text">
+                    <h3 class="person-name">{{ person.name }}</h3>
+                    <p class="person-title">{{ person.title | translate }}</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="middle">
+    <div class="left">
+        <div class="left-content">
+            <div class="graphic" [class.italian]="language === 'it'">
+                <div class="simplicity-container">
+                    <p class="simplicity">{{ "aboutUs.simplicity" | translate }}</p>
+                </div>
+                <div class="humor-container">
+                    <p class="humor">&{{ "aboutUs.humor" | translate }}</p>
+                </div>
+                <p class="insteadOf">{{ "aboutUs.insteadOf" | translate }}</p>
+                <p class="ecoPessimism">{{ "aboutUs.ecoPessimism" | translate }}</p>
+                <svg class="line" width="12rem" height="10.287rem" version="1.1" viewBox="0 0 61.264 52.521" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(-52.917 -92.869)">
+                        <path class="cls-3" d="m52.965 108.07c4.9556 1.9394 17.698 6.0378 31.245 3.265 11.097-2.2701 20.108-16.404 12.7-18.256-5.4875-1.3732-16.177 15.15-8.8265 26.024 5.1223 7.5777 12.859 3.5084 20.468 7.3131 11.642 5.8208 2.9104 24.871-8.7312 16.933-11.708-7.9825-19.783-5.6118-22.847-4.1275" fill="none" stroke="#ffffff" stroke-dasharray="1.57427, 1.57427" stroke-miterlimit="10" stroke-width=".5"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="right-content">
+            <p>{{ "aboutUs.aboutOurGoals" | translate }}</p>
+        </div>
+    </div>
+</div>
+<div>
+    <h2 class="on-insta">{{ "aboutUs.onInsta" | translate }}</h2>
+    <p style="padding: 10rem; text-align: center">Todo: Insta Feed einblenden</p>
+</div>
