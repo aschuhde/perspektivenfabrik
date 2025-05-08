@@ -31,14 +31,20 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         {
             if (command.Project.Owner != null)
                 return new PutProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.Owner)));
+            if(command.Project.Contributors.Length > 0)
+                return new PutProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.Contributors)));
         }
-        command.Project.Owner ??= ApiPersonReference.WithUserId(CurrentUserId);
+        
+        
+        
         
         var existingProject = await projectService.GetProjectWithHistoryByIdAndCacheDbProject(command.Project.EntityId.Value, ct);
         if (existingProject == null)
         {
             return new PutProjectEntityNotFoundResponse(command.Project.EntityId.Value);
         }
+        command.Project.Owner ??= ApiPersonReference.WithUserId(existingProject.Owner.EntityId);
+        command.Project.Contributors = existingProject.Contributors.Select(x => ApiPersonReference.WithUserId(x.EntityId)).ToArray();;
 
         if (existingProject.Owner.EntityId != CurrentUserId &&
             existingProject.Contributors.All(c => c.EntityId != CurrentUserId))
