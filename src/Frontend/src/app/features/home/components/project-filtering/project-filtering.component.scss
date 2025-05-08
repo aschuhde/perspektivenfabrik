@@ -22,11 +22,24 @@ mat-form-field.filter-item{
   font-size: .8rem;
   vertical-align: middle;
   margin-bottom: 20px;
+  padding-left: .5rem;
 }
 
 .add-project-button {
   margin-bottom: 20px;
+  white-space: nowrap;
   
+  > * {
+    vertical-align: middle
+  }
+  mat-icon{
+    margin-right: .5rem
+  }
+}
+.filter-button {
+  margin-bottom: 20px;
+  white-space: nowrap;
+
   > * {
     vertical-align: middle
   }
@@ -53,6 +66,9 @@ mat-form-field.filter-item{
   }
   
   .add-project-button {
+    margin-bottom: 0;
+  }
+  .filter-button {
     margin-bottom: 0;
   }
   

@@ -60,7 +60,7 @@ public static class Configuration
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration).CreateLogger();
 
-        builder.Services.AddSerilog((services, configuration) =>
+        builder.Services.AddSerilog(configuration =>
         {
             configuration.ReadFrom.Configuration(builder.Configuration);
             
