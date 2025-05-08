@@ -20,4 +20,5 @@ export class MessageDialogComponent {
   title: string = this.data?.title ?? "";
   message: string = this.data?.message ?? "";
   buttonText: string = this.data?.buttonText ?? "";
+  isHtmlMessage: boolean = this.data?.isHtmlMessage ?? false;
 }

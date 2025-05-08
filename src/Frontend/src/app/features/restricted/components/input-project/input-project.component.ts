@@ -98,8 +98,8 @@ export class InputProjectComponent {
       upload: (file: File) => {
         if(!this.projectInput().entityId){
           this.showMessageDialog({
-            message: "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich.",
-            title: "Bitte zuerst speichern",
+            message: this.translateService.instant("messages.fileValidationNotSavedMessage"),
+            title: this.translateService.instant("messages.fileValidationNotSavedTitle"),
             buttonText: "Ok"
           });
           return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
@@ -108,8 +108,8 @@ export class InputProjectComponent {
         }
         if(file.size >= 1024 * 1024 * 5) {
           this.showMessageDialog({
-            message: "Die Bild ist zu groß. Bitte wähle nur Bilder mit weniger als 5MB.",
-            title: "Dateigröße überschritten",
+            message: this.translateService.instant("messages.fileValidationTooLargeMessage"),
+            title: this.translateService.instant("messages.fileValidationTooLargeTitle"),
             buttonText: "Ok"
           });
           return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
@@ -500,7 +500,7 @@ get typeNameGenitive(){
     };
   }
 
-  showMessageDialog(dialogData: MessageDialogData) {
+  showMessageDialog(dialogData: Partial<MessageDialogData>) {
     this.dialog.open(MessageDialogComponent, {
       data: dialogData
     });
@@ -586,12 +586,11 @@ get typeNameGenitive(){
 
     if(tooLargeFiles.length > 0){
       this.dialog.open(MessageDialogComponent, {
-        data: {
-          helpImageUpload: new MessageDialogData({
-            message: `Bitte lade nur Bilder, deren Dateigröße kleiner als 20MB ist, hoch. Du hast versucht folgende Dateien hochzuladen, die aber zu groß sind:<br> ${tooLargeFiles.map(x => `${x.name} - ${(x.size / (1014 * 1024)).toLocaleString(undefined, {maximumFractionDigits: 1})}`).join("<br>")}`,
-            title: `Datei zu groß`
-          }) 
-        }
+        data: new MessageDialogData({
+            isHtmlMessage: true,
+            message: this.translateService.instant("messages.fileTooLargeMessage", { uploadedFilesList: `<br>${tooLargeFiles.map(x => `${x.name} - ${(x.size / (1014 * 1024)).toLocaleString(undefined, {maximumFractionDigits: 1})}`).join("<br>") }` }),
+            title: this.translateService.instant("messages.fileTooLargeTitle")
+        })
       });      
     }
 

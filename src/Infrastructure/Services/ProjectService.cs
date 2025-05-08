@@ -347,16 +347,6 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
         existingHistoryConnection.History.UpdateToTarget(history.ToDbHistory());
     }
-    private void ConcurrencyFix(){
-      foreach (var entry in dbContext.ChangeTracker.Entries().Where(e => 
-                 e.State == EntityState.Unchanged
-                 && e.References.Any(r =>
-                   r.TargetEntry != null
-                   && r.TargetEntry.State == EntityState.Modified
-                   && r.TargetEntry.Metadata.IsOwned()
-                   && e.Metadata.GetTableName() == r.TargetEntry.Metadata.GetTableName())))
-        entry.State = EntityState.Modified;
-    }
     public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct)
     {
         var existingProject = changeContext.IsCreating
@@ -366,6 +356,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         
         return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (transaction,ctInner) =>
         {
+            
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications?.ToArray() ?? []);
             SaveProjectTimeSpecifications(project.TimeSpecifications, existingProject?.TimeSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.LocationSpecifications, existingProject?.LocationSpecifications?.ToArray(), x => x.ToDbLocationSpecification(), x => x.LocationSpecification!, x => x, x => x);

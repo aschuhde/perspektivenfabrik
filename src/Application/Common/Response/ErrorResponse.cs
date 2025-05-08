@@ -34,10 +34,13 @@ public sealed class ErrorResponse
     {
         return new ErrorResponseException(this.ToString(), Error.RelatedException);
     }
-
+    public string ToJson()
+    {
+        return JsonSerializer.Serialize(this, JsonSerializerOptions.Web);
+    }
     public override string ToString()
     {
-        return JsonSerializer.Serialize(this);
+        return ToJson();
     }
 }
 

@@ -35,6 +35,15 @@ app-navigation-bar-full{
           'opsz' 24
 }
 
+.show-as-box {
+  display: inline-block;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  word-break: break-word;
+}
+
 @include responsive.mobile{
   app-navigation-bar-full{
     height: 3rem;

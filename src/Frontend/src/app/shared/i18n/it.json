@@ -287,6 +287,24 @@
     "helpLocationAddressMessage": "Inserisci l'indirizzo di un luogo. Puoi anche aggiungere un nome visualizzato. Puoi utilizzare la mappa come aiuto per determinare nome e indirizzo. Se scegli 'Indirizzo' o 'Nome' come tipo di luogo dipende da quale sia più rilevante tra il nome del luogo o l'indirizzo.",
     "helpLocationAddressTitle": "Indirizzo di un luogo",
     "helpLocationCoordinatesMessage": "Inserisci le coordinate del tuo luogo in Lat, Lon (es. '46.5432, 11.2345') in formato decimale. Usa la mappa come aiuto per determinare le coordinate.",
-    "helpLocationCoordinatesTitle": "Coordinate di un luogo"
+    "helpLocationCoordinatesTitle": "Coordinate di un luogo",
+    "fileTooLargeMessage": "Carica solo immagini con dimensioni inferiori a 5MB. Hai tentato di caricare i seguenti file che sono troppo grandi: {{ uploadedFilesList }}",
+    "fileTooLargeTitle": "File troppo grande",
+    "fileValidationTooLargeTitle": "Dimensione del file superata",
+    "fileValidationTooLargeMessage": "L'immagine è troppo grande. Seleziona solo immagini con dimensioni inferiori a 5MB.",
+    "fileValidationNotSavedTitle": "Salvare prima",
+    "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento."
+  },
+  "saveProjectErrorDialog": {
+    "copyToClipboard": "Copia messaggio negli appunti",
+    "copiedToClipboard": "Messaggio copiato negli appunti",
+    "savingFailed": "Il salvataggio non è riuscito.",
+    "whatToDo": "<a target='blank' href='mailto:info@perspektivenfabrik.it?subject={{titleEncoded}}'>info@perspektivenfabrik.it</a> o crea un issue su Github: <a target='_blank' href='https://github.com/aschuhde/perspektivenfabrik/issues/new?title={{titleEncoded}}'>https://github.com/aschuhde/perspektivenfabrik/issues/new</a></p>",
+    "pleaseAddMessage": "Per favore aggiungi il seguente contenuto al tuo messaggio",
+    "personalDataInfo": "Ti preghiamo di notare che il messaggio contiene i dati personali della tua richiesta al server. Questi dati ci aiutano a identificare il problema. Se non desideri condividere questi dati con noi, puoi semplicemente eliminarli dal messaggio.",
+    "projectFailedTitle": "Errore interno - Salvataggio non riuscito!",
+    "projectValidationFailedTitle": "Errore di validazione - Salvataggio non riuscito!",
+    "projectFailedMessage": "<p>Il salvataggio non è riuscito. Si è verificato un errore interno.</p><p>Per favore contatta ",
+    "projectValidationFailedMessage": "<p>Il salvataggio non è riuscito. Durante la validazione dei campi si è verificato il seguente errore: </p><p><strong>{{ errorMessage }}</strong></p><p>Probabilmente non tutti i campi obbligatori sono stati compilati correttamente. Stiamo ancora lavorando per migliorare l'esperienza utente.</p><p>In caso di problemi, contatta "
   }
 }
