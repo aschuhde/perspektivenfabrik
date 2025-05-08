@@ -74,6 +74,10 @@ import {
   ApplicationModelsApiModelsApiRequirementSpecification
 } from "../../../server/model/applicationModelsApiModelsApiRequirementSpecification";
 import {LocaleDataProvider} from "../../../core/services/locale-data.service";
+import {
+  ApplicationModelsApiModelsApiSkillSpecification
+} from "../../../server/model/applicationModelsApiModelsApiSkillSpecification";
+import {distinctBy} from "../../../shared/tools/array-tools";
 
 export class ApiProjectModel {
   project: ApplicationModelsApiModelsApiProject | null = null;
@@ -112,8 +116,26 @@ export class ApiProjectModel {
     this.timeSpecifications = this.project?.timeSpecifications ?? [];
     this.tags = this.project?.projectTags ?? [];
     this.requirementSpecificationPersons = this.project?.requirementSpecifications?.filter(x => x.classType === ApplicationModelsApiModelsApiRequirementSpecificationTypes.Person) ?? [];
-    this.requirementSpecificationPersonsFlat = this.requirementSpecificationPersons.flatMap(person => {
+    this.requirementSpecificationPersonsFlat = distinctBy(this.requirementSpecificationPersons.flatMap(person => {
       const personSpecification = person as ApplicationModelsApiModelsApiRequirementSpecificationPerson;
+      if(personSpecification && personSpecification?.skillSpecifications?.length === 0){
+        return [ObjectCreator.Create<ApplicationModelsApiModelsApiRequirementSpecificationPerson>({
+          skillSpecifications: [ObjectCreator.Create<ApplicationModelsApiModelsApiSkillSpecification>({
+            name: localeDataProvider.locale === "it-IT" ? "Aiutanti" : "Helfer*innen",
+            title: {
+              rawContentString: localeDataProvider.locale === "it-IT" ? "Aiutanti" : "Helfer*innen",
+            }
+          })],
+          locationSpecifications: personSpecification.locationSpecifications,
+          timeSpecifications: personSpecification.timeSpecifications,
+          classType: personSpecification.classType,
+          quantitySpecification: personSpecification.quantitySpecification,
+          locationSpecificationsSameAsProject: personSpecification.locationSpecificationsSameAsProject,
+          timeSpecificationSameAsProject: personSpecification.timeSpecificationSameAsProject,
+          workAmountSpecification: personSpecification.workAmountSpecification
+        })];
+      }
+      
       return personSpecification?.skillSpecifications?.map(x => {
         return ObjectCreator.Create<ApplicationModelsApiModelsApiRequirementSpecificationPerson>({
           skillSpecifications: [x],
@@ -126,7 +148,7 @@ export class ApiProjectModel {
           workAmountSpecification: personSpecification.workAmountSpecification
         })
       }) ?? [];
-    });
+    }), x => x?.skillSpecifications ? x.skillSpecifications[0]?.name : "");
     this.requirementSpecificationMaterials = this.project?.requirementSpecifications?.filter(x => x.classType === ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material) ?? [];
     this.requirementSpecificationMaterialsFlat = this.requirementSpecificationMaterials.flatMap(material => {
       const materialSpecification = material as ApplicationModelsApiModelsApiRequirementSpecificationMaterial;

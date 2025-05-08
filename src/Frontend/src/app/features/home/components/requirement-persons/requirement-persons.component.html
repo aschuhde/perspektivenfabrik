@@ -7,11 +7,11 @@
             <p class="question">{{ "persons.what-skills" | translate }}</p>
             <p class="answer">{{ skillText(requirement) }}</p>
             <p class="question">{{ "persons.what-workload" | translate }}</p>
-            <p class="answer">{{ workloadText(requirement) }}</p>
+            <p class="answer">{{ workloadText(requirement) | async }}</p>
             <p class="question"><mat-icon fontIcon="date_range"></mat-icon> {{ "persons.when" | translate }}</p>
-            <p class="answer">{{ periodText(requirement) }}</p>
+            <p class="answer">{{ periodText(requirement) | async }}</p>
             <p class="question"><mat-icon fontIcon="location_on"></mat-icon> {{ "persons.where" | translate }}</p>
-            <p class="answer">{{ locationText(requirement) }}</p>
+            <p class="answer">{{ locationText(requirement) | async }}</p>
         </div>
     </div>
 }

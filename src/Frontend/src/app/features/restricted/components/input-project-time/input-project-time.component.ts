@@ -1,13 +1,10 @@
 import { Component, inject, model, output } from '@angular/core';
 import { ProjectTimeInput, ProjectTimeType } from '../../models/project-time-input';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageDialogData } from '../../../../shared/models/message-dialog-data';
-import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialog/message-dialog.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateTime } from "luxon";
 import { DatePickerComponent } from '../../../../shared/components/date-picker/date-picker.component';
 import { MonthPickerComponent } from '../../../../shared/components/month-picker/month-picker.component';
@@ -15,24 +12,13 @@ import { DatePickerRangeComponent } from '../../../../shared/components/date-pic
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {Language} from "../../../../core/types/general-types";
 
-export const DATE_FORMAT_MONTH = {
-  parse: {
-    dateInput: 'dd.MM.yyyy',
-  },
-  display: {
-    dateInput: 'dd.MM.yyyy',
-    monthYearLabel: 'MMMM yyyy',
-    dateA11yLabel: 'dd.MM.yyyy',
-    monthYearA11yLabel: 'MMMM yyyy',
-  },
-};
 
 @Component({
   selector: 'app-input-project-time',
   imports: [MatFormFieldModule, MatInputModule, MatIcon, MatSelect, MatOption, DatePickerComponent, MonthPickerComponent, DatePickerRangeComponent, TranslateModule],
   templateUrl: './input-project-time.component.html',
   styleUrl: './input-project-time.component.scss',
-  providers: [provideLuxonDateAdapter(DATE_FORMAT_MONTH)]
+  providers: []
 })
 export class InputProjectTimeComponent {
   readonly dialog = inject(MatDialog);
@@ -106,12 +92,6 @@ export class InputProjectTimeComponent {
   
     removeClicked(){
       this.remove.emit(this.projectTimeObject);
-    }  
-  
-    showMessageDialog(dialogData: MessageDialogData) {
-      this.dialog.open(MessageDialogComponent, {
-        data: dialogData
-      });
     }
   
 }

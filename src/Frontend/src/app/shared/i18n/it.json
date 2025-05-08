@@ -13,7 +13,9 @@
     "month-format": "MM YYYY",
     "month": "Mese",
     "start-date": "Data di inizio",
-    "end-date": "Data di fine"
+    "end-date": "Data di fine",
+    "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
+    "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto"
   },
   "nav": {
     "about us": "chi siamo",
@@ -306,5 +308,9 @@
     "projectValidationFailedTitle": "Errore di validazione - Salvataggio non riuscito!",
     "projectFailedMessage": "<p>Il salvataggio non è riuscito. Si è verificato un errore interno.</p><p>Per favore contatta ",
     "projectValidationFailedMessage": "<p>Il salvataggio non è riuscito. Durante la validazione dei campi si è verificato il seguente errore: </p><p><strong>{{ errorMessage }}</strong></p><p>Probabilmente non tutti i campi obbligatori sono stati compilati correttamente. Stiamo ancora lavorando per migliorare l'esperienza utente.</p><p>In caso di problemi, contatta "
+  },
+  "effortHoursType": {
+    "perWeek": "a settimana",
+    "total": "totale"
   }
 }

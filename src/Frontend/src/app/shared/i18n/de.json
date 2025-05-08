@@ -13,7 +13,9 @@
       "month-format": "MM YYYY",
       "month": "Monat",
       "start-date": "Startdatum",
-      "end-date": "Enddatum"
+      "end-date": "Enddatum",
+      "inTheSameTimeOfTheProject": "Im gleichen Zeitraum des Projekts",
+      "atTheSameLocationOfTheProject": "Am gleichen Ort wie das Projekt"
     },
     "nav": {
         "about us": "über uns",
@@ -306,5 +308,9 @@
       "projectValidationFailedTitle": "Validierungsfehler - Speichern fehlgeschlagen!",
       "projectFailedMessage": "<p>Das Speichern ist fehlgeschlagen. Es ist ein interner Fehler aufgetreten.</p><p>Bitte wende dich an ",
       "projectValidationFailedMessage": "<p>Das Speichern ist fehlgeschlagen. Bei der Validierung der Eingabefelder is folgender Fehler ist aufgetreten: </p><p><strong>{{ errorMessage }}</strong></p><p>Womöglich sind nicht alle Pflichtfelder korrekt ausgefüllt. Wir arbeiten noch daran die User-Experience zu verbessern.</p><p>Bei Problemen wende dich bitte an "
+    },
+    "effortHoursType": {
+      "perWeek": "pro Woche",
+      "total": "insgesamt"
     }
 }

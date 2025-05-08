@@ -12,11 +12,13 @@ import {
 import { ApplicationModelsApiModelsApiRequirementSpecificationMoney } from '../../../../server/model/applicationModelsApiModelsApiRequirementSpecificationMoney';
 import {formatMoney} from "../../../../shared/tools/formatting";
 import {MatIconModule} from "@angular/material/icon";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-requirement-materials',
-  imports: [MatIconModule, TranslateModule],
+  imports: [MatIconModule, TranslateModule, AsyncPipe],
   templateUrl: './requirement-materials.component.html',
   styleUrl: './requirement-materials.component.scss'
 })
@@ -24,6 +26,7 @@ export class RequirementMaterialsComponent {
   requirements = input<ApplicationModelsApiModelsApiRequirementSpecificationMaterial[]>([])
   requirementsMoney = input<ApplicationModelsApiModelsApiRequirementSpecificationMoney[]>([])
   localDataProvider = inject(LocaleDataProvider)
+  translateService = inject(TranslateService)
   
   materialSpecificationText(materialSpecification: ApplicationModelsApiModelsApiMaterialSpecification) {
     if(!materialSpecification?.title?.rawContentString) return "-";
@@ -43,14 +46,14 @@ export class RequirementMaterialsComponent {
 
   periodText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationMaterial | ApplicationModelsApiModelsApiRequirementSpecificationMoney) {
     if(requirement.timeSpecificationSameAsProject){
-      return "Im gleichen Zeitraum des Projekts"
+      return this.translateService.stream("general.inTheSameTimeOfTheProject")
     }
-    return stringEmptyPropagate(joinWithConjunction(requirement?.timeSpecifications?.map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
+    return of(stringEmptyPropagate(joinWithConjunction(requirement?.timeSpecifications?.map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
   }
   locationText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
     if(requirement.locationSpecificationsSameAsProject){
-      return "Am gleichen Ort wie das Projekt"
+      return this.translateService.stream("general.atTheSameLocationOfTheProject")
     }
-    return stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
+    return of(stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
   }
 }
