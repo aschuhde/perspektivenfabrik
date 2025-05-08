@@ -136,10 +136,10 @@ hr{
 }
 @include responsive.mobile {
   .only-mobile{
-    display: unset;
+    display: unset !important;
   }
   .only-desktop{
-    display: none;
+    display: none !important;
   }
   
   .w-100-mobile{

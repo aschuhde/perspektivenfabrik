@@ -103,25 +103,7 @@ export class InputProjectTimeComponent {
   get projectTimeObject(){
     return this.projectTime();
   }
-
-  readonly messageDialogs = {
-      helpLocationLink: new MessageDialogData({
-        message: "Todo: Beschreibung, wozu link gut sein kann",
-        title: "Link für Remote-Ort"
-      }),
-      helpLocationName: new MessageDialogData({
-        message: "Todo: Der Name kann ein Dorf, ein Platz, eine Region etc... sein",
-        title: "Name eines Ortes"
-      }),
-      helpLocationAddress: new MessageDialogData({
-        message: "Todo: Beschreibung zu Adresse",
-        title: "Adresse"
-      }) ,
-      helpLocationCoordinates: new MessageDialogData({
-        message: "Todo: Beschreibung zu Koordinaten",
-        title: "Koordinaten"
-      }) 
-    };
+  
     removeClicked(){
       this.remove.emit(this.projectTimeObject);
     }  

@@ -42,7 +42,7 @@ export const appConfig: ApplicationConfig = {
             return new TranslateJsonLoader();
         }
       }
-    }), 
+    }),
     provideAnimationsAsync('noop'), 
     provideAnimationsAsync()]
 };

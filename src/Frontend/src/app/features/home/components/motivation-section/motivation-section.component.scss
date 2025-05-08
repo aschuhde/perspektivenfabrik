@@ -11,7 +11,41 @@
     display: inline-block;
     width: 50%;
     vertical-align: top;
-    padding-top: 1rem;
+    text-align: center;
+    padding: 2rem 0;
+  
+  .graphic{
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    font-weight: bold;
+    position: relative;
+    text-align: left;
+    
+    .projects{
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .ideas{
+      position: absolute;
+      bottom: 0;
+      left: 3rem;
+      margin: 0;
+      padding: 0;
+    }
+    .inspirations{
+      position: absolute;
+      bottom: 6.7rem;
+      right: -8rem;
+      margin: 0;
+      padding: 0;
+    }
+
+  }
 }
 #motivation-section-right{
     display: inline-block;
@@ -34,6 +68,27 @@
   #motivation-section-left{
     display: block;
     width: 100%;
+
+    .graphic {
+      font-size: 1.5rem;
+      .projects{
+        left: 1rem;
+        top: 0;
+        margin: 0;
+        padding: 0;
+      }
+      .ideas{
+        bottom: 0;
+        left: 3rem;
+      }
+      .inspirations{
+        bottom: 5.7rem;
+        right: -2.5rem;
+      }
+      .lines {
+        width: 18rem;
+      }
+    }
   }
   #motivation-section-right{
     display: block;

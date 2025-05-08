@@ -85,7 +85,17 @@
     flex-grow: 1;
     flex-basis: 50%;
 }
-
+@include responsive.desktop-medium{
+  .left{
+    width: 25rem;
+  }
+  .main{
+    width: calc(100% - 25rem);
+    .content{
+      padding: 3rem 5rem;
+    }
+  }
+}
 @include responsive.mobile {
   .top {
     min-height: 0;
@@ -116,6 +126,7 @@
     top: 3.5rem;
     left: 0;
     background-color: #EA6A31;
+    width: 100%;
   }
 
   .bottom{
@@ -138,3 +149,4 @@
     }
   }
 }
+

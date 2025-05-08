@@ -26,8 +26,4 @@ export class ConfirmDialogComponent {
   confirmDialog() {
     this.onConfirm(this);
   }
-  
-  closeDialog() {
-   //todo 
-  }
 }

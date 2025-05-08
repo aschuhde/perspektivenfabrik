@@ -18,7 +18,7 @@ public static class TransactionExecutor
         {
             await transaction.RollbackAsync(ct);
             logger.LogError(exception, "Executing the action '{ActionName}' in a transaction failed.", callerName);
-            return new TransactionExecutionResult<T> { HasResult = false, Exception = exception };
+            throw;
         }
     }
 }

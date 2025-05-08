@@ -10,6 +10,12 @@ import {ApplicationModelsApiModelsApiProject} from "../../../../server/model/app
 import {ProjectSaveContext} from "../../models/project-save-context";
 import { RestrictedRouteNames } from '../../restricted-route-names';
 import {isServer} from "../../../../shared/tools/server-tools";
+import { catchError, of, throwError } from 'rxjs';
+import { MatDialog } from "@angular/material/dialog";
+import {MessageDialogComponent} from "../../../../shared/dialogs/message-dialog/message-dialog.component";
+import {MessageDialogData} from "../../../../shared/models/message-dialog-data";
+import {TranslateService} from "@ngx-translate/core"
+import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling";
 
 @Component({
   selector: 'app-update-project-page',
@@ -18,12 +24,14 @@ import {isServer} from "../../../../shared/tools/server-tools";
   styleUrl: './update-project-page.component.scss'
 })
 export class UpdateProjectPageComponent {
+  readonly dialog = inject(MatDialog);
   projectInput: ProjectInput = new ProjectInput();
   projectIdentifier: string = inject(ActivatedRoute).snapshot.paramMap.get("projectIdentifier") ?? "";
   apiService = inject(ApiService)
   project: ApplicationModelsApiModelsApiProject | null = null
   isLoading: boolean = true;
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
+  translateService = inject(TranslateService)
   loadProject(){
     if(isServer()) return;
     
@@ -52,7 +60,10 @@ export class UpdateProjectPageComponent {
     const projectRequest = await this.projectInput.buildRequest() 
     this.apiService.webApiEndpointsPutProject({
       project: projectRequest,         
-    }, this.projectIdentifier).subscribe(x => {
+    }, this.projectIdentifier).pipe(catchError((err) => {
+      this.projectSaveContext.isSaving = false;
+      handleProjectSaveErrorAndGetDialogData(err, this.dialog, this.translateService, projectRequest, "Update Project");
+    })).subscribe(x => {
       this.projectSaveContext.isSaving = false;
       this.projectSaveContext.lastSave = new Date();
       this.projectSaveContext.lastSavedProjectRequest = projectRequest;

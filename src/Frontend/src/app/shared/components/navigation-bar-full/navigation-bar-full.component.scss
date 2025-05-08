@@ -1,0 +1,36 @@
+@use "vars";
+@use "responsive";
+
+.navigation-bar-full{
+  flex-wrap: nowrap;
+}
+.logo-container{
+  white-space: nowrap;
+}
+.logo-image{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 2rem;
+  margin-top: .5rem;
+  width: 3rem;
+}
+.logo-text{
+  text-transform: uppercase;
+  color: vars.$bg-orange;
+  font-size: 1.5rem;
+  letter-spacing: 6px;
+  font-weight: bold;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: .8rem;
+}
+
+@include responsive.mobile {
+  .logo-image{
+    margin-left: 1rem;
+    margin-top: 0;
+    width: 2.5rem;
+  }
+}

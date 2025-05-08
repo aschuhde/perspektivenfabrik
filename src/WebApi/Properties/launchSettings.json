@@ -5,7 +5,7 @@
       "commandName": "Project",
       "applicationUrl": "http://localhost:5002",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Production",
         "JWT-KEY": "replace this key. it should be long enough to have ASCII 512 bits. replace this key. it should be long enough to have ASCII 512 bits",
         "POSTGRES_PORT": "5432",
         "POSTGRES_PASSWORD": "password_to_replace",

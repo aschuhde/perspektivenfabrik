@@ -15,7 +15,7 @@ export function getMonthName(monthFromOneToTwelve: number, locale: string): stri
     if(monthFromOneToTwelve < 1 || monthFromOneToTwelve > 12){
         return "";
     }
-    //todo
+
     const germanMonths = [
         "Januar", 
         "Februar", 
@@ -29,8 +29,24 @@ export function getMonthName(monthFromOneToTwelve: number, locale: string): stri
         "Oktober", 
         "November", 
         "Dezember"
-      ];
-    return germanMonths[monthFromOneToTwelve - 1];
+    ];
+
+    const italianMonths = [
+        "Gennaio",
+        "Febbraio",
+        "Marzo",
+        "Aprile",
+        "Maggio",
+        "Giugno",
+        "Luglio",
+        "Agosto",
+        "Settembre",
+        "Ottobre",
+        "Novembre",
+        "Dicembre"
+    ];
+
+    return locale === 'it' ? italianMonths[monthFromOneToTwelve - 1] : germanMonths[monthFromOneToTwelve - 1];
 }
 
 export function getLuxonDateTimeFromNullableJsDate(date: Date | null): DateTime | null{

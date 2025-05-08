@@ -98,8 +98,8 @@ export class InputProjectComponent {
       upload: (file: File) => {
         if(!this.projectInput().entityId){
           this.showMessageDialog({
-            message: "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich.",
-            title: "Bitte zuerst speichern",
+            message: this.translateService.instant("messages.fileValidationNotSavedMessage"),
+            title: this.translateService.instant("messages.fileValidationNotSavedTitle"),
             buttonText: "Ok"
           });
           return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
@@ -108,8 +108,8 @@ export class InputProjectComponent {
         }
         if(file.size >= 1024 * 1024 * 5) {
           this.showMessageDialog({
-            message: "Die Bild ist zu groß. Bitte wähle nur Bilder mit weniger als 5MB.",
-            title: "Dateigröße überschritten",
+            message: this.translateService.instant("messages.fileValidationTooLargeMessage"),
+            title: this.translateService.instant("messages.fileValidationTooLargeTitle"),
             buttonText: "Ok"
           });
           return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
@@ -124,10 +124,9 @@ export class InputProjectComponent {
               }
             }, this.projectInput().entityId!).subscribe(y => {
               if(!y.imageIdentifier){
-                //todo error
                 this.showMessageDialog({
-                  message: "Todo: Error",
-                  title: "Todo: Error",
+                  message: this.translateService.instant("messages.imageUploadFailedMessage"),
+                  title: this.translateService.instant("messages.imageUploadFailedTitle"),
                   buttonText: "Ok"
                 });
                 return subscriber.error();
@@ -455,53 +454,53 @@ get typeNameGenitive(){
   get messageDialogs(){
     return {
       helpProjectType: new MessageDialogData({
-        message: "Du kannst Projekte, Ideen oder Inspirationen hinzufügen. Projekt sind...",
-        title: "Was möchtest du hinzufügen?"
+        message: this.translateService.instant("messages.helpProjectTypeMessage"),
+        title: this.translateService.instant("messages.helpProjectTypeTitle")
       }),
       helpProjectTitle: new MessageDialogData({
-        message: `Der Titel ${this.yoursDeclination} ${this.typeName} wird auf der Platform angezeigt und kann Formatierungen enthalten. Der Name ${this.yoursDeclination} ${this.typeName} wird beispielsweise in Links verwendet.`,
-        title: "Projekttitel und Projektname"
+        message: this.translateService.instant("messages.helpProjectTitleMessage", {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant("messages.helpProjectTitleTitle")
       }),
       helpProjectPhase: new MessageDialogData({
-        message: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}...`,
-        title: `In welcher Phase befindet sich ${this.yourDeclination} ${this.typeName}?`
+        message: this.translateService.instant(`messages.helpProjectPhaseMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpProjectPhaseTitle`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName})
       }),
       helpProjectLocation: new MessageDialogData({
-        message: `Du kannst mehrere Orte für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst Namen von Orten, Adressen oder Koordinaten verwenden. Findet ${this.yourDeclination} ${this.typeName} nur digital statt, wähle Remote aus`,
-        title: `Orte ${this.yoursDeclination} ${this.typeName}?`
+        message: this.translateService.instant(`messages.helpProjectLocationMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpProjectLocationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }),
       helpProjectTime: new MessageDialogData({
-        message: `Du kannst mehrere Zeitpunkte/Zeiträume für ${this.yourDeclination} ${this.typeName} hinzufügen. Du kannst konkrete Daten oder einen ganzen Monat auswählen. Wann du helfende Hände, Material oder Geld für ${this.yourDeclination} ${this.typeName} brauchst, kannst du weiter unten nochmal auswählen.`,
-        title: `Projektzeiten ${this.yoursDeclination} ${this.typeName}?`
+        message: this.translateService.instant(`messages.helpProjectTimeMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpProjectTimeTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }),
       helpRequirements: new MessageDialogData({
-        message: `Du kannst Helfer*innen, Material und Finanzielle Unterstützung für ${this.yourDeclination} ${this.typeName} anfordern.`,
-        title: `Unterstützung für ${this.yourDeclination} ${this.typeName}?`
+        message: this.translateService.instant(`messages.helpRequirementsMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpRequirementsTitle`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName})
       }),
       helpContact: new MessageDialogData({
-        message: `todo.`,
-        title: `todo?`
+        message: this.translateService.instant(`messages.helpContactMessage`, {"yourDeclination": this.yourDeclination, "yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpContactTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }),
       helpDescription: new MessageDialogData({
-        message: `todo.`,
-        title: `todo?`
+        message: this.translateService.instant(`messages.helpDescriptionMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpDescriptionTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }),
       helpImageUpload: new MessageDialogData({
-        message: `todo.`,
-        title: `todo?`
+        message: this.translateService.instant(`messages.helpImageUploadMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpImageUploadTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }),
       helpProjectVisibility: new MessageDialogData({
-        message: `todo.`,
-        title: `todo?`
+        message: this.translateService.instant(`messages.helpProjectVisibilityMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpProjectVisibilityTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
       }), 
         helpTags: new MessageDialogData({
-            message: `todo.`,
-            title: `todo?`
+            message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
+            title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
         })
     };
   }
 
-  showMessageDialog(dialogData: MessageDialogData) {
+  showMessageDialog(dialogData: Partial<MessageDialogData>) {
     this.dialog.open(MessageDialogComponent, {
       data: dialogData
     });
@@ -587,12 +586,11 @@ get typeNameGenitive(){
 
     if(tooLargeFiles.length > 0){
       this.dialog.open(MessageDialogComponent, {
-        data: {
-          helpImageUpload: new MessageDialogData({
-            message: `Bitte lade nur Bilder, deren Dateigröße kleiner als 20MB ist, hoch. Du hast versucht folgende Dateien hochzuladen, die aber zu groß sind:<br> ${tooLargeFiles.map(x => `${x.name} - ${(x.size / (1014 * 1024)).toLocaleString(undefined, {maximumFractionDigits: 1})}`).join("<br>")}`,
-            title: `Datei zu groß`
-          }) 
-        }
+        data: new MessageDialogData({
+            isHtmlMessage: true,
+            message: this.translateService.instant("messages.fileTooLargeMessage", { uploadedFilesList: `<br>${tooLargeFiles.map(x => `${x.name} - ${(x.size / (1014 * 1024)).toLocaleString(undefined, {maximumFractionDigits: 1})}`).join("<br>") }` }),
+            title: this.translateService.instant("messages.fileTooLargeTitle")
+        })
       });      
     }
 

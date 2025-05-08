@@ -11,11 +11,12 @@
     font-size: 4rem;
 }
 .temp-welcome-image {
-  width: 60%;
+ width: 30rem;
 }
 
 @include responsive.mobile {
   .temp-welcome-image {
     width: 100%;
+    max-width: 30rem;
   }
 }

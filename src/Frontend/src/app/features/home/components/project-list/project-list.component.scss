@@ -54,9 +54,10 @@
   .project-list{
     width: calc(100% - 2rem);
     padding: 0 1rem;
+    display: block;
   }
   
   .project-list-item{
-    width: 100%;
+    width: calc(100% - 2rem);
   }
 }

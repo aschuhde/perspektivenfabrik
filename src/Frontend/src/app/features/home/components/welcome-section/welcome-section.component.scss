@@ -1,17 +1,22 @@
 @use "responsive";
-
+@use "vars";
+:host{
+  display: flex;
+}
 .left{
   width: 50%;
-  display: inline-block;
+  background-color: vars.$bg-orange;
   vertical-align: top;
 }
 .right{
   width: 50%;
-  display: inline-block;
   vertical-align: top;
 }
 
 @include responsive.mobile {
+  :host{
+    display: block; 
+  }
   .left {
     margin-top: 3rem;
     width: 100%;

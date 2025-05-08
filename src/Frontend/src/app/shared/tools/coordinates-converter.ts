@@ -2,11 +2,17 @@ import { DomainDataTypesCoordinates } from "../../server/model/domainDataTypesCo
 
 export class CoordinatesConverter{
     static TransformCoordinatesStringToApiCoordinates(coordinatesString: string) : DomainDataTypesCoordinates{
-        //todo
-        return {
-            lat: 0,
-            lon: 0
+        if (!coordinatesString || !coordinatesString.includes(',')) {
+            throw new Error('Invalid coordinates format');
         }
+
+        const [lat, lon] = coordinatesString.split(',').map(coord => parseFloat(coord.trim()));
+
+        if (isNaN(lat) || isNaN(lon)) {
+            throw new Error('Invalid coordinates values');
+        }
+
+        return {lat, lon};
     }
 
   static FromApiCoordinates(geoCoordinates: DomainDataTypesCoordinates | null) {

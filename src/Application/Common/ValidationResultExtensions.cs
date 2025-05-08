@@ -7,10 +7,9 @@ public static class ValidationResultExtensions
 {
     public static ErrorResponseData ToErrorResponseData(this ValidationResult validationResult)
     {
-        //todo
         return new ErrorResponseData()
         {
-            Message = ""
+            Message = validationResult.ToString()
         };
     }
 }

@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'theme-colors' as theme;
+@use "responsive";
 
 html {
     @include mat.theme((
@@ -25,6 +26,12 @@ html {
     border-bottom-left-radius: 2rem !important;
 }
 .mat-mdc-dialog-panel{
-    max-width: none !important;
+    max-width: 60rem !important;
     max-height: none !important;
+}
+@include responsive.mobile{
+    .mat-mdc-dialog-panel{
+        max-width: none !important;
+        max-height: none !important;
+    }
 }

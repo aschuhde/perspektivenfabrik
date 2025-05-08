@@ -58,8 +58,12 @@ public static class Configuration
     public static void AddLogging(this WebApplicationBuilder builder)
     {
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration).CreateLogger(); 
-        
-        builder.Host.UseSerilog();
+            .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+        builder.Services.AddSerilog((services, configuration) =>
+        {
+            configuration.ReadFrom.Configuration(builder.Configuration);
+            
+        }, writeToProviders: true);
     }
 }

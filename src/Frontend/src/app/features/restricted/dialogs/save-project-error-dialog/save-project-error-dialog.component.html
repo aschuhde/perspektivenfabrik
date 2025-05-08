@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+    <div>
+        <div [innerHTML]="mainMessage"></div>
+        <p><strong>{{ "saveProjectErrorDialog.pleaseAddMessage" | translate }}</strong></p>
+        @if(withPersonalData){
+            <p>{{ "saveProjectErrorDialog.personalDataInfo" | translate }}</p>
+        }
+        <p style="text-align: center">
+            @if(clipboardIsCopied){
+                <button class="w-100 secondary readonly" (click)="copyToClipboard()"><mat-icon fontIcon="rocket_launch"></mat-icon> {{ "saveProjectErrorDialog.copiedToClipboard" | translate }} <mat-icon fontIcon="rocket_launch"></mat-icon></button>
+            } @else {
+                <button class="w-100" (click)="copyToClipboard()"><mat-icon fontIcon="content_copy"></mat-icon> {{ "saveProjectErrorDialog.copyToClipboard" | translate }}</button>
+            }
+        </p>
+        <p class="show-as-box" (click)="copyToClipboard()" style="cursor: pointer" [innerHTML]="messageToAdd">
+            
+        </p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close>Ok</button>
+</mat-dialog-actions>

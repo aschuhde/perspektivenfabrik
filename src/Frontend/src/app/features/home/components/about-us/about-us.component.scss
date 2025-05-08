@@ -1,0 +1,285 @@
+@use "vars";
+@use "responsive";
+
+.top {
+  background-color: vars.$bg-purple;
+  color: white;
+  
+  .left{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    > .left-content {
+      display: inline-block;
+      padding: 2rem 2rem 2rem 2rem;
+      width: 20rem;
+      text-align: left;
+      .title{
+        text-transform: uppercase;
+        font-size: 3rem;
+        letter-spacing: 6px;
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 25rem;
+      padding: 2rem 2rem 2rem 2rem;
+    }
+  }
+}
+.people-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 2rem 0;
+  
+  .person-container {
+    width: 50%;
+    text-align: center;
+    .person-inner {
+      display: inline-block;
+      padding: 2rem 2rem 2rem 2rem;
+      
+      img{
+        width: 10rem;
+      }
+      
+      .person-name {
+        text-transform: uppercase;
+      }
+      
+      .person-title {
+        border: 1px solid vars.$bg-orange;
+        color: vars.$bg-orange;
+        border-radius: 1rem;
+        padding: .25rem 1rem;
+      }
+    }
+
+    &:nth-child(2) {
+      .person-inner {
+        padding: 8rem 20rem 2rem 2rem;
+      }
+    }
+    &:nth-child(3) {
+      .person-inner {
+        padding: 2rem 2rem 2rem 20rem;
+      }
+    }
+  }
+}
+.middle {
+  background-color: vars.$bg-orange;
+  color: white;
+  padding: 2rem 0 4rem 0;
+  
+  .left{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    
+    .left-content{
+      text-align: center;
+      padding-top: 2rem;
+      
+      .graphic {
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 2rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        position: relative;
+        text-align: left;
+
+        > p{
+          margin: 0;
+        }
+
+        .simplicity, .humor {
+          border: 1px solid white;
+          display: inline-block;
+          border-radius: 2rem;
+          padding: .6rem 2rem;
+        }
+        
+        .simplicity {
+          transform: rotate(-15deg);
+          
+        }
+        .humor {
+          transform: rotate(5deg);
+          margin-left: -9.8rem;
+        }
+        .humor-container, .simplicity-container {
+          display: inline-block;
+          vertical-align: top;
+        }
+        .simplicity-container {
+          padding-top: 1.5rem;
+        }
+        
+        .humor-container{
+          padding-top: 4.5rem;
+        }
+        .line {
+          position: absolute;
+          left: 19.5rem;
+          top: 0;
+        }
+        
+        &.italian{
+          .simplicity {
+            margin-left: 1rem;
+          }
+          .humor {
+            margin-left: -9rem;
+          }
+          .humor-container{
+            position: relative;
+            z-index: 1;
+            padding-top: 5rem;
+            
+            &:before{
+              content: "";
+              position: absolute;
+              width: 5rem;
+              height: 5rem;
+              right: 0;
+              bottom: 0;
+              background-color: vars.$bg-orange;
+              z-index: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 25rem;
+      padding: 2rem 2rem 2rem 2rem;
+    }
+  }
+}
+.on-insta{
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+}
+
+@include responsive.mobile{
+  .top {
+    .left{
+      width: 100%;
+      display: block;
+      
+      > .left-content {
+        .title{
+          font-size: 2.5rem;
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+      
+      .right-content {
+        width: auto;
+      }
+    }
+  }
+  .people-container {
+    .person-container {
+      width: 100%;
+      .person-inner {
+        padding: 2rem 2rem 2rem 2rem !important;
+      }
+    }
+  }
+  .middle {
+    .left{
+      width: 100%;
+      display: block;
+      
+      .left-content{
+        
+        .graphic{
+          font-size: 1rem;
+
+          .humor {
+            margin-left: -6.5rem;
+          }
+          .simplicity{
+            margin-left: -4rem;
+          }
+          .humor-container, .simplicity-container {
+            display: inline-block;
+            vertical-align: top;
+          }
+          .simplicity-container {
+            padding-top: 1.5rem;
+          }
+
+          .humor-container{
+            padding-top: 3.7rem;
+          }
+          .line {
+            position: absolute;
+            left: 9.7rem;
+            top: -1.4rem;
+            width: 9rem;
+          }
+
+          &.italian{
+            .simplicity {
+              margin-left: -3rem;
+            }
+            .humor {
+              margin-left: -6.5rem;
+            }
+            .humor-container{
+              position: relative;
+              z-index: 1;
+              padding-top: 4rem;
+
+              &:before{
+                content: "";
+                position: absolute;
+                width: 5rem;
+                height: 3rem;
+                right: 0;
+                bottom: 0;
+                background-color: vars.$bg-orange;
+                z-index: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        width: auto;
+      }
+    }
+  }
+}
