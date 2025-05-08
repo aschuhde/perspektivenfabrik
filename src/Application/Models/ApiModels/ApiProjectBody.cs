@@ -20,6 +20,6 @@ public class ApiProjectBody : ApiBaseEntity
     public required bool ConnectedOrganizationsSameAsOwner { get; init; }
     public required ApiOrganizationReference[] ConnectedOrganizations { get; init; }
     public ApiPersonReference? Owner { get; set; }
-    public required ApiPersonReference[] Contributors { get; init; }
+    public required ApiPersonReference[] Contributors { get; set; }
     public required ApiProjectReference[] RelatedProjects { get; init; }
 }
