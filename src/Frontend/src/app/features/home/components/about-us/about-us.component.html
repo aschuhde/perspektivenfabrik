@@ -7,10 +7,11 @@
     <div class="right">
         <div class="right-content">
             <p [innerHTML]=" 'aboutUs.descriptionText' | translate"></p>
-            <a><button>{{ "aboutUs.thatsUs" | translate }} <mat-icon fontIcon="arrow_downward"></mat-icon></button></a>
+            <a [routerLink]="[]" [fragment]="'team'"><button>{{ "aboutUs.thatsUs" | translate }} <mat-icon fontIcon="arrow_downward"></mat-icon></button></a>
         </div>
     </div>
 </div>
+<a id="team"></a>
 <div class="people-container">
     @for (person of people; track person){
         <div class="person-container">

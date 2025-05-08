@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -22,7 +22,10 @@ registerLocaleData(localeEn);
 registerLocaleData(localeIt);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(),
+  providers: [provideRouter(routes, withInMemoryScrolling({
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled'
+  })), provideClientHydration(),
       { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },    
       provideApiService(), provideHttpClient(withFetch(), withInterceptorsFromDi()),
       {provide: BASE_PATH, useFactory: () => {

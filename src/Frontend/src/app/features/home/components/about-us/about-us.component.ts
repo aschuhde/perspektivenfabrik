@@ -3,13 +3,14 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {shuffle} from "../../../../shared/tools/array-tools";
 import { isPlatformServer } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 const SHUFFLED_PEOPLE_KEY = makeStateKey<any[]>('shuffledPeople');
 
 
 @Component({
   selector: 'app-about-us',
-  imports: [TranslateModule, MatIcon],
+  imports: [TranslateModule, MatIcon, RouterLink],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })
