@@ -9,7 +9,7 @@ import { MessageDialogComponent } from '../../../../shared/dialogs/message-dialo
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MapDialogComponent } from '../../../../shared/dialogs/map-dialog/map-dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-location',
@@ -24,6 +24,7 @@ export class InputLocationComponent {
   locationIndex = model.required<number>();
   remove = output<LocationInput>();
   onChanged = output();
+  translateService = inject(TranslateService)
 
   get locationNumber(){
     return this.locationIndex() + 1;
@@ -93,20 +94,20 @@ export class InputLocationComponent {
   }
   readonly messageDialogs = {
     helpLocationLink: new MessageDialogData({
-      message: "Todo: Beschreibung, wozu link gut sein kann",
-      title: "Link für Remote-Ort"
+      message: this.translateService.instant("messages.helpLocationLinkMessage"),
+      title: this.translateService.instant("messages.helpLocationLinkTitle")
     }),
     helpLocationName: new MessageDialogData({
-      message: "Todo: Der Name kann ein Dorf, ein Platz, eine Region etc... sein",
-      title: "Name eines Ortes"
+      message: this.translateService.instant("messages.helpLocationNameMessage"),
+      title: this.translateService.instant("messages.helpLocationNameTitle")
     }),
     helpLocationAddress: new MessageDialogData({
-      message: "Todo: Beschreibung zu Adresse",
-      title: "Adresse"
+      message: this.translateService.instant("messages.helpLocationAddressMessage"),
+      title: this.translateService.instant("messages.helpLocationAddressTitle")
     }) ,
     helpLocationCoordinates: new MessageDialogData({
-      message: "Todo: Beschreibung zu Koordinaten",
-      title: "Koordinaten"
+      message: this.translateService.instant("messages.helpLocationCoordinatesMessage"),
+      title: this.translateService.instant("messages.helpLocationCoordinatesTitle")
     }) 
   };
   removeClicked(){

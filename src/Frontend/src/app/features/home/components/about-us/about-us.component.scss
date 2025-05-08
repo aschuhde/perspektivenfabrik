@@ -1,4 +1,6 @@
 @use "vars";
+@use "responsive";
+
 .top {
   background-color: vars.$bg-purple;
   color: white;
@@ -179,4 +181,105 @@
   text-transform: uppercase;
   letter-spacing: 4px;
   text-align: center;
+}
+
+@include responsive.mobile{
+  .top {
+    .left{
+      width: 100%;
+      display: block;
+      
+      > .left-content {
+        .title{
+          font-size: 2.5rem;
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+      
+      .right-content {
+        width: auto;
+      }
+    }
+  }
+  .people-container {
+    .person-container {
+      width: 100%;
+      .person-inner {
+        padding: 2rem 2rem 2rem 2rem !important;
+      }
+    }
+  }
+  .middle {
+    .left{
+      width: 100%;
+      display: block;
+      
+      .left-content{
+        
+        .graphic{
+          font-size: 1rem;
+
+          .humor {
+            margin-left: -6.5rem;
+          }
+          .simplicity{
+            margin-left: -4rem;
+          }
+          .humor-container, .simplicity-container {
+            display: inline-block;
+            vertical-align: top;
+          }
+          .simplicity-container {
+            padding-top: 1.5rem;
+          }
+
+          .humor-container{
+            padding-top: 3.7rem;
+          }
+          .line {
+            position: absolute;
+            left: 9.7rem;
+            top: -1.4rem;
+            width: 9rem;
+          }
+
+          &.italian{
+            .simplicity {
+              margin-left: -3rem;
+            }
+            .humor {
+              margin-left: -6.5rem;
+            }
+            .humor-container{
+              position: relative;
+              z-index: 1;
+              padding-top: 4rem;
+
+              &:before{
+                content: "";
+                position: absolute;
+                width: 5rem;
+                height: 3rem;
+                right: 0;
+                bottom: 0;
+                background-color: vars.$bg-orange;
+                z-index: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        width: auto;
+      }
+    }
+  }
 }

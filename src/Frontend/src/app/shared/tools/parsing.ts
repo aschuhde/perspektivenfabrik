@@ -1,5 +1,4 @@
 export function parseMoneyWithFallback(value: any, fallback: number | null): number | null{
-    //todo
     return parseFloatWithFallback(value.replace("€", "").trim() ?? "", fallback);
 }
 
