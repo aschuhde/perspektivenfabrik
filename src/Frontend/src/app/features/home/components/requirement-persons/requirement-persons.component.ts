@@ -7,15 +7,19 @@ import {LocaleDataProvider} from "../../../../core/services/locale-data.service"
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 import {ApiProjectModel} from "../../models/api-project-model";
 import {MatIconModule} from "@angular/material/icon";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {parseEffortHours} from "../../../../shared/tools/parsing";
+import { map, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-requirement-persons',
-  imports: [MatIconModule, TranslateModule],
+  imports: [MatIconModule, TranslateModule, AsyncPipe],
   templateUrl: './requirement-persons.component.html',
   styleUrl: './requirement-persons.component.scss'
 })
 export class RequirementPersonsComponent {
+  translateService = inject(TranslateService)
   requirements = input<ApplicationModelsApiModelsApiRequirementSpecificationPerson[]>([])
   localDataProvider = inject(LocaleDataProvider)
   
@@ -29,19 +33,20 @@ export class RequirementPersonsComponent {
   }
 
   workloadText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationPerson) {
-    return stringEmptyPropagate(requirement?.workAmountSpecification?.value, "-");
+    const effortHours = parseEffortHours(requirement?.workAmountSpecification?.value)
+    return this.translateService.stream(`effortHoursType.${effortHours.effortHoursType}`).pipe(map(x => `${stringEmptyPropagate(effortHours.effortHours, "-")} ${x}`));
   }
 
   periodText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationPerson) {
     if(requirement.timeSpecificationSameAsProject){
-      return "Im gleichen Zeitraum des Projekts"
+      return this.translateService.stream("general.inTheSameTimeOfTheProject")
     }
-    return stringEmptyPropagate(joinWithConjunction(requirement?.timeSpecifications?.map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
+    return of(stringEmptyPropagate(joinWithConjunction(requirement?.timeSpecifications?.map(x => ApiProjectModel.getTimeSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
   }
   locationText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationPerson) {
     if(requirement.locationSpecificationsSameAsProject){
-      return "Am gleichen Ort wie das Projekt"
+      return this.translateService.stream("general.atTheSameLocationOfTheProject")
     }
-    return stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
+    return of(stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
   }
 }

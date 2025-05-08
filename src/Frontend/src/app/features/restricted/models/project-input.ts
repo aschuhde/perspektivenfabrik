@@ -141,7 +141,7 @@ export class ProjectInput{
               name: "shortDescription",
                 entityId: this.shortDescriptionTypeEntityId ?? undefined,
               descriptionTitle: {
-                rawContentString: "Kurzbeschreibung",
+                rawContentString: "short description",
               }
             },
             content: {
@@ -154,7 +154,7 @@ export class ProjectInput{
               name: "longDescription",
                 entityId: this.longDescriptionTypeEntityId ?? undefined,
               descriptionTitle: {
-                rawContentString: "Ausführliche Beschreibung"
+                rawContentString: "long description"
               }
             },
             content: {

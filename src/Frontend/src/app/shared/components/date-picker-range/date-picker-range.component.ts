@@ -1,31 +1,18 @@
 import { Component, model } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
-import {DateRange, MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { DateTime } from 'luxon';
-import {provideNativeDateAdapter} from "@angular/material/core";
 import { TranslateModule } from '@ngx-translate/core';
+import { provideLuxonDateAdapterFullDate } from '../../tools/language-tools';
 
-export const DATE_FORMAT_DATE = {
-  parse: {
-    dateInput: 'dd.MM.yyyy',
-  },
-  display: {
-    dateInput: 'dd.MM.yyyy',
-    monthYearLabel: 'dd.MM.yyyy',
-    dateA11yLabel: 'dd.MM.yyyy',
-    monthYearA11yLabel: 'dd.MM.yyyy',
-  },
-};
 
 @Component({
   selector: 'app-date-picker-range',
   imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './date-picker-range.component.html',
   styleUrl: './date-picker-range.component.scss',
-  providers: [provideLuxonDateAdapter(DATE_FORMAT_DATE)]
+  providers: [provideLuxonDateAdapterFullDate()]
 })
 export class DatePickerRangeComponent {
   readonly startDate = model.required<DateTime | null>();

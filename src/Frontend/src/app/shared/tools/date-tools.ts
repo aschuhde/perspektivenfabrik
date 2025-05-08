@@ -64,6 +64,9 @@ export function getLuxonDateTimeFromMonth(month: DomainDataTypesMonth | null) {
 }
 
 export function formatDate(value: Date | null, locale: string){
+    if(locale === "it"){
+        return getLuxonDateTimeFromNullableJsDate(value)?.toFormat("dd/MM/yyyy") ?? "";
+    }
     return getLuxonDateTimeFromNullableJsDate(value)?.toFormat("dd.MM.yyyy") ?? "";
 }
 export function formatTime(value: Date | null, locale: string){

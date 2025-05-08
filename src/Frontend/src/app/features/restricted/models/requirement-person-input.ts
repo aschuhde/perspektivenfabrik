@@ -5,6 +5,7 @@ import { SelectOption } from "../../../shared/models/select-option";
 import { ObjectCreator } from "../../../shared/tools/object-creator";
 import { LocationInput } from "./location-input";
 import { ProjectTimeInput } from "./project-time-input";
+import {getEffortHoursWithHourUnit, parseEffortHours} from "../../../shared/tools/parsing";
 
 export declare type EffortHoursType = "perWeek" | "total"
 export class RequirementPersonInput{
@@ -20,6 +21,10 @@ export class RequirementPersonInput{
   requirementLocationIsIdenticalToProjectLocation: boolean = true
   requirementLocations: LocationInput[] = [new LocationInput()];
 
+  getHoursWithUnit(){
+      return getEffortHoursWithHourUnit(this.hours);
+  }
+  
   toRequirementPersonSpecification(): ApplicationModelsApiModelsApiRequirementSpecificationPerson {
     return {
         classType: ApplicationModelsApiModelsApiRequirementSpecificationTypes.Person,
@@ -36,7 +41,7 @@ export class RequirementPersonInput{
             }
         })),
         workAmountSpecification: {
-            value: `${this.hours}h ${this.effortHoursType}`,
+            value: `${this.getHoursWithUnit()} ${this.effortHoursType}`,
             entityId: this.workAmountEntityId ?? undefined
         },
         timeSpecificationSameAsProject: this.requirementTimeIsIdenticalToProjectTime,
@@ -47,13 +52,14 @@ export class RequirementPersonInput{
   }
 
   static fromRequirementSpecification(requirementSpecification: ApplicationModelsApiModelsApiRequirementSpecificationPerson) {
+      const effortHours = parseEffortHours(requirementSpecification.workAmountSpecification?.value);
     const result = new RequirementPersonInput();
     result.entityId = requirementSpecification.entityId ?? null;
     result.quantitySpecificationEntityId = requirementSpecification.quantitySpecification?.entityId ?? null;
     result.workAmountEntityId = requirementSpecification.workAmountSpecification?.entityId ?? null;
     result.numberOfPersons = requirementSpecification.quantitySpecification?.value ?? "";
-    result.hours = requirementSpecification.workAmountSpecification?.value?.split(" ")[0] ?? "";
-    result.effortHoursType = requirementSpecification.workAmountSpecification?.value?.split(" ")[1]?.toLowerCase()?.trim() === "perweek" ? "perWeek" : "total";
+    result.hours = effortHours?.effortHours ?? "";
+    result.effortHoursType = effortHours?.effortHoursType ?? "perWeek";
     result.requirementTimeIsIdenticalToProjectTime = requirementSpecification.timeSpecificationSameAsProject ?? true;
     result.requirementLocationIsIdenticalToProjectLocation = requirementSpecification.locationSpecificationsSameAsProject ?? true;
     result.requirementLocations = requirementSpecification.locationSpecifications?.map(x => LocationInput.fromLocationSpecification(x))?.filter(x => !!x) ?? [];

@@ -6,3 +6,15 @@
     }
     return shuffled;
 }
+
+export function distinctBy<T, K>(array: T[], selector: (item: T) => K): T[] {
+    const seen = new Map<K, T>();
+    array.forEach(item => {
+        const key = selector(item);
+        if (!seen.has(key)) {
+            seen.set(key, item);
+        }
+    });
+    return Array.from(seen.values());
+}
+
