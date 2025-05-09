@@ -9,8 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ApplicationApiDataTypesApiTranslationValue } from './applicationApiDataTypesApiTranslationValue';
 import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
 
 export interface ApplicationModelsApiModelsApiQuantitySpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     value?: string;
+    valueTranslations?: Array<ApplicationApiDataTypesApiTranslationValue>;
 }

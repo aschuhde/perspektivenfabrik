@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Application.ApiDataTypes;
 using Domain.DataTypes;
 
 namespace Application.Models.ApiModels;
@@ -27,11 +28,13 @@ public class ApiContactSpecification : ApiBaseEntityWithId
 public sealed class ApiContactSpecificationPersonalName : ApiContactSpecification
 {
     public required string PersonalName { get; init; }
+    public ApiTranslationValue[] PersonalNameTranslations { get; set; } = [];
 }
 
 public sealed class ApiContactSpecificationOrganisationName : ApiContactSpecification
 {
     public required string OrganisationName { get; init; }
+    public ApiTranslationValue[] OrganisationNameTranslations { get; set; } = [];
 }
 
 public sealed class ApiContactSpecificationPhoneNumber : ApiContactSpecification

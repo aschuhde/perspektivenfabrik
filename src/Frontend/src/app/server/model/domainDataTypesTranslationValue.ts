@@ -9,9 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
-export interface DomainDataTypesPhoneNumber { 
-    phoneNumberText?: string;
-    phoneNumberTextTranslations?: Array<DomainDataTypesTranslationValue>;
+export interface DomainDataTypesTranslationValue { 
+    value?: string;
+    languageCode?: string;
 }

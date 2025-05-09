@@ -28,7 +28,15 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
   private async Task<ProjectDto[]> GetProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction,
     Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct)
   {
-    return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(x => x.ToProject()).ToArray();
+    return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(ToProject).ToArray();
+  }
+
+  private ProjectDto ToProject(DbProject dbProject)
+  {
+      var projectDto = dbProject.ToProject();
+      var fieldTranslations = dbProject.FieldTranslations;
+      projectDto.ApplyTranslations(fieldTranslations.Select(x => x.ToFieldTranslation()).ToArray());
+      return projectDto;
   }
     private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct, bool includeDeleted = false)
     {
@@ -41,6 +49,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         // {
         //   query = query.AsNoTracking();
         // }
+        
         var start = Stopwatch.GetTimestamp();
         IQueryable<DbProject> innerProjectsQuery = dbContext.Projects;
         if (!includeDeleted)
@@ -170,9 +179,12 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             requirementPerson.WorkAmountSpecification = requirementWorkAmountSpecifications.FirstOrDefault(x => x.RequirementSpecificationPersonId == requirement.RequirementSpecificationId);
           }
         }
+        
+        var fieldTranslations = await dbContext.DbFieldTranslations.Where(x => projectIds.Contains(x.GroupEntityId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
 
         foreach (DbProject project in projects)
         {
+            project.FieldTranslations = fieldTranslations.Where(x => x.GroupEntityId == project.EntityId).ToList();
           project.ContactSpecifications = projectContactSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
           project.DescriptionSpecifications = projectDescriptionSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
           project.GraphicsSpecifications = projectGraphicsSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
@@ -551,15 +563,24 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
     public async Task<TagDto[]> GetTags(CancellationToken ct)
     {
-        return (await dbContext.Tags.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToTag()).ToArray(); 
+        var dbTags = await dbContext.Tags.AsNoTracking().ToArrayAsync(ct);
+        var dbTagIds = dbTags.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbTagIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbTags.Select(x => x.ToTag().ApplyTranslations(fieldTranslations)).ToArray();
     }
     public async Task<MaterialDto[]> GetMaterials(CancellationToken ct)
     {
-        return (await dbContext.Materials.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToMaterial()).ToArray(); 
+        var dbMaterials = await dbContext.Materials.AsNoTracking().ToArrayAsync(ct);
+        var dbMaterialIds = dbMaterials.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbMaterialIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbMaterials.Select(x => x.ToMaterial().ApplyTranslations(fieldTranslations)).ToArray();
     }
     public async Task<SkillDto[]> GetSkills(CancellationToken ct)
     {
-        return (await dbContext.Skills.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToSkill()).ToArray(); 
+        var dbSkills = await dbContext.Skills.AsNoTracking().ToArrayAsync(ct);
+        var dbSkillIds = dbSkills.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbSkillIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbSkills.Select(x => x.ToSkill().ApplyTranslations(fieldTranslations)).ToArray(); 
     }
 
     public async Task<Guid> AddDescriptionImage(Guid projectId, byte[] image, CancellationToken ct)

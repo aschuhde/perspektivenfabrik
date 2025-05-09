@@ -22,7 +22,6 @@ import { ApplicationDeleteProjectDeleteProjectDeleteProjectResponse } from '../m
 import { ApplicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse } from '../model/applicationExampleAnonymousGetExampleAnonymousGetExampleAnonymousResponse';
 import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applicationExampleGetExampleGetExampleResponse';
 import { ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse } from '../model/applicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse';
-import { ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest } from '../model/applicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest';
 import { ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse } from '../model/applicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse';
 import { ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse } from '../model/applicationGetInternalProjectGetInternalProjectGetInternalProjectResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
@@ -188,20 +187,16 @@ export class ApiService {
     /**
      * 
      * 
-     * @param body 
      * @param projectIdentifier 
      * @param imageIdentifier 
+     * @param u 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>;
-    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
-    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
-    public webApiEndpointsGetDescriptionImage(body: ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageRequest, projectIdentifier: string, imageIdentifier: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsGetDescriptionImage.');
-        }
+    public webApiEndpointsGetDescriptionImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>;
+    public webApiEndpointsGetDescriptionImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
+    public webApiEndpointsGetDescriptionImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>>;
+    public webApiEndpointsGetDescriptionImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (projectIdentifier === null || projectIdentifier === undefined) {
             throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetDescriptionImage.');
@@ -209,6 +204,12 @@ export class ApiService {
 
         if (imageIdentifier === null || imageIdentifier === undefined) {
             throw new Error('Required parameter imageIdentifier was null or undefined when calling webApiEndpointsGetDescriptionImage.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
         }
 
         let headers = this.defaultHeaders;
@@ -224,16 +225,11 @@ export class ApiService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
-        return this.httpClient.request<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}/description-images/${encodeURIComponent(String(imageIdentifier))}`,
+        return this.httpClient.request<ApplicationGetDescriptionImageGetDescriptionImageGetDescriptionImageResponse>('get',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}/description-images/${encodeURIComponent(String(imageIdentifier))}`,
             {
-                body: body,
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

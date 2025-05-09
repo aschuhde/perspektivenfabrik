@@ -9,8 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface DomainDataTypesRegion { 
     regionName?: string;
     addressText?: string;
+    regionNameTranslations?: Array<DomainDataTypesTranslationValue>;
+    addressTextTranslations?: Array<DomainDataTypesTranslationValue>;
 }

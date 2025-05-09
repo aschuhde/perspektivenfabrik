@@ -14,7 +14,8 @@ public static partial class ApiMappingExtensions
         return new OrganizationDto()
         {
             EntityId = apiOrganizationReference.OrganizationEntityId,
-            Name = ""
+            Name = "",
+            NameTranslations = []
         };
     }
 }

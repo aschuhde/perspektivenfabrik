@@ -9,7 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface DomainDataTypesMailAddress { 
     mail?: string;
+    mailTranslations?: Array<DomainDataTypesTranslationValue>;
 }

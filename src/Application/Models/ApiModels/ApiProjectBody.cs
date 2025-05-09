@@ -1,4 +1,5 @@
-﻿using Domain.DataTypes;
+﻿using Application.ApiDataTypes;
+using Domain.DataTypes;
 using Domain.Enums;
 
 namespace Application.Models.ApiModels;
@@ -13,6 +14,7 @@ public class ApiProjectBody : ApiBaseEntity
     public required ApiRequirementSpecification[] RequirementSpecifications { get; init; }
     public required ApiContactSpecification[] ContactSpecifications { get; init; }
     public required string ProjectName { get; init; }
+    public ApiTranslationValue[] ProjectNameTranslations { get; set; } = [];
     public required ApiProjectTag[] ProjectTags { get; init; }
     public required FormattedTitle ProjectTitle { get; init; }
     public required ApiDescriptionSpecification[] DescriptionSpecifications { get; init; }

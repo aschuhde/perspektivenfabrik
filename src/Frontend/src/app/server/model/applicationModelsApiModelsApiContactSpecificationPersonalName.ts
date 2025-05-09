@@ -9,8 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ApplicationApiDataTypesApiTranslationValue } from './applicationApiDataTypesApiTranslationValue';
 import { ApplicationModelsApiModelsApiContactSpecification } from './applicationModelsApiModelsApiContactSpecification';
 
 export interface ApplicationModelsApiModelsApiContactSpecificationPersonalName extends ApplicationModelsApiModelsApiContactSpecification { 
     personalName?: string;
+    personalNameTranslations?: Array<ApplicationApiDataTypesApiTranslationValue>;
 }

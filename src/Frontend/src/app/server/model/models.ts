@@ -1,3 +1,4 @@
+export * from './applicationApiDataTypesApiTranslationValue';
 export * from './applicationCommonBaseRequestOfDeleteProjectResponse';
 export * from './applicationCommonBaseRequestOfGetAutocompleteEntriesResponse';
 export * from './applicationCommonBaseRequestOfGetDescriptionImageResponse';
@@ -115,6 +116,7 @@ export * from './domainDataTypesMonth';
 export * from './domainDataTypesPhoneNumber';
 export * from './domainDataTypesPostalAddress';
 export * from './domainDataTypesRegion';
+export * from './domainDataTypesTranslationValue';
 export * from './domainDataTypesUrl';
 export * from './domainDataTypesYear';
 export * from './domainEnumsGraphicsType';

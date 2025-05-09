@@ -47,6 +47,10 @@ public sealed class DbProject : DbEntity
     [DeleteBehavior(DeleteBehavior.NoAction)]
     [MapperIgnore]
     public List<DbDescriptionImage>? DescriptionImages { get; set; }
+    
+    [MapperIgnore]
+    [NotMapped]
+    public List<DbFieldTranslation> FieldTranslations { get; set; } = [];
 
     public override void UpdateToTarget(DbEntityWithId target)
     {

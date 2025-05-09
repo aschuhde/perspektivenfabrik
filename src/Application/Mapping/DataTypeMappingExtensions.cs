@@ -40,4 +40,7 @@ public static partial class ApiMappingExtensions
     
     public static partial Year ToYear(this ApiYear apiYear);
     public static partial ApiYear ToApiYear(this Year year);
+    
+    public static partial TranslationValue ToTranslationValue(this ApiTranslationValue apiTranslationValue);
+    public static partial ApiTranslationValue ToApiTranslationValue(this TranslationValue translationValue);
 }

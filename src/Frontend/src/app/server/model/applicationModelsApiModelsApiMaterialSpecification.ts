@@ -9,12 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ApplicationApiDataTypesApiTranslationValue } from './applicationApiDataTypesApiTranslationValue';
 import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
 import { DomainDataTypesFormattedContent } from './domainDataTypesFormattedContent';
 
 export interface ApplicationModelsApiModelsApiMaterialSpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     name?: string;
+    nameTranslations?: Array<ApplicationApiDataTypesApiTranslationValue>;
     amountValue?: string;
+    amountValueTranslations?: Array<ApplicationApiDataTypesApiTranslationValue>;
     title?: DomainDataTypesFormattedContent;
     description?: DomainDataTypesFormattedContent;
 }

@@ -29,6 +29,7 @@ public static partial class MappingExtensions
     [MapperIgnoreSource(nameof(ProjectDto.RelatedProjects))]
     [MapperIgnoreTarget(nameof(DbProject.ConnectedOrganizations))]
     [MapperIgnoreSource(nameof(ProjectDto.ConnectedOrganizations))]
+    [MapperIgnoreSource(nameof(ProjectDto.ProjectNameTranslations))]
     public static partial DbProject ToDbProjectInner(this ProjectDto projectDto);
     
     [UserMapping(Default = true)]
@@ -95,5 +96,6 @@ public static partial class MappingExtensions
         return r;
     }
     
+    [MapperIgnoreTarget(nameof(ProjectDto.ProjectNameTranslations))]
     public static partial ProjectDto ToProject(this DbProject dbProject);
 }
