@@ -10,7 +10,6 @@ services:
       - '21000-21010:21000-21010'
     volumes:
       - storage:/home/user
-    network_mode: "host"
   codegen:
     build:
       context: .
