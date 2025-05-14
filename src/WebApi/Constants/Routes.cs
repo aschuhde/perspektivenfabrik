@@ -18,6 +18,6 @@ public static class Routes
     public const string DeleteProject = $"{ApiRoute}/projects/{{ProjectIdentifier}}";
     public const string GetInternalProject = $"{ApiRoute}/shared/projects/{{ProjectIdentifier}}";
     public const string GetAutocompleteEntries = $"{ApiRoute}/autocomplete-entries";
-    public const string PostDescriptionImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/description-images";
-    public const string GetDescriptionImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/description-images/{{ImageIdentifier}}";
+    public const string PostProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images";
+    public const string GetProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images/{{ImageIdentifier}}";
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.DataTypes;
+using Domain.Extensions;
 
 namespace Domain.Entities;
 
@@ -9,6 +10,11 @@ public sealed class ProjectTagDto : BaseEntityWithIdDto
 
     public void ApplyTranslations(FieldTranslationDto[] fieldTranslations)
     {
-        TagNameTranslations = fieldTranslations.Where(x => x.CorrelatedEntityId == x.EntityId && x.PropertyPath == nameof(TagName)).Select(x => x.ToTranslationValue()).ToArray();
+        TagNameTranslations = fieldTranslations.Where(x => x.CorrelatedEntityId == EntityId && x.PropertyPath == nameof(TagName)).Select(x => x.ToTranslationValue()).ToArray();
+    }
+
+    public FieldTranslationDto[] CollectTranslations(Guid projectId)
+    {
+        return TagNameTranslations.CreateFieldTranslationDtos(projectId, EntityId, nameof(TagName));
     }
 }

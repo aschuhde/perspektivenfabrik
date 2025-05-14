@@ -1,4 +1,5 @@
 ﻿using Domain.DataTypes;
+using Domain.Extensions;
 
 namespace Domain.Entities;
 
@@ -18,5 +19,15 @@ public sealed class MaterialSpecificationDto : BaseEntityWithIdDto
         AmountValueTranslations = translations.Where(x => x.PropertyPath == nameof(AmountValue)).Select(x => x.ToTranslationValue()).ToArray();
         Title.ContentTranslations = translations.Where(x => x.PropertyPath == nameof(Title)).Select(x => x.ToTranslationValue()).ToArray();
         Description.ContentTranslations = translations.Where(x => x.PropertyPath == nameof(Description)).Select(x => x.ToTranslationValue()).ToArray();
+    }
+
+    public FieldTranslationDto[] CollectTranslations(Guid projectId)
+    {
+        var result = new List<FieldTranslationDto>();
+        result.AddRange(NameTranslations.CreateFieldTranslationDtos(projectId, EntityId, nameof(Name)));
+        result.AddRange(AmountValueTranslations.CreateFieldTranslationDtos(projectId, EntityId, nameof(AmountValue)));
+        result.AddRange(Title.ContentTranslations.CreateFieldTranslationDtos(projectId, EntityId, nameof(Title)));
+        result.AddRange(Description.ContentTranslations.CreateFieldTranslationDtos(projectId, EntityId, nameof(Description)));
+        return result.ToArray();
     }
 }

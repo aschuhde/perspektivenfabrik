@@ -1,12 +1,38 @@
 @use "responsive";
 
+.btn-nav{
+    display: none;
+    position: absolute;
+    top: 50%;
+    opacity: .7;
+}
+.btn-prev{
+    left: 2rem;
+}
+.btn-next{
+    right: 2rem;
+}
 :host{
     display: block;
     height: 100%;
+    position: relative;
+    
+    &:hover{
+        .btn-nav{
+            display: block;
+        }
+    }
 }
 
 img{
     height: 100%;
     width: 100%;
     object-fit: cover;
+    opacity: 0;
+    display: none;
+    
+    &.active{
+        display: block;
+        opacity: 1;
+    }
 }

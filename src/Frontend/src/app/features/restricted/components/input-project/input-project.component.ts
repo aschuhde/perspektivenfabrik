@@ -44,6 +44,11 @@ import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service"
 import {BASE_PATH} from "../../../../server/variables";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {Language} from "../../../../core/types/general-types";
+import {
+    MatInputTranslationsComponent
+} from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
+import {TranslationValue} from "../../../../shared/models/translation-value";
+import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 
 @Component({
     selector: 'app-input-project',
@@ -64,7 +69,8 @@ import {Language} from "../../../../core/types/general-types";
         MatChipsModule,
         AngularEditorModule,
         InputContactSpecificationComponent,
-        TranslateModule],
+        TranslateModule, 
+        MatInputTranslationsComponent],
     templateUrl: './input-project.component.html',
     styleUrl: './input-project.component.scss'
 })
@@ -90,6 +96,8 @@ export class InputProjectComponent {
     static IgnoreUnloadEvent = false;
     autoCompleteDataService = inject(AutocompleteDataService);
     translateService = inject(TranslateService);
+    isDescriptionOtherLanguageActive: boolean = false;
+    descriptionMainLanguage = this.translateService.currentLang as Language;
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
       spellcheck: true,
@@ -118,7 +126,7 @@ export class InputProjectComponent {
         }
         return new Observable<HttpEvent<UploadResponse>>((subscriber) => {
           new UploadedImage(file).getBase64().then(x => {
-            this.apiService.webApiEndpointsPostDescriptionImage({
+            this.apiService.webApiEndpointsPostProjectImage({
               image: {
                 content: x
               }
@@ -133,7 +141,7 @@ export class InputProjectComponent {
               }
               subscriber.next(new HttpResponse<UploadResponse>({
                 body: {
-                  imageUrl: `${this.apiBasePath}/api/projects/${this.projectInput().entityId}/description-images/${y.imageIdentifier}`
+                  imageUrl: `${this.apiBasePath}/api/projects/${this.projectInput().entityId}/project-images/${y.imageIdentifier}`
                 },
                 status: 200
               }));
@@ -155,8 +163,12 @@ export class InputProjectComponent {
     }
     ngOnInit(){
       this.autoCompleteDataService.getTags().then(x => {
-        this.tagOptions = x?.filter(y => !!y).map(y => new SelectOption(y.name ?? "")) ?? [];
+        this.tagOptions = x?.filter(y => !!y).map(y => {
+          const valueTranslations = TranslationValue.arrayFromApiTranslationValues(y.nameTranslations ?? []);
+          return new SelectOption(TranslationValue.getTranslationIfExist(y.name ?? "", valueTranslations, this.translateService.currentLang as Language), null, null, valueTranslations);
+        }) ?? [];
       })
+      this.descriptionMainLanguage = this.translateService.currentLang as Language;
     }
   
     constructor() {
@@ -200,6 +212,15 @@ export class InputProjectComponent {
   set projectTitle(value: string) {
     this.projectInput().projectTitle = value;
       this.onUpdated();
+  }
+
+  get projectTitleTranslations(): TranslationValue[] {
+    return this.projectInput().projectTitleTranslations;
+  }
+
+  set projectTitleTranslations(value: TranslationValue[]) {
+    this.projectInput().projectTitleTranslations = value;
+    this.onUpdated();
   }
 
   get projectPhase(): "unknown" | "planning" | "ongoing" | "finished" | "cancelled" {
@@ -260,6 +281,15 @@ export class InputProjectComponent {
       this.onUpdated();
   }
 
+  get contactMailTranslations(){
+    return this.projectInput().contactMailTranslations;
+  }
+  set contactMailTranslations(value: TranslationValue[]){
+    this.projectInput().contactMailTranslations = value;
+    this.onUpdated();
+  }
+
+
   get contactPhone(): string {
     return this.projectInput().contactPhone;
   }
@@ -268,13 +298,30 @@ export class InputProjectComponent {
     this.projectInput().contactPhone = value;
       this.onUpdated();
   }
+  get contactPhoneTranslations(){
+    return this.projectInput().contactPhoneTranslations;
+  }
+  set contactPhoneTranslations(value: TranslationValue[]){
+    this.projectInput().contactPhoneTranslations = value;
+    this.onUpdated();
+  }
 
   get longDescription(): string {
     return this.projectInput().longDescription;
   }
 
   set longDescription(value: string) {
-    this.projectInput().longDescription = value;
+    const projectInput = this.projectInput();
+    projectInput.longDescription = value;
+    if(!projectInput.longDescriptionTranslations){
+      projectInput.longDescriptionTranslations = [];
+    }
+    const translation = projectInput.longDescriptionTranslations.find(x => x.language === this.descriptionMainLanguage);
+    if(translation){
+      translation.value = value;
+    }else{
+      projectInput.longDescriptionTranslations = [...projectInput.longDescriptionTranslations, new TranslationValue(this.descriptionMainLanguage, value)];
+    }
       this.onUpdated();
   }
 
@@ -283,8 +330,53 @@ export class InputProjectComponent {
   }
 
   set shortDescription(value: string) {
-    this.projectInput().shortDescription = value;
+    const projectInput = this.projectInput();
+    projectInput.shortDescription = value;
+    if(!projectInput.shortDescriptionTranslations){
+      projectInput.shortDescriptionTranslations = [];
+    }
+    const translation = projectInput.shortDescriptionTranslations.find(x => x.language === this.descriptionMainLanguage);
+    if(translation){
+      translation.value = value;
+    }else{
+      projectInput.shortDescriptionTranslations = [...projectInput.shortDescriptionTranslations, new TranslationValue(this.descriptionMainLanguage, value)];
+    }
       this.onUpdated();
+  }
+
+  get shortDescriptionOtherLanguage(): string {
+    return stringEmptyPropagate(this.projectInput().shortDescriptionTranslations?.find(x => x.language === this.descriptionOtherLanguage)?.value, this.shortDescription);
+  }
+  get longDescriptionOtherLanguage(): string {
+    return stringEmptyPropagate(this.projectInput().longDescriptionTranslations?.find(x => x.language === this.descriptionOtherLanguage)?.value, this.longDescription);
+  }
+
+  set shortDescriptionOtherLanguage(value: string) {
+    const projectInput = this.projectInput();
+    if(!projectInput.shortDescriptionTranslations){
+      projectInput.shortDescriptionTranslations = [];
+    }
+    const translation = projectInput.shortDescriptionTranslations.find(x => x.language === this.descriptionOtherLanguage);
+    if(translation){
+      translation.value = value;
+    }else{
+      projectInput.shortDescriptionTranslations = [...projectInput.shortDescriptionTranslations, new TranslationValue(this.descriptionOtherLanguage, value)];
+    }
+    this.onUpdated();
+  }
+
+  set longDescriptionOtherLanguage(value: string) {
+    const projectInput = this.projectInput();
+    if(!projectInput.longDescriptionTranslations){
+      projectInput.longDescriptionTranslations = [];
+    }
+    const translation = projectInput.longDescriptionTranslations.find(x => x.language === this.descriptionOtherLanguage);
+    if(translation){
+      translation.value = value;
+    }else{
+      projectInput.longDescriptionTranslations = [...projectInput.longDescriptionTranslations, new TranslationValue(this.descriptionOtherLanguage, value)];
+    }
+    this.onUpdated();
   }
 
   get uploadedImages(): UploadedImage[] {
@@ -319,11 +411,27 @@ export class InputProjectComponent {
       this.onUpdated();
   }
 
+  get contactNameTranslations(){
+    return this.projectInput().contactNameTranslations;
+  }
+  set contactNameTranslations(value: TranslationValue[]){
+    this.projectInput().contactNameTranslations = value;
+    this.onUpdated();
+  }
+
   get organisationName(){
     return this.projectInput().organisationName;
   }
   set organisationName(value: string) {
     this.projectInput().organisationName = value;
+    this.onUpdated();
+  }
+
+  get organisationNameTranslations(){
+    return this.projectInput().organisationNameTranslations;
+  }
+  set organisationNameTranslations(value: TranslationValue[]){
+    this.projectInput().organisationNameTranslations = value;
     this.onUpdated();
   }
   
@@ -598,11 +706,36 @@ get typeNameGenitive(){
       return;
     }
     
-    this.uploadedImages.push(...validFiles.map(x => new UploadedImage(x)));
+    for(const file of validFiles){
+      new UploadedImage(file).getBase64().then(x => {
+        this.apiService.webApiEndpointsPostProjectImage({
+          image: {
+            content: x
+          }
+        }, this.projectInput().entityId!).subscribe(y => {
+          if(!y.imageIdentifier){
+            this.showMessageDialog({
+              message: this.translateService.instant("messages.imageUploadFailedMessage"),
+              title: this.translateService.instant("messages.imageUploadFailedTitle"),
+              buttonText: "Ok"
+            });
+            return
+          }
+          this.uploadedImages.push(UploadedImage.fromApi({
+            imageId: y.imageIdentifier,
+            type: "Additional" 
+          }, this.apiBasePath, this.projectInput().entityId!));
+        })
+      })
+    }
+      
+    
     this.fileUpload.nativeElement.value = "";
     this.onUpdated();
   }
 
+  
+  
   onUploadButtonClicked(){
     this.fileUpload.nativeElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   }
@@ -705,8 +838,11 @@ get typeNameGenitive(){
           return;
       }
 
+      
+      
       if (!this.selectedTags.find(x => x.value === value)) {
-          this.selectedTags.push(new SelectOption(value));
+        const tagOption = this.tagOptions.find(x => x.value === value);
+          this.selectedTags.push(new SelectOption(value, value,null, tagOption?.valueTranslations, tagOption?.valueTranslations));
           this.onUpdated();
       }
 
@@ -717,7 +853,8 @@ get typeNameGenitive(){
   tagSelected(event: MatAutocompleteSelectedEvent){
       event.option.deselect();
       if (!this.selectedTags.find(x => x.value === event.option.value)) {
-          this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue));
+        const tagOption = this.tagOptions.find(x => x.value === event.option.value);
+          this.selectedTags.push(new SelectOption(event.option.value, event.option.viewValue, null, tagOption?.valueTranslations, tagOption?.valueTranslations));
           this.onUpdated();
       }
       this.tagAutocompleteValue.set("");
@@ -737,7 +874,7 @@ get typeNameGenitive(){
   }
 
   onUpdated() {
-    this.projectSaveContext()?.onChange(this.projectInput());
+    this.projectSaveContext()?.onChange(this.projectInput(), this.translateService.currentLang as Language);
   }
 
   formatDate(date: Date | null) {
@@ -783,5 +920,22 @@ get typeNameGenitive(){
           link: this.internalLink
         }
       })
+  }
+  selectDescriptionLanguage(language: Language){
+      this.isDescriptionOtherLanguageActive = this.descriptionMainLanguage !== language; 
+  }
+  get descriptionOtherLanguage(): Language{
+      return this.descriptionMainLanguage === "it" ? "de" : "it";
+  }
+  get descriptionLanguageDeActive(){
+      return !this.descriptionLanguageItActive;
+  }
+  get descriptionLanguageItActive(){
+    return (this.descriptionMainLanguage === "it" && !this.isDescriptionOtherLanguageActive) ||
+        (this.descriptionMainLanguage !== "it" && this.isDescriptionOtherLanguageActive);
+  }
+  
+  get canUploadImages(){
+      return !!this.projectInput().entityId;
   }
 }

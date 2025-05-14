@@ -25,10 +25,16 @@ import {
   ApplicationModelsApiModelsApiLocationSpecificationAddress
 } from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationAddress";
 import {
+  ApplicationModelsApiModelsApiLocationSpecificationName
+} from "../../../../server/model/applicationModelsApiModelsApiLocationSpecificationName";
+import {
   RequirementMaterialsDialogComponent
 } from "../../dialogs/requirement-materials-dialog/requirement-materials-dialog.component";
 import { RequirementPersonsDialogComponent } from '../../dialogs/requirement-persons-dialog/requirement-persons-dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {TranslationValue} from "../../../../shared/models/translation-value";
+import {BASE_PATH} from "../../../../server/variables";
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-project-detail',
@@ -41,6 +47,8 @@ export class ProjectDetailComponent {
     localeDataProvider = inject(LocaleDataProvider)
     apiProjectModel = new ApiProjectModel()
   readonly dialog = inject(MatDialog);
+    translateService = inject(TranslateService);
+  apiBasePath = inject(BASE_PATH)
 
   get project(){
     return this.apiProjectModel.project;
@@ -53,6 +61,9 @@ export class ProjectDetailComponent {
   }
   get projectTitle(){
     return this.apiProjectModel.projectTitle;
+  }
+  get projectTitleTranslations(){
+    return TranslationValue.arrayFromApiTranslationValues(this.apiProjectModel.projectTitleTranslations);
   }
   get projectImages(){
     return this.apiProjectModel.projectImages;
@@ -102,11 +113,11 @@ export class ProjectDetailComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         if(changes["apiProject"]?.currentValue){
-          this.apiProjectModel.loadFromApiProject(changes["apiProject"]?.currentValue, this.localeDataProvider);           
+          this.apiProjectModel.loadFromApiProject(changes["apiProject"]?.currentValue, this.localeDataProvider, this.apiBasePath);           
         }
     }
     getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
-        return ApiProjectModel.getLocationSpecificationShortName(locationSpecification, this.localeDataProvider);
+        return ApiProjectModel.getLocationSpecificationShortName(locationSpecification, this.localeDataProvider, this.translateService);
     }
 
     getLocationSpecificationIconName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification): string {
@@ -145,10 +156,16 @@ export class ProjectDetailComponent {
         return formatCoordinates((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationCoordinates).coordinates, this.localeDataProvider.locale);
       }
       if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Region){
-        return (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationRegion).region?.addressText ?? "";
+        return TranslationValue.getTranslationIfExist((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationRegion).region?.addressText ?? "",
+            TranslationValue.arrayFromApiTranslationValues((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationRegion).region?.addressTextTranslations ?? []), this.translateService.currentLang as Language);
       }
       if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Address){
-        return (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress?.addressText ?? "";
+        return TranslationValue.getTranslationIfExist((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress?.addressText ?? "",
+            TranslationValue.arrayFromApiTranslationValues((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress?.addressTextTranslations ?? []), this.translateService.currentLang as Language);
+      }
+      if(locationSpecification.classType === ApplicationModelsApiModelsApiLocationSpecificationTypes.Name){
+        return TranslationValue.getTranslationIfExist((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationName).postalAddress?.addressText ?? "",
+            TranslationValue.arrayFromApiTranslationValues((locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationName).postalAddress?.addressTextTranslations ?? []), this.translateService.currentLang as Language);
       }
       return "";
     }
@@ -165,7 +182,8 @@ export class ProjectDetailComponent {
     }
     isLocationClickable(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification): boolean{
       return locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote
-        && locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Base;  
+        && locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.Base  
+        && locationSpecification.classType !== ApplicationModelsApiModelsApiLocationSpecificationTypes.EntireProvince;  
     }
     requirementSpecificationPersonClicked(){
       this.showRequirementPersonsDialog();

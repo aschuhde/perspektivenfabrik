@@ -31,23 +31,10 @@
                             <mat-icon>cancel</mat-icon><span class="only-desktop">{{"input-requirement-material.remove-material" | translate}}</span>
                         </button></h4>
                         <div>
-                            <mat-form-field class="w-100">
-                                <mat-label>{{"input-requirement-material.amount" | translate}}</mat-label>
-                                <input type="text"
-                                    aria-label="Amount of Material"
-                                    matInput
-                                    [(ngModel)]="selectedMaterial.amount"/>
-                            </mat-form-field>
+                            <app-mat-input-translations class="w-100" [label]="'input-requirement-material.amount' | translate" [(value)]="selectedMaterial.amount" [(translations)]="selectedMaterial.amountTranslations" ></app-mat-input-translations>
                         </div>
                         <div>
-                            <mat-form-field class="w-100">
-                                <mat-label>{{"input-requirement-material.material-description" | translate}}</mat-label>
-                                <textarea
-                                    rows = "1"
-                                    aria-label="Description of Material"
-                                    matInput
-                                    [(ngModel)]="selectedMaterial.description"></textarea>
-                            </mat-form-field>
+                            <app-mat-input-translations class="w-100" [label]="'input-requirement-material.material-description' | translate" [(value)]="selectedMaterial.description" [(translations)]="selectedMaterial.descriptionTranslations" ></app-mat-input-translations>
                         </div>   
                     </div>           
                 </div>

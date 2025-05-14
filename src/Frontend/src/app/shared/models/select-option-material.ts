@@ -1,12 +1,17 @@
 import { SelectOption } from "./select-option";
+import {TranslationValue} from "./translation-value";
 
 export class SelectOptionMaterial extends SelectOption{
     amount: string
     description: string
+    amountTranslations: TranslationValue[]
+    descriptionTranslations: TranslationValue[]
 
-    constructor(value: string, text: string | null = null, amount: string | null = null, description: string | null = null, entityId : string | null = null){
-        super(value, text, entityId);
-        this.amount = amount ?? "";
-        this.description = description ?? "";
+    constructor(init: Partial<SelectOptionMaterial>){
+        super(init.value ?? "", init.text, init.entityId, init.valueTranslations, init.textTranslations);
+        this.amount = init.amount ?? "";
+        this.description = init.description ?? "";
+        this.amountTranslations = init.amountTranslations ?? [];
+        this.descriptionTranslations = init.descriptionTranslations ?? [];
     }
 }

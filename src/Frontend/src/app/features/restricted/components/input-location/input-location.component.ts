@@ -10,10 +10,15 @@ import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MapDialogComponent } from '../../../../shared/dialogs/map-dialog/map-dialog.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+    MatInputTranslationsComponent
+} from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
+import {TranslationValue} from "../../../../shared/models/translation-value";
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-input-location',
-  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule],
+    imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule, MatInputTranslationsComponent],
   templateUrl: './input-location.component.html',
   styleUrl: './input-location.component.scss'
 })
@@ -25,6 +30,10 @@ export class InputLocationComponent {
   remove = output<LocationInput>();
   onChanged = output();
   translateService = inject(TranslateService)
+  locationNameLanguage: Language = this.translateService.currentLang as Language;
+  locationAddressLanguage: Language = this.translateService.currentLang as Language;
+  locationAddressDisplayNameLanguage: Language = this.translateService.currentLang as Language;
+  locationDisplayNameLanguage: Language = this.translateService.currentLang as Language;
 
   get locationNumber(){
     return this.locationIndex() + 1;
@@ -44,6 +53,13 @@ export class InputLocationComponent {
     this.location().locationLink = value
       this.onChanged.emit();
   }
+  get locationLinkTranslations(){
+    return this.location().locationLinkTranslations
+  }
+  set locationLinkTranslations(value: TranslationValue[]){
+    this.location().locationLinkTranslations = value
+    this.onChanged.emit();
+  }
   get locationName(){
     return this.location().locationName
   }
@@ -51,11 +67,25 @@ export class InputLocationComponent {
     this.location().locationName = value
       this.onChanged.emit();
   }
+  get locationNameTranslations(){
+    return this.location().locationNameTranslations
+  }
+  set locationNameTranslations(value: TranslationValue[]){
+    this.location().locationNameTranslations = value
+    this.onChanged.emit();
+  }
   get locationDisplayName(){
     return this.location().locationDisplayName
   }
   set locationDisplayName(value: string){
     this.location().locationDisplayName = value
+    this.onChanged.emit();
+  }
+  get locationDisplayNameTranslations(){
+    return this.location().locationDisplayNameTranslations
+  }
+  set locationDisplayNameTranslations(value: TranslationValue[]){
+    this.location().locationDisplayNameTranslations = value
     this.onChanged.emit();
   }
   get locationAddress(){
@@ -65,11 +95,25 @@ export class InputLocationComponent {
     this.location().locationAddress = value
       this.onChanged.emit();
   }
+  get locationAddressTranslations(){
+    return this.location().locationAddressTranslations
+  }
+  set locationAddressTranslations(value: TranslationValue[]){
+    this.location().locationAddressTranslations = value
+    this.onChanged.emit();
+  }
   get locationAddressDisplayName(){
     return this.location().locationAddressDisplayName
   }
   set locationAddressDisplayName(value: string){
     this.location().locationAddressDisplayName = value
+    this.onChanged.emit();
+  }
+  get locationAddressDisplayNameTranslations(){
+    return this.location().locationAddressDisplayNameTranslations
+  }
+  set locationAddressDisplayNameTranslations(value: TranslationValue[]){
+    this.location().locationAddressDisplayNameTranslations = value
     this.onChanged.emit();
   }
   get locationCoordinates(){
@@ -124,25 +168,33 @@ export class InputLocationComponent {
     this.dialog.open(MapDialogComponent, {
       data: {
         lookupMode: this.mapLookupMode,
-        onApply: (value: string, displayName: string) => {
-          this.mapRetrievedPoint(value, displayName);
+        onApply: (value: string, displayName: string, valueTranslations: TranslationValue[], displayNameTranslations: TranslationValue[], mainLanguage: Language) => {
+          this.mapRetrievedPoint(value, displayName, valueTranslations, displayNameTranslations, mainLanguage);
         }
       }
     });
   }
 
-  mapRetrievedPoint(value: string, displayName: string){
+  mapRetrievedPoint(value: string, displayName: string, valueTranslations: TranslationValue[], displayNameTranslations: TranslationValue[], mainLanguage: Language){
     switch(this.locationType){
       case "address":
+        this.locationAddressLanguage = mainLanguage;
+        this.locationAddressDisplayNameLanguage = mainLanguage;
         this.locationAddress = value;
+        this.locationAddressTranslations = valueTranslations;
         this.locationAddressDisplayName = displayName;
+        this.locationAddressDisplayNameTranslations = displayNameTranslations;
         break;
       case "coordinates":
         this.locationCoordinates = value;
         break;
       case "name":
+        this.locationNameLanguage = mainLanguage;
+        this.locationDisplayNameLanguage = mainLanguage;
         this.locationName = value;
+        this.locationNameTranslations = valueTranslations;
         this.locationDisplayName = displayName;
+        this.locationDisplayNameTranslations = displayNameTranslations;
         break;
     }     
   }

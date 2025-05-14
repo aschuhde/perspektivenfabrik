@@ -2,7 +2,7 @@
     @for (project of projects; track project){
         <div class="project-list-item">
             <div>
-                <img class="project-list-item-thumbnail" src="{{ project.getThumbnailUrl()}}"  alt="Thumbnail Image of {{ project.projectTitle }}"/>
+                <img class="project-list-item-thumbnail" src="{{ project.getThumbnailUrl(this.apiBasePath)}}"  alt="Thumbnail Image of {{ project.projectTitle }}"/>
                 <div class="project-list-item-text-container">
                 <h4 class="project-title">{{ project.projectTitle }}</h4>
                 <p class="thumbnail-description" [innerHTML]="project.thumbnailDescription"></p>

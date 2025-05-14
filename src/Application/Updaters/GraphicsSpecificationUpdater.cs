@@ -19,8 +19,8 @@ public static class GraphicsSpecificationUpdater
     private static void UpdateChanges(this ApiGraphicsSpecification entity, GraphicsSpecificationDto existingItem,
         EntityUpdatingContext updatingContext)
     {
-        if(entity.Content.Content != existingItem.Content.Content)
-            updatingContext.AddChange(nameof(ApiGraphicsSpecification.Content), entity.Content.Content.ToBase64(), existingItem.Content.Content.ToBase64());
+        if(entity.ImageId != existingItem.ImageId)
+            updatingContext.AddChange(nameof(ApiGraphicsSpecification.ImageId), entity.ImageId.ToString(), existingItem.ImageId.ToString());
         
         if(entity.Type != existingItem.Type)
             updatingContext.AddChange(nameof(ApiGraphicsSpecification.Type), entity.Type.ToString(), existingItem.Type.ToString());

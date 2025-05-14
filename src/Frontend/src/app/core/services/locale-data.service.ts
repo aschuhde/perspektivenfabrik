@@ -16,6 +16,9 @@ export class LocaleDataProvider{
         }
         return "de-DE";
     }
+    get language(){
+        return this.languageService.currentLanguageCode;
+    }
     get dateTimeFormat() {
         if(this.languageService.currentLanguageCode === "it"){
             return "dd/MM/yyyy HH:mm";

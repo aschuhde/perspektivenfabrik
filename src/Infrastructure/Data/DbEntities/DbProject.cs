@@ -46,7 +46,7 @@ public sealed class DbProject : DbEntity
     public List<DbProjectConnection>? RelatedProjects { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)]
     [MapperIgnore]
-    public List<DbDescriptionImage>? DescriptionImages { get; set; }
+    public List<DbProjectImage>? ProjectImages { get; set; }
     
     [MapperIgnore]
     [NotMapped]

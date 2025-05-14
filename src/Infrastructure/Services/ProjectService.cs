@@ -4,6 +4,7 @@ using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
 using Application.Updaters;
+using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
@@ -368,7 +369,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         
         return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (transaction,ctInner) =>
         {
-            
+            UpdateTranslations(project, existingProject);
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications?.ToArray() ?? []);
             SaveProjectTimeSpecifications(project.TimeSpecifications, existingProject?.TimeSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.LocationSpecifications, existingProject?.LocationSpecifications?.ToArray(), x => x.ToDbLocationSpecification(), x => x.LocationSpecification!, x => x, x => x);
@@ -390,6 +391,40 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             return new CreateorUpdateProjectResult { Success = true, Project = resultProject };
         }, logger, ct)).ToCreateProjectResult();
     }
+
+    private void UpdateTranslations(ProjectDto project, DbProject? existingProject)
+    {
+        var existingTranslations = existingProject?.FieldTranslations ?? [];
+        var projectTranslations = project.CollectTranslations().Select(x =>
+        {
+            var result = x.ToDbFieldTranslation();
+            result.IsNewEntity = true;
+            return result;
+        }).ToArray();
+        
+        foreach (var existingTranslation in existingTranslations)
+        {
+            var projectTranslation = projectTranslations.FirstOrDefault(x =>
+                x.GroupEntityId == existingTranslation.GroupEntityId &&
+                x.CorrelatedEntityId == existingTranslation.CorrelatedEntityId &&
+                x.PropertyPath == existingTranslation.PropertyPath &&
+                x.LanguageCode == existingTranslation.LanguageCode);
+
+            if (projectTranslation == null)
+            {
+                dbContext.Remove(existingTranslation);
+            }
+            else
+            {
+                existingTranslation.Content = projectTranslation.Content;
+                projectTranslation.IsNewEntity = false;
+            }
+        }
+        
+        dbContext.DbFieldTranslations.AddRange(projectTranslations.Where(x => x.IsNewEntity));
+    }
+
+    
 
     private void SaveRequirementSpecification(RequirementSpecificationDto[] requirementSpecifications, DbRequirementSpecificationProjectConnection[] existingRequirementSpecifications)
     {
@@ -583,10 +618,10 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return dbSkills.Select(x => x.ToSkill().ApplyTranslations(fieldTranslations)).ToArray(); 
     }
 
-    public async Task<Guid> AddDescriptionImage(Guid projectId, byte[] image, CancellationToken ct)
+    public async Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct)
     {
         var guid = Guid.NewGuid();
-        dbContext.DbDescriptionImages.Add(new DbDescriptionImage()
+        dbContext.DbProjectImages.Add(new DbProjectImage()
         {
             Content = new DbGraphicsContent()
             {
@@ -599,9 +634,9 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return guid;
     }
     
-    public async Task<DescriptionImageDto?> GetDescriptionImage(Guid projectId, Guid imageId, CancellationToken ct)
+    public async Task<ProjectImageDto?> GetProjectImage(Guid projectId, Guid imageId, CancellationToken ct)
     {
-        return (await dbContext.DbDescriptionImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToDescriptionImage();
+        return (await dbContext.DbProjectImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToProjectImage();
     }
     
     public async Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct)

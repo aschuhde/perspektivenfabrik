@@ -1,5 +1,6 @@
 ﻿using Domain.DataTypes;
 using Domain.Enums;
+using Domain.Extensions;
 
 namespace Domain.Entities;
 
@@ -54,5 +55,40 @@ public sealed class ProjectDto : BaseEntityDto
         {
             descriptionSpecification.ApplyTranslations(fieldTranslations);
         }
+    }
+    
+    public FieldTranslationDto[] CollectTranslations()
+    {
+        var result = new List<FieldTranslationDto>();
+
+        result.AddRange(ProjectNameTranslations.CreateFieldTranslationDtos(EntityId, EntityId, nameof(ProjectName)));
+        result.AddRange(ProjectTitle.ContentTranslations.CreateFieldTranslationDtos(EntityId, EntityId, nameof(ProjectTitle)));
+        
+        foreach (var locationSpecification in LocationSpecifications)
+        {
+            result.AddRange(locationSpecification.CollectTranslations(EntityId));
+        }
+        
+        foreach (var requirementSpecification in RequirementSpecifications)
+        {
+            result.AddRange(requirementSpecification.CollectTranslations(EntityId));
+        }
+        
+        foreach (var contactSpecification in ContactSpecifications)
+        {
+            result.AddRange(contactSpecification.CollectTranslations(EntityId));
+        }
+        
+        foreach (var projectTag in ProjectTags)
+        {
+            result.AddRange(projectTag.CollectTranslations(EntityId));
+        }
+        
+        foreach (var descriptionSpecification in DescriptionSpecifications)
+        {
+            result.AddRange(descriptionSpecification.CollectTranslations(EntityId));
+        }
+
+        return result.ToArray();
     }
 }

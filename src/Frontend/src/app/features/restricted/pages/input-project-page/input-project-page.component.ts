@@ -11,6 +11,7 @@ import { catchError, of, throwError } from 'rxjs';
 import { MatDialog } from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core"
 import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling";
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-input-project-page',
@@ -21,7 +22,7 @@ import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling
 export class InputProjectPageComponent {
   dialog = inject(MatDialog)
   translateService = inject(TranslateService)
-  projectInput: ProjectInput = new ProjectInput();
+  projectInput: ProjectInput = new ProjectInput(() => this.translateService.currentLang as Language);
   apiService = inject(ApiService)
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
   
@@ -29,7 +30,7 @@ export class InputProjectPageComponent {
     this.projectSaveContext.hasChanges = true;
   }
   async sendRequest(){
-    const request = await this.projectInput.buildRequest()
+    const request = await this.projectInput.buildRequest(this.translateService.currentLang as Language)
     this.apiService.webApiEndpointsPostProject({
       project: request
     }).pipe(catchError((err) => {

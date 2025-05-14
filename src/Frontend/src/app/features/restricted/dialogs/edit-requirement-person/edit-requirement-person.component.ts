@@ -20,6 +20,8 @@ import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementPersonInput, EffortHoursType } from '../../models/requirement-person-input';
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 import { TranslateModule } from '@ngx-translate/core';
+import {TranslationValue} from "../../../../shared/models/translation-value";
+import {LanguageService} from "../../../../core/services/language-service.service";
 
 @Component({
   selector: 'app-edit-requirement-person',
@@ -39,10 +41,14 @@ export class EditRequirementPersonComponent {
   skillOptions: SelectOption[] = [];
   requirementIndex: number = this.data?.requirementIndex;
   onChanged: () => void = this.data?.onChanged;
+  languageService = inject(LanguageService);
 
   ngOnInit(){
     this.autoCompleteDataService.getSkills().then(x => {
-      this.skillOptions = x?.filter(y => !!y).map(y => new SelectOption(y.name ?? "")) ?? [];
+      this.skillOptions = x?.filter(y => !!y).map(y => {
+        const valueTranslations = TranslationValue.arrayFromApiTranslationValues(y.nameTranslations ?? []);
+        return new SelectOption(TranslationValue.getTranslationIfExist(y.name ?? "", valueTranslations, this.languageService.currentLanguageCode), null, null, valueTranslations)
+      }) ?? [];
     })  
   }
   
@@ -124,7 +130,8 @@ export class EditRequirementPersonComponent {
     }
 
     if (!this.selectedSkills.find(x => x.value === value)) {
-      this.selectedSkills.push(new SelectOption(value));
+      const skillOption = this.skillOptions.find(x => x.value === value);
+      this.selectedSkills.push(new SelectOption(value, value, null, skillOption?.valueTranslations, skillOption?.valueTranslations));
         this.onUpdated();
     }
 
@@ -134,8 +141,9 @@ export class EditRequirementPersonComponent {
 
   skillSelected(event: MatAutocompleteSelectedEvent){        
     event.option.deselect();               
-    if (!this.selectedSkills.find(x => x.value === event.option.value)) { 
-      this.selectedSkills.push(new SelectOption(event.option.value, event.option.viewValue));
+    if (!this.selectedSkills.find(x => x.value === event.option.value)) {
+      const skillOption = this.skillOptions.find(x => x.value === event.option.value);
+      this.selectedSkills.push(new SelectOption(event.option.value, event.option.viewValue, null, skillOption?.valueTranslations, skillOption?.valueTranslations));
         this.onUpdated();
     }
     

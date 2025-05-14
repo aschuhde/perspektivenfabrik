@@ -49,7 +49,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbTag> Tags { get; init; }
     public required DbSet<DbMaterial> Materials { get; init; }
     public required DbSet<DbSkill> Skills { get; init; }
-    public required DbSet<DbDescriptionImage> DbDescriptionImages { get; init; }
+    public required DbSet<DbProjectImage> DbProjectImages { get; init; }
     public required DbSet<DbFieldTranslation> DbFieldTranslations { get; init; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -100,7 +100,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             .HasValue<DbLocationSpecificationRemote>(nameof(DbLocationSpecificationRemote))
             .HasValue<DbLocationSpecificationRegion>(nameof(DbLocationSpecificationRegion))
             .HasValue<DbLocationSpecificationCoordinates>(nameof(DbLocationSpecificationCoordinates))
-            .HasValue<DbLocationSpecificationAddress>(nameof(DbLocationSpecificationAddress));
+            .HasValue<DbLocationSpecificationAddress>(nameof(DbLocationSpecificationAddress))
+            .HasValue<DbLocationSpecificationName>(nameof(DbLocationSpecificationName))
+            .HasValue<DbLocationSpecificationEntireProvince>(nameof(DbLocationSpecificationEntireProvince));
         
         modelBuilder.Entity<DbTimeSpecification>().HasDiscriminator<string>($"{nameof(DbTimeSpecification)}{DiscriminatorPostfix}")
             .HasValue<DbTimeSpecification>(nameof(DbTimeSpecification))

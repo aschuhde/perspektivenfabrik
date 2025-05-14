@@ -78,12 +78,17 @@ import {
   ApplicationModelsApiModelsApiSkillSpecification
 } from "../../../server/model/applicationModelsApiModelsApiSkillSpecification";
 import {distinctBy} from "../../../shared/tools/array-tools";
+import { DomainDataTypesTranslationValue } from "../../../server/model/domainDataTypesTranslationValue";
+import { ApplicationModelsApiModelsApiLocationSpecificationName } from "../../../server/model/applicationModelsApiModelsApiLocationSpecificationName";
+import { TranslateService } from "@ngx-translate/core";
+import {UploadedImage} from "../../../shared/models/uploaded-image";
 
 export class ApiProjectModel {
   project: ApplicationModelsApiModelsApiProject | null = null;
   shortDescription: string = "";
   longDescription: string = "";
   projectTitle: string = "";
+  projectTitleTranslations: DomainDataTypesTranslationValue[] = [];
   projectImages: GalleryImage[] = [];
   locationSpecifications: ApplicationModelsApiModelsApiLocationSpecification[] = [];
   timeSpecifications: ApplicationModelsApiModelsApiTimeSpecification[] = [];
@@ -101,7 +106,7 @@ export class ApiProjectModel {
   contactWebsite: string = "";
   thumbnailDescription: string = "";
 
-  loadFromApiProject(apiProject: ApplicationModelsApiModelsApiProject, localeDataProvider: LocaleDataProvider) {
+  loadFromApiProject(apiProject: ApplicationModelsApiModelsApiProject, localeDataProvider: LocaleDataProvider, apiBasePath: string) {
     this.project = apiProject;
     this.shortDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "shortDescription")?.content?.rawContentString ?? "";
     this.longDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "longDescription")?.content?.rawContentString ?? "";
@@ -109,7 +114,7 @@ export class ApiProjectModel {
     this.projectTitle = this.project?.projectTitle?.rawContentString ?? "";
     this.projectImages = this.project?.graphicsSpecifications?.filter(x => x.type !== 'Logo').map(x => ObjectCreator.Create<GalleryImage>({
       imageName: "",
-      src: "data:image/png;base64, " + (x.content?.content ?? ""),
+      src: UploadedImage.buildUrl(apiBasePath, this.project?.entityId ?? null, x.imageId ?? null),
       alt: "",
     })) ?? [];
     this.locationSpecifications = this.project?.locationSpecifications ?? [];
@@ -187,11 +192,14 @@ export class ApiProjectModel {
     this.contactWebsite = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website) as ApplicationModelsApiModelsApiContactSpecificationWebsite)?.website?.rawUrl ?? "";
     return this;
   }
-  static getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider){
+  static getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider, translateService: TranslateService){
     switch(locationSpecification.classType){
       case ApplicationModelsApiModelsApiLocationSpecificationTypes.Address:
         const address = (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationAddress).postalAddress;
-        return address ? AddressConverter.getShortName(address) : "-";
+        return address ? AddressConverter.getShortName(address, localeDataProvider.language) : "-";
+      case ApplicationModelsApiModelsApiLocationSpecificationTypes.Name:
+        const name = (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationName).postalAddress;
+        return name ? AddressConverter.getShortName(name, localeDataProvider.language) : "-";
       case ApplicationModelsApiModelsApiLocationSpecificationTypes.Region:
         const region = (locationSpecification as ApplicationModelsApiModelsApiLocationSpecificationRegion).region;
         return region?.regionName ?? "-";
@@ -202,7 +210,9 @@ export class ApiProjectModel {
         }
         return `${formatNumber(coordinates?.lat, localeDataProvider.locale, "1.3-3")}, ${formatNumber(coordinates?.lon, localeDataProvider.locale, "1.3-3")}`;
       case ApplicationModelsApiModelsApiLocationSpecificationTypes.Remote:
-        return "remote";
+        return translateService.instant("input-location.remote");
+      case ApplicationModelsApiModelsApiLocationSpecificationTypes.EntireProvince:
+        return translateService.instant("input-location.entireProvince");
     }
     return null;
   }
@@ -291,14 +301,14 @@ export class ApiProjectModel {
     return formatMoney(moneySpecification.quantitySpecification.value, localeDataProvider.locale, "euro");
   }
 
-  getThumbnailUrl() {
-    const contentBase64 = this.project?.graphicsSpecifications?.find(x => x.type === "Header")?.content?.content ??
-      this.project?.graphicsSpecifications?.find(x => x.type !== "Logo")?.content?.content ??
-      this.project?.graphicsSpecifications?.find(_ => true)?.content?.content;
-    if(!contentBase64){
+  getThumbnailUrl(apiBasePath: string) {
+    const graphicSpecification = this.project?.graphicsSpecifications?.find(x => x.type === "Header") ??
+      this.project?.graphicsSpecifications?.find(x => x.type !== "Logo") ??
+      this.project?.graphicsSpecifications?.find(_ => true);
+    if(!graphicSpecification){
       return "";
     }
-    return "data:image/png;base64, " + contentBase64;
+    return UploadedImage.buildUrl(apiBasePath, this.project?.entityId ?? null, graphicSpecification.imageId ?? null);
   }
 
   needsMoney() {

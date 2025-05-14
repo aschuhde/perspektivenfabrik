@@ -9,6 +9,7 @@ export class UploadedImage{
     src: string = "";
     isLogo: boolean = false;
     isMainImage: boolean = false;
+    imageId: string | null = null;
     constructor(file: File | null){
         this.file = file;
         if(file) {
@@ -19,13 +20,16 @@ export class UploadedImage{
     getType(): DomainEnumsGraphicsType{
         return this.isLogo ? "Logo" : (this.isMainImage ? "Header" : "Additional")
     }
-
-    static fromApi(graphicsSpecification: ApplicationModelsApiModelsApiGraphicsSpecification): UploadedImage{
+    static buildUrl(apiBasePath: string, projectEntityId: string | null, imageId: string | null){
+        return `${apiBasePath}/api/projects/${projectEntityId}/project-images/${imageId}`
+    }   
+    static fromApi(graphicsSpecification: ApplicationModelsApiModelsApiGraphicsSpecification, apiBasePath: string, projectId: string): UploadedImage{
         const result = new UploadedImage(null);
         result.entityId = graphicsSpecification.entityId ?? null;
-        result.src = "data:image/png;base64, " + (graphicsSpecification.content?.content ?? "");
+        result.src = this.buildUrl(apiBasePath, projectId, graphicsSpecification.imageId ?? "not-found");
         result.isLogo = graphicsSpecification.type == "Logo";
         result.isMainImage = graphicsSpecification.type == "Header"
+        result.imageId = graphicsSpecification.imageId ?? null;
         return result;
     }
     

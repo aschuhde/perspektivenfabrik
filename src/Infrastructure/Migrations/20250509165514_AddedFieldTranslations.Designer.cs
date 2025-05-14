@@ -66,7 +66,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("ContactSpecificationConnections");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectImage", b =>
                 {
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("DescriptionImage");
+                    b.ToTable("ProjectImage");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionSpecification", b =>
@@ -1195,29 +1195,29 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectImage", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
-                        .WithMany("DescriptionImages")
+                        .WithMany("ProjectImages")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("Infrastructure.Data.DbDataTypes.DbGraphicsContent", "Content", b1 =>
                         {
-                            b1.Property<Guid>("DbDescriptionImageEntityId")
+                            b1.Property<Guid>("DbProjectImageEntityId")
                                 .HasColumnType("uuid");
 
                             b1.Property<byte[]>("Content")
                                 .IsRequired()
                                 .HasColumnType("bytea");
 
-                            b1.HasKey("DbDescriptionImageEntityId");
+                            b1.HasKey("DbProjectImageEntityId");
 
-                            b1.ToTable("DescriptionImage");
+                            b1.ToTable("ProjectImage");
 
                             b1.WithOwner()
-                                .HasForeignKey("DbDescriptionImageEntityId");
+                                .HasForeignKey("DbProjectImageEntityId");
                         });
 
                     b.Navigation("Content")
@@ -2652,7 +2652,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Contributors");
 
-                    b.Navigation("DescriptionImages");
+                    b.Navigation("ProjectImages");
 
                     b.Navigation("DescriptionSpecifications");
 

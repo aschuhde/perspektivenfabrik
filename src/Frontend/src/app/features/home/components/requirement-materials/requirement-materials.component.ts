@@ -54,6 +54,6 @@ export class RequirementMaterialsComponent {
     if(requirement.locationSpecificationsSameAsProject){
       return this.translateService.stream("general.atTheSameLocationOfTheProject")
     }
-    return of(stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
+    return of(stringEmptyPropagate(joinWithConjunction(requirement?.locationSpecifications?.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localDataProvider, this.translateService)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-"));
   }
 }
