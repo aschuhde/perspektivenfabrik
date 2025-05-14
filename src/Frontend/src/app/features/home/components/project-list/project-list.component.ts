@@ -16,8 +16,9 @@ import {
 } from "../../../../server/model/applicationModelsApiModelsApiProjectTag";
 import { HomeRouteNames } from '../../home-route-names';
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {isServer} from "../../../../shared/tools/server-tools";
+import {BASE_PATH} from "../../../../server/variables";
 
 @Component({
   selector: 'app-project-list',
@@ -30,6 +31,8 @@ export class ProjectListComponent {
   projects: ApiProjectModel[] = []
   localeDataProvider = inject(LocaleDataProvider)
   type = input<"home" | "user-area">("home")
+  translateService = inject(TranslateService)
+  apiBasePath = inject(BASE_PATH)
   loadProjects(){
     if(isServer()) return;
     
@@ -39,7 +42,7 @@ export class ProjectListComponent {
       projectsResponse.subscribe(x => {
         if(x.projects){
           this.projects = x.projects?.map(x => {
-            return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider);
+            return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider, this.apiBasePath);
           }) ?? [];
         }
       });
@@ -50,7 +53,7 @@ export class ProjectListComponent {
     projectsResponse.subscribe(x => {
       if(x.projects){
         this.projects = x.projects?.map(x => {
-          return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider);
+          return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider, this.apiBasePath);
         }) ?? [];
       }
     });
@@ -66,12 +69,12 @@ export class ProjectListComponent {
       return "";
     }
     if(locationSpecifications?.length === 1){
-      return ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider);
+      return ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider, this.translateService);
     }
     if(locationSpecifications?.length === 2){
-      return joinWithConjunction(locationSpecifications.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(locationSpecifications.map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider, this.translateService) ?? ""), this.localeDataProvider.locale);
     }
-    return `${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider)}, ${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[1], this.localeDataProvider)}...`;
+    return `${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[0], this.localeDataProvider, this.translateService)}, ${ApiProjectModel.getLocationSpecificationShortName(locationSpecifications[1], this.localeDataProvider, this.translateService)}...`;
   }
 
   needLocationSpecificationPlusIcons(locationSpecifications: ApplicationModelsApiModelsApiLocationSpecification[]) {
@@ -83,7 +86,7 @@ export class ProjectListComponent {
   }
 
   getLocationSpecificationTooltipContent(project: ApiProjectModel) {
-    return joinWithConjunction(project.locationSpecifications.slice(2).map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider) ?? ""), this.localeDataProvider.locale)
+    return joinWithConjunction(project.locationSpecifications.slice(2).map(x => ApiProjectModel.getLocationSpecificationShortName(x, this.localeDataProvider, this.translateService) ?? ""), this.localeDataProvider.locale)
   }
 
 

@@ -17,8 +17,8 @@ public interface IProjectService
     public Task<TagDto[]> GetTags(CancellationToken ct);
     public Task<MaterialDto[]> GetMaterials(CancellationToken ct);
     public Task<SkillDto[]> GetSkills(CancellationToken ct);
-    public Task<Guid> AddDescriptionImage(Guid projectId, byte[] image, CancellationToken ct);
-    public Task<DescriptionImageDto?> GetDescriptionImage(Guid projectId, Guid imageId, CancellationToken ct);
+    public Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct);
+    public Task<ProjectImageDto?> GetProjectImage(Guid projectId, Guid imageId, CancellationToken ct);
     public Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct);
     public Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct);
     public Task<bool> ProjectExists(Guid projectId, CancellationToken ct);

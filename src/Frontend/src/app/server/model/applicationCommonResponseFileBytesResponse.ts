@@ -16,4 +16,5 @@ export interface ApplicationCommonResponseFileBytesResponse extends ApplicationC
     fileName?: string;
     lastModified?: Date;
     contentType?: string;
+    isInline?: boolean;
 }

@@ -6,5 +6,5 @@ namespace Domain.Entities;
 public sealed class GraphicsSpecificationDto : BaseEntityWithIdDto
 {
     public required GraphicsType Type { get; init; }
-    public required GraphicsContent Content { get; init; }
+    public required Guid ImageId { get; init; }
 }

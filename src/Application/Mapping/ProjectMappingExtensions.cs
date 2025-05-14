@@ -29,10 +29,12 @@ public static partial class ApiMappingExtensions
                 RequirementSpecifications = [],
                 ContactSpecifications = [],
                 ProjectName = "",
+                ProjectNameTranslations = [],
                 ProjectTags = [],
                 ProjectTitle = new FormattedTitle()
                 {
-                    RawContentString = ""
+                    RawContentString = "",
+                    ContentTranslations = []
                 },
                 DescriptionSpecifications = [],
                 GraphicsSpecifications = [],

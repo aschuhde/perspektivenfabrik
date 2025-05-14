@@ -10,7 +10,9 @@
  * Do not edit the class manually.
  */
 import { ApplicationModelsApiModelsApiContactSpecification } from './applicationModelsApiModelsApiContactSpecification';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface ApplicationModelsApiModelsApiContactSpecificationPersonalName extends ApplicationModelsApiModelsApiContactSpecification { 
     personalName?: string;
+    personalNameTranslations?: Array<DomainDataTypesTranslationValue>;
 }

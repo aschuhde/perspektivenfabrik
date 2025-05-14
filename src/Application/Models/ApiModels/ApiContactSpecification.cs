@@ -27,11 +27,13 @@ public class ApiContactSpecification : ApiBaseEntityWithId
 public sealed class ApiContactSpecificationPersonalName : ApiContactSpecification
 {
     public required string PersonalName { get; init; }
+    public TranslationValue[] PersonalNameTranslations { get; set; } = [];
 }
 
 public sealed class ApiContactSpecificationOrganisationName : ApiContactSpecification
 {
     public required string OrganisationName { get; init; }
+    public TranslationValue[] OrganisationNameTranslations { get; set; } = [];
 }
 
 public sealed class ApiContactSpecificationPhoneNumber : ApiContactSpecification

@@ -52,3 +52,13 @@ app-navigation-bar-full{
     height: calc(100% - 3rem);
   }
 }
+
+@include responsive.desktop{
+  .mat-input-desktop-min-width{
+    min-width: 20rem !important;
+  }
+}
+
+app-mat-input-translations .mat-mdc-form-field-infix {
+  padding-right: 2rem;
+}

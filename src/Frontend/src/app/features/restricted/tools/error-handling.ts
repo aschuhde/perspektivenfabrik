@@ -7,10 +7,6 @@ import {
 } from "../dialogs/save-project-error-dialog/save-project-error-dialog.component";
 
 export function handleProjectSaveErrorAndGetDialogData(err: any, dialog: MatDialog, translateService: TranslateService, request: ApplicationModelsApiModelsApiProjectBody, contextName: string): never{
-    for(let graphicsSpecification of request?.graphicsSpecifications ?? []){
-        if(!graphicsSpecification?.content?.content) continue;
-        graphicsSpecification.content.content = "removed";
-    }
     const errorId = err?.error?.error?.errorId ?? "unknown";
     const errorMessage = err?.error?.error?.message?.content ?? "unknown";
     const titleEncoded = encodeURIComponent(`Bug Report - ${contextName} - ${errorId}`);

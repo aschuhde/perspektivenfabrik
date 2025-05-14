@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
-import { DomainDataTypesGraphicsContent } from './domainDataTypesGraphicsContent';
 import { DomainEnumsGraphicsType } from './domainEnumsGraphicsType';
 
 export interface ApplicationModelsApiModelsApiGraphicsSpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     type?: DomainEnumsGraphicsType;
-    content?: DomainDataTypesGraphicsContent;
+    imageId?: string;
 }

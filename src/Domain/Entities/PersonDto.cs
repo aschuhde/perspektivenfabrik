@@ -1,3 +1,5 @@
+using Domain.DataTypes;
+
 namespace Domain.Entities;
 
 public class PersonDto : BaseEntityDto

@@ -1,5 +1,5 @@
 import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
-import { Component, inject, model, output } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
@@ -17,10 +17,15 @@ import { ProjectTimeInput } from '../../models/project-time-input';
 import { RequirementMaterialInput } from '../../models/requirement-material-input';
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  MatInputTranslationsComponent
+} from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
+import {TranslationValue} from "../../../../shared/models/translation-value";
+import {LanguageService} from "../../../../core/services/language-service.service";
 
 @Component({
   selector: 'app-edit-requirement-material',
-  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, TranslateModule],
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatOption, MatAutocompleteModule, MatChipsModule, MatSlideToggle, InputProjectTimeComponent, InputLocationComponent, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, TranslateModule, MatInputTranslationsComponent],
   templateUrl: './edit-requirement-material.component.html',
   styleUrl: './edit-requirement-material.component.scss'
 })
@@ -36,10 +41,17 @@ export class EditRequirementMaterialComponent {
   materialOptions: SelectOptionMaterial[] = [];
   requirementIndex: number = this.data?.requirementIndex;
     onChanged: () => void = this.data?.onChanged;
+    languageService = inject(LanguageService);
 
   ngOnInit(){
     this.autoCompleteDataService.getMaterials().then(x => {
-      this.materialOptions = x?.filter(y => !!y).map(y => new SelectOptionMaterial(y.name ?? "")) ?? [];
+      this.materialOptions = x?.filter(y => !!y).map(y => {
+        const valueTranslations = TranslationValue.arrayFromApiTranslationValues(y.nameTranslations ?? []);
+        return new SelectOptionMaterial({
+          value: TranslationValue.getTranslationIfExist(y.name ?? "", valueTranslations, this.languageService.currentLanguageCode),
+          valueTranslations: valueTranslations
+        });
+      }) ?? [];
     })
   }
   
@@ -88,7 +100,13 @@ export class EditRequirementMaterialComponent {
     }
 
     if (!this.selectedMaterials.find(x => x.value === value)) {
-      this.selectedMaterials.push(new SelectOptionMaterial(value));
+      const materialOption = this.materialOptions.find(x => x.value === value);
+      this.selectedMaterials.push(new SelectOptionMaterial({
+        value: value,
+        text: value,
+        valueTranslations: materialOption?.valueTranslations,
+        textTranslations: materialOption?.textTranslations
+      }));
         this.onUpdated();
     }
 
@@ -98,8 +116,14 @@ export class EditRequirementMaterialComponent {
 
   materialSelected(event: MatAutocompleteSelectedEvent){        
     event.option.deselect();               
-    if (!this.selectedMaterials.find(x => x.value === event.option.value)) { 
-      this.selectedMaterials.push(new SelectOptionMaterial(event.option.value, event.option.viewValue));
+    if (!this.selectedMaterials.find(x => x.value === event.option.value)) {
+      const materialOption = this.materialOptions.find(x => x.value === event.option.value);
+      this.selectedMaterials.push(new SelectOptionMaterial({
+        value: event.option.value,
+        text: event.option.viewValue,
+        valueTranslations: materialOption?.valueTranslations,
+        textTranslations: materialOption?.textTranslations
+      }));
         this.onUpdated();
     }
     this.materialAutocompleteValue.set("");

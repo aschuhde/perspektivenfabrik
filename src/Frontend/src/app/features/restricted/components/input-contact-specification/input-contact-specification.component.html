@@ -11,16 +11,13 @@
 
     @if(contactSpecificationType === "bankAccount"){
         <div>
-            <mat-form-field class="w-100 prefix">
-                <mat-label>{{ "input-contact-specs.account-name" | translate }}</mat-label>
-                <input type="text" matInput [(ngModel)]="bankAccountName" />
-            </mat-form-field>
+            <app-mat-input-translations class="w-100 prefix" [(value)]="bankAccountName" [(translations)]="bankAccountNameTranslations" [label]="'input-contact-specs.account-name' | translate"></app-mat-input-translations>
         </div>
         <div>
             <mat-form-field class="w-100 prefix">
                 <mat-label>{{ "input-contact-specs.iban" | translate }}</mat-label>
                 <input type="text" matInput [(ngModel)]="bankAccountIban" />
-            </mat-form-field>        
+            </mat-form-field>
         </div>
         <div>
             <mat-form-field class="w-100 prefix">
@@ -29,37 +26,25 @@
             </mat-form-field>        
         </div>
         <div>
-            <mat-form-field class="w-100 prefix">
-                <mat-label>{{ "input-contact-specs.bank-reference" | translate }}</mat-label>
-                <input type="text" matInput [(ngModel)]="bankAccountReference" />
-            </mat-form-field>
+            <app-mat-input-translations class="w-100 prefix" [(value)]="bankAccountReference" [(translations)]="bankAccountReferenceTranslations" [label]="'input-contact-specs.bank-reference' | translate"></app-mat-input-translations>
         </div>
     }
 
     @if(contactSpecificationType === "paypalAccount"){
         <div>
-            <mat-form-field class="w-100 prefix">
-                <mat-label>{{ "input-contact-specs.paypal-e-mail-address" | translate }}</mat-label>
-                <input type="text" matInput [(ngModel)]="paypalAddress" />
-            </mat-form-field>        
+            <app-mat-input-translations class="w-100 prefix" [(value)]="paypalAddress" [(translations)]="paypalAddressTranslations" [label]="'input-contact-specs.paypal-e-mail-address' | translate"></app-mat-input-translations>
         </div>
         <div style="margin-bottom: 1.3rem;">
             <span>{{ "general.and/or" | translate }}</span>
         </div>
         <div>
-            <mat-form-field class="w-100 prefix">
-                <mat-label>{{ "input-contact-specs.paypal-me-url" | translate }}</mat-label>
-                <input type="text" matInput [(ngModel)]="paypalMeAddress" />
-            </mat-form-field>
+            <app-mat-input-translations class="w-100 prefix" [(value)]="paypalMeAddress" [(translations)]="paypalMeAddressTranslations" [label]="'input-contact-specs.paypal-me-url' | translate"></app-mat-input-translations>
         </div>
     }
 
     @if(contactSpecificationType === "website"){
         <div>
-            <mat-form-field class="w-100 prefix">
-                <mat-label>{{ "input-contact-specs.website" | translate }}</mat-label>
-                <input type="text" matInput [(ngModel)]="website" />
-            </mat-form-field>        
+            <app-mat-input-translations class="w-100 prefix" [(value)]="website" [(translations)]="websiteTranslations" [label]="'input-contact-specs.website' | translate"></app-mat-input-translations>
         </div>
     }
 </div>

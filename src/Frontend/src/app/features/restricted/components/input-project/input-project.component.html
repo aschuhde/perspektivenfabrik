@@ -109,11 +109,8 @@
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectName'">
                         <div class="prefix-suffix-container">
-                            <mat-form-field class="prefix w-100-mobile">
-                                <mat-label>{{ "input-project.project-title" | translate }}</mat-label>
-                                <input matInput [(ngModel)]="projectTitle" />
-                            </mat-form-field>
-                            <mat-form-field class="suffix w-100-mobile">
+                            <app-mat-input-translations [withoutBorderRadius]="true" class="prefix w-100-mobile mat-input-desktop-min-width" [(translations)]="projectTitleTranslations" [(value)]="projectTitle" [label]="'input-project.project-title' | translate"></app-mat-input-translations>
+                            <mat-form-field class="suffix w-100-mobile mat-input-desktop-min-width">
                                 <mat-label>{{ "input-project.internal-project-name" | translate }}</mat-label>
                                 <input matInput disabled [(ngModel)]="projectName" />
                             </mat-form-field>
@@ -190,38 +187,14 @@
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectContact'">
                         <div>
-                            <mat-form-field class="field-min-width-medium w-100-mobile">
-                                <mat-label>{{ "input-project.your-name" | translate }}</mat-label>
-                                <input type="text"
-                                       aria-label="Contact Personal Name"
-                                       matInput
-                                       [(ngModel)]="contactName"/>
-                            </mat-form-field>
+                            <app-mat-input-translations class="field-min-width-medium w-100-mobile" [(value)]="contactName" [(translations)]="contactNameTranslations" [label]="'input-project.your-name' | translate"></app-mat-input-translations>
                             <span> {{ "general.and-or" | translate }} </span>
-                            <mat-form-field class="field-min-width-medium w-100-mobile">
-                                <mat-label>{{ "input-project.organisation-name" | translate }}</mat-label>
-                                <input type="text"
-                                       aria-label="Contact Organisation Name"
-                                       matInput
-                                       [(ngModel)]="organisationName"/>
-                            </mat-form-field>
+                            <app-mat-input-translations class="field-min-width-medium w-100-mobile" [(value)]="organisationName" [(translations)]="organisationNameTranslations" [label]="'input-project.organisation' | translate"></app-mat-input-translations>
                         </div>
                         <div>
-                            <mat-form-field class="field-min-width-medium w-100-mobile">
-                                <mat-label>{{ "input-project.e-mail" | translate }}</mat-label>
-                                <input type="text"
-                                       aria-label="Contact E-Mail"
-                                       matInput
-                                       [(ngModel)]="contactMail"/>
-                            </mat-form-field>
+                            <app-mat-input-translations class="field-min-width-medium w-100-mobile" [(value)]="contactMail" [(translations)]="contactMailTranslations" [label]="'input-project.e-mail' | translate"></app-mat-input-translations>
                             <span> {{ "general.and-or" | translate }} </span>
-                            <mat-form-field class="field-min-width-medium w-100-mobile">
-                                <mat-label>{{ "input-project.phone-number" | translate }}</mat-label>
-                                <input type="text"
-                                       aria-label="Contact Phone Number"
-                                       matInput
-                                       [(ngModel)]="contactPhone"/>
-                            </mat-form-field>
+                            <app-mat-input-translations class="field-min-width-medium w-100-mobile" [(value)]="contactPhone" [(translations)]="contactPhoneTranslations" [label]="'input-project.phone-number' | translate"></app-mat-input-translations>
                             <div>
                                 <button (click)="addContactSpecification()"><mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add"></mat-icon> {{ "input-project.add-bank-account" | translate }}</button>
                             </div>
@@ -271,13 +244,37 @@
                         </div>
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectDescription'">
-                        <h4>{{ "input-project.short-description" | translate }}: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
                         <div>
+                            <p class="prefix-suffix-container">
+                                <button class="prefix w-100-mobile" [class.secondary]="descriptionLanguageItActive" (click)="selectDescriptionLanguage('de')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 2rem" viewBox="0 0 5 3">
+                                        <rect id="black_stripe" width="5" height="3" y="0" x="0" fill="#000"/>
+                                        <rect id="red_stripe" width="5" height="2" y="1" x="0" fill="#D00"/>
+                                        <rect id="gold_stripe" width="5" height="1" y="2" x="0" fill="#FFCE00"/>
+                                    </svg>
+                                </button>
+                                <button class="suffix w-100-mobile" [class.secondary]="descriptionLanguageDeActive" (click)="selectDescriptionLanguage('it')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 2rem" viewBox="0 0 3 2">
+                                        <rect width="3" height="2" fill="#009246"/>
+                                        <rect width="2" height="2" x="1" fill="#fff"/>
+                                        <rect width="1" height="2" x="2" fill="#ce2b37"/>
+                                    </svg>
+                                </button>
+                            </p>
+                        </div>
+                        <h4>{{ "input-project.short-description" | translate }}: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
+                        <div [class.hidden]="isDescriptionOtherLanguageActive">
                             <angular-editor [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
+                        <div [class.hidden]="!isDescriptionOtherLanguageActive">
+                            <angular-editor [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
+                        </div>
                         <h4>{{ "input-project.long-description" | translate }}: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
-                        <div>
+                        <div [class.hidden]="isDescriptionOtherLanguageActive">
                             <angular-editor [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescription" [config]="angularEditorConfig"></angular-editor>
+                        </div>
+                        <div [class.hidden]="!isDescriptionOtherLanguageActive">
+                            <angular-editor [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div>
                             <button (click)="selectNext()" class="btn-next w-100-mobile" >{{ "general.Continue" | translate}}</button>
@@ -285,8 +282,12 @@
                     </div>
                     <div class="step-content" [class.hidden]="currentGroup != 'projectImages'">
                         <div>
+                            @if(!canUploadImages){
+                                <h4>{{ "input-project.pleaseSaveBeforeImageUpload" | translate }}</h4>
+                            }
                             <input multiple accept="image/*" class="hidden" #fileUpload type="file" (change)="onFileUpload($event)">
-                            <button class="btn-large w-100-mobile" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>{{ "input-project.upload-images" | translate }}</span></button>
+                            <button [attr.disabled]="canUploadImages ? null : ''" class="btn-large w-100-mobile" (click)="onUploadButtonClicked()"><mat-icon class="add-icon" aria-label="Add icon" fontIcon="add"></mat-icon><span>{{ "input-project.upload-images" | translate }}</span></button>
+                            
                         </div>
                         <div class="uploaded-image-container">
                             @for(image of uploadedImages; track image){

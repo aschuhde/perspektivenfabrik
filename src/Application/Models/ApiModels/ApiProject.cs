@@ -13,6 +13,7 @@ public sealed class ApiProject : ApiBaseEntity
     public required ApiRequirementSpecification[] RequirementSpecifications { get; init; }
     public required ApiContactSpecification[] ContactSpecifications { get; init; }
     public required string ProjectName { get; init; }
+    public TranslationValue[] ProjectNameTranslations { get; set; } = [];
     public required ApiProjectTag[] ProjectTags { get; init; }
     public required FormattedTitle ProjectTitle { get; init; }
     public required ApiDescriptionSpecification[] DescriptionSpecifications { get; init; }

@@ -4,6 +4,7 @@ using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
 using Application.Updaters;
+using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
@@ -28,7 +29,15 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
   private async Task<ProjectDto[]> GetProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction,
     Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct)
   {
-    return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(x => x.ToProject()).ToArray();
+    return (await GetDbProjects(filterFunction, selectFunction, withTracking, withHistory, cache, ct)).Select(ToProject).ToArray();
+  }
+
+  private ProjectDto ToProject(DbProject dbProject)
+  {
+      var projectDto = dbProject.ToProject();
+      var fieldTranslations = dbProject.FieldTranslations;
+      projectDto.ApplyTranslations(fieldTranslations.Select(x => x.ToFieldTranslation()).ToArray());
+      return projectDto;
   }
     private async Task<DbProject[]> GetDbProjects(Func<IQueryable<DbProject>, IQueryable<DbProject>> filterFunction, Func<IQueryable<DbProject>, IQueryable<DbProject>> selectFunction, bool withTracking, bool withHistory, bool cache, CancellationToken ct, bool includeDeleted = false)
     {
@@ -41,6 +50,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         // {
         //   query = query.AsNoTracking();
         // }
+        
         var start = Stopwatch.GetTimestamp();
         IQueryable<DbProject> innerProjectsQuery = dbContext.Projects;
         if (!includeDeleted)
@@ -170,9 +180,12 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             requirementPerson.WorkAmountSpecification = requirementWorkAmountSpecifications.FirstOrDefault(x => x.RequirementSpecificationPersonId == requirement.RequirementSpecificationId);
           }
         }
+        
+        var fieldTranslations = await dbContext.DbFieldTranslations.Where(x => projectIds.Contains(x.GroupEntityId)).WithAsNoTrackingIfEnabled(withTracking).ToArrayAsync(ct);
 
         foreach (DbProject project in projects)
         {
+            project.FieldTranslations = fieldTranslations.Where(x => x.GroupEntityId == project.EntityId).ToList();
           project.ContactSpecifications = projectContactSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
           project.DescriptionSpecifications = projectDescriptionSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
           project.GraphicsSpecifications = projectGraphicsSpecifications.Where(x => x.ProjectId == project.EntityId).ToList();
@@ -356,7 +369,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         
         return (await dbContext.ExecuteInTransactionAndLogErrorIfFails(async (transaction,ctInner) =>
         {
-            
+            UpdateTranslations(project, existingProject);
             SaveRequirementSpecification(project.RequirementSpecifications, existingProject?.RequirementSpecifications?.ToArray() ?? []);
             SaveProjectTimeSpecifications(project.TimeSpecifications, existingProject?.TimeSpecifications?.ToArray() ?? []);
             UpdateRelatedEntities(project.LocationSpecifications, existingProject?.LocationSpecifications?.ToArray(), x => x.ToDbLocationSpecification(), x => x.LocationSpecification!, x => x, x => x);
@@ -378,6 +391,40 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             return new CreateorUpdateProjectResult { Success = true, Project = resultProject };
         }, logger, ct)).ToCreateProjectResult();
     }
+
+    private void UpdateTranslations(ProjectDto project, DbProject? existingProject)
+    {
+        var existingTranslations = existingProject?.FieldTranslations ?? [];
+        var projectTranslations = project.CollectTranslations().Select(x =>
+        {
+            var result = x.ToDbFieldTranslation();
+            result.IsNewEntity = true;
+            return result;
+        }).ToArray();
+        
+        foreach (var existingTranslation in existingTranslations)
+        {
+            var projectTranslation = projectTranslations.FirstOrDefault(x =>
+                x.GroupEntityId == existingTranslation.GroupEntityId &&
+                x.CorrelatedEntityId == existingTranslation.CorrelatedEntityId &&
+                x.PropertyPath == existingTranslation.PropertyPath &&
+                x.LanguageCode == existingTranslation.LanguageCode);
+
+            if (projectTranslation == null)
+            {
+                dbContext.Remove(existingTranslation);
+            }
+            else
+            {
+                existingTranslation.Content = projectTranslation.Content;
+                projectTranslation.IsNewEntity = false;
+            }
+        }
+        
+        dbContext.DbFieldTranslations.AddRange(projectTranslations.Where(x => x.IsNewEntity));
+    }
+
+    
 
     private void SaveRequirementSpecification(RequirementSpecificationDto[] requirementSpecifications, DbRequirementSpecificationProjectConnection[] existingRequirementSpecifications)
     {
@@ -551,21 +598,30 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
     public async Task<TagDto[]> GetTags(CancellationToken ct)
     {
-        return (await dbContext.Tags.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToTag()).ToArray(); 
+        var dbTags = await dbContext.Tags.AsNoTracking().ToArrayAsync(ct);
+        var dbTagIds = dbTags.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbTagIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbTags.Select(x => x.ToTag().ApplyTranslations(fieldTranslations)).ToArray();
     }
     public async Task<MaterialDto[]> GetMaterials(CancellationToken ct)
     {
-        return (await dbContext.Materials.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToMaterial()).ToArray(); 
+        var dbMaterials = await dbContext.Materials.AsNoTracking().ToArrayAsync(ct);
+        var dbMaterialIds = dbMaterials.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbMaterialIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbMaterials.Select(x => x.ToMaterial().ApplyTranslations(fieldTranslations)).ToArray();
     }
     public async Task<SkillDto[]> GetSkills(CancellationToken ct)
     {
-        return (await dbContext.Skills.AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToSkill()).ToArray(); 
+        var dbSkills = await dbContext.Skills.AsNoTracking().ToArrayAsync(ct);
+        var dbSkillIds = dbSkills.Select(x => x.EntityId).ToArray();
+        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbSkillIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
+        return dbSkills.Select(x => x.ToSkill().ApplyTranslations(fieldTranslations)).ToArray(); 
     }
 
-    public async Task<Guid> AddDescriptionImage(Guid projectId, byte[] image, CancellationToken ct)
+    public async Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct)
     {
         var guid = Guid.NewGuid();
-        dbContext.DbDescriptionImages.Add(new DbDescriptionImage()
+        dbContext.DbProjectImages.Add(new DbProjectImage()
         {
             Content = new DbGraphicsContent()
             {
@@ -578,9 +634,9 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return guid;
     }
     
-    public async Task<DescriptionImageDto?> GetDescriptionImage(Guid projectId, Guid imageId, CancellationToken ct)
+    public async Task<ProjectImageDto?> GetProjectImage(Guid projectId, Guid imageId, CancellationToken ct)
     {
-        return (await dbContext.DbDescriptionImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToDescriptionImage();
+        return (await dbContext.DbProjectImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToProjectImage();
     }
     
     public async Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct)

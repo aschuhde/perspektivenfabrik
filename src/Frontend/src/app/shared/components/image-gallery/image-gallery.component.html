@@ -1,4 +1,9 @@
-
+@if(canShowNavigation){
+    <button class="secondary btn-nav btn-prev" (click)="prev()"><mat-icon fontIcon="chevron_left"></mat-icon></button>
+}
 @for(image of imagesArray; track image){
-    <img class="image-gallery-image" src="{{ image.src }}" alt="{{ image.alt }}"/>
+    <img [class.active]="selectedIndex == $index" class="image-gallery-image" src="{{ image.src }}" alt="{{ image.alt }}"/>
+}
+@if(canShowNavigation){
+    <button class="secondary btn-nav btn-next" (click)="next()"><mat-icon fontIcon="chevron_right"></mat-icon></button>
 }

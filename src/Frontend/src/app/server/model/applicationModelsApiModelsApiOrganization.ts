@@ -12,7 +12,9 @@
 import { ApplicationModelsApiModelsApiBaseEntity } from './applicationModelsApiModelsApiBaseEntity';
 import { ApplicationModelsApiModelsApiModificationHistory } from './applicationModelsApiModelsApiModificationHistory';
 import { ApplicationModelsApiModelsApiPerson } from './applicationModelsApiModelsApiPerson';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface ApplicationModelsApiModelsApiOrganization extends ApplicationModelsApiModelsApiBaseEntity { 
     name?: string;
+    nameTranslations?: Array<DomainDataTypesTranslationValue>;
 }

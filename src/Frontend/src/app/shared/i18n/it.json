@@ -86,11 +86,15 @@
     "and-visible-with-link": "e visibile tramite link",
     "internal-link-for-sharing": "Link interno per la condivisione",
     "open-preview-in-new-tab": "Apri anteprima in una nuova scheda",
-    "delete": "Elimina"
+    "delete": "Elimina",
+    "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!"
   },
   "map": {
+    "map": "Mappa",
     "select-on-map": "Seleziona sulla mappa",
-    "address-name-poi": "Indirizzo / Nome / POI"
+    "address-name-poi": "Indirizzo / Nome / POI",
+    "search": "Cerca...",
+    "lookupOnSearchIconInfo": "Per effettuare una ricerca, utilizza l'icona di ricerca in alto a destra sulla mappa"
   },
   "input-material-group": {
     "material": "Materiale",
@@ -172,7 +176,9 @@
     "what-is-the-address": "Qual è l'indirizzo che vuoi indicare?",
     "what-are-the-coordinates": "Quali sono le coordinate in \"Lat, Lon\",<br>che vuoi indicare?",
     "lat-lon": "Lat, Lon",
-    "remove-entry": "Rimuovi {{typeName}}"
+    "remove-entry": "Rimuovi {{typeName}}",
+    "link": "Link",
+    "entireProvince": "Tutto l'Alto Adige"
   },
   "input-project-time": {
     "type": "Tipo di tempo",

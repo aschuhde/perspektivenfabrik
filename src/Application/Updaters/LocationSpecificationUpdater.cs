@@ -33,5 +33,9 @@ public static class LocationSpecificationUpdater
         if(entity is ApiLocationSpecificationRemote locationSpecificationRemote
            && locationSpecificationRemote.Link.ToString() != (existingItem as LocationSpecificationDtoRemote)?.Link.ToString())
             updatingContext.AddChange(nameof(ApiLocationSpecificationRemote.Link), locationSpecificationRemote.Link.ToString(), (existingItem as LocationSpecificationDtoRemote)?.Link.ToString());
+        
+        if(entity is ApiLocationSpecificationName locationSpecificationName
+           && locationSpecificationName.PostalAddress.ToString() != (existingItem as LocationSpecificationDtoName)?.PostalAddress.ToString())
+            updatingContext.AddChange(nameof(ApiLocationSpecificationName.PostalAddress), locationSpecificationName.PostalAddress.ToString(), (existingItem as LocationSpecificationDtoName)?.PostalAddress.ToString());
     }
 }

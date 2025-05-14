@@ -8,10 +8,14 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {Language} from "../../../../core/types/general-types";
+import {
+    MatInputTranslationsComponent
+} from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
+import {TranslationValue} from "../../../../shared/models/translation-value";
 
 @Component({
   selector: 'app-input-contact-specification',
-  imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule],
+    imports: [MatIcon, MatFormField, MatSelect, MatLabel, MatOption, MatInput, FormsModule, TranslateModule, MatInputTranslationsComponent],
   templateUrl: './input-contact-specification.component.html',
   styleUrl: './input-contact-specification.component.scss'
 })
@@ -67,6 +71,13 @@ export class InputContactSpecificationComponent {
     this.contactSpecification().bankAccountName = value;
       this.onChanged.emit();
   }
+  get bankAccountNameTranslations(){
+    return this.contactSpecification().bankAccountNameTranslations;
+  }
+  set bankAccountNameTranslations(value: TranslationValue[]){
+    this.contactSpecification().bankAccountNameTranslations = value;
+    this.onChanged.emit();
+  }
 
   get bankAccountIban(){
     return this.contactSpecification().bankAccountIban;
@@ -91,6 +102,13 @@ export class InputContactSpecificationComponent {
     this.contactSpecification().bankAccountReference = value;
       this.onChanged.emit();
   }
+  get bankAccountReferenceTranslations(){
+    return this.contactSpecification().bankAccountReferenceTranslations;
+  }
+  set bankAccountReferenceTranslations(value: TranslationValue[]){
+    this.contactSpecification().bankAccountReferenceTranslations = value;
+    this.onChanged.emit();
+  }
 
   get paypalAddress(){
     return this.contactSpecification().paypalAddress;
@@ -98,6 +116,13 @@ export class InputContactSpecificationComponent {
   set paypalAddress(value: string){
     this.contactSpecification().paypalAddress = value;
       this.onChanged.emit();
+  }
+  get paypalAddressTranslations(){
+    return this.contactSpecification().paypalAddressTranslations;
+  }
+  set paypalAddressTranslations(value: TranslationValue[]){
+    this.contactSpecification().paypalAddressTranslations = value;
+    this.onChanged.emit();
   }
 
   get paypalMeAddress(){
@@ -107,6 +132,13 @@ export class InputContactSpecificationComponent {
     this.contactSpecification().paypalMeAddress = value;
       this.onChanged.emit();
   }
+  get paypalMeAddressTranslations(){
+    return this.contactSpecification().paypalMeAddressTranslations;
+  }
+  set paypalMeAddressTranslations(value: TranslationValue[]){
+    this.contactSpecification().paypalMeAddressTranslations = value;
+    this.onChanged.emit();
+  }
 
   get website(){
     return this.contactSpecification().website;
@@ -114,6 +146,13 @@ export class InputContactSpecificationComponent {
   set website(value: string){
     this.contactSpecification().website = value;
       this.onChanged.emit();
+  }
+  get websiteTranslations(){
+    return this.contactSpecification().websiteTranslations;
+  }
+  set websiteTranslations(value: TranslationValue[]){
+    this.contactSpecification().websiteTranslations = value;
+    this.onChanged.emit();
   }
 
   removeClicked(){

@@ -1,16 +1,25 @@
-<h2 mat-dialog-title>{{ "map.select-on-map" | translate }}</h2>
+@if (type === "lookup"){
+    <h2 mat-dialog-title>{{ "map.select-on-map" | translate }}</h2>
+}@else{
+    <h2 mat-dialog-title>{{ "map.map" | translate }}</h2>
+}
 <mat-dialog-content class="w-100-mobile">
-    <div>
+    @if (type === "lookup"){
+        <h5>{{ "map.lookupOnSearchIconInfo" | translate}}</h5>
+        <div>
+            <app-mat-input-translations class="w-100" [(selectedLanguage)]="retrievedPointSelectedLanguage" [label]="'map.address-name-poi' | translate" [(value)]="retrievedPoint" [(translations)]="retrievedPointTranslations"></app-mat-input-translations>       
+        </div>
+    }@else{
         <mat-form-field class="w-100">
-            <mat-label>{{ "map.address-name-poi" | translate }}</mat-label>
-            <input type="text" matInput [(ngModel)]="retrievedPoint" />
+        <mat-label>{{'map.address-name-poi' | translate}}</mat-label>
+            <input type="text" matInput [(ngModel)]="retrievedPoint"/>
         </mat-form-field>
-    </div>
-    <app-map [lookupMode]="lookupMode" [type]="type" [startPoint]="startPoint" (onRetrievedPoint)="mapRetrievedPoint($event.value, $event.displayName)"></app-map>
+    }
+    <app-map [lookupMode]="lookupMode" [type]="type" [startPoint]="startPoint" (onRetrievedPoint)="mapRetrievedPoint($event.value, $event.displayName, $event.valueTranslations, $event.displayNameTranslations)"></app-map>
 </mat-dialog-content>
 <mat-dialog-actions>    
     @if(type == "lookup"){
-      <button [disabled]="!retrievedPoint" (click)="apply()" mat-dialog-close>{{ "general.apply" | translate }}</button>
+      <button [disabled]="!retrievedPointValid" (click)="apply()" mat-dialog-close>{{ "general.apply" | translate }}</button>
       <button class="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
     } @else {
         <button class="secondary" mat-dialog-close>{{ "general.close" | translate }}</button>

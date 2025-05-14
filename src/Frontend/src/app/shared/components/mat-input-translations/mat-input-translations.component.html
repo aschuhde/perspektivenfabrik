@@ -1,0 +1,24 @@
+<mat-form-field class="{{ class() }}" [class.without-border-radius]="withoutBorderRadius()">
+    <mat-label>{{ label() }}</mat-label>
+    <input matInput [(ngModel)]="value" />
+    <span class="translation-container">
+        <span class="translation-area translation-area-german" [class.active]="germanIsActive">
+        <span class="translate-button translate-button-german" (click)="selectGerman()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3">
+                <rect id="black_stripe" width="5" height="3" y="0" x="0" fill="#000"/>
+                <rect id="red_stripe" width="5" height="2" y="1" x="0" fill="#D00"/>
+                <rect id="gold_stripe" width="5" height="1" y="2" x="0" fill="#FFCE00"/>
+            </svg>
+        </span>
+        </span>
+        <span class="translation-area translation-area-italian" (click)="selectItalian()" [class.active]="italianIsActive">
+        <span class="translate-button translate-button-italian">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
+                <rect width="3" height="2" fill="#009246"/>
+                <rect width="2" height="2" x="1" fill="#fff"/>
+                <rect width="1" height="2" x="2" fill="#ce2b37"/>
+            </svg>
+        </span>
+        </span>
+    </span>
+</mat-form-field>

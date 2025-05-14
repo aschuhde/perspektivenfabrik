@@ -11,10 +11,13 @@
  */
 import { DomainDataTypesBic } from './domainDataTypesBic';
 import { DomainDataTypesIban } from './domainDataTypesIban';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface DomainDataTypesBankAccount { 
     iban?: DomainDataTypesIban;
     bic?: DomainDataTypesBic;
     accountName?: string;
     reference?: string;
+    accountNameTranslations?: Array<DomainDataTypesTranslationValue>;
+    referenceTranslations?: Array<DomainDataTypesTranslationValue>;
 }

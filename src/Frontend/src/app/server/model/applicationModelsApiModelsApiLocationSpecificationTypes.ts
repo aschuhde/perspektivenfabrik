@@ -10,12 +10,14 @@
  * Do not edit the class manually.
  */
 
-export type ApplicationModelsApiModelsApiLocationSpecificationTypes = 'Base' | 'Remote' | 'Region' | 'Coordinates' | 'Address';
+export type ApplicationModelsApiModelsApiLocationSpecificationTypes = 'Base' | 'Remote' | 'Region' | 'Coordinates' | 'Address' | 'Name' | 'EntireProvince';
 
 export const ApplicationModelsApiModelsApiLocationSpecificationTypes = {
     Base: 'Base' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
     Remote: 'Remote' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
     Region: 'Region' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
     Coordinates: 'Coordinates' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
-    Address: 'Address' as ApplicationModelsApiModelsApiLocationSpecificationTypes
+    Address: 'Address' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
+    Name: 'Name' as ApplicationModelsApiModelsApiLocationSpecificationTypes,
+    EntireProvince: 'EntireProvince' as ApplicationModelsApiModelsApiLocationSpecificationTypes
 };

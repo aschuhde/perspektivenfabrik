@@ -22,6 +22,7 @@ import { ApplicationModelsApiModelsApiProjectTag } from './applicationModelsApiM
 import { ApplicationModelsApiModelsApiRequirementSpecification } from './applicationModelsApiModelsApiRequirementSpecification';
 import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationModelsApiModelsApiTimeSpecification';
 import { DomainDataTypesFormattedTitle } from './domainDataTypesFormattedTitle';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 import { DomainEnumsProjectPhase } from './domainEnumsProjectPhase';
 import { DomainEnumsProjectType } from './domainEnumsProjectType';
 import { DomainEnumsProjectVisibility } from './domainEnumsProjectVisibility';
@@ -35,6 +36,7 @@ export interface ApplicationModelsApiModelsApiProject extends ApplicationModelsA
     requirementSpecifications?: Array<ApplicationModelsApiModelsApiRequirementSpecification>;
     contactSpecifications?: Array<ApplicationModelsApiModelsApiContactSpecification>;
     projectName?: string;
+    projectNameTranslations?: Array<DomainDataTypesTranslationValue>;
     projectTags?: Array<ApplicationModelsApiModelsApiProjectTag>;
     projectTitle?: DomainDataTypesFormattedTitle;
     descriptionSpecifications?: Array<ApplicationModelsApiModelsApiDescriptionSpecification>;

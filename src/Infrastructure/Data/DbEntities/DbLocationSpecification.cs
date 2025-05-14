@@ -50,6 +50,21 @@ public sealed class DbLocationSpecificationAddress : DbLocationSpecification
     }
 }
 
+public sealed class DbLocationSpecificationName : DbLocationSpecification
+{
+    public required DbPostalAddress PostalAddress { get; init; }
+    public override void UpdateToTarget(DbEntityWithId target)
+    {
+        if(target is not DbLocationSpecificationName targetEntity) return;
+        this.PostalAddress.Update(targetEntity.PostalAddress);
+    }
+}
+
+public sealed class DbLocationSpecificationEntireProvince : DbLocationSpecification
+{
+    
+}
+
 [Table("LocationSpecificationProjectConnections")]
 public sealed class DbLocationSpecificationProjectConnection : DbEntityWithId
 {

@@ -9,7 +9,7 @@ namespace Infrastructure.Data.DbEntities;
 public sealed class DbGraphicsSpecification : DbEntityWithId
 {
     public required GraphicsType Type { get; set; }
-    public required DbGraphicsContent Content { get; set; }
+    public required Guid ImageId { get; set; }
 
     public override void UpdateToTarget(DbEntityWithId target)
     {
@@ -18,7 +18,10 @@ public sealed class DbGraphicsSpecification : DbEntityWithId
       {
         this.Type = graphicsSpecification.Type;
       }
-      this.Content.Update(graphicsSpecification.Content);
+      if (this.ImageId != graphicsSpecification.ImageId)
+      {
+        this.ImageId = graphicsSpecification.ImageId;
+      }
     }
 }
 

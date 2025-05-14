@@ -6,7 +6,7 @@ namespace Application.Models.ApiModels;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ApiLocationSpecificationTypes
 {
-    Base, Remote, Region, Coordinates, Address,
+    Base, Remote, Region, Coordinates, Address, Name, EntireProvince
 }
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "classType")]
 [JsonDerivedType(typeof(ApiLocationSpecification), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Base))]
@@ -14,6 +14,8 @@ public enum ApiLocationSpecificationTypes
 [JsonDerivedType(typeof(ApiLocationSpecificationRegion), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Region))]
 [JsonDerivedType(typeof(ApiLocationSpecificationCoordinates), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Coordinates))]
 [JsonDerivedType(typeof(ApiLocationSpecificationAddress), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Address))]
+[JsonDerivedType(typeof(ApiLocationSpecificationName), typeDiscriminator: nameof(ApiLocationSpecificationTypes.Name))]
+[JsonDerivedType(typeof(ApiLocationSpecificationEntireProvince), typeDiscriminator: nameof(ApiLocationSpecificationTypes.EntireProvince))]
 public class ApiLocationSpecification : ApiBaseEntityWithId
 {
     
@@ -37,4 +39,14 @@ public sealed class ApiLocationSpecificationCoordinates : ApiLocationSpecificati
 public sealed class ApiLocationSpecificationAddress : ApiLocationSpecification
 {
     public required PostalAddress PostalAddress { get; init; }
+}
+
+public sealed class ApiLocationSpecificationName : ApiLocationSpecification
+{
+    public required PostalAddress PostalAddress { get; init; }
+}
+
+public sealed class ApiLocationSpecificationEntireProvince : ApiLocationSpecification
+{
+    
 }

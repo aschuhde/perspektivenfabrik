@@ -13,6 +13,8 @@ public static partial class ApiMappingExtensions
     public static partial LocationSpecificationDtoRegion ToLocationSpecificationRegion(this ApiLocationSpecificationRegion apiLocationSpecificationRegion);
     public static partial LocationSpecificationDtoCoordinates ToLocationSpecificationCoordinates(this ApiLocationSpecificationCoordinates apiLocationSpecificationCoordinates);
     public static partial LocationSpecificationDtoAddress ToLocationSpecificationAddress(this ApiLocationSpecificationAddress apiLocationSpecificationAddress);
+    public static partial LocationSpecificationDtoName ToLocationSpecificationName(this ApiLocationSpecificationName apiLocationSpecificationName);
+    public static partial LocationSpecificationDtoEntireProvince ToLocationSpecificationEntireProvince(this ApiLocationSpecificationEntireProvince apiLocationSpecificationEntireProvince);
 
     [UserMapping(Default = true)]
     public static LocationSpecificationDto ToLocationSpecification(this ApiLocationSpecification apiLocationSpecification) =>
@@ -26,6 +28,10 @@ public static partial class ApiMappingExtensions
                 .ToLocationSpecificationCoordinates(),
             ApiLocationSpecificationAddress apiLocationSpecificationAddress => apiLocationSpecificationAddress
                 .ToLocationSpecificationAddress(),
+            ApiLocationSpecificationName apiLocationSpecificationName => apiLocationSpecificationName
+                .ToLocationSpecificationName(),
+            ApiLocationSpecificationEntireProvince apiLocationSpecificationEntireProvince => apiLocationSpecificationEntireProvince
+                .ToLocationSpecificationEntireProvince(),
             _ => apiLocationSpecification.ToLocationSpecificationInner()
         };
 
@@ -34,6 +40,8 @@ public static partial class ApiMappingExtensions
     public static partial ApiLocationSpecificationRegion ToApiLocationSpecificationRegion(this LocationSpecificationDtoRegion locationSpecificationDtoRegion);
     public static partial ApiLocationSpecificationCoordinates ToApiLocationSpecificationCoordinates(this LocationSpecificationDtoCoordinates locationSpecificationDtoCoordinates);
     public static partial ApiLocationSpecificationAddress ToApiLocationSpecificationAddress(this LocationSpecificationDtoAddress locationSpecificationDtoAddress);
+    public static partial ApiLocationSpecificationName ToApiLocationSpecificationName(this LocationSpecificationDtoName locationSpecificationDtoName);
+    public static partial ApiLocationSpecificationEntireProvince ToApiLocationSpecificationEntireProvince(this LocationSpecificationDtoEntireProvince locationSpecificationDtoEntireProvince);
     [UserMapping(Default = true)]
     public static ApiLocationSpecification ToApiLocationSpecification(this LocationSpecificationDto locationSpecificationDto) =>
         locationSpecificationDto switch
@@ -46,6 +54,10 @@ public static partial class ApiMappingExtensions
                 .ToApiLocationSpecificationCoordinates(),
             LocationSpecificationDtoAddress locationSpecificationAddress => locationSpecificationAddress
                 .ToApiLocationSpecificationAddress(),
+            LocationSpecificationDtoName locationSpecificationName => locationSpecificationName
+                .ToApiLocationSpecificationName(),
+            LocationSpecificationDtoEntireProvince locationSpecificationEntireProvince => locationSpecificationEntireProvince
+                .ToApiLocationSpecificationEntireProvince(),
             _ => locationSpecificationDto.ToApiLocationSpecificationInner()
         };
 }

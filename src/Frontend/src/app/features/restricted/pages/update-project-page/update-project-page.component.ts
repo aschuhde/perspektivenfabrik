@@ -16,6 +16,8 @@ import {MessageDialogComponent} from "../../../../shared/dialogs/message-dialog/
 import {MessageDialogData} from "../../../../shared/models/message-dialog-data";
 import {TranslateService} from "@ngx-translate/core"
 import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling";
+import {Language} from "../../../../core/types/general-types";
+import {BASE_PATH} from "../../../../server/variables";
 
 @Component({
   selector: 'app-update-project-page',
@@ -25,13 +27,15 @@ import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling
 })
 export class UpdateProjectPageComponent {
   readonly dialog = inject(MatDialog);
-  projectInput: ProjectInput = new ProjectInput();
+  translateService = inject(TranslateService)
+  projectInput: ProjectInput = new ProjectInput(() => this.translateService.currentLang as Language);
   projectIdentifier: string = inject(ActivatedRoute).snapshot.paramMap.get("projectIdentifier") ?? "";
   apiService = inject(ApiService)
   project: ApplicationModelsApiModelsApiProject | null = null
   isLoading: boolean = true;
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
-  translateService = inject(TranslateService)
+  apiBasePath = inject(BASE_PATH);
+  
   loadProject(){
     if(isServer()) return;
     
@@ -39,11 +43,11 @@ export class UpdateProjectPageComponent {
 
     projectResponse.subscribe(x => {
       if((x as any).project){
-        this.projectInput.loadFromProject((x as any).project);
-        this.projectInput.buildRequest().then((x) => {
+        this.projectInput.loadFromProject((x as any).project, this.translateService.currentLang as Language, this.apiBasePath);
+        this.projectInput.buildRequest(this.translateService.currentLang as Language).then((x) => {
             this.projectSaveContext.hasChanges = false;
             this.projectSaveContext.lastSavedProjectRequest = x;
-            this.projectSaveContext.onChange(this.projectInput);
+            this.projectSaveContext.onChange(this.projectInput, this.translateService.currentLang as Language);
         })
         this.isLoading = false;
       }
@@ -57,7 +61,7 @@ export class UpdateProjectPageComponent {
   async sendRequest(){
     this.projectSaveContext.isSaving = true;
     this.projectSaveContext.madeChangesWhileSaving = false;
-    const projectRequest = await this.projectInput.buildRequest() 
+    const projectRequest = await this.projectInput.buildRequest(this.translateService.currentLang as Language) 
     this.apiService.webApiEndpointsPutProject({
       project: projectRequest,         
     }, this.projectIdentifier).pipe(catchError((err) => {

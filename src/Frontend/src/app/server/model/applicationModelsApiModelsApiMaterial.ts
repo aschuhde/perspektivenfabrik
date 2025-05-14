@@ -10,7 +10,9 @@
  * Do not edit the class manually.
  */
 import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface ApplicationModelsApiModelsApiMaterial extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     name?: string;
+    nameTranslations?: Array<DomainDataTypesTranslationValue>;
 }

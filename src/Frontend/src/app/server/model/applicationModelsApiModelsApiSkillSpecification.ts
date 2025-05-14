@@ -11,8 +11,10 @@
  */
 import { ApplicationModelsApiModelsApiBaseEntityWithId } from './applicationModelsApiModelsApiBaseEntityWithId';
 import { DomainDataTypesFormattedContent } from './domainDataTypesFormattedContent';
+import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
 
 export interface ApplicationModelsApiModelsApiSkillSpecification extends ApplicationModelsApiModelsApiBaseEntityWithId { 
     name?: string;
+    nameTranslations?: Array<DomainDataTypesTranslationValue>;
     title?: DomainDataTypesFormattedContent;
 }

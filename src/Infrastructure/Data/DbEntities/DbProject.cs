@@ -46,7 +46,11 @@ public sealed class DbProject : DbEntity
     public List<DbProjectConnection>? RelatedProjects { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)]
     [MapperIgnore]
-    public List<DbDescriptionImage>? DescriptionImages { get; set; }
+    public List<DbProjectImage>? ProjectImages { get; set; }
+    
+    [MapperIgnore]
+    [NotMapped]
+    public List<DbFieldTranslation> FieldTranslations { get; set; } = [];
 
     public override void UpdateToTarget(DbEntityWithId target)
     {

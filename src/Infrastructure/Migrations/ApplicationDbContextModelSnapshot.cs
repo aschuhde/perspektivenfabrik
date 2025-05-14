@@ -63,22 +63,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("ContactSpecificationConnections");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
-                {
-                    b.Property<Guid>("EntityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("EntityId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("DescriptionImage");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionSpecification", b =>
                 {
                     b.Property<Guid>("EntityId")
@@ -131,10 +115,47 @@ namespace Infrastructure.Migrations
                     b.ToTable("DescriptionTypes");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbFieldTranslation", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("character varying(50000)");
+
+                    b.Property<Guid>("CorrelatedEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GroupEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("PropertyPath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("EntityId");
+
+                    b.HasIndex("GroupEntityId");
+
+                    b.ToTable("FieldTranslations");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbGraphicsSpecification", b =>
                 {
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ImageId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Type")
@@ -174,8 +195,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("DbLocationSpecification_type")
                         .IsRequired()
-                        .HasMaxLength(34)
-                        .HasColumnType("character varying(34)");
+                        .HasMaxLength(55)
+                        .HasColumnType("character varying(55)");
 
                     b.HasKey("EntityId");
 
@@ -564,6 +585,22 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RelatedProjectId");
 
                     b.ToTable("ProjectConnections");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectImage", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EntityId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("DescriptionImage");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectTag", b =>
@@ -1012,6 +1049,24 @@ namespace Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("DbLocationSpecificationCoordinates");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationEntireProvince", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbLocationSpecification");
+
+                    b.ToTable("LocationSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbLocationSpecificationEntireProvince");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationName", b =>
+                {
+                    b.HasBaseType("Infrastructure.Data.DbEntities.DbLocationSpecification");
+
+                    b.ToTable("LocationSpecifications");
+
+                    b.HasDiscriminator().HasValue("DbLocationSpecificationName");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationRegion", b =>
                 {
                     b.HasBaseType("Infrastructure.Data.DbEntities.DbLocationSpecification");
@@ -1158,37 +1213,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionImage", b =>
-                {
-                    b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
-                        .WithMany("DescriptionImages")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbGraphicsContent", "Content", b1 =>
-                        {
-                            b1.Property<Guid>("DbDescriptionImageEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<byte[]>("Content")
-                                .IsRequired()
-                                .HasColumnType("bytea");
-
-                            b1.HasKey("DbDescriptionImageEntityId");
-
-                            b1.ToTable("DescriptionImage");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbDescriptionImageEntityId");
-                        });
-
-                    b.Navigation("Content")
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbDescriptionSpecification", b =>
                 {
                     b.HasOne("Infrastructure.Data.DbEntities.DbDescriptionType", "Type")
@@ -1261,29 +1285,6 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("DescriptionTitle")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbGraphicsSpecification", b =>
-                {
-                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbGraphicsContent", "Content", b1 =>
-                        {
-                            b1.Property<Guid>("DbGraphicsSpecificationEntityId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<byte[]>("Content")
-                                .IsRequired()
-                                .HasColumnType("bytea");
-
-                            b1.HasKey("DbGraphicsSpecificationEntityId");
-
-                            b1.ToTable("GraphicsSpecifications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbGraphicsSpecificationEntityId");
-                        });
-
-                    b.Navigation("Content")
                         .IsRequired();
                 });
 
@@ -1838,6 +1839,37 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("RelatedProject");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectImage", b =>
+                {
+                    b.HasOne("Infrastructure.Data.DbEntities.DbProject", "Project")
+                        .WithMany("ProjectImages")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbGraphicsContent", "Content", b1 =>
+                        {
+                            b1.Property<Guid>("DbProjectImageEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<byte[]>("Content")
+                                .IsRequired()
+                                .HasColumnType("bytea");
+
+                            b1.HasKey("DbProjectImageEntityId");
+
+                            b1.ToTable("DescriptionImage");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbProjectImageEntityId");
+                        });
+
+                    b.Navigation("Content")
+                        .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbProjectTagConnection", b =>
@@ -2399,11 +2431,13 @@ namespace Infrastructure.Migrations
 
                             b1.Property<string>("AddressDisplayName")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
 
                             b1.Property<string>("AddressText")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(500)
                                 .HasColumnType("character varying(500)");
 
@@ -2441,6 +2475,37 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("Coordinates")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbLocationSpecificationName", b =>
+                {
+                    b.OwnsOne("Infrastructure.Data.DbDataTypes.DbPostalAddress", "PostalAddress", b1 =>
+                        {
+                            b1.Property<Guid>("DbLocationSpecificationNameEntityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AddressDisplayName")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.Property<string>("AddressText")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("DbLocationSpecificationNameEntityId");
+
+                            b1.ToTable("LocationSpecifications");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DbLocationSpecificationNameEntityId");
+                        });
+
+                    b.Navigation("PostalAddress")
                         .IsRequired();
                 });
 
@@ -2615,8 +2680,6 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Contributors");
 
-                    b.Navigation("DescriptionImages");
-
                     b.Navigation("DescriptionSpecifications");
 
                     b.Navigation("GraphicsSpecifications");
@@ -2624,6 +2687,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("LocationSpecifications");
 
                     b.Navigation("Owner");
+
+                    b.Navigation("ProjectImages");
 
                     b.Navigation("ProjectTags");
 

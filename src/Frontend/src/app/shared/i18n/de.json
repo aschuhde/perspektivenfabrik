@@ -86,11 +86,15 @@
       "and-visible-with-link": "und per Link einsehbar",
       "internal-link-for-sharing": "Interner Link zum Teilen",
       "open-preview-in-new-tab": "Vorschau in neuem Tab öffnen",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "pleaseSaveBeforeImageUpload": "Das Hochladen von Bildern ist erst nach dem ersten Speichern möglich. Bitte speichere erst!"
     },
     "map": {
+      "map": "Karte",
       "select-on-map": "Auf der Karte auswählen",
-      "address-name-poi": "Adresse / Name / POI"
+      "address-name-poi": "Adresse / Name / POI",
+      "search": "Suchen...",
+      "lookupOnSearchIconInfo": "Bitte verwende zum Suchen das Such-Icon oben Rechts auf der Karte"
     },
     "input-material-group": {
       "material": "Material",
@@ -172,7 +176,9 @@
       "what-is-the-address": "Wie ist die Adresse, die du angeben möchtest?",
       "what-are-the-coordinates": "Wie sind die Koordinaten in \"Lat, Lon\",<br>die du angeben möchtest?",
       "lat-lon": "Lat, Lon",
-      "remove-entry": "{{typeName}} entfernen"
+      "remove-entry": "{{typeName}} entfernen",
+      "link": "Link",
+      "entireProvince": "Ganz Südtirol"
     },
     "input-project-time": {
       "type": "Zeittyp",
