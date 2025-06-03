@@ -94,14 +94,15 @@
                 <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
             }
             @for(website of contactWebsites; track website){
-                @if (isInstagram(website)){
-                    <p class="contact-text"><app-insta-icon></app-insta-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getInstaName(website) }}</a></p>
-                } @else if (isGithub(website)){
-                    <p class="contact-text"><app-github-icon></app-github-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getGithubName(website) }}</a></p>
-                } @else if (isFacebook(website)){
-                    <p class="contact-text"><app-facebook-icon></app-facebook-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getFacebookName(website) }}</a></p>
+                @let websiteUrl = getWebsiteUrl(website);
+                @if (isInstagram(websiteUrl)){
+                    <p class="contact-text"><app-insta-icon></app-insta-icon><span>&nbsp;</span><a target="_blank" href="{{ websiteUrl }}">{{ getInstaName(websiteUrl) }}</a></p>
+                } @else if (isGithub(websiteUrl)){
+                    <p class="contact-text"><app-github-icon></app-github-icon><span>&nbsp;</span><a target="_blank" href="{{ websiteUrl }}">{{ getGithubName(websiteUrl) }}</a></p>
+                } @else if (isFacebook(websiteUrl)){
+                    <p class="contact-text"><app-facebook-icon></app-facebook-icon><span>&nbsp;</span><a target="_blank" href="{{ websiteUrl }}">{{ getFacebookName(websiteUrl) }}</a></p>
                 } @else {
-                    <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ website }}</a></p>
+                    <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ websiteUrl }}">{{ websiteUrl }}</a></p>
                 }
             }
             </div>

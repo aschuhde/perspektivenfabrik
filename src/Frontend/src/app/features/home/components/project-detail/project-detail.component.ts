@@ -40,6 +40,9 @@ import {GithubIconComponent} from "../../../../shared/components/github-icon/git
 import {FacebookIconComponent} from "../../../../shared/components/facebook-icon/facebook-icon.component";
 import {trimChar} from "../../../../shared/tools/string-tools";
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
+import {
+  ApplicationModelsApiModelsApiContactSpecificationWebsite
+} from "../../../../server/model/applicationModelsApiModelsApiContactSpecificationWebsite";
 
 @Component({
   selector: 'app-project-detail',
@@ -60,16 +63,13 @@ export class ProjectDetailComponent {
     return this.apiProjectModel.project;
   }
   get shortDescription(){
-    return stringEmptyPropagate(this.apiProjectModel.shortDescription, this.apiProjectModel.longDescription);
+    return stringEmptyPropagate(this.apiProjectModel.getShortDescriptionContent(this.translateService.currentLang as Language), this.apiProjectModel.getLongDescriptionContent(this.translateService.currentLang as Language));
   }
   get longDescription(){
-    return stringEmptyPropagate(this.apiProjectModel.longDescription, this.apiProjectModel.shortDescription);
+    return stringEmptyPropagate(this.apiProjectModel.getLongDescriptionContent(this.translateService.currentLang as Language), this.apiProjectModel.getShortDescriptionContent(this.translateService.currentLang as Language));
   }
   get projectTitle(){
-    return this.apiProjectModel.projectTitle;
-  }
-  get projectTitleTranslations(){
-    return TranslationValue.arrayFromApiTranslationValues(this.apiProjectModel.projectTitleTranslations);
+    return this.apiProjectModel.getProjectTitleContent(this.translateService.currentLang as Language);
   }
   get projectImages(){
     return this.apiProjectModel.projectImages;
@@ -102,16 +102,16 @@ export class ProjectDetailComponent {
     return this.apiProjectModel.requirementSpecificationMoneySummed;
   }
   get contactPersonalName(){
-    return this.apiProjectModel.contactPersonalName;
+    return this.apiProjectModel.getContactPersonalNameContent(this.translateService.currentLang as Language);
   }
   get contactOrganisationName(){
-    return this.apiProjectModel.contactOrganisationName;
+    return this.apiProjectModel.getContactOrganisationNameContent(this.translateService.currentLang as Language);
   }
   get contactPhone(){
-    return this.apiProjectModel.contactPhone;
+    return this.apiProjectModel.getContactPhoneNumberContent(this.translateService.currentLang as Language);
   }
   get contactMailAddress(){
-    return this.apiProjectModel.contactMailAddress;
+    return this.apiProjectModel.getContactMailAddressContent(this.translateService.currentLang as Language);
   }
     get contactWebsites(){
       return this.apiProjectModel.contactWebsites;
@@ -137,15 +137,15 @@ export class ProjectDetailComponent {
       return this.apiProjectModel.getTimeSpecificationIcon(timeSpecification);
     }
     getTagShortName(tag: ApplicationModelsApiModelsApiProjectTag){
-      return this.apiProjectModel.getTagShortName(tag);
+      return this.apiProjectModel.getTagShortName(tag, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationPersonShortName(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson | undefined){
-      return this.apiProjectModel.getRequirementSpecificationPersonShortName(requirementSpecificationPerson);
+      return this.apiProjectModel.getRequirementSpecificationPersonShortName(requirementSpecificationPerson, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecification){
-      return this.apiProjectModel.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial);
+      return this.apiProjectModel.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationMoneyShortName(requirementSpecificationMoney: ApplicationModelsApiModelsApiRequirementSpecification){
@@ -269,5 +269,16 @@ export class ProjectDetailComponent {
     } catch {
       return url;
     }
+  }
+  
+  getWebsiteUrl(website: ApplicationModelsApiModelsApiContactSpecificationWebsite){
+    const language = this.translateService.currentLang as Language;
+    if(!website) return "";
+
+    const urlTranslation = website.website?.urlTranslations?.find(x => x.languageCode == language);
+    if(urlTranslation && urlTranslation.value){
+      return urlTranslation.value;
+    }
+    return website.website?.rawUrl ?? "";
   }
 }
