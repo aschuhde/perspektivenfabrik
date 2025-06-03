@@ -4,8 +4,8 @@
             <div>
                 <img class="project-list-item-thumbnail" src="{{ project.getThumbnailUrl(this.apiBasePath)}}"  alt="Thumbnail Image of {{ project.projectTitle }}"/>
                 <div class="project-list-item-text-container">
-                <h4 class="project-title">{{ project.projectTitle }}</h4>
-                <p class="thumbnail-description" [innerHTML]="project.thumbnailDescription"></p>
+                <h4 class="project-title">{{ project.getProjectTitleContent(this.currentLang) }}</h4>
+                <p class="thumbnail-description" [innerHTML]="project.getThumbnailDescriptionContent(this.currentLang)"></p>
                 @if (project.locationSpecifications.length > 0){
                     <p>
                         <span><mat-icon fontIcon="location_on"></mat-icon> {{ getLocationSpecificationText(project) }}</span>

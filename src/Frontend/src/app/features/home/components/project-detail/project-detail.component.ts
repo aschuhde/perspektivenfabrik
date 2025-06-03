@@ -35,14 +35,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {TranslationValue} from "../../../../shared/models/translation-value";
 import {BASE_PATH} from "../../../../server/variables";
 import {Language} from "../../../../core/types/general-types";
+import {InstaIconComponent} from "../../../../shared/components/insta-icon/insta-icon.component";
+import {GithubIconComponent} from "../../../../shared/components/github-icon/github-icon.component";
+import {FacebookIconComponent} from "../../../../shared/components/facebook-icon/facebook-icon.component";
+import {trimChar} from "../../../../shared/tools/string-tools";
+import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
+import {
+  ApplicationModelsApiModelsApiContactSpecificationWebsite
+} from "../../../../server/model/applicationModelsApiModelsApiContactSpecificationWebsite";
 
 @Component({
   selector: 'app-project-detail',
-    imports: [ImageGalleryComponent, MatIconModule, TranslateModule],
+  imports: [ImageGalleryComponent, MatIconModule, TranslateModule, InstaIconComponent, GithubIconComponent, FacebookIconComponent],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
-export class ProjectDetailComponent {    
+export class ProjectDetailComponent {
+      
     apiProject = model.required<ApplicationModelsApiModelsApiProject | null>();
     localeDataProvider = inject(LocaleDataProvider)
     apiProjectModel = new ApiProjectModel()
@@ -54,16 +63,13 @@ export class ProjectDetailComponent {
     return this.apiProjectModel.project;
   }
   get shortDescription(){
-    return this.apiProjectModel.shortDescription;
+    return stringEmptyPropagate(this.apiProjectModel.getShortDescriptionContent(this.translateService.currentLang as Language), this.apiProjectModel.getLongDescriptionContent(this.translateService.currentLang as Language));
   }
   get longDescription(){
-    return this.apiProjectModel.longDescription;
+    return stringEmptyPropagate(this.apiProjectModel.getLongDescriptionContent(this.translateService.currentLang as Language), this.apiProjectModel.getShortDescriptionContent(this.translateService.currentLang as Language));
   }
   get projectTitle(){
-    return this.apiProjectModel.projectTitle;
-  }
-  get projectTitleTranslations(){
-    return TranslationValue.arrayFromApiTranslationValues(this.apiProjectModel.projectTitleTranslations);
+    return this.apiProjectModel.getProjectTitleContent(this.translateService.currentLang as Language);
   }
   get projectImages(){
     return this.apiProjectModel.projectImages;
@@ -96,19 +102,19 @@ export class ProjectDetailComponent {
     return this.apiProjectModel.requirementSpecificationMoneySummed;
   }
   get contactPersonalName(){
-    return this.apiProjectModel.contactPersonalName;
+    return this.apiProjectModel.getContactPersonalNameContent(this.translateService.currentLang as Language);
   }
   get contactOrganisationName(){
-    return this.apiProjectModel.contactOrganisationName;
+    return this.apiProjectModel.getContactOrganisationNameContent(this.translateService.currentLang as Language);
   }
   get contactPhone(){
-    return this.apiProjectModel.contactPhone;
+    return this.apiProjectModel.getContactPhoneNumberContent(this.translateService.currentLang as Language);
   }
   get contactMailAddress(){
-    return this.apiProjectModel.contactMailAddress;
+    return this.apiProjectModel.getContactMailAddressContent(this.translateService.currentLang as Language);
   }
-    get contactWebsite(){
-      return this.apiProjectModel.contactWebsite;
+    get contactWebsites(){
+      return this.apiProjectModel.contactWebsites;
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -131,15 +137,15 @@ export class ProjectDetailComponent {
       return this.apiProjectModel.getTimeSpecificationIcon(timeSpecification);
     }
     getTagShortName(tag: ApplicationModelsApiModelsApiProjectTag){
-      return this.apiProjectModel.getTagShortName(tag);
+      return this.apiProjectModel.getTagShortName(tag, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationPersonShortName(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson | undefined){
-      return this.apiProjectModel.getRequirementSpecificationPersonShortName(requirementSpecificationPerson);
+      return this.apiProjectModel.getRequirementSpecificationPersonShortName(requirementSpecificationPerson, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecification){
-      return this.apiProjectModel.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial);
+      return this.apiProjectModel.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial, this.translateService.currentLang as Language);
     }
 
     getRequirementSpecificationMoneyShortName(requirementSpecificationMoney: ApplicationModelsApiModelsApiRequirementSpecification){
@@ -216,4 +222,63 @@ export class ProjectDetailComponent {
         }
       });
     }
+
+  isInstagram(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('instagram.com');
+    } catch {
+      return false;
+    }
+  }
+
+  getInstaName(url: string){
+    try {
+      return "@" + trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
+
+  isGithub(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('github.com');
+    } catch {
+      return false;
+    }
+  }
+
+  getGithubName(url: string){
+    try {
+      return trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
+
+  isFacebook(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('facebook.com');
+    } catch {
+      return false;
+    }
+  }
+  
+  getFacebookName(url: string){
+    try {
+      return trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
+  
+  getWebsiteUrl(website: ApplicationModelsApiModelsApiContactSpecificationWebsite){
+    const language = this.translateService.currentLang as Language;
+    if(!website) return "";
+
+    const urlTranslation = website.website?.urlTranslations?.find(x => x.languageCode == language);
+    if(urlTranslation && urlTranslation.value){
+      return urlTranslation.value;
+    }
+    return website.website?.rawUrl ?? "";
+  }
 }

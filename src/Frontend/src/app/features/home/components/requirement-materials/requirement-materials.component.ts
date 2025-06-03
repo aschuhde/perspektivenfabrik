@@ -15,6 +15,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-requirement-materials',
@@ -28,17 +29,42 @@ export class RequirementMaterialsComponent {
   localDataProvider = inject(LocaleDataProvider)
   translateService = inject(TranslateService)
   
-  materialSpecificationText(materialSpecification: ApplicationModelsApiModelsApiMaterialSpecification) {
-    if(!materialSpecification?.title?.rawContentString) return "-";
-    let suffix = "";
-    if(materialSpecification.amountValue){
-      suffix = ` (${materialSpecification.amountValue})`
+  materialSpecificationHtml(materialSpecification: ApplicationModelsApiModelsApiMaterialSpecification) {
+    if(!materialSpecification) return "-";
+    let titleTranslation = materialSpecification.title?.contentTranslations?.find(x => x.languageCode == this.translateService.currentLang as Language);
+    let title = materialSpecification.title?.rawContentString;
+    if(titleTranslation?.value){
+      title = titleTranslation.value;
     }
-    return materialSpecification?.title?.rawContentString + suffix;
+    if(!title){
+      return "-";
+    }
+    let suffix = "";
+    const amountValueTranslation = materialSpecification.amountValueTranslations?.find(x => x.languageCode == this.translateService.currentLang as Language);
+    if(amountValueTranslation && amountValueTranslation.value){
+      suffix = `${amountValueTranslation.value}`
+    }else if(materialSpecification.amountValue){
+      suffix = `${materialSpecification.amountValue}`
+    }
+    
+    const descriptionTranslation = materialSpecification.description?.contentTranslations?.find(x => x.languageCode == this.translateService.currentLang as Language);
+    let description = materialSpecification.description?.rawContentString;
+    if(descriptionTranslation?.value){
+      description = descriptionTranslation.value;
+    }
+    if(description && suffix){
+      suffix += ` - <i>${description}</i>`;
+    }else if(description){
+      suffix = `<i>${description}</i>`;
+    }
+    if(suffix){
+      suffix = ` (${suffix})`;
+    }
+    return `<strong>${title}</strong>${suffix}`;
   }
   
-  materialText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
-    return stringEmptyPropagate(joinWithConjunction(requirement?.materialSpecifications?.map(x => this.materialSpecificationText(x)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
+  materialHtml(requirement: ApplicationModelsApiModelsApiRequirementSpecificationMaterial) {
+    return stringEmptyPropagate(joinWithConjunction(requirement?.materialSpecifications?.map(x => this.materialSpecificationHtml(x)).filter(x => !!x).map(x => x!), this.localDataProvider.locale), "-");
   }
   moneyText(requirement: ApplicationModelsApiModelsApiRequirementSpecificationMoney) {
     return stringEmptyPropagate(formatMoney(requirement?.quantitySpecification?.value, this.localDataProvider.locale, "euro"), "-");

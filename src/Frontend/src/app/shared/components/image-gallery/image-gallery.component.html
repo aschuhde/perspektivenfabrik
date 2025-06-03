@@ -2,7 +2,10 @@
     <button class="secondary btn-nav btn-prev" (click)="prev()"><mat-icon fontIcon="chevron_left"></mat-icon></button>
 }
 @for(image of imagesArray; track image){
-    <img [class.active]="selectedIndex == $index" class="image-gallery-image" src="{{ image.src }}" alt="{{ image.alt }}"/>
+    <div [class.active]="selectedIndex == $index" class="image-box">
+        <div class="image-blur" style="background-image: url('{{ image.src }}')"></div>
+        <img class="image-gallery-image" src="{{ image.src }}" alt="{{ image.alt }}"/>
+    </div>
 }
 @if(canShowNavigation){
     <button class="secondary btn-nav btn-next" (click)="next()"><mat-icon fontIcon="chevron_right"></mat-icon></button>

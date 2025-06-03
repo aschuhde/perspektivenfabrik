@@ -78,17 +78,17 @@ import {
   ApplicationModelsApiModelsApiSkillSpecification
 } from "../../../server/model/applicationModelsApiModelsApiSkillSpecification";
 import {distinctBy} from "../../../shared/tools/array-tools";
-import { DomainDataTypesTranslationValue } from "../../../server/model/domainDataTypesTranslationValue";
 import { ApplicationModelsApiModelsApiLocationSpecificationName } from "../../../server/model/applicationModelsApiModelsApiLocationSpecificationName";
 import { TranslateService } from "@ngx-translate/core";
 import {UploadedImage} from "../../../shared/models/uploaded-image";
+import {DomainDataTypesFormattedContent} from "../../../server/model/domainDataTypesFormattedContent";
+import {Language} from "../../../core/types/general-types";
 
 export class ApiProjectModel {
   project: ApplicationModelsApiModelsApiProject | null = null;
-  shortDescription: string = "";
-  longDescription: string = "";
-  projectTitle: string = "";
-  projectTitleTranslations: DomainDataTypesTranslationValue[] = [];
+  shortDescription: DomainDataTypesFormattedContent | null = null;
+  longDescription: DomainDataTypesFormattedContent | null = null;
+  projectTitle: DomainDataTypesFormattedContent | null = null;
   projectImages: GalleryImage[] = [];
   locationSpecifications: ApplicationModelsApiModelsApiLocationSpecification[] = [];
   timeSpecifications: ApplicationModelsApiModelsApiTimeSpecification[] = [];
@@ -99,19 +99,19 @@ export class ApiProjectModel {
   requirementSpecificationMaterialsFlat: ApplicationModelsApiModelsApiRequirementSpecificationMaterial[] = [];
   requirementSpecificationMoney: ApplicationModelsApiModelsApiRequirementSpecificationMoney[] = [];
   requirementSpecificationMoneySummed: ApplicationModelsApiModelsApiRequirementSpecificationMoney | null = null;
-  contactPersonalName: string = "";
-  contactOrganisationName: string = "";
-  contactPhone: string = "";
-  contactMailAddress: string = "";
-  contactWebsite: string = "";
-  thumbnailDescription: string = "";
+  contactPersonalName: ApplicationModelsApiModelsApiContactSpecificationPersonalName | null = null;
+  contactOrganisationName: ApplicationModelsApiModelsApiContactSpecificationOrganisationName | null = null;
+  contactPhone: ApplicationModelsApiModelsApiContactSpecificationPhoneNumber | null = null;
+  contactMailAddress: ApplicationModelsApiModelsApiContactSpecificationMailAddress | null = null;
+  contactWebsites: ApplicationModelsApiModelsApiContactSpecificationWebsite[] = [];
+  thumbnailDescription: DomainDataTypesFormattedContent | null = null;
 
   loadFromApiProject(apiProject: ApplicationModelsApiModelsApiProject, localeDataProvider: LocaleDataProvider, apiBasePath: string) {
     this.project = apiProject;
-    this.shortDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "shortDescription")?.content?.rawContentString ?? "";
-    this.longDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "longDescription")?.content?.rawContentString ?? "";
-    this.thumbnailDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "thumbnailDescription")?.content?.rawContentString ?? this.shortDescription ?? "";
-    this.projectTitle = this.project?.projectTitle?.rawContentString ?? "";
+    this.shortDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "shortDescription")?.content ?? null;
+    this.longDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "longDescription")?.content ?? null;
+    this.thumbnailDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "thumbnailDescription")?.content ?? this.shortDescription ?? null;
+    this.projectTitle = this.project?.projectTitle ?? null;
     this.projectImages = this.project?.graphicsSpecifications?.filter(x => x.type !== 'Logo').map(x => ObjectCreator.Create<GalleryImage>({
       imageName: "",
       src: UploadedImage.buildUrl(apiBasePath, this.project?.entityId ?? null, x.imageId ?? null),
@@ -185,13 +185,15 @@ export class ApiProjectModel {
     if((parseMoneyWithFallback(this.requirementSpecificationMoneySummed.quantitySpecification?.value, 0) ?? 0) <= 0){
       this.requirementSpecificationMoneySummed = null;
     }
-    this.contactPersonalName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName)?.personalName ?? "";
-    this.contactOrganisationName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName)?.organisationName ?? "";
-    this.contactPhone = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber)?.phoneNumber?.phoneNumberText ?? "";
-    this.contactMailAddress = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress)?.mailAddress?.mail ?? "";
-    this.contactWebsite = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website) as ApplicationModelsApiModelsApiContactSpecificationWebsite)?.website?.rawUrl ?? "";
+    this.contactPersonalName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PersonalName) as ApplicationModelsApiModelsApiContactSpecificationPersonalName) ?? null;
+    this.contactOrganisationName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName) ?? null;
+    this.contactPhone = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber) ?? null;
+    this.contactMailAddress = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress) ?? null;
+    this.contactWebsites = this.project?.contactSpecifications?.filter(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website).map(x => (x as ApplicationModelsApiModelsApiContactSpecificationWebsite) ?? null).filter(x => x) ?? [];
     return this;
   }
+  
+  
   static getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider, translateService: TranslateService){
     switch(locationSpecification.classType){
       case ApplicationModelsApiModelsApiLocationSpecificationTypes.Address:
@@ -261,11 +263,15 @@ export class ApiProjectModel {
     }
     return null;
   }
-  getTagShortName(tag: ApplicationModelsApiModelsApiProjectTag){
-    return tag.tagName;
+  getTagShortName(tag: ApplicationModelsApiModelsApiProjectTag, language: Language){
+    const tagNameTranslations = tag.tagNameTranslations?.find(x => x.languageCode == language);
+    if(tagNameTranslations && tagNameTranslations.value){
+      return tagNameTranslations.value;
+    }
+    return tag?.tagName;
   }
 
-  getRequirementSpecificationPersonShortName(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson | undefined){
+  getRequirementSpecificationPersonShortName(requirementSpecificationPerson: ApplicationModelsApiModelsApiRequirementSpecificationPerson | undefined, language: Language){
     if(!requirementSpecificationPerson){
       return "";
     }
@@ -276,10 +282,19 @@ export class ApiProjectModel {
     if((personSpecification.skillSpecifications?.length ?? 0) === 0){
       return "";
     }
-    return personSpecification?.skillSpecifications![0].title?.rawContentString ?? personSpecification?.skillSpecifications![0].name ?? "";
+    let skillSpecification = personSpecification?.skillSpecifications![0];
+    const contentTranslation = skillSpecification.title?.contentTranslations?.find(x => x.languageCode == language);
+    if(contentTranslation && contentTranslation.value){
+      return contentTranslation.value;
+    }
+    const nameTranslation = skillSpecification.nameTranslations?.find(x => x.languageCode == language);
+    if(nameTranslation && nameTranslation.value){
+      return nameTranslation.value;
+    }
+    return skillSpecification.title?.rawContentString ?? skillSpecification.name ?? "";
   }
 
-  getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecification){
+  getRequirementSpecificationMaterialShortName(requirementSpecificationMaterial: ApplicationModelsApiModelsApiRequirementSpecification, language: Language){
     if (requirementSpecificationMaterial.classType !== ApplicationModelsApiModelsApiRequirementSpecificationTypes.Material){
       return "";
     }
@@ -287,7 +302,16 @@ export class ApiProjectModel {
     if((materialSpecification.materialSpecifications?.length ?? 0) === 0){
       return "";
     }
-    return materialSpecification?.materialSpecifications![0].title?.rawContentString ?? materialSpecification?.materialSpecifications![0].name ?? "";
+    const materialSpecificationObj = materialSpecification?.materialSpecifications![0];
+    const contentTranslation = materialSpecificationObj.title?.contentTranslations?.find(x => x.languageCode == language);
+    if(contentTranslation && contentTranslation.value){
+      return contentTranslation.value;
+    }
+    const nameTranslation = materialSpecificationObj.nameTranslations?.find(x => x.languageCode == language);
+    if(nameTranslation && nameTranslation.value){
+      return nameTranslation.value;
+    }
+    return materialSpecificationObj.title?.rawContentString ?? materialSpecificationObj.name ?? "";
   }
 
   getRequirementSpecificationMoneyShortName(requirementSpecificationMoney: ApplicationModelsApiModelsApiRequirementSpecification, localeDataProvider: LocaleDataProvider){
@@ -313,5 +337,84 @@ export class ApiProjectModel {
 
   needsMoney() {
     return !!this.requirementSpecificationMoney.find(x => (parseMoneyWithFallback(x.quantitySpecification?.value ?? "0", 0) ?? 0) > 0);
+  }
+  
+  getShortDescriptionContent(language: Language){
+    if(!this.shortDescription) return "";
+
+    const contentTranslation = this.shortDescription.contentTranslations?.find(x => x.languageCode == language);
+    if(contentTranslation && contentTranslation.value){
+      return contentTranslation.value;
+    }
+    return this.shortDescription.rawContentString ?? "";
+  }
+  getLongDescriptionContent(language: Language){
+    if(!this.longDescription) return "";
+
+    const contentTranslation = this.longDescription.contentTranslations?.find(x => x.languageCode == language);
+    if(contentTranslation && contentTranslation.value){
+      return contentTranslation.value;
+    }
+    return this.longDescription.rawContentString ?? "";
+  }
+
+  getThumbnailDescriptionContent(language: Language){
+    if(!this.thumbnailDescription) return "";
+
+    const contentTranslation = this.thumbnailDescription.contentTranslations?.find(x => x.languageCode == language);
+    if(contentTranslation && contentTranslation.value){
+      return contentTranslation.value;
+    }
+    return this.thumbnailDescription.rawContentString ?? "";
+  }
+
+  getContactPersonalNameContent(language: Language){
+    if(!this.contactPersonalName) return "";
+
+    const personalNameTranslation = this.contactPersonalName.personalNameTranslations?.find(x => x.languageCode == language);
+    if(personalNameTranslation && personalNameTranslation.value){
+      return personalNameTranslation.value;
+    }
+    return this.contactPersonalName.personalName ?? "";
+  }
+
+  getContactOrganisationNameContent(language: Language){
+    if(!this.contactOrganisationName) return "";
+
+    const organisationNameTranslation = this.contactOrganisationName.organisationNameTranslations?.find(x => x.languageCode == language);
+    if(organisationNameTranslation && organisationNameTranslation.value){
+      return organisationNameTranslation.value;
+    }
+    return this.contactOrganisationName.organisationName ?? "";
+  }
+
+  getContactPhoneNumberContent(language: Language){
+    if(!this.contactPhone?.phoneNumber) return "";
+
+    const phoneNumberTranslation = this.contactPhone?.phoneNumber?.phoneNumberTextTranslations?.find(x => x.languageCode == language);
+    if(phoneNumberTranslation && phoneNumberTranslation.value){
+      return phoneNumberTranslation.value;
+    }
+    return this.contactPhone.phoneNumber.phoneNumberText ?? "";
+  }
+
+  getContactMailAddressContent(language: Language){
+    if(!this.contactMailAddress?.mailAddress) return "";
+
+    const mailAddressTranslation = this.contactMailAddress?.mailAddress?.mailTranslations?.find(x => x.languageCode == language);
+    if(mailAddressTranslation && mailAddressTranslation.value){
+      return mailAddressTranslation.value;
+    }
+    return this.contactMailAddress.mailAddress.mail ?? "";
+  }
+
+  getProjectTitleContent(language: Language){
+    if(!this.projectTitle) return "";
+
+    const projectTitleTranslation = this.projectTitle.contentTranslations?.find(x => x.languageCode == language);
+    if(projectTitleTranslation && projectTitleTranslation.value){
+      return projectTitleTranslation.value;
+    }
+    return this.projectTitle.rawContentString ?? "";
   }
 }

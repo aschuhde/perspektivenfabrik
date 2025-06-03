@@ -19,6 +19,7 @@ import { RestrictedRouteNames } from '../../../restricted/restricted-route-names
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {isServer} from "../../../../shared/tools/server-tools";
 import {BASE_PATH} from "../../../../server/variables";
+import {Language} from "../../../../core/types/general-types";
 
 @Component({
   selector: 'app-project-list',
@@ -33,6 +34,10 @@ export class ProjectListComponent {
   type = input<"home" | "user-area">("home")
   translateService = inject(TranslateService)
   apiBasePath = inject(BASE_PATH)
+  
+  get currentLang() {
+    return this.translateService.currentLang as Language;
+  }
   loadProjects(){
     if(isServer()) return;
     
@@ -122,12 +127,12 @@ export class ProjectListComponent {
       return "";
     }
     if(tags?.length === 1){
-      return project.getTagShortName(tags[0]);
+      return project.getTagShortName(tags[0], this.currentLang);
     }
     if(tags?.length === 2){
-      return joinWithConjunction(tags.map(x => project.getTagShortName(x) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(tags.map(x => project.getTagShortName(x, this.currentLang) ?? ""), this.localeDataProvider.locale);
     }
-    return `${project.getTagShortName(tags[0])}, ${project.getTagShortName(tags[1])}...`;
+    return `${project.getTagShortName(tags[0], this.currentLang)}, ${project.getTagShortName(tags[1], this.currentLang)}...`;
   }
 
   needTagPlusIcons(tags: ApplicationModelsApiModelsApiProjectTag[]) {
@@ -139,7 +144,7 @@ export class ProjectListComponent {
   }
 
   getTagTooltipContent(project: ApiProjectModel) {
-    return joinWithConjunction(project.tags.slice(2).map(x => project.getTagShortName(x) ?? ""), this.localeDataProvider.locale)
+    return joinWithConjunction(project.tags.slice(2).map(x => project.getTagShortName(x, this.currentLang) ?? ""), this.localeDataProvider.locale)
   }
 
   getRequirementPersonText(project: ApiProjectModel) {
@@ -148,12 +153,12 @@ export class ProjectListComponent {
       return "";
     }
     if(requirementSpecificationPersonsFlat?.length === 1){
-      return project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[0]);
+      return project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[0], this.currentLang);
     }
     if(requirementSpecificationPersonsFlat?.length === 2){
-      return joinWithConjunction(requirementSpecificationPersonsFlat.map(x => project.getRequirementSpecificationPersonShortName(x) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(requirementSpecificationPersonsFlat.map(x => project.getRequirementSpecificationPersonShortName(x, this.currentLang) ?? ""), this.localeDataProvider.locale);
     }
-    return `${project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[0])}, ${project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[1])}...`;
+    return `${project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[0], this.currentLang)}, ${project.getRequirementSpecificationPersonShortName(requirementSpecificationPersonsFlat[1], this.currentLang)}...`;
   }
 
   getRequirementMaterialText(project: ApiProjectModel) {
@@ -162,12 +167,12 @@ export class ProjectListComponent {
       return "";
     }
     if(requirementSpecificationMaterialsFlat?.length === 1){
-      return project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[0]);
+      return project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[0], this.currentLang);
     }
     if(requirementSpecificationMaterialsFlat?.length === 2){
-      return joinWithConjunction(requirementSpecificationMaterialsFlat.map(x => project.getRequirementSpecificationMaterialShortName(x) ?? ""), this.localeDataProvider.locale);
+      return joinWithConjunction(requirementSpecificationMaterialsFlat.map(x => project.getRequirementSpecificationMaterialShortName(x, this.currentLang) ?? ""), this.localeDataProvider.locale);
     }
-    return `${project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[0])}, ${project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[1])}...`;
+    return `${project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[0], this.currentLang)}, ${project.getRequirementSpecificationMaterialShortName(requirementSpecificationMaterialsFlat[1], this.currentLang)}...`;
   }
   
   getRequirementMoneyText(project: ApiProjectModel) {
