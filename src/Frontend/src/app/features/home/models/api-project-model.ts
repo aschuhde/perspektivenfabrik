@@ -103,7 +103,7 @@ export class ApiProjectModel {
   contactOrganisationName: string = "";
   contactPhone: string = "";
   contactMailAddress: string = "";
-  contactWebsite: string = "";
+  contactWebsites: string[] = [];
   thumbnailDescription: string = "";
 
   loadFromApiProject(apiProject: ApplicationModelsApiModelsApiProject, localeDataProvider: LocaleDataProvider, apiBasePath: string) {
@@ -189,7 +189,7 @@ export class ApiProjectModel {
     this.contactOrganisationName = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.OrganisationName) as ApplicationModelsApiModelsApiContactSpecificationOrganisationName)?.organisationName ?? "";
     this.contactPhone = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.PhoneNumber) as ApplicationModelsApiModelsApiContactSpecificationPhoneNumber)?.phoneNumber?.phoneNumberText ?? "";
     this.contactMailAddress = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.MailAddress) as ApplicationModelsApiModelsApiContactSpecificationMailAddress)?.mailAddress?.mail ?? "";
-    this.contactWebsite = (this.project?.contactSpecifications?.find(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website) as ApplicationModelsApiModelsApiContactSpecificationWebsite)?.website?.rawUrl ?? "";
+    this.contactWebsites = this.project?.contactSpecifications?.filter(x=> x.classType === ApplicationModelsApiModelsApiContactSpecificationTypes.Website).map(x => (x as ApplicationModelsApiModelsApiContactSpecificationWebsite)?.website?.rawUrl ?? "") ?? [];
     return this;
   }
   static getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification, localeDataProvider: LocaleDataProvider, translateService: TranslateService){

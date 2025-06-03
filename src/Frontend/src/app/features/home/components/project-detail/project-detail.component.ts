@@ -35,14 +35,19 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {TranslationValue} from "../../../../shared/models/translation-value";
 import {BASE_PATH} from "../../../../server/variables";
 import {Language} from "../../../../core/types/general-types";
+import {InstaIconComponent} from "../../../../shared/components/insta-icon/insta-icon.component";
+import {GithubIconComponent} from "../../../../shared/components/github-icon/github-icon.component";
+import {FacebookIconComponent} from "../../../../shared/components/facebook-icon/facebook-icon.component";
+import {trimChar} from "../../../../shared/tools/string-tools";
 
 @Component({
   selector: 'app-project-detail',
-    imports: [ImageGalleryComponent, MatIconModule, TranslateModule],
+  imports: [ImageGalleryComponent, MatIconModule, TranslateModule, InstaIconComponent, GithubIconComponent, FacebookIconComponent],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
-export class ProjectDetailComponent {    
+export class ProjectDetailComponent {
+      
     apiProject = model.required<ApplicationModelsApiModelsApiProject | null>();
     localeDataProvider = inject(LocaleDataProvider)
     apiProjectModel = new ApiProjectModel()
@@ -107,8 +112,8 @@ export class ProjectDetailComponent {
   get contactMailAddress(){
     return this.apiProjectModel.contactMailAddress;
   }
-    get contactWebsite(){
-      return this.apiProjectModel.contactWebsite;
+    get contactWebsites(){
+      return this.apiProjectModel.contactWebsites;
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -216,4 +221,52 @@ export class ProjectDetailComponent {
         }
       });
     }
+
+  isInstagram(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('instagram.com');
+    } catch {
+      return false;
+    }
+  }
+
+  getInstaName(url: string){
+    try {
+      return "@" + trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
+
+  isGithub(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('github.com');
+    } catch {
+      return false;
+    }
+  }
+
+  getGithubName(url: string){
+    try {
+      return trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
+
+  isFacebook(url: string) {
+    try {
+      return new URL(url).hostname.toLowerCase().includes('facebook.com');
+    } catch {
+      return false;
+    }
+  }
+  
+  getFacebookName(url: string){
+    try {
+      return trimChar(new URL(url).pathname, "/");
+    } catch {
+      return url;
+    }
+  }
 }

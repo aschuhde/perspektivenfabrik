@@ -93,8 +93,16 @@
             @if(contactMailAddress){
                 <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
             }
-            @if(contactWebsite){
-                <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ contactWebsite }}">{{ contactWebsite }}</a></p>
+            @for(website of contactWebsites; track website){
+                @if (isInstagram(website)){
+                    <p class="contact-text"><app-insta-icon></app-insta-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getInstaName(website) }}</a></p>
+                } @else if (isGithub(website)){
+                    <p class="contact-text"><app-github-icon></app-github-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getGithubName(website) }}</a></p>
+                } @else if (isFacebook(website)){
+                    <p class="contact-text"><app-facebook-icon></app-facebook-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ getFacebookName(website) }}</a></p>
+                } @else {
+                    <p class="contact-text"><mat-icon fontIcon="language"></mat-icon><span>&nbsp;</span><a target="_blank" href="{{ website }}">{{ website }}</a></p>
+                }
             }
             </div>
         </div>
