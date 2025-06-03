@@ -3,7 +3,7 @@
         <div class="group">
             <h4><mat-icon fontIcon="construction"></mat-icon> {{ "materials.material-group" | translate }} {{ $index + 1}}</h4>
             <p class="question">{{ "materials.what" | translate }}</p>
-            <p class="answer">{{ materialText(requirement) }}</p>
+            <p class="answer" [innerHTML]="materialHtml(requirement)"></p>
             <p class="question"><mat-icon fontIcon="date_range"></mat-icon> {{ "materials.when" | translate }}</p>
             <p class="answer">{{ periodText(requirement) | async }}</p>
             <p class="question"><mat-icon fontIcon="location_on"></mat-icon> {{ "materials.where" | translate }}</p>
