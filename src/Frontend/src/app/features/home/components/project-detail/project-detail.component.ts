@@ -39,6 +39,7 @@ import {InstaIconComponent} from "../../../../shared/components/insta-icon/insta
 import {GithubIconComponent} from "../../../../shared/components/github-icon/github-icon.component";
 import {FacebookIconComponent} from "../../../../shared/components/facebook-icon/facebook-icon.component";
 import {trimChar} from "../../../../shared/tools/string-tools";
+import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 
 @Component({
   selector: 'app-project-detail',
@@ -59,10 +60,10 @@ export class ProjectDetailComponent {
     return this.apiProjectModel.project;
   }
   get shortDescription(){
-    return this.apiProjectModel.shortDescription;
+    return stringEmptyPropagate(this.apiProjectModel.shortDescription, this.apiProjectModel.longDescription);
   }
   get longDescription(){
-    return this.apiProjectModel.longDescription;
+    return stringEmptyPropagate(this.apiProjectModel.longDescription, this.apiProjectModel.shortDescription);
   }
   get projectTitle(){
     return this.apiProjectModel.projectTitle;
