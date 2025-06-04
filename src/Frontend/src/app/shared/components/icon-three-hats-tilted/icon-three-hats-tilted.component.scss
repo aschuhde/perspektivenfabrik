@@ -1,0 +1,13 @@
+@use "responsive";
+:host{
+  width: 4rem;
+
+  > svg{
+    width: 100%;
+  }
+}
+@include responsive.mobile {
+  :host {
+    width: 3rem;
+  }
+}

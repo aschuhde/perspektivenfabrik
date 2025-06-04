@@ -5,10 +5,11 @@ import { ApplicationModelsApiModelsApiProject } from '../../../../server/model/a
 import { ProjectDetailComponent } from '../../components/project-detail/project-detail.component';
 import { NavigationBarFullComponent } from '../../../../shared/components/navigation-bar-full/navigation-bar-full.component';
 import {isServer} from "../../../../shared/tools/server-tools";
+import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-project-detail-page',
-  imports: [ProjectDetailComponent, NavigationBarFullComponent],
+  imports: [ProjectDetailComponent, NavigationBarFullComponent, FooterComponent],
   templateUrl: './project-detail-page.component.html',
   styleUrl: './project-detail-page.component.scss'
 })

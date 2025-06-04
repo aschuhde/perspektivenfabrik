@@ -7,19 +7,23 @@
 }
 
 :host{
-    padding-top: 3rem;
-    display: block;
-    text-align: center;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .container{
-    text-align: center;
-    width: 23rem;
-    display: inline-block;
+  text-align: center;
+  width: 23rem;
+  display: inline-block;
+  padding-bottom: 4rem;
 }
 
 @include responsive.mobile {
   .container{
     width: 80%;
+    padding-bottom: 0;
   }
 }

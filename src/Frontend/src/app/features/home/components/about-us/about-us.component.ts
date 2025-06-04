@@ -4,13 +4,19 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {shuffle} from "../../../../shared/tools/array-tools";
 import { isPlatformServer } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {
+    IconThreeHatsTiltedComponent
+} from "../../../../shared/components/icon-three-hats-tilted/icon-three-hats-tilted.component";
+import {IconStarComponent} from "../../../../shared/components/icon-star/icon-star.component";
+import {IconRainbowComponent} from "../../../../shared/components/icon-rainbow/icon-rainbow.component";
+import {IconMountainComponent} from "../../../../shared/components/icon-mountain/icon-mountain.component";
 
 const SHUFFLED_PEOPLE_KEY = makeStateKey<any[]>('shuffledPeople');
 
 
 @Component({
   selector: 'app-about-us',
-  imports: [TranslateModule, MatIcon, RouterLink],
+  imports: [TranslateModule, MatIcon, RouterLink, IconThreeHatsTiltedComponent, IconStarComponent, IconRainbowComponent, IconMountainComponent],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })

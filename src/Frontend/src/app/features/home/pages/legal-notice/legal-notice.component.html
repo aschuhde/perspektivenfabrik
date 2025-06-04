@@ -1,0 +1,15 @@
+<app-navigation-bar-full></app-navigation-bar-full>
+<div style="padding: 2rem">
+<h1>{{ "legalNotice.title" | translate }}</h1>
+<p>{{ "legalNotice.info" | translate }}</p>
+<p [innerHTML]="'legalNotice.address' | translate"></p>
+<p>{{ "legalNotice.mail" | translate }}: <a href="mailto: info@climateaction.bz">info&commat;climateaction.bz</a><br>
+{{ "legalNotice.pec" | translate }}: <a href="mailto: cast@pec-legal.it">cast&commat;pec-legal.it</a><br>
+{{ "legalNotice.web" | translate }}: <a href="mailto: https://climateaction.bz/">https://climateaction.bz/</a></p>
+<p>
+    {{ "legalNotice.taxNumber" | translate }}: 94140540215
+</p>
+
+<p><a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+</div>
+<app-footer></app-footer>
