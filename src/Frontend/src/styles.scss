@@ -27,6 +27,10 @@ app-navigation-bar-full{
   height: calc(100% - 4.5rem);
   display: block;
 }
+.full-height-minus-nav-viewport{
+  min-height: calc(100vh - 4.5rem);
+  display: block;
+}
 .material-symbols-outlined {
   font-variation-settings:
           'FILL' 0,
@@ -50,6 +54,9 @@ app-navigation-bar-full{
   }
   .full-height-minus-nav{
     height: calc(100% - 3rem);
+  }
+  .full-height-minus-nav-viewport{
+    min-height: calc(100vh - 3rem);
   }
 }
 

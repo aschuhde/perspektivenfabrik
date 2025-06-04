@@ -1,10 +1,12 @@
 <div class="top">
-    <div class="left">
+    <div class="left" style="position: relative">
         <div class="left-content">
             <h2 class="title">{{ "aboutUs.thePeopleBehindPerspektivenfabrik" | translate }}</h2>
         </div>
+        <app-icon-three-hats-tilted style="position: absolute; right: 5rem; bottom: 1rem; color: #fedf74;"></app-icon-three-hats-tilted>
     </div>
-    <div class="right">
+    <div class="right" style="position: relative">
+        <app-icon-star style="position: absolute; right: 5rem; top: 1rem; color: #fedf74;"></app-icon-star>
         <div class="right-content">
             <p [innerHTML]=" 'aboutUs.descriptionText' | translate"></p>
             <a [routerLink]="[]" [fragment]="'team'"><button>{{ "aboutUs.thatsUs" | translate }} <mat-icon fontIcon="arrow_downward"></mat-icon></button></a>
@@ -12,6 +14,9 @@
     </div>
 </div>
 <a id="team"></a>
+<div style="position: relative">
+    <app-icon-rainbow class="rainbow" style="color: #fedf74;"></app-icon-rainbow>
+</div>
 <div class="people-container">
     @for (person of people; track person){
         <div class="person-container">
@@ -24,6 +29,9 @@
             </div>
         </div>
     }
+</div>
+<div style="position: relative">
+    <app-icon-mountain class="mountain" style="color: #EA6A31;"></app-icon-mountain>
 </div>
 <div class="middle">
     <div class="left">

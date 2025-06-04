@@ -5,6 +5,10 @@
     background-color: vars.$bg-orange;
     display: block;
 }
+.container{
+  color: white;
+  padding: 1rem;
+}
 #welcome-logo-title {
     padding: 5rem 1rem 3rem 1rem;
     color: white;
@@ -14,9 +18,41 @@
  width: 30rem;
 }
 
+.perspektivenfabrik{
+  color: white;
+  font-size: 6rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  font-weight: 1000;
+  text-align: center;
+}
+
+.icon-row{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  
+  > * {
+    flex-shrink: 1;
+  }
+  
+  h1{
+    margin: 0;
+    padding: 0;
+  }
+}
+@include responsive.desktop-medium {
+  .perspektivenfabrik {
+    font-size: 4rem;
+  }
+}
 @include responsive.mobile {
   .temp-welcome-image {
     width: 100%;
     max-width: 30rem;
+  }
+  .perspektivenfabrik {
+    font-size: 2.5rem;
   }
 }

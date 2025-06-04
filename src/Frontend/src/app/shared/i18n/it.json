@@ -15,7 +15,9 @@
     "start-date": "Data di inizio",
     "end-date": "Data di fine",
     "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
-    "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto"
+    "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto",
+    "legalNotice": "Informazioni Legali",
+    "privacyPolicy": "Privacy Policy"
   },
   "nav": {
     "about us": "chi siamo",
@@ -318,5 +320,14 @@
   "effortHoursType": {
     "perWeek": "a settimana",
     "total": "totale"
+  },
+  "legalNotice": {
+    "title": "Note Legali",
+    "info": "La Perspektivenfabrik è organizzato da un gruppo indipendente. La rappresentanza formale è assunta dalla seguente organizzazione.",
+    "mail": "Email",
+    "pec": "PEC",
+    "web": "Web",
+    "taxNumber": "Codice Fiscale",
+    "address": "<strong>Climate Action South Tyrol EO</strong><br><strong>Via Caproni 9</strong><br><strong>39100 Bolzano</strong>"
   }
 }

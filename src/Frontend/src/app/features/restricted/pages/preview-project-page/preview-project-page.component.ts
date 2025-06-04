@@ -6,10 +6,11 @@ import {ProjectDetailComponent} from "../../../home/components/project-detail/pr
 import {
   NavigationBarFullComponent
 } from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
+import {FooterComponent} from "../../../home/components/footer/footer.component";
 
 @Component({
   selector: 'app-preview-project-page',
-  imports: [ProjectDetailComponent, NavigationBarFullComponent],
+    imports: [ProjectDetailComponent, NavigationBarFullComponent, FooterComponent],
   templateUrl: './preview-project-page.component.html',
   styleUrl: './preview-project-page.component.scss'
 })
