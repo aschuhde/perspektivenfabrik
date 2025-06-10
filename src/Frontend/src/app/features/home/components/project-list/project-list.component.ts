@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, inject, input} from '@angular/core';
 import {ApiService} from "../../../../server/api/api.service";
 import { ApiProjectModel } from '../../models/api-project-model';
 import {LocaleDataProvider} from "../../../../core/services/locale-data.service";
@@ -25,7 +25,8 @@ import {Language} from "../../../../core/types/general-types";
   selector: 'app-project-list',
   imports: [MoreIconComponent, MatIcon, TranslateModule],
   templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.scss'
+  styleUrl: './project-list.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProjectListComponent {
   apiService = inject(ApiService)
