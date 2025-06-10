@@ -1,4 +1,4 @@
-<swiper-container class="project-list h-100" loop="true" pagination-clickable="true" pagination="true" navigation="true">
+<swiper-container #projectList class="project-list h-100" pagination-clickable="true" pagination="true" navigation="true">
 @for(image of imagesArray; track image){
     <swiper-slide lazy="true" class="image-box">
         <div class="image-blur" style="background-image: url('{{ image.src }}')"></div>

@@ -164,21 +164,27 @@
                         </div>
                         <hr>
                         <div [class.hidden]="currentRequirementGroup !== 'person'">
+                            <div class="item-tiles-container">
                             @for(requirementPerson of requirementPersons; track requirementPerson){
                                 <app-input-requirement-person (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementPerson]="requirementPerson" (remove)="removeRequirementPerson($event)"></app-input-requirement-person>
                             }
+                            </div>
                             <button class="w-100-mobile" aria-label="Add requirement person" (click)="addRequirementPerson()"><mat-icon fontIcon="add"></mat-icon> {{ "input-project.add-helping-hand" | translate }}</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'material'">
+                            <div class="item-tiles-container">
                             @for(requirementMaterial of requirementMaterials; track requirementMaterial){
                                 <app-input-requirement-material (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMaterial]="requirementMaterial" (remove)="removeRequirementMaterial($event)"></app-input-requirement-material>
                             }
+                            </div>
                             <button class="w-100-mobile" aria-label="Add requirement material" (click)="addRequirementMaterial()"><mat-icon fontIcon="add"></mat-icon> {{ "input-project.material" | translate }}</button>
                         </div>
                         <div [class.hidden]="currentRequirementGroup !== 'money'">
+                            <div class="item-tiles-container">
                             @for(requirementMoney of requirementsMoney; track requirementMoney){
                                 <app-input-requirement-money (onChanged)="onUpdated()" [requirementIndex]="$index" [requirementMoney]="requirementMoney" (remove)="removeRequirementMoney($event)"></app-input-requirement-money>
                             }
+                            </div>
                             <button class="w-100-mobile" aria-label="Add requirement money" (click)="addRequirementMoney()"><mat-icon fontIcon="add"></mat-icon> {{ "input-project.financial-support" | translate }}</button>
                         </div>
                         <div>
