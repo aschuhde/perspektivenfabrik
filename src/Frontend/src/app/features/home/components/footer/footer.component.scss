@@ -1,7 +1,36 @@
+@use "responsive";
+
 footer{
   background-color: #175153;
   color: white;
   display: flex;
   justify-content: space-evenly;
   padding: 1rem;
+}
+app-insta-icon, app-github-icon{
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 2rem
+}
+.icon-mail{
+  font-size:3rem;
+  width: 3rem;
+  height: 3rem
+}
+
+@include responsive.mobile{
+  footer{
+    font-size: 1rem;
+  }
+
+  app-insta-icon, app-github-icon{
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem
+  }
+  .icon-mail{
+    font-size:2.5rem; 
+    width: 2.5rem; 
+    height: 2.5rem
+  }
 }
