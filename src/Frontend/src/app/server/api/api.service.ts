@@ -37,6 +37,8 @@ import { ApplicationPostProjectImagePostProjectImagePostProjectImageRequest } fr
 import { ApplicationPostProjectImagePostProjectImagePostProjectImageResponse } from '../model/applicationPostProjectImagePostProjectImagePostProjectImageResponse';
 import { ApplicationPostProjectPostProjectPostProjectRequest } from '../model/applicationPostProjectPostProjectPostProjectRequest';
 import { ApplicationPostProjectPostProjectPostProjectResponse } from '../model/applicationPostProjectPostProjectPostProjectResponse';
+import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest';
+import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse';
 import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
 import { ApplicationPutProjectPutProjectPutProjectResponse } from '../model/applicationPutProjectPutProjectPutProjectResponse';
 import { Filter } from '../model/filter';
@@ -919,6 +921,65 @@ export class ApiService {
         }
 
         return this.httpClient.request<ApplicationPutProjectPutProjectPutProjectResponse>('put',`${this.basePath}/api/projects/${encodeURIComponent(String(entityId))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param entityId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPutProjectApprovalStatus(body: ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest, entityId: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse>;
+    public webApiEndpointsPutProjectApprovalStatus(body: ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest, entityId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse>>;
+    public webApiEndpointsPutProjectApprovalStatus(body: ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest, entityId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse>>;
+    public webApiEndpointsPutProjectApprovalStatus(body: ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest, entityId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPutProjectApprovalStatus.');
+        }
+
+        if (entityId === null || entityId === undefined) {
+            throw new Error('Required parameter entityId was null or undefined when calling webApiEndpointsPutProjectApprovalStatus.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(entityId))}/approval-status`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

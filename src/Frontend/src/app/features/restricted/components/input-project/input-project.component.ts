@@ -161,6 +161,7 @@ export class InputProjectComponent {
         'insertVideo',
         'insertHorizontalRule']]
     }
+    
     ngOnInit(){
       this.autoCompleteDataService.getTags().then(x => {
         this.tagOptions = x?.filter(y => !!y).map(y => {
@@ -566,7 +567,7 @@ get typeNameGenitive(){
         title: this.translateService.instant("messages.helpProjectTypeTitle")
       }),
       helpProjectTitle: new MessageDialogData({
-        message: this.translateService.instant("messages.helpProjectTitleMessage", {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
+        message: this.translateService.instant("messages.helpProjectTitleMessage", {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive}),
         title: this.translateService.instant("messages.helpProjectTitleTitle")
       }),
       helpProjectPhase: new MessageDialogData({
@@ -575,36 +576,40 @@ get typeNameGenitive(){
       }),
       helpProjectLocation: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectLocationMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectLocationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectLocationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpProjectTime: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectTimeMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectTimeTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectTimeTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpRequirements: new MessageDialogData({
         message: this.translateService.instant(`messages.helpRequirementsMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
         title: this.translateService.instant(`messages.helpRequirementsTitle`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName})
       }),
       helpContact: new MessageDialogData({
-        message: this.translateService.instant(`messages.helpContactMessage`, {"yourDeclination": this.yourDeclination, "yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpContactTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        message: this.translateService.instant(`messages.helpContactMessage`, {"yourDeclination": this.yourDeclination, "yoursDeclination": this.yoursDeclination, "typeName": this.typeName, "typeNameGenitive": this.typeNameGenitive}),
+        title: this.translateService.instant(`messages.helpContactTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpDescription: new MessageDialogData({
         message: this.translateService.instant(`messages.helpDescriptionMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpDescriptionTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpDescriptionTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpImageUpload: new MessageDialogData({
         message: this.translateService.instant(`messages.helpImageUploadMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpImageUploadTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpImageUploadTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpProjectVisibility: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectVisibilityMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectVisibilityTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectVisibilityTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }), 
-        helpTags: new MessageDialogData({
-            message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
-            title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
-        })
+      helpTags: new MessageDialogData({
+          message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
+          title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerification: new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpVerificationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      })
     };
   }
 
@@ -937,5 +942,15 @@ get typeNameGenitive(){
   
   get canUploadImages(){
       return !!this.projectInput().entityId;
+  }
+  
+  get projectIsApproved(){
+      const status = this.projectInput().approvalStatus;
+      return status === "Approved" || status === "AutoApproved";
+  }
+  
+  get projectIsRejected(){
+      const status = this.projectInput().approvalStatus;
+      return status === "Rejected";
   }
 }

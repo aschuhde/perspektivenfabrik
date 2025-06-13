@@ -89,7 +89,13 @@
     "internal-link-for-sharing": "Link interno per la condivisione",
     "open-preview-in-new-tab": "Apri anteprima in una nuova scheda",
     "delete": "Elimina",
-    "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!"
+    "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!",
+    "is-approved-message": "Abbiamo esaminato e verificato {{ yourDeclination }} {{ typeName }}.",
+    "is-rejected-message": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo considerato non idoneo per la piattaforma. Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "is-approval-pending-message": "Stiamo esaminando {{ yourDeclination }} {{ typeName }}. Non appena avremo verificato {{ yourDeclination }} {{ typeName }}, sarà visualizzato sulla piattaforma.",
+    "is-approved-info": "verificato",
+    "is-rejected-info": "rifiutato",
+    "is-approval-pending-info": "in revisione"
   },
   "map": {
     "map": "Mappa",
@@ -280,7 +286,7 @@
     "helpProjectTimeTitle": "Tempi {{yoursDeclination}} {{typeName}}",
     "helpRequirementsMessage": "Puoi richiedere volontari, materiali e supporto finanziario per {{yourDeclination}} {{typeName}}.",
     "helpRequirementsTitle": "Supporto per {{yourDeclination}} {{typeName}}",
-    "helpContactMessage": "Puoi inserire diversi dati di contatto per {{yourDeclination}} {{typeName}}. Questi dati verranno visualizzati sulla pagina {{yoursDeclination}} {{typeName}}.",
+    "helpContactMessage": "Puoi inserire diversi dati di contatto per {{yourDeclination}} {{typeName}}. Questi dati verranno visualizzati sulla pagina {{yoursDeclination}} {{typeNameGenitive}}.",
     "helpContactTitle": "Dati di contatto {{yoursDeclination}} {{typeName}}",
     "helpDescriptionMessage": "Per favore inserisci una descrizione per {{yourDeclination}} {{typeName}}. La breve descrizione sarà mostrata nell'elenco generale e nel riepilogo della pagina dettagliata. La descrizione dettagliata sarà visibile solo nella pagina dei dettagli.",
     "helpDescriptionTitle": "Descrizione {{yoursDeclination}} {{typeName}}",
@@ -303,7 +309,9 @@
     "fileValidationTooLargeTitle": "Dimensione del file superata",
     "fileValidationTooLargeMessage": "L'immagine è troppo grande. Seleziona solo immagini con dimensioni inferiori a 5MB.",
     "fileValidationNotSavedTitle": "Salvare prima",
-    "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento."
+    "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento.",
+    "helpVerificationTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationMessage": "Prima della prima pubblicazione, verificheremo {{ yourDeclination }} {{ typeName }}. Una volta verificato, {{ yourDeclination }} {{ typeName }} apparirà sulla piattaforma. Potrai apportare modifiche successive senza bisogno di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente."
   },
   "saveProjectErrorDialog": {
     "copyToClipboard": "Copia messaggio negli appunti",

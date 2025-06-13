@@ -66,6 +66,15 @@ hr{
 .d-inline-block{
     display: inline-block;
 }
+.color-orange{
+  color: vars.$bg-orange;
+}
+.color-green{
+  color: vars.$bg-color-alt;
+}
+.color-white{
+  color: white;
+}
 @mixin prefix-suffix-container {
   display: flex;
 

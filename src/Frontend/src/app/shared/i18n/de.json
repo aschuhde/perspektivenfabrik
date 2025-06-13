@@ -89,7 +89,13 @@
       "internal-link-for-sharing": "Interner Link zum Teilen",
       "open-preview-in-new-tab": "Vorschau in neuem Tab öffnen",
       "delete": "Löschen",
-      "pleaseSaveBeforeImageUpload": "Das Hochladen von Bildern ist erst nach dem ersten Speichern möglich. Bitte speichere erst!"
+      "pleaseSaveBeforeImageUpload": "Das Hochladen von Bildern ist erst nach dem ersten Speichern möglich. Bitte speichere erst!",
+      "is-approved-message": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und verifiziert.",
+      "is-rejected-message": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als nicht ungeeignet für die Platform eingestuft. Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+      "is-approval-pending-message": "Wir prüfen {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, wird {{ yourDeclination }} {{ typeName }} auf der Platform angezeigt.",
+      "is-approved-info": "verifziert",
+      "is-rejected-info": "abgelehnt",
+      "is-approval-pending-info": "wird geprüft"
     },
     "map": {
       "map": "Karte",
@@ -280,7 +286,7 @@
       "helpProjectTimeTitle": "Projektzeiten {{yoursDeclination}} {{typeName}}",
       "helpRequirementsMessage": "Du kannst Helfer*innen, Material und finanzielle Unterstützung für {{yourDeclination}} {{typeName}} anfordern.",
       "helpRequirementsTitle": "Unterstützung für {{yourDeclination}} {{typeName}}",
-      "helpContactMessage": "Du kannst verschiedene Kontaktdaten für {{yourDeclination}} {{typeName}} hinterlegen. Diese Daten werden dann auf der Seite {{yoursDeclination}} {{typeName}} angezeigt.",
+      "helpContactMessage": "Du kannst verschiedene Kontaktdaten für {{yourDeclination}} {{typeName}} hinterlegen. Diese Daten werden dann auf der Seite {{yoursDeclination}} {{typeNameGenitive}} angezeigt.",
       "helpContactTitle": "Kontaktdaten {{yoursDeclination}} {{typeName}}",
       "helpDescriptionMessage": "Bitte gebe eine Beschreibung für {{ yourDeclination }} {{ typeName }} an. Die Kurzbeschreibung wird in der Übersichtslist und in der Übersicht der Detailseite angezeigt. Die ausführliche Beschreibung wird nur auf der Detailseite angezeigt.",
       "helpDescriptionTitle": "Beschreibung {{yoursDeclination}} {{typeName}}",
@@ -303,7 +309,9 @@
       "fileValidationTooLargeTitle": "Dateigröße überschritten",
       "fileValidationTooLargeMessage": "Die Bild ist zu groß. Bitte wähle nur Bilder mit weniger als 5MB.",
       "fileValidationNotSavedTitle": "Bitte zuerst speichern",
-      "fileValidationNotSavedMessage": "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich."
+      "fileValidationNotSavedMessage": "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich.",
+      "helpVerificationTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
+      "helpVerificationMessage": "Vor der ersten Veröffentlichung prüfen wir {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, erscheint {{ yourDeclination }} {{ typeName }} auf der Platform. Nachträgliche Bearbeitungen kannst du ohne erneute Verifizierung vornehmen. Wir werden allerdings bei jeder Änderung benachrichtigt und schauen nachträglich nochmal drüber."
     },
     "saveProjectErrorDialog": {
       "copyToClipboard": "Nachricht in Zwischenablage kopieren",
