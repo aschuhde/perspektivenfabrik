@@ -245,7 +245,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         return await GetProjects(query =>
             (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
-                x.Visibility == ProjectVisibility.Public)), query => 
+                x.Visibility == ProjectVisibility.Public && (x.ApprovalStatus == ApprovalStatus.Approved || x.ApprovalStatus == ApprovalStatus.AutoApproved))), query => 
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
     public async Task<ProjectDto[]> GetUsersProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)

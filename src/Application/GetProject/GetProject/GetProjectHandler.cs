@@ -16,7 +16,9 @@ public class GetProjectHandler(IServiceProvider serviceProvider, IProjectService
             return new GetProjectResponseNotFound();
         }
 
-        if (project.Visibility != ProjectVisibility.Public)
+        if (project.Visibility != ProjectVisibility.Public
+            || (project.ApprovalStatus != ApprovalStatus.Approved
+                && project.ApprovalStatus != ApprovalStatus.AutoApproved))
         {
             return new GetProjectResponseForbidden();
         }
