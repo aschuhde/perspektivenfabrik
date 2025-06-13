@@ -5,6 +5,7 @@ using Application.Messages;
 using Application.Models.ApiModels;
 using Application.Services;
 using Application.Updaters;
+using Domain.Enums;
 using FluentValidation;
 
 namespace Application.PostProject.PostProject;
@@ -46,7 +47,7 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
         };
         
         command.Project.PrepareEntityForNewProject(creationContext);
-        var projectDto = command.Project.ToProject();
+        var projectDto = command.Project.ToProject(UserAccessService.UserProjectsNeedApproval() ? ApprovalStatus.Pending : ApprovalStatus.AutoApproved);
         
         var result = await projectService.CreateOrUpdateProject(projectDto, creationContext, ct);
         if (!result.Success)

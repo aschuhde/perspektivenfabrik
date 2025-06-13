@@ -20,4 +20,5 @@ public static class Routes
     public const string GetAutocompleteEntries = $"{ApiRoute}/autocomplete-entries";
     public const string PostProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images";
     public const string GetProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images/{{ImageIdentifier}}";
+    public const string PutProjectApprovalStatus = $"{ApiRoute}/projects/{{EntityId:Guid}}/approval-status";
 }

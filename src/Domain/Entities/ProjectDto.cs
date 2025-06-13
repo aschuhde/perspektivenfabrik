@@ -9,6 +9,7 @@ public sealed class ProjectDto : BaseEntityDto
     public required ProjectPhase Phase { get; init; }
     public required ProjectType Type { get; init; }
     public required ProjectVisibility Visibility  { get; init; }
+    public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Pending;
     public required LocationSpecificationDto[] LocationSpecifications { get; init; }
     public required TimeSpecificationDto[] TimeSpecifications { get; init; }
     public required RequirementSpecificationDto[] RequirementSpecifications { get; init; }

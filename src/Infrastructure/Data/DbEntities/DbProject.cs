@@ -13,6 +13,7 @@ public sealed class DbProject : DbEntity
     public required ProjectPhase Phase { get; set; }
     public required ProjectType Type { get; set; }
     public required ProjectVisibility Visibility  { get; set; }
+    public required ApprovalStatus ApprovalStatus  { get; set; }
     
     [MapperIgnore]
     public bool IsSoftDeleted { get; set; } = false;
@@ -70,6 +71,10 @@ public sealed class DbProject : DbEntity
       if (this.Visibility != project.Visibility)
       {
         this.Visibility = project.Visibility;
+      }
+      if (this.ApprovalStatus != project.ApprovalStatus)
+      {
+        this.ApprovalStatus = project.ApprovalStatus;
       }
       if (this.ConnectedOrganizationsSameAsOwner != project.ConnectedOrganizationsSameAsOwner)
       {

@@ -9,17 +9,21 @@ public sealed class ClaimsPrincipalUserData
     public const string AuthenticationType = "jwt";
      public required Guid UserId { get; init; }
      public required string[] Roles { get; init; } = [];
+     public required string DisplayName { get; init; }
 }
 
 public static class UserRoles
 {
     public const string Admin = "Admin";
+    public const string TrustedUser = "TrustedUser";
+    public const string ApprovalUser = "ApprovalUser";
 }
 
 public static class ClaimsPrincipalExtensions
 {
     private const string UserIdName = "data-userid";
     private const string RoleName = "data-role";
+    private const string DisplayName = "data-displayName";
     private static ClaimsPrincipalUserData ToUserData(this IEnumerable<Claim> claimsEnumerable)
     {
         var claims = claimsEnumerable.ToList();
@@ -27,6 +31,7 @@ public static class ClaimsPrincipalExtensions
         {
             UserId = Guid.Parse(ThrowIf.NullOrWhitespace(claims.FirstOrDefault(x => x.Type == UserIdName)?.Value,
                 $"{UserIdName} not found in user claims")),
+            DisplayName = claims.FirstOrDefault(x => x.Type == DisplayName)?.Value ?? "",
             Roles = claims.Where(x => x.Type == RoleName).Select(x => x.Value).ToArray()
         };
     }
@@ -46,6 +51,7 @@ public static class ClaimsPrincipalExtensions
         {
             claims.AddRange(user.Roles.Select(x => new Claim(RoleName, x)));
         }
+        claims.Add(new Claim(DisplayName, $"{user.Firstname} {user.Lastname}"));
 
         return new ClaimsIdentity(claims, ClaimsPrincipalUserData.AuthenticationType);
     }

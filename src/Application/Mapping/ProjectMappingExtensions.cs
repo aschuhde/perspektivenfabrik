@@ -2,6 +2,7 @@
 using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
+using Riok.Mapperly.Abstractions;
 
 namespace Application.Mapping;
 
@@ -11,8 +12,18 @@ public static partial class ApiMappingExtensions
     public static partial ApiProject ToApiProject(this ProjectDto projectDto);
     
     public static partial ProjectDto ToProject(this ApiProject apiProject);
-    public static partial ProjectDto ToProject(this ApiProjectBody apiProjectBody);
 
+    [MapperIgnoreTarget(nameof(ProjectDto.ApprovalStatus))]
+    internal static partial ProjectDto ToProjectInner(this ApiProjectBody apiProjectBody);
+    
+    public static ProjectDto ToProject(this ApiProjectBody apiProjectBody, ApprovalStatus approvalStatus)
+    {
+        var result = apiProjectBody.ToProjectInner();
+        result.ApprovalStatus = approvalStatus;
+        return result;
+    }
+
+    
     public static ProjectConnectionDto ToProject(this ApiProjectReference apiProjectReference)
     {
         return new ProjectConnectionDto

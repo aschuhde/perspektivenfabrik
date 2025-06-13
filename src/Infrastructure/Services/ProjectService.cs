@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Application.Filter;
+using Application.Messages;
 using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
@@ -652,5 +653,38 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     public async Task<bool> ProjectExists(Guid projectId, CancellationToken ct)
     {
         return await dbContext.Projects.AnyAsync(x => x.EntityId == projectId, ct);
+    }
+
+    public async Task<ApproveProjectResult> ApproveProject(Guid commandEntityId, string approvedByName)
+    {
+        var entity = await dbContext.Projects.FindAsync(commandEntityId);
+
+        if (entity == null)
+        {
+            return ApproveProjectResult.ProjectNotFound;
+        }
+
+        if (entity.ApprovalStatus is ApprovalStatus.AutoApproved or ApprovalStatus.Approved)
+        {
+            return ApproveProjectResult.AlreadyApproved;
+        }
+
+        entity.ApprovalStatus = ApprovalStatus.Approved;
+        if (entity.History?.HistoryId != null)
+        {
+            var historyItem = new ModificationHistoryItemDto()
+            {
+                HistoryEntryType = HistoryEntryType.Approved,
+                Message = $"Approved by {approvedByName}"
+            };
+
+            dbContext.HistoryItems.Add(historyItem.ToDbHistoryItem(new ModificationHistoryDto()
+            {
+                EntityId = entity.History.HistoryId.Value,
+                HistoryItems = []
+            }));
+        }
+        await dbContext.SaveChangesAsync();
+        return ApproveProjectResult.Ok;
     }
 }

@@ -22,4 +22,5 @@ public interface IProjectService
     public Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct);
     public Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct);
     public Task<bool> ProjectExists(Guid projectId, CancellationToken ct);
+    public Task<ApproveProjectResult> ApproveProject(Guid commandEntityId, string approvedByName);
 }
