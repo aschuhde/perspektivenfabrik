@@ -12,14 +12,14 @@ public sealed class PutProjectApprovalStatusHandler(IServiceProvider serviceProv
         {
             return new PutProjectApprovalStatusNotAllowedResponse(Messages.ProjectMessages.PutProjectApprovalStatusNotAllowedResponse(command.EntityId));
         }
-
-        var result = await projectService.ApproveProject(command.EntityId, CurrentUserService.DisplayName);
+        
+        var result = await projectService.UpdateProjectApprovalStatus(command.Data.ApprovalStatus, command.EntityId, CurrentUserService.DisplayName, command.Data.Reason);
 
         return result switch
         {
             ApproveProjectResult.ProjectNotFound => new PutProjectApprovalStatusNotFoundResponse(Messages.ProjectMessages.EntityNotFound(command.EntityId)),
             ApproveProjectResult.Ok => new PutProjectApprovalStatusOk(),
-            ApproveProjectResult.AlreadyApproved => new PutProjectApprovalStatusAlreadyApproved(),
+            ApproveProjectResult.NotModified => new PutProjectApprovalStatusAlreadyApproved(),
             _ => throw new ArgumentOutOfRangeException()
         };
     }

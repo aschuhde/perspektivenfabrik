@@ -10,5 +10,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './project-section.component.scss'
 })
 export class ProjectSectionComponent {
-  type = input<"home" | "user-area">("home")
+  type = input<"home" | "user-area" | "pending-approvals">("home")
 }

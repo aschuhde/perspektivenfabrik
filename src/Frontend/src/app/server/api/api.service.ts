@@ -24,6 +24,7 @@ import { ApplicationExampleGetExampleGetExampleResponse } from '../model/applica
 import { ApplicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse } from '../model/applicationGetAutocompleteEntriesGetAutocompleteEntriesGetAutocompleteEntriesResponse';
 import { ApplicationGetInternalProjectGetInternalProjectGetInternalProjectResponse } from '../model/applicationGetInternalProjectGetInternalProjectGetInternalProjectResponse';
 import { ApplicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse } from '../model/applicationGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesGetJsonTypeDiscriminatorNamesResponse';
+import { ApplicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse } from '../model/applicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse';
 import { ApplicationGetProjectGetProjectGetProjectResponse } from '../model/applicationGetProjectGetProjectGetProjectResponse';
 import { ApplicationGetProjectImageGetProjectImageGetProjectImageResponse } from '../model/applicationGetProjectImageGetProjectImageGetProjectImageResponse';
 import { ApplicationGetProjectsGetProjectsGetProjectsResponse } from '../model/applicationGetProjectsGetProjectsGetProjectsResponse';
@@ -43,8 +44,10 @@ import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/appli
 import { ApplicationPutProjectPutProjectPutProjectResponse } from '../model/applicationPutProjectPutProjectPutProjectResponse';
 import { Filter } from '../model/filter';
 import { Filter1 } from '../model/filter1';
+import { Filter2 } from '../model/filter2';
 import { Selector } from '../model/selector';
 import { Selector1 } from '../model/selector1';
+import { Selector2 } from '../model/selector2';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -394,6 +397,75 @@ export class ApiService {
     /**
      * 
      * 
+     * @param withRejectedAndApproved 
+     * @param filter 
+     * @param selector 
+     * @param u 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsGetPendingApprovalProjects(withRejectedAndApproved: boolean, filter?: Filter, selector?: Selector, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse>;
+    public webApiEndpointsGetPendingApprovalProjects(withRejectedAndApproved: boolean, filter?: Filter, selector?: Selector, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse>>;
+    public webApiEndpointsGetPendingApprovalProjects(withRejectedAndApproved: boolean, filter?: Filter, selector?: Selector, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse>>;
+    public webApiEndpointsGetPendingApprovalProjects(withRejectedAndApproved: boolean, filter?: Filter, selector?: Selector, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (withRejectedAndApproved === null || withRejectedAndApproved === undefined) {
+            throw new Error('Required parameter withRejectedAndApproved was null or undefined when calling webApiEndpointsGetPendingApprovalProjects.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withRejectedAndApproved !== undefined && withRejectedAndApproved !== null) {
+            queryParameters = queryParameters.set('with-rejected-and-approved', <any>withRejectedAndApproved);
+        }
+        if (filter !== undefined && filter !== null) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+        if (selector !== undefined && selector !== null) {
+            queryParameters = queryParameters.set('selector', <any>selector);
+        }
+        if (u !== undefined && u !== null) {
+            queryParameters = queryParameters.set('_', <any>u);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ApplicationGetPendingApprovalProjectsGetPendingApprovalProjectsGetPendingApprovalProjectsResponse>('get',`${this.basePath}/api/approval-projects`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param projectIdentifier 
      * @param u 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -503,10 +575,10 @@ export class ApiService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectsGetProjectsGetProjectsResponse>;
-    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
-    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
-    public webApiEndpointsGetProjects(filter?: Filter, selector?: Selector, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public webApiEndpointsGetProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectsGetProjectsGetProjectsResponse>;
+    public webApiEndpointsGetProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
+    public webApiEndpointsGetProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectsGetProjectsGetProjectsResponse>>;
+    public webApiEndpointsGetProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
@@ -613,10 +685,10 @@ export class ApiService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>;
-    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
-    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
-    public webApiEndpointsGetUsersProjects(filter?: Filter1, selector?: Selector1, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public webApiEndpointsGetUsersProjects(filter?: Filter2, selector?: Selector2, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter2, selector?: Selector2, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter2, selector?: Selector2, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetUsersProjectsGetUsersProjectsGetUsersProjectsResponse>>;
+    public webApiEndpointsGetUsersProjects(filter?: Filter2, selector?: Selector2, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 

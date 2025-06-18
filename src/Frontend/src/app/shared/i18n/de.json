@@ -17,7 +17,8 @@
       "inTheSameTimeOfTheProject": "Im gleichen Zeitraum des Projekts",
       "atTheSameLocationOfTheProject": "Am gleichen Ort wie das Projekt",
       "legalNotice": "Rechtliche Informationen",
-      "privacyPolicy": "Privacy Policy"
+      "privacyPolicy": "Privacy Policy",
+      "available-soon": "bald verfügbar!"
     },
     "nav": {
         "about us": "über uns",
@@ -91,7 +92,7 @@
       "delete": "Löschen",
       "pleaseSaveBeforeImageUpload": "Das Hochladen von Bildern ist erst nach dem ersten Speichern möglich. Bitte speichere erst!",
       "is-approved-message": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und verifiziert.",
-      "is-rejected-message": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als nicht ungeeignet für die Platform eingestuft. Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+      "is-rejected-message": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als nicht geeignet für die Platform eingestuft.{{ ReasonText }} Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
       "is-approval-pending-message": "Wir prüfen {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, wird {{ yourDeclination }} {{ typeName }} auf der Platform angezeigt.",
       "is-approved-info": "verifziert",
       "is-rejected-info": "abgelehnt",
@@ -310,8 +311,12 @@
       "fileValidationTooLargeMessage": "Die Bild ist zu groß. Bitte wähle nur Bilder mit weniger als 5MB.",
       "fileValidationNotSavedTitle": "Bitte zuerst speichern",
       "fileValidationNotSavedMessage": "Bitte speichere zuerst das Projekt. Danach ist der Upload möglich.",
-      "helpVerificationTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
-      "helpVerificationMessage": "Vor der ersten Veröffentlichung prüfen wir {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, erscheint {{ yourDeclination }} {{ typeName }} auf der Platform. Nachträgliche Bearbeitungen kannst du ohne erneute Verifizierung vornehmen. Wir werden allerdings bei jeder Änderung benachrichtigt und schauen nachträglich nochmal drüber."
+      "helpVerificationPendingTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
+      "helpVerificationPendingMessage": "Vor der ersten Veröffentlichung prüfen wir {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, erscheint {{ yourDeclination }} {{ typeName }} auf der Platform. Nachträgliche Bearbeitungen kannst du ohne erneute Verifizierung vornehmen. Wir werden allerdings bei jeder Änderung benachrichtigt und schauen nachträglich nochmal drüber.",
+      "helpVerificationApprovedTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
+      "helpVerificationApprovedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} verifiziert. Nachträgliche Bearbeitungen kannst du ohne erneute Verifizierung vornehmen. Wir werden allerdings bei jeder Änderung benachrichtigt und schauen nachträglich nochmal drüber.",
+      "helpVerificationRejectedTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
+      "helpVerificationRejectedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als für die Platform nicht geeignet eingestuft.{{ ReasonText }} Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>."
     },
     "saveProjectErrorDialog": {
       "copyToClipboard": "Nachricht in Zwischenablage kopieren",
@@ -337,5 +342,14 @@
       "web": "Web",
       "taxNumber": "Steuernummer",
       "address": "<strong>Climate Action South Tyrol EO</strong><br><strong>Capronistraße 9</strong><br><strong>39100 Bozen</strong>"
+    },
+    "user-area": {
+      "my-projects": "Meine Projekte",
+      "pending-approvals": "Ausstehende Überprüfungen",
+      "my-account": "Mein Account",
+      "sign-out": "Abmelden",
+      "change-approval": "Verifizierung ändern",
+      "approve": "Akzeptieren",
+      "reject": "Ablehnen"
     }
 }

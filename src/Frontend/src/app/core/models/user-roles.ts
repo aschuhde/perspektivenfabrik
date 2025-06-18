@@ -1,0 +1,1 @@
+﻿export declare type UserRoles = "Admin" | "TrustedUser" | "ApprovalUser";

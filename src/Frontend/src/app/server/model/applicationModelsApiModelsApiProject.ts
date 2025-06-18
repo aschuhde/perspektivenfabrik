@@ -33,6 +33,8 @@ export interface ApplicationModelsApiModelsApiProject extends ApplicationModelsA
     type?: DomainEnumsProjectType;
     visibility?: DomainEnumsProjectVisibility;
     approvalStatus?: DomainEnumsApprovalStatus;
+    approvalStatusLastChangedByName?: string;
+    approvalStatusLastChangeReason?: string;
     locationSpecifications?: Array<ApplicationModelsApiModelsApiLocationSpecification>;
     timeSpecifications?: Array<ApplicationModelsApiModelsApiTimeSpecification>;
     requirementSpecifications?: Array<ApplicationModelsApiModelsApiRequirementSpecification>;

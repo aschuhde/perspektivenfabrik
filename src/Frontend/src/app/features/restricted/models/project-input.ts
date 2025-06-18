@@ -75,6 +75,8 @@ export class ProjectInput{
     projectTitleTranslations: TranslationValue[] = [];
     onGetCurrentLanguage: () => Language;
     approvalStatus: DomainEnumsApprovalStatus = "Unknown";
+    approvalStatusLastChangeBy: string = "";
+    approvalStatusLastChangeReason: string = "";
     
     constructor(onGetCurrentLanguage: () => Language) {
       this.onGetCurrentLanguage = onGetCurrentLanguage;
@@ -118,6 +120,8 @@ export class ProjectInput{
       this.projectTitleTranslations = TranslationValue.arrayFromApiTranslationValues(project.projectTitle?.contentTranslations ?? []);
       this.projectTitle = TranslationValue.getTranslationIfExist(project.projectTitle?.rawContentString ?? "", this.projectTitleTranslations, mainLanguage);
       this.approvalStatus = project.approvalStatus ?? "Unknown";
+      this.approvalStatusLastChangeReason = project.approvalStatusLastChangeReason ?? "";
+      this.approvalStatusLastChangeBy = project.approvalStatusLastChangedByName ?? "";
       this.loadProjectPhaseFromApi(project.phase ?? "Unkown");
 
       this.locations = (project.locationSpecifications ?? []).map(

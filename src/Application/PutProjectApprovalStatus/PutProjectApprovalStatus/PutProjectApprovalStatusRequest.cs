@@ -13,5 +13,7 @@ public sealed class PutProjectApprovalStatusRequest : BaseRequest<PutProjectAppr
 public sealed class PutProjectApprovalStatusRequestBody
 {
     public required ApprovalStatus ApprovalStatus { get; init; }
+    public required string? Reason { get; init; }
+        
 }
 

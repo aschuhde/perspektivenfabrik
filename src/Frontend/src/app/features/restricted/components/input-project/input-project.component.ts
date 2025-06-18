@@ -75,6 +75,7 @@ import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
     styleUrl: './input-project.component.scss'
 })
 export class InputProjectComponent {
+    
     apiBasePath = inject(BASE_PATH);
     readonly dialog = inject(MatDialog);
     apiService = inject(ApiService);
@@ -606,9 +607,20 @@ get typeNameGenitive(){
           message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
           title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
-      helpVerification: new MessageDialogData({
-        message: this.translateService.instant(`messages.helpVerificationMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpVerificationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      helpVerificationPending: new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationPendingMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpVerificationPendingTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerificationApproved: new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationApprovedMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpVerificationApprovedTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerificationRejected: (reason: string) => new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationRejectedMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName, 
+          "reasonText": reason ? ` ${reason.trim()}${reason.trim().endsWith(".") 
+          || reason.trim().endsWith("?") 
+          || reason.trim().endsWith("!") ? "" : "."}`: ""}),
+        title: this.translateService.instant(`messages.helpVerificationRejectedTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       })
     };
   }
@@ -952,5 +964,13 @@ get typeNameGenitive(){
   get projectIsRejected(){
       const status = this.projectInput().approvalStatus;
       return status === "Rejected";
+  }
+
+  showMessageDialogRejected() {
+    this.showMessageDialog(this.messageDialogs.helpVerificationRejected(this.projectInput().approvalStatusLastChangeReason));
+  }
+
+  projectLastChangeReason(){
+      return this.projectInput().approvalStatusLastChangeReason;
   }
 }

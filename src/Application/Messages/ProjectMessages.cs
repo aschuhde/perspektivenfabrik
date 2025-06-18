@@ -11,4 +11,5 @@ public static class ProjectMessages
     public static Message FieldIsNull(string fieldName) => new($"The field '{fieldName}' is not set but required by the request! Please set this field in the request.");
     public static Message EntityNotFound(Guid entityId) => new($"The project entity with the id '{entityId}' of the request could not be found.");
     public static Message PutProjectApprovalStatusNotAllowedResponse(Guid entityId) => new($"You are not allowed to approve the project entity with the id '{entityId}'.");
+    public static Message GetPendingApprovalProjectsNotAllowedResponse() => new($"You are not allowed to approve projects.");
 }

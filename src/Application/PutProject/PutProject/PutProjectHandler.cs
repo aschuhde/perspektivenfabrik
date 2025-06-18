@@ -62,7 +62,7 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         };
         command.Project.PrepareEntityAndCollectChanges(existingProject, updatingContext);
         
-        var projectDto = command.Project.ToProject(existingProject.ApprovalStatus);
+        var projectDto = command.Project.ToProject(existingProject);
         
         var result = await projectService.CreateOrUpdateProject(projectDto, updatingContext, ct);
         if (!result.Success)

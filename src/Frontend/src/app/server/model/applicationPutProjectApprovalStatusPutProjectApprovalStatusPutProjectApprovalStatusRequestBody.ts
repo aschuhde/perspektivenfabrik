@@ -13,4 +13,5 @@ import { DomainEnumsApprovalStatus } from './domainEnumsApprovalStatus';
 
 export interface ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequestBody { 
     approvalStatus?: DomainEnumsApprovalStatus;
+    reason?: string;
 }

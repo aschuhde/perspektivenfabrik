@@ -83,7 +83,7 @@ export class UpdateProjectPageComponent {
 
   onDelete() {
     this.apiService.webApiEndpointsDeleteProject({}, this.projectIdentifier).subscribe(x => {
-      window.location.href = RestrictedRouteNames.UserAreaUrl();
+      window.location.href = RestrictedRouteNames.MyProjectsUrl();
     });
   }
 }

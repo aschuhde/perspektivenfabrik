@@ -3,6 +3,7 @@ using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Updaters;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Services;
 
@@ -10,6 +11,8 @@ public interface IProjectService
 {
     public Task<ProjectDto[]> GetPublicProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct);
     public Task<ProjectDto[]> GetUsersProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct);
+    public Task<ProjectDto[]> GetPendingApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct);
+    public Task<ProjectDto[]> GetAllApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct);
     public Task<ProjectDto?> GetProjectById(Guid entityId, CancellationToken ct);
     public Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct);
     public Task<ProjectDto?> GetProjectWithHistoryByIdAndCacheDbProject(Guid entityId, CancellationToken ct);
@@ -22,5 +25,5 @@ public interface IProjectService
     public Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct);
     public Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct);
     public Task<bool> ProjectExists(Guid projectId, CancellationToken ct);
-    public Task<ApproveProjectResult> ApproveProject(Guid commandEntityId, string approvedByName);
+    public Task<ApproveProjectResult> UpdateProjectApprovalStatus(ApprovalStatus approvalStatus, Guid commandEntityId, string displayName, string? dataReason);
 }

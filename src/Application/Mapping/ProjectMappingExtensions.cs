@@ -14,12 +14,24 @@ public static partial class ApiMappingExtensions
     public static partial ProjectDto ToProject(this ApiProject apiProject);
 
     [MapperIgnoreTarget(nameof(ProjectDto.ApprovalStatus))]
+    [MapperIgnoreTarget(nameof(ProjectDto.ApprovalStatusLastChangedByName))]
+    [MapperIgnoreTarget(nameof(ProjectDto.ApprovalStatusLastChangeReason))]
     internal static partial ProjectDto ToProjectInner(this ApiProjectBody apiProjectBody);
-    
+
     public static ProjectDto ToProject(this ApiProjectBody apiProjectBody, ApprovalStatus approvalStatus)
     {
         var result = apiProjectBody.ToProjectInner();
         result.ApprovalStatus = approvalStatus;
+        result.ApprovalStatusLastChangedByName = null;
+        result.ApprovalStatusLastChangeReason = null;
+        return result;
+    }
+    public static ProjectDto ToProject(this ApiProjectBody apiProjectBody, ProjectDto existingProject)
+    {
+        var result = apiProjectBody.ToProjectInner();
+        result.ApprovalStatus = existingProject.ApprovalStatus;
+        result.ApprovalStatusLastChangedByName = existingProject.ApprovalStatusLastChangedByName;
+        result.ApprovalStatusLastChangeReason = existingProject.ApprovalStatusLastChangeReason;
         return result;
     }
 

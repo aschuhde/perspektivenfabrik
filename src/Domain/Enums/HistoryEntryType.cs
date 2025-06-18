@@ -5,5 +5,5 @@ namespace Domain.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HistoryEntryType
 {
-    Created, Deleted, Updated, Special, Unknown, Approved
+    Created, Deleted, Updated, Special, Unknown, Approval
 }

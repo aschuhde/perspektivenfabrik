@@ -17,7 +17,8 @@
     "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
     "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto",
     "legalNotice": "Informazioni Legali",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "available-soon": "disponibile presto!"
   },
   "nav": {
     "about us": "chi siamo",
@@ -337,5 +338,14 @@
     "web": "Web",
     "taxNumber": "Codice Fiscale",
     "address": "<strong>Climate Action South Tyrol EO</strong><br><strong>Via Caproni 9</strong><br><strong>39100 Bolzano</strong>"
+  },
+  "user-area": {
+    "my-projects": "I miei progetti",
+    "pending-approvals": "Verifiche in sospeso",
+    "my-account": "Il mio account",
+    "sign-out": "Scollega",
+    "change-approval": "Modifica verifica",
+    "approve": "Approva",
+    "reject": "Rifiuta"
   }
 }

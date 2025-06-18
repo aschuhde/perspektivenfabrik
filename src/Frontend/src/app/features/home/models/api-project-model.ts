@@ -83,6 +83,7 @@ import { TranslateService } from "@ngx-translate/core";
 import {UploadedImage} from "../../../shared/models/uploaded-image";
 import {DomainDataTypesFormattedContent} from "../../../server/model/domainDataTypesFormattedContent";
 import {Language} from "../../../core/types/general-types";
+import {DomainEnumsApprovalStatus} from "../../../server/model/domainEnumsApprovalStatus";
 
 export class ApiProjectModel {
   project: ApplicationModelsApiModelsApiProject | null = null;
@@ -105,9 +106,11 @@ export class ApiProjectModel {
   contactMailAddress: ApplicationModelsApiModelsApiContactSpecificationMailAddress | null = null;
   contactWebsites: ApplicationModelsApiModelsApiContactSpecificationWebsite[] = [];
   thumbnailDescription: DomainDataTypesFormattedContent | null = null;
+  approvalStatus: DomainEnumsApprovalStatus = "Unknown";
 
   loadFromApiProject(apiProject: ApplicationModelsApiModelsApiProject, localeDataProvider: LocaleDataProvider, apiBasePath: string) {
     this.project = apiProject;
+    this.approvalStatus = this.project?.approvalStatus ?? "Unknown";
     this.shortDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "shortDescription")?.content ?? null;
     this.longDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "longDescription")?.content ?? null;
     this.thumbnailDescription = this.project?.descriptionSpecifications?.find(x => x.type?.name === "thumbnailDescription")?.content ?? this.shortDescription ?? null;

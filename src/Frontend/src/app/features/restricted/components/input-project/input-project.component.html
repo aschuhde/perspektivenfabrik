@@ -328,8 +328,9 @@
                         @if(projectVisibility === "public"){
                             @if (projectIsApproved){
                                 <p><mat-icon fontIcon="verified"></mat-icon> {{ "input-project.is-approved-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}</p>
-                            }@else if (projectIsApproved){
-                                <p><mat-icon fontIcon="unpublished"></mat-icon> {{ "input-project.is-rejected-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}</p>
+                            }@else if (projectIsRejected){
+                                <p><mat-icon fontIcon="unpublished"></mat-icon> {{ "input-project.is-rejected-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}{{ projectLastChangeReason }}
+                                </p>
                             } @else {
                                 <p><mat-icon fontIcon="schedule"></mat-icon> {{ "input-project.is-approval-pending-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}</p>
                             }
@@ -381,11 +382,11 @@
                             <a href="{{ previewLink }}" target="_blank"><button style="margin-top: 1rem" class="w-100"><mat-icon fontIcon="visibility"></mat-icon><span class="only-desktop"> {{ "input-project.open-preview-in-new-tab" | translate }}</span></button></a>
                             @if(projectVisibility === "public"){
                                 @if (projectIsApproved){
-                                    <p><mat-icon fontIcon="verified"></mat-icon> {{ "input-project.is-approved-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerification)"></mat-icon></p>
+                                    <p><mat-icon fontIcon="verified"></mat-icon> {{ "input-project.is-approved-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerificationApproved)"></mat-icon></p>
                                 }@else if (projectIsApproved){
-                                    <p><mat-icon fontIcon="unpublished"></mat-icon> {{ "input-project.is-rejected-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerification)"></mat-icon></p>
+                                    <p><mat-icon fontIcon="unpublished"></mat-icon> {{ "input-project.is-rejected-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialogRejected()"></mat-icon></p>
                                 } @else {
-                                    <p><mat-icon fontIcon="schedule"></mat-icon> {{ "input-project.is-approval-pending-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerification)"></mat-icon></p>
+                                    <p><mat-icon fontIcon="schedule"></mat-icon> {{ "input-project.is-approval-pending-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerificationPending)"></mat-icon></p>
                                 }
                             }
                         }

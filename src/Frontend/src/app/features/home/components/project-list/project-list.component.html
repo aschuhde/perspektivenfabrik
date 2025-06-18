@@ -48,6 +48,14 @@
                     <div class="project-list-item-button-container">
                         @if (type() === 'user-area'){
                             <a href="{{editProjectUrl(project.project?.entityId ?? '')}}"><button class="secondary">{{ "home.edit" | translate }}</button></a>
+                        } @else if (type() === 'pending-approvals'){
+                            @if (project.approvalStatus === "Pending"){
+                                <div>
+                                    <button><mat-icon fontIcon="thumb_up"></mat-icon> {{ "user-area.approve" | translate }}</button>
+                                    <button class="secondary"><mat-icon fontIcon="thumb_down"></mat-icon> {{ "user-area.reject" | translate }}</button>
+                                </div>
+                            }
+                            <a target="_blank" href="{{projectUrl(project.project?.entityId ?? '')}}"><button class="secondary">{{ "home.to-project" | translate }}</button></a>                         
                         } @else {
                             <a href="{{projectUrl(project.project?.entityId ?? '')}}"><button class="secondary">{{ "home.to-project" | translate }}</button></a>
                         }

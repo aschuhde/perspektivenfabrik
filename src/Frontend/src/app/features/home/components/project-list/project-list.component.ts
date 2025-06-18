@@ -20,6 +20,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {isServer} from "../../../../shared/tools/server-tools";
 import {BASE_PATH} from "../../../../server/variables";
 import {Language} from "../../../../core/types/general-types";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-project-list',
@@ -32,9 +33,10 @@ export class ProjectListComponent {
   apiService = inject(ApiService)
   projects: ApiProjectModel[] = []
   localeDataProvider = inject(LocaleDataProvider)
-  type = input<"home" | "user-area">("home")
+  type = input<"home" | "user-area" | "pending-approvals">("home")
   translateService = inject(TranslateService)
   apiBasePath = inject(BASE_PATH)
+  activatedRoute = inject(ActivatedRoute)
   
   get currentLang() {
     return this.translateService.currentLang as Language;
@@ -47,8 +49,20 @@ export class ProjectListComponent {
 
       projectsResponse.subscribe(x => {
         if(x.projects){
-          this.projects = x.projects?.map(x => {
-            return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider, this.apiBasePath);
+          this.projects = x.projects?.map(y => {
+            return (new ApiProjectModel()).loadFromApiProject(y, this.localeDataProvider, this.apiBasePath);
+          }) ?? [];
+        }
+      });
+      return;
+    }
+    if(this.type() === "pending-approvals"){
+      const projectsResponse = this.apiService.webApiEndpointsGetPendingApprovalProjects(this.activatedRoute.snapshot.paramMap.get("with-rejected-and-approved")?.trim() === "true");
+
+      projectsResponse.subscribe(x => {
+        if((x as any).projects){
+          this.projects = (x as any).projects?.map((y: any) => {
+            return (new ApiProjectModel()).loadFromApiProject(y, this.localeDataProvider, this.apiBasePath);
           }) ?? [];
         }
       });
@@ -58,8 +72,8 @@ export class ProjectListComponent {
 
     projectsResponse.subscribe(x => {
       if(x.projects){
-        this.projects = x.projects?.map(x => {
-          return (new ApiProjectModel()).loadFromApiProject(x, this.localeDataProvider, this.apiBasePath);
+        this.projects = x.projects?.map(y => {
+          return (new ApiProjectModel()).loadFromApiProject(y, this.localeDataProvider, this.apiBasePath);
         }) ?? [];
       }
     });

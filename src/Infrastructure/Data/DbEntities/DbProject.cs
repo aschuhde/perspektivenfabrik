@@ -14,6 +14,8 @@ public sealed class DbProject : DbEntity
     public required ProjectType Type { get; set; }
     public required ProjectVisibility Visibility  { get; set; }
     public required ApprovalStatus ApprovalStatus  { get; set; }
+    public required string? ApprovalStatusLastChangedByName  { get; set; }
+    public required string? ApprovalStatusLastChangeReason  { get; set; }
     
     [MapperIgnore]
     public bool IsSoftDeleted { get; set; } = false;
@@ -75,6 +77,14 @@ public sealed class DbProject : DbEntity
       if (this.ApprovalStatus != project.ApprovalStatus)
       {
         this.ApprovalStatus = project.ApprovalStatus;
+      }
+      if (this.ApprovalStatusLastChangedByName != project.ApprovalStatusLastChangedByName)
+      {
+        this.ApprovalStatusLastChangedByName = project.ApprovalStatusLastChangedByName;
+      }
+      if (this.ApprovalStatusLastChangeReason != project.ApprovalStatusLastChangeReason)
+      {
+        this.ApprovalStatusLastChangeReason = project.ApprovalStatusLastChangeReason;
       }
       if (this.ConnectedOrganizationsSameAsOwner != project.ConnectedOrganizationsSameAsOwner)
       {

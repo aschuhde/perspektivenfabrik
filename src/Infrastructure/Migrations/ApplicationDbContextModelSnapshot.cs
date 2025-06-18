@@ -535,6 +535,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("integer");
 
+                    b.Property<string>("ApprovalStatusLastChangeReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ApprovalStatusLastChangedByName")
+                        .HasColumnType("text");
+
                     b.Property<bool>("ConnectedOrganizationsSameAsOwner")
                         .HasColumnType("boolean");
 

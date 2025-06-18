@@ -259,6 +259,24 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
                 currentUser.IsAdmin | projectOwnerIds.Contains(x.EntityId) || projectContributerIds.Contains(x.EntityId))), query => 
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
+    
+    public async Task<ProjectDto[]> GetPendingApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
+    {
+        var currentUser = serviceProvider.GetRequiredService<ICurrentUserService>();
+        return await GetProjects(query =>
+            (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
+                x.Visibility == ProjectVisibility.Public && x.ApprovalStatus == ApprovalStatus.Pending)), query => 
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
+    }
+    
+    public async Task<ProjectDto[]> GetAllApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
+    {
+        var currentUser = serviceProvider.GetRequiredService<ICurrentUserService>();
+        return await GetProjects(query =>
+            (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
+                x.Visibility == ProjectVisibility.Public)), query => 
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
+    }
 
     public async Task<ProjectDto?> GetProjectWithHistoryByIdAndCacheDbProject(Guid entityId, CancellationToken ct)
     {
@@ -655,7 +673,8 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return await dbContext.Projects.AnyAsync(x => x.EntityId == projectId, ct);
     }
 
-    public async Task<ApproveProjectResult> ApproveProject(Guid commandEntityId, string approvedByName)
+    public async Task<ApproveProjectResult> UpdateProjectApprovalStatus(ApprovalStatus approvalStatus, Guid commandEntityId, string approvedByName,
+        string? reason)
     {
         var entity = await dbContext.Projects.FindAsync(commandEntityId);
 
@@ -664,26 +683,53 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             return ApproveProjectResult.ProjectNotFound;
         }
 
-        if (entity.ApprovalStatus is ApprovalStatus.AutoApproved or ApprovalStatus.Approved)
+        if (entity.ApprovalStatus is ApprovalStatus.AutoApproved or ApprovalStatus.Approved
+            && approvalStatus == ApprovalStatus.Approved)
         {
-            return ApproveProjectResult.AlreadyApproved;
+            return ApproveProjectResult.NotModified;
         }
 
-        entity.ApprovalStatus = ApprovalStatus.Approved;
-        if (entity.History?.HistoryId != null)
+        if (entity.ApprovalStatus == approvalStatus)
         {
-            var historyItem = new ModificationHistoryItemDto()
-            {
-                HistoryEntryType = HistoryEntryType.Approved,
-                Message = $"Approved by {approvedByName}"
-            };
+            return ApproveProjectResult.NotModified;
+        }
 
-            dbContext.HistoryItems.Add(historyItem.ToDbHistoryItem(new ModificationHistoryDto()
+        entity.ApprovalStatus = approvalStatus;
+        entity.ApprovalStatusLastChangedByName = approvedByName;
+        entity.ApprovalStatusLastChangeReason = reason;
+        if (entity.History?.HistoryId == null)
+        {
+            var history = new ModificationHistoryDto()
             {
-                EntityId = entity.History.HistoryId.Value,
                 HistoryItems = []
-            }));
+            }.ToDbHistory();
+            entity.History = new DbModificationHistoryConnection()
+            {
+                History = history,
+                HistoryId = history.EntityId
+            };
+            dbContext.Histories.Add(history);
         }
+
+        var historyItem = new ModificationHistoryItemDto()
+        {
+            HistoryEntryType = HistoryEntryType.Approval,
+            Message = approvalStatus switch
+            {
+                ApprovalStatus.Pending => $"Reset approval status {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.AutoApproved => $"Approved by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.Approved => $"Approved by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.Rejected => $"Rejected by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                _ => throw new ArgumentOutOfRangeException(nameof(approvalStatus), approvalStatus, null)
+            }
+        };
+
+        dbContext.HistoryItems.Add(historyItem.ToDbHistoryItem(new ModificationHistoryDto()
+        {
+            EntityId = entity.History.HistoryId.Value,
+            HistoryItems = []
+        }));
+        
         await dbContext.SaveChangesAsync();
         return ApproveProjectResult.Ok;
     }

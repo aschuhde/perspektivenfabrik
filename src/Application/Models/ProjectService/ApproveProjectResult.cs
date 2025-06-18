@@ -2,5 +2,5 @@
 
 public enum ApproveProjectResult
 {
-    ProjectNotFound, Ok, AlreadyApproved
+    ProjectNotFound, Ok, NotModified
 }

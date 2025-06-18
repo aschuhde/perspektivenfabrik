@@ -9,5 +9,5 @@ import { RestrictedRouteNames } from '../../../features/restricted/restricted-ro
   styleUrl: './user-area.component.scss'
 })
 export class UserAreaComponent {
-  routeUserArea= RestrictedRouteNames.UserAreaUrl()
+  routeUserArea= RestrictedRouteNames.MyProjectsUrl()
 }
