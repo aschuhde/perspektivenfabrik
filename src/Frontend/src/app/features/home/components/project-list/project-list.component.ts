@@ -21,6 +21,15 @@ import {isServer} from "../../../../shared/tools/server-tools";
 import {BASE_PATH} from "../../../../server/variables";
 import {Language} from "../../../../core/types/general-types";
 import {ActivatedRoute} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import { catchError } from 'rxjs/operators';
+import {
+  RejectProjectDialogComponent
+} from "../../../restricted/dialogs/reject-project-dialog/reject-project-dialog.component";
+import {ObjectCreator} from "../../../../shared/tools/object-creator";
+import {
+  ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest
+} from "../../../../server/model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest";
 
 @Component({
   selector: 'app-project-list',
@@ -30,6 +39,7 @@ import {ActivatedRoute} from "@angular/router";
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProjectListComponent {
+  
   apiService = inject(ApiService)
   projects: ApiProjectModel[] = []
   localeDataProvider = inject(LocaleDataProvider)
@@ -37,6 +47,7 @@ export class ProjectListComponent {
   translateService = inject(TranslateService)
   apiBasePath = inject(BASE_PATH)
   activatedRoute = inject(ActivatedRoute)
+  dialog = inject(MatDialog)
   
   get currentLang() {
     return this.translateService.currentLang as Language;
@@ -203,5 +214,38 @@ export class ProjectListComponent {
   }
   editProjectUrl(entityId: string) {
     return RestrictedRouteNames.UpdateProjectUrl(entityId);
+  }
+
+  rejectProject(entityId: string) {
+    this.dialog.open(RejectProjectDialogComponent, {
+      data: {
+        onSubmit: (rejectReason: string) => {
+          this.apiService.webApiEndpointsPutProjectApprovalStatus(ObjectCreator.Create<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest>({
+            data: {
+              approvalStatus: "Rejected",
+              reason: rejectReason,
+            }
+          }), entityId).pipe(catchError((error) => {
+            alert(this.translateService.instant("messages.error-message-on-rejecting-project"));
+            throw error;
+          })).subscribe((response) => {
+            this.projects = this.projects.filter(x => x.project?.entityId !== entityId);
+          });
+        }
+      }
+    });
+  }
+  approveProject(entityId: string) {
+    this.apiService.webApiEndpointsPutProjectApprovalStatus(ObjectCreator.Create<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest>({
+      data: {
+        approvalStatus: "Approved",
+        reason: "",
+      }
+    }), entityId).pipe(catchError((error) => {
+      alert(this.translateService.instant("messages.error-message-on-approving-project"));
+      throw error;
+    })).subscribe((response) => {
+      this.projects = this.projects.filter(x => x.project?.entityId !== entityId);
+    });
   }
 }

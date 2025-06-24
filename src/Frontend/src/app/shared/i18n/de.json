@@ -96,7 +96,8 @@
       "is-approval-pending-message": "Wir prüfen {{ yourDeclination }} {{ typeName }}. Sobald verifiziert, wird {{ yourDeclination }} {{ typeName }} auf der Platform angezeigt.",
       "is-approved-info": "verifziert",
       "is-rejected-info": "abgelehnt",
-      "is-approval-pending-info": "wird geprüft"
+      "is-approval-pending-info": "wird geprüft",
+      "reason": "Begründung"
     },
     "map": {
       "map": "Karte",
@@ -316,7 +317,9 @@
       "helpVerificationApprovedTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
       "helpVerificationApprovedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} verifiziert. Nachträgliche Bearbeitungen kannst du ohne erneute Verifizierung vornehmen. Wir werden allerdings bei jeder Änderung benachrichtigt und schauen nachträglich nochmal drüber.",
       "helpVerificationRejectedTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
-      "helpVerificationRejectedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als für die Platform nicht geeignet eingestuft.{{ ReasonText }} Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>."
+      "helpVerificationRejectedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als für die Platform nicht geeignet eingestuft.{{ ReasonText }} Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+      "error-message-on-rejecting-project": "Es ist ein Fehler beim Ablehnen des Eintrags aufgetreten. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it",
+      "error-message-on-approving-project": "Es ist ein Fehler beim Freigeben des Eintrags aufgetreten. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it"
     },
     "saveProjectErrorDialog": {
       "copyToClipboard": "Nachricht in Zwischenablage kopieren",
@@ -350,6 +353,11 @@
       "sign-out": "Abmelden",
       "change-approval": "Verifizierung ändern",
       "approve": "Akzeptieren",
+      "reject": "Ablehnen"
+    },
+    "reject-offer-dialog": {
+      "reject-offer": "Eintrag ablehnen",
+      "please-add-a-reason": "Bitte gib eine Bergündung an",
       "reject": "Ablehnen"
     }
 }

@@ -617,9 +617,8 @@ get typeNameGenitive(){
       }),
       helpVerificationRejected: (reason: string) => new MessageDialogData({
         message: this.translateService.instant(`messages.helpVerificationRejectedMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName, 
-          "reasonText": reason ? ` ${reason.trim()}${reason.trim().endsWith(".") 
-          || reason.trim().endsWith("?") 
-          || reason.trim().endsWith("!") ? "" : "."}`: ""}),
+          "ReasonText": reason ? `<br>${reason}<br>`: ""}),
+        isHtmlMessage: true,
         title: this.translateService.instant(`messages.helpVerificationRejectedTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       })
     };
@@ -967,10 +966,14 @@ get typeNameGenitive(){
   }
 
   showMessageDialogRejected() {
-    this.showMessageDialog(this.messageDialogs.helpVerificationRejected(this.projectInput().approvalStatusLastChangeReason));
+    this.showMessageDialog(this.messageDialogs.helpVerificationRejected(this.projectLastChangeReason));
   }
 
-  projectLastChangeReason(){
-      return this.projectInput().approvalStatusLastChangeReason;
+  get projectLastChangeReason(){
+      const reason = this.projectInput().approvalStatusLastChangeReason;
+      if(!reason){
+        return "";
+      }
+      return this.translateService.instant("input-project.reason") + ": " + reason;
   }
 }

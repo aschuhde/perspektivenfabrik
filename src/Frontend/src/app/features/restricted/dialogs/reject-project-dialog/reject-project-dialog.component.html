@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{ "reject-offer-dialog.reject-offer" | translate }}</h2>
+<mat-dialog-content>
+    <p>{{ "reject-offer-dialog.please-add-a-reason" | translate }}</p>
+    <mat-form-field class="textarea-container">
+        <textarea matInput [(ngModel)]="reason"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button [disabled]="!reason" (click)="submit()" mat-dialog-close><mat-icon fontIcon="thumb_down"></mat-icon> {{ "reject-offer-dialog.reject" | translate }}</button>
+    <button class="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
+</mat-dialog-actions>

@@ -96,7 +96,8 @@
     "is-approval-pending-message": "Stiamo esaminando {{ yourDeclination }} {{ typeName }}. Non appena avremo verificato {{ yourDeclination }} {{ typeName }}, sarà visualizzato sulla piattaforma.",
     "is-approved-info": "verificato",
     "is-rejected-info": "rifiutato",
-    "is-approval-pending-info": "in revisione"
+    "is-approval-pending-info": "in revisione",
+    "reason": "Motivazione"
   },
   "map": {
     "map": "Mappa",
@@ -311,8 +312,14 @@
     "fileValidationTooLargeMessage": "L'immagine è troppo grande. Seleziona solo immagini con dimensioni inferiori a 5MB.",
     "fileValidationNotSavedTitle": "Salvare prima",
     "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento.",
-    "helpVerificationTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
-    "helpVerificationMessage": "Prima della prima pubblicazione, verificheremo {{ yourDeclination }} {{ typeName }}. Una volta verificato, {{ yourDeclination }} {{ typeName }} apparirà sulla piattaforma. Potrai apportare modifiche successive senza bisogno di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente."
+    "helpVerificationPendingTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationPendingMessage": "Prima della prima pubblicazione, esamineremo {{ yourDeclination }} {{ typeName }}. Una volta verificato, {{ yourDeclination }} {{ typeName }} apparirà sulla piattaforma. Potrai apportare modifiche successive senza necessità di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente.",
+    "helpVerificationApprovedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationApprovedMessage": "Abbiamo verificato {{ yourDeclination }} {{ typeName }}. Potrai apportare modifiche successive senza necessità di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente.",
+    "helpVerificationRejectedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationRejectedMessage": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo valutato come non idoneo per la piattaforma.{{ ReasonText }} Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "error-message-on-rejecting-project": "Si è verificato un errore durante il rifiuto della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
+    "error-message-on-approving-project": "Si è verificato un errore durante l'approvazione della voce. Per favore riprova o contatta info@perspektivenfabrik.it"
   },
   "saveProjectErrorDialog": {
     "copyToClipboard": "Copia messaggio negli appunti",
@@ -346,6 +353,11 @@
     "sign-out": "Scollega",
     "change-approval": "Modifica verifica",
     "approve": "Approva",
+    "reject": "Rifiuta"
+  },
+  "reject-offer-dialog": {
+    "reject-offer": "Rifiuta voce",
+    "please-add-a-reason": "Per favore inserisci una motivazione",
     "reject": "Rifiuta"
   }
 }
