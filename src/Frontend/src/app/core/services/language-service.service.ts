@@ -1,6 +1,6 @@
-﻿import {DOCUMENT, isPlatformServer } from "@angular/common";
+﻿import {isPlatformServer} from "@angular/common";
 import {Language} from "../types/general-types";
-import { inject, Injectable, makeStateKey, PLATFORM_ID, REQUEST, TransferState } from "@angular/core";
+import { inject, Injectable, makeStateKey, PLATFORM_ID, REQUEST, TransferState, DOCUMENT } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 
 
