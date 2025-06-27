@@ -20,7 +20,7 @@ import {RequirementMoneyInput} from '../../models/requirement-money-input';
 import {InputRequirementMaterialComponent} from '../input-requirement-material/input-requirement-material.component';
 import {InputRequirementMoneyComponent} from '../input-requirement-money/input-requirement-money.component';
 import {InputRequirementPersonComponent} from '../input-requirement-person/input-requirement-person.component';
-import {AngularEditorConfig, AngularEditorModule} from '@kolkov/angular-editor';
+import {AngularEditorConfig, AngularEditorModule, UploadResponse} from '@kolkov/angular-editor';
 import {UploadedImage} from '../../../../shared/models/uploaded-image';
 import {ProjectInput, ProjectType} from '../../models/project-input';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
@@ -39,8 +39,7 @@ import { ShareLinkDialogComponent } from '../../dialogs/share-link-dialog/share-
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 import {ApiService} from "../../../../server/api/api.service";
 import {Observable} from "rxjs";
-import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
-import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
+import {HttpEvent, HttpResponse} from "@angular/common/http";
 import {BASE_PATH} from "../../../../server/variables";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {Language} from "../../../../core/types/general-types";

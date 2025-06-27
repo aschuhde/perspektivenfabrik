@@ -141,7 +141,7 @@ export class MapComponent {
                 marker = L.default.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
               }
               self.onRetrievedPoint.emit({value: "...", displayName: "...", valueTranslations: [], displayNameTranslations: []});
-              getNominatimOsmEntry(otherGeocoderLanguage, r.properties.osm_id, r.properties.osm_type, r.properties.place_id, this.httpClient).then(resultOtherGeocoder => {
+              getNominatimOsmEntry(otherGeocoderLanguage, r.properties.osm_id.toString(), r.properties.osm_type, r.properties.place_id.toString(), this.httpClient).then(resultOtherGeocoder => {
                 const results = this.parseGeocoderResults(r, resultOtherGeocoder, preferredGeocoderLanguage, otherGeocoderLanguage);
                 self.onRetrievedPoint.emit({value: results.name, displayName: results.displayName, valueTranslations: results.valueTranslations, displayNameTranslations: results.displayNameTranslations});
               });
