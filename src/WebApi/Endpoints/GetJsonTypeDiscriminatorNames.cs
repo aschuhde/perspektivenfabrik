@@ -1,5 +1,4 @@
 using Application.GetJsonTypeDiscriminatorNames.GetJsonTypeDiscriminatorNames;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 
 namespace WebApi.Endpoints;

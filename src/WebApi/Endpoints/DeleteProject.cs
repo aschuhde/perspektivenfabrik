@@ -1,5 +1,4 @@
 using Application.DeleteProject.DeleteProject;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 
 namespace WebApi.Endpoints;

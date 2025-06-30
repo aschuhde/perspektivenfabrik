@@ -10,7 +10,7 @@ using FluentValidation;
 
 namespace Application.PutProject.PutProject;
 
-public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidator<PutProjectRequest> validator, IProjectService projectService) : BaseHandler<PutProjectRequest, PutProjectResponse>(serviceProvider)
+public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidator<PutProjectRequest> validator, IProjectService projectService, INotificationService notificationService) : BaseHandler<PutProjectRequest, PutProjectResponse>(serviceProvider)
 {
     public override async Task<PutProjectResponse> ExecuteAsync(PutProjectRequest command, CancellationToken ct)
     {
@@ -34,9 +34,6 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
             if(command.Project.Contributors.Length > 0)
                 return new PutProjectNotAllowedResponse(ProjectMessages.FieldCannotBeEditedDueToMissingRights(nameof(ApiProject.Contributors)));
         }
-        
-        
-        
         
         var existingProject = await projectService.GetProjectWithHistoryByIdAndCacheDbProject(command.Project.EntityId.Value, ct);
         if (existingProject == null)
@@ -67,6 +64,8 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         var result = await projectService.CreateOrUpdateProject(projectDto, updatingContext, ct);
         if (!result.Success)
             return new PutProjectUpdateFailedResponse(result);
+        
+        notificationService.ProjectUpdated(projectDto, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
         
         return new PutProjectOkResponse()
         {

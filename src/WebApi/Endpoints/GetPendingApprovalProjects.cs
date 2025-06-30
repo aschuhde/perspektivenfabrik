@@ -1,5 +1,4 @@
 using Application.GetPendingApprovalProjects.GetPendingApprovalProjects;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 
 namespace WebApi.Endpoints;

@@ -4,7 +4,7 @@ using Application.Services;
 
 namespace Application.DeleteProject.DeleteProject;
 
-public class DeleteProjectHandler(IServiceProvider serviceProvider, IProjectService projectService) : BaseHandler<DeleteProjectRequest, DeleteProjectResponse>(serviceProvider)
+public class DeleteProjectHandler(IServiceProvider serviceProvider, IProjectService projectService, INotificationService notificationService) : BaseHandler<DeleteProjectRequest, DeleteProjectResponse>(serviceProvider)
 {
     public override async Task<DeleteProjectResponse> ExecuteAsync(DeleteProjectRequest command, CancellationToken ct)
     {
@@ -20,7 +20,7 @@ public class DeleteProjectHandler(IServiceProvider serviceProvider, IProjectServ
         {
             return new DeleteProjectNotAllowedResponse(ProjectMessages.EntityCannotBeDeletedDueToMissingRights());
         }
-        
+        notificationService.ProjectDeleted(entityId, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
         
         await projectService.SoftDeleteProject(entityId, ct);
         return new DeleteProjectOkResponse();
