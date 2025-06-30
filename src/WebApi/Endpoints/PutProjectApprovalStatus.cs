@@ -1,5 +1,4 @@
 using Application.PutProjectApprovalStatus.PutProjectApprovalStatus;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 
 namespace WebApi.Endpoints;

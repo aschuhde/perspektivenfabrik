@@ -22,4 +22,8 @@ public static class Routes
     public const string GetProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images/{{ImageIdentifier}}";
     public const string PutProjectApprovalStatus = $"{ApiRoute}/projects/{{EntityId:Guid}}/approval-status";
     public const string GetPendingApprovalProjects = $"{ApiRoute}/approval-projects";
+    public const string PostProjectReport = $"{ApiRoute}/projects/{{EntityId:Guid}}/report";
+    public const string PostRegisterUser = $"{ApiRoute}/users";
+    public const string PostRequestOtp = $"{ApiRoute}/users/{{UserId:Guid}}/otp-request";
+    public const string PostConfirmOtp = $"{ApiRoute}/users/{{UserId:Guid}}/otp-confirm";
 }

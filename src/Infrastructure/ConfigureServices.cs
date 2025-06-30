@@ -22,6 +22,7 @@ public static class ConfigureServices
         services.AddScoped<IUserDataService, UserDataService>();
         services.AddScoped<IRefreshTokenRepositoryService, RefreshTokenRepositoryService>();
         services.AddScoped<IProjectService, ProjectService>();
+        services.AddScoped<IOtpService, OtpService>();
         services.AddDbContext<ApplicationDbContext>((_, builder) =>
         {
             builder.UseNpgsql(connectionString);

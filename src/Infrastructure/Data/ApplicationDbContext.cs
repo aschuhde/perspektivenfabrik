@@ -51,6 +51,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public required DbSet<DbSkill> Skills { get; init; }
     public required DbSet<DbProjectImage> DbProjectImages { get; init; }
     public required DbSet<DbFieldTranslation> DbFieldTranslations { get; init; }
+    public required DbSet<DbOtp> Otps { get; init; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

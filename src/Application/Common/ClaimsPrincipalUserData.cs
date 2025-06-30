@@ -24,6 +24,22 @@ public static class ClaimsPrincipalExtensions
     private const string UserIdName = "data-userid";
     private const string RoleName = "data-role";
     private const string DisplayName = "data-displayName";
+
+    public static Guid? GetUserIdOrNull(this ClaimsPrincipal? claimsPrincipal)
+    {
+        if (claimsPrincipal == null)
+        {
+            return null;
+        }
+
+        var userIdName = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == UserIdName)?.Value;
+        if (string.IsNullOrWhiteSpace(userIdName))
+        {
+            return null;
+        }
+        return Guid.TryParse(userIdName, out var userId) ? userId : null;
+    }
+    
     private static ClaimsPrincipalUserData ToUserData(this IEnumerable<Claim> claimsEnumerable)
     {
         var claims = claimsEnumerable.ToList();
