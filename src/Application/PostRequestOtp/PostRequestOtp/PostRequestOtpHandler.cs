@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Application.PostRequestOtp.PostRequestOtp;
 
-public sealed class PostRequestOtpHandler(IServiceProvider serviceProvider, IOtpService otpService, IUserDataService userDataService, IConfiguration configuration, INotificationService notificationService) : BaseHandler<PostRequestOtpRequest, PostRequestOtpResponse>(serviceProvider)
+public sealed class PostRequestOtpHandler(IServiceProvider serviceProvider, IOtpService otpService, IUserDataService userDataService, IConfiguration configuration) : BaseHandler<PostRequestOtpRequest, PostRequestOtpResponse>(serviceProvider)
 {
     public override async Task<PostRequestOtpResponse> ExecuteAsync(PostRequestOtpRequest command, CancellationToken ct)
     {

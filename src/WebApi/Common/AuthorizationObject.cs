@@ -2,5 +2,5 @@ namespace WebApi.Common;
 
 public enum AuthorizationObject
 {
-    Anonymous
+    Anonymous, AuthenticatedWithUnconfirmedEmail
 }

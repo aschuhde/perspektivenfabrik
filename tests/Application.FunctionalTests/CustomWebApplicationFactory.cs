@@ -46,13 +46,13 @@ public sealed class CustomWebApplicationFactory : WebApplicationFactory<IAssembl
         {
             if (keyValuePair.Value == null)
                 continue;
-            Environment.SetEnvironmentVariable($"{Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
+            Environment.SetEnvironmentVariable($"{WebApi.Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
         }
         foreach (var keyValuePair in configurationManager.GetSection("ConfigurationOverrides").AsEnumerable())
         {
             if (keyValuePair.Value == null)
                 continue;
-            Environment.SetEnvironmentVariable($"{Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
+            Environment.SetEnvironmentVariable($"{WebApi.Configuration.EnvironmentConfigurationOverridePrefix}{keyValuePair.Key.Replace(":", "__")}", keyValuePair.Value);
         }
     }
     //

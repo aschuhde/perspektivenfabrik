@@ -14,7 +14,7 @@ public sealed class PutProjectApprovalStatusHandler(IServiceProvider serviceProv
             return new PutProjectApprovalStatusNotAllowedResponse(Messages.ProjectMessages.PutProjectApprovalStatusNotAllowedResponse(command.EntityId));
         }
         
-        var result = await projectService.UpdateProjectApprovalStatus(command.Data.ApprovalStatus, command.EntityId, CurrentUserService.DisplayName, command.Data.Reason);
+        var result = await projectService.UpdateProjectApprovalStatus(command.Data.ApprovalStatus, command.EntityId, CurrentUserService.DisplayName, command.Data.Reason, ct);
 
         if (result == ApproveProjectResult.Ok && command.Data.ApprovalStatus == ApprovalStatus.Rejected)
         {

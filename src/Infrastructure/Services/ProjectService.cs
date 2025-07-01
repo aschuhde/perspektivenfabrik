@@ -674,9 +674,9 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     }
 
     public async Task<ApproveProjectResult> UpdateProjectApprovalStatus(ApprovalStatus approvalStatus, Guid commandEntityId, string approvedByName,
-        string? reason)
+        string? reason, CancellationToken ct)
     {
-        var entity = await dbContext.Projects.FindAsync(commandEntityId);
+        var entity = await dbContext.Projects.FindAsync(commandEntityId, ct);
 
         if (entity == null)
         {
@@ -730,7 +730,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
             HistoryItems = []
         }));
         
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(ct);
         return ApproveProjectResult.Ok;
     }
 }

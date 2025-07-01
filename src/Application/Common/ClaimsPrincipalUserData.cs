@@ -7,6 +7,7 @@ namespace Application.Common;
 public sealed class ClaimsPrincipalUserData
 {
     public const string AuthenticationType = "jwt";
+    public const string EMailIsConfirmed = "data-emailIsConfirmed";
      public required Guid UserId { get; init; }
      public required string[] Roles { get; init; } = [];
      public required string DisplayName { get; init; }
@@ -68,6 +69,7 @@ public static class ClaimsPrincipalExtensions
             claims.AddRange(user.Roles.Select(x => new Claim(RoleName, x)));
         }
         claims.Add(new Claim(DisplayName, $"{user.Firstname} {user.Lastname}"));
+        claims.Add(new Claim(ClaimsPrincipalUserData.EMailIsConfirmed, user.EmailConfirmed ? "true" : "false"));
 
         return new ClaimsIdentity(claims, ClaimsPrincipalUserData.AuthenticationType);
     }
