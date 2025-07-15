@@ -34,10 +34,18 @@ import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenRequest } from 
 import { ApplicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse } from '../model/applicationJwtRefreshTokenJwtRefreshTokenJwtRefreshTokenResponse';
 import { ApplicationJwtTokenJwtTokenRequest } from '../model/applicationJwtTokenJwtTokenRequest';
 import { ApplicationJwtTokenJwtTokenResponse } from '../model/applicationJwtTokenJwtTokenResponse';
+import { ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest } from '../model/applicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest';
+import { ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse } from '../model/applicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse';
 import { ApplicationPostProjectImagePostProjectImagePostProjectImageRequest } from '../model/applicationPostProjectImagePostProjectImagePostProjectImageRequest';
 import { ApplicationPostProjectImagePostProjectImagePostProjectImageResponse } from '../model/applicationPostProjectImagePostProjectImagePostProjectImageResponse';
 import { ApplicationPostProjectPostProjectPostProjectRequest } from '../model/applicationPostProjectPostProjectPostProjectRequest';
 import { ApplicationPostProjectPostProjectPostProjectResponse } from '../model/applicationPostProjectPostProjectPostProjectResponse';
+import { ApplicationPostProjectReportPostProjectReportPostProjectReportRequest } from '../model/applicationPostProjectReportPostProjectReportPostProjectReportRequest';
+import { ApplicationPostProjectReportPostProjectReportPostProjectReportResponse } from '../model/applicationPostProjectReportPostProjectReportPostProjectReportResponse';
+import { ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest } from '../model/applicationPostRegisterUserPostRegisterUserPostRegisterUserRequest';
+import { ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse } from '../model/applicationPostRegisterUserPostRegisterUserPostRegisterUserResponse';
+import { ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest } from '../model/applicationPostRequestOtpPostRequestOtpPostRequestOtpRequest';
+import { ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse } from '../model/applicationPostRequestOtpPostRequestOtpPostRequestOtpResponse';
 import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest';
 import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse';
 import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
@@ -835,6 +843,65 @@ export class ApiService {
      * 
      * 
      * @param body 
+     * @param userId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostConfirmOtp(body: ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest, userId: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse>;
+    public webApiEndpointsPostConfirmOtp(body: ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse>>;
+    public webApiEndpointsPostConfirmOtp(body: ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse>>;
+    public webApiEndpointsPostConfirmOtp(body: ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpRequest, userId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostConfirmOtp.');
+        }
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling webApiEndpointsPostConfirmOtp.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostConfirmOtpPostConfirmOtpPostConfirmOtpResponse>('post',`${this.basePath}/api/users/${encodeURIComponent(String(userId))}/otp-confirm`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -934,6 +1001,171 @@ export class ApiService {
         }
 
         return this.httpClient.request<ApplicationPostProjectImagePostProjectImagePostProjectImageResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(projectIdentifier))}/project-images`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param entityId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostProjectReport(body: ApplicationPostProjectReportPostProjectReportPostProjectReportRequest, entityId: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostProjectReportPostProjectReportPostProjectReportResponse>;
+    public webApiEndpointsPostProjectReport(body: ApplicationPostProjectReportPostProjectReportPostProjectReportRequest, entityId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostProjectReportPostProjectReportPostProjectReportResponse>>;
+    public webApiEndpointsPostProjectReport(body: ApplicationPostProjectReportPostProjectReportPostProjectReportRequest, entityId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostProjectReportPostProjectReportPostProjectReportResponse>>;
+    public webApiEndpointsPostProjectReport(body: ApplicationPostProjectReportPostProjectReportPostProjectReportRequest, entityId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostProjectReport.');
+        }
+
+        if (entityId === null || entityId === undefined) {
+            throw new Error('Required parameter entityId was null or undefined when calling webApiEndpointsPostProjectReport.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostProjectReportPostProjectReportPostProjectReportResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(entityId))}/report`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostRegisterUser(body: ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse>;
+    public webApiEndpointsPostRegisterUser(body: ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse>>;
+    public webApiEndpointsPostRegisterUser(body: ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse>>;
+    public webApiEndpointsPostRegisterUser(body: ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostRegisterUser.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse>('post',`${this.basePath}/api/users`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param userId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPostRequestOtp(body: ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest, userId: string, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse>;
+    public webApiEndpointsPostRequestOtp(body: ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest, userId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse>>;
+    public webApiEndpointsPostRequestOtp(body: ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest, userId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse>>;
+    public webApiEndpointsPostRequestOtp(body: ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest, userId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPostRequestOtp.');
+        }
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling webApiEndpointsPostRequestOtp.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse>('post',`${this.basePath}/api/users/${encodeURIComponent(String(userId))}/otp-request`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
