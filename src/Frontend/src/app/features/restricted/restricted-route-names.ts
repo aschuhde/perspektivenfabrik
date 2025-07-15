@@ -18,4 +18,7 @@ export class RestrictedRouteNames{
   public static readonly MyProjectsUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.MyProjectsName}`;
   public static readonly MyAccountUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.MyAccountName}`;
   public static readonly PendingApprovalsUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.PendingApprovalsName}`;
+
+  public static readonly ConfirmMailName = "confirm-email";
+  public static readonly ConfirmMailUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.ConfirmMailName}`;
 }

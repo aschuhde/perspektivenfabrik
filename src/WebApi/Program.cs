@@ -31,6 +31,11 @@ if (!builder.Configuration.IsInCodeGenerationMode())
     builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
 }
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    
+});
+
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddWebApi(builder.Configuration);
@@ -39,6 +44,14 @@ builder.Services.AddHealthChecks().AddCheck<StartupHealthCheck>("Startup", tags:
 builder.Services.AddHostedService<StartupBackgroundService>();
 
 var app = builder.Build();
+app.UseRequestLocalization(options =>
+{
+    var supportedCultures = new[] { "en-US", "de-DE", "it-IT" };
+    options.SetDefaultCulture("en-US")
+        .AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures);
+    options.ApplyCurrentCultureToResponseHeaders = true;
+});
 app.UseExceptionHandler();
 if (!builder.Configuration.IsInCodeGenerationMode())
 {

@@ -12,9 +12,14 @@ public class SmtpOptions
     public string SmtpSenderAddress { get; set; } = "";
     public int SmtpPort { get; set; }
     public string DevRecipient { get; set; } = "";
+    public bool Enabled { get; set; } = true;
 
     public void Validate()
     {
+        if (!Enabled)
+        {
+            return;
+        }
         ThrowIf.NullOrWhitespace(SmtpHost);
         ThrowIf.NullOrWhitespace(SmtpUser);
         ThrowIf.NullOrWhitespace(SmtpPassword);

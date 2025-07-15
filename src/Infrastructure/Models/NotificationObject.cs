@@ -9,9 +9,9 @@ public sealed class NotificationObject : NotificationObjectBase
   [JsonIgnore]
   public Guid Id { get; init; } = Guid.NewGuid();
   [JsonIgnore]
-  public required TaskCompletionStatus TaskStatus { get; set; }
+  public TaskCompletionStatus TaskStatus { get; set; } = TaskCompletionStatus.Pending;
   [JsonIgnore]
-  public required NotificationObjectType Type { get; set; }
+  public NotificationObjectType Type { get; set; } = NotificationObjectType.Unknown;
   
   public NotificationObject WithJsonData(string dbTaskTaskData)
   {

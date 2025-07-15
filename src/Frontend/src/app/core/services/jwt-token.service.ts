@@ -109,6 +109,14 @@ export class JWTTokenService {
         return this.hasToken() && this.isTokenValid();
     }
     
+    hasValidTokenButNeedToConfirmEmail(): boolean{
+        if(!this.hasValidToken()){
+            return false;
+        }
+        const token = this.getDecodedToken();
+        return !!token && (token["data-emailIsConfirmed"] === "false" || token["data-emailIsConfirmed"] === false);
+    }
+    
     isTokenValid(): boolean {
         const expiryTime = this.getExpiryTime();
         if (expiryTime) {

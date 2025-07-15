@@ -12,4 +12,5 @@
 import { ApplicationCommonResponseJsonResponse } from './applicationCommonResponseJsonResponse';
 
 export interface ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse extends ApplicationCommonResponseJsonResponse { 
+    canRequestNewOtpAtUtc?: Date;
 }

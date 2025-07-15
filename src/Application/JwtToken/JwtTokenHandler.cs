@@ -1,5 +1,6 @@
 using Application.Common;
 using Application.Services;
+using System.Security.Cryptography;
 
 namespace Application.JwtToken;
 
@@ -10,7 +11,9 @@ public sealed class JwtTokenHandler(JwtAuthenticationDataService jwtAuthenticati
         var user = await UserDataService.GetActiveUserByEMail(command.Email, ct);
         if (user == null)
             return new JwtTokenUserNotFoundResponse(command.Email);
-
+        
+        await Task.Delay(RandomNumberGenerator.GetInt32(200, 1001), ct);
+        
         if (!user.VerifyPassword(command.Password))
             return new JwtTokenWrongPasswordResponse();
         

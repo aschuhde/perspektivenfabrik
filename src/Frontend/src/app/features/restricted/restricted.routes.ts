@@ -7,6 +7,7 @@ import {PreviewProjectPageComponent} from "./pages/preview-project-page/preview-
 import {MyAccountPageComponent} from "./pages/my-account-page/my-account-page.component";
 import {PendingApprovalsPageComponent} from "./pages/pending-approvals-page/pending-approvals-page.component";
 import {MyProjectsPageComponent} from "./pages/my-projects-page/my-projects-page.component";
+import {ConfirmEmailComponent} from "./pages/confirm-email/confirm-email.component";
 
 
 export const RestrictedRoutes: Routes = [
@@ -16,5 +17,6 @@ export const RestrictedRoutes: Routes = [
     {path: RestrictedRouteNames.MyAccountName, component: MyAccountPageComponent},
     {path: RestrictedRouteNames.PendingApprovalsName, component: PendingApprovalsPageComponent},
     {path: RestrictedRouteNames.UpdateProjectName, component: UpdateProjectPageComponent},
-    {path: RestrictedRouteNames.PreviewProjectName, component: PreviewProjectPageComponent}
+    {path: RestrictedRouteNames.PreviewProjectName, component: PreviewProjectPageComponent},
+    {path: RestrictedRouteNames.ConfirmMailName, component: ConfirmEmailComponent},
 ]

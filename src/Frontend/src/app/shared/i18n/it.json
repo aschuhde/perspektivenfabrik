@@ -206,7 +206,42 @@
   "login": {
     "login": "Accedi",
     "e-mail": "E-mail",
-    "password": "Password"
+    "password": "Password",
+    "no-user-yet": "Non hai ancora un account?",
+    "register-here": "Registrati qui",
+    "general-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "user-does-not-exist": "Non esiste alcun utente con l'indirizzo e-mail specificato!",
+    "wrong-credentials": "La password non è corretta!",
+    "forgot-password": "Password dimenticata?"
+  },
+  "register": {
+    "register": "Registrati",
+    "e-mail": "E-mail",
+    "password": "Password",
+    "firstname": "Nome",
+    "lastname": "Cognome",
+    "already-user": "Hai già un account?",
+    "login-here": "Accedi qui",
+    "unknown-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "must-not-be-empty": "Per favore compila il campo {{parameter}}!",
+    "must-not-be-over-n-chars": "Il campo {{parameter}} non può contenere più di {{n}} caratteri!",
+    "password-policy": "La password deve essere compresa tra 8 e 50 caratteri e deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~).",
+    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!"
+  },
+  "confirm-email": {
+    "title": "Conferma indirizzo e-mail",
+    "we-sent-you-a-code": "Ti abbiamo inviato un codice via e-mail",
+    "please-put-in-the-code": "Per favore inserisci questo codice qui per confermare il tuo indirizzo e-mail",
+    "the-code-is-incorrect": "Il codice non corrisponde all'ultimo codice che ti abbiamo inviato",
+    "please-check-the-code": "Per favore verifica il codice o richiedine uno nuovo",
+    "unexpected-error-occured": "Si è verificato un errore imprevisto",
+    "please-retry-or-contact": "Per favore riprova più tardi o contatta",
+    "the-code-is-expired": "Questo codice è scaduto",
+    "please-put-in-the-last-code": "Per favore inserisci l'ultimo codice che ti abbiamo inviato oppure richiedine uno nuovo!",
+    "request-new-code": "Richiedi nuovo codice!",
+    "request-new-code-in": "Richiedi nuovo codice tra",
+    "seconds": "secondi",
+    "contact-if-there-are-problems": "In caso di problemi, contatta"
   },
   "home": {
     "motivation-text": "Vuoi dare una mano ma non sai da dove cominciare? Hai un progetto e cerchi qualcuno che ti aiuti? Hai un'idea che vuoi condividere e far crescere insieme ad altri? Se hai risposto \"sì\" ad almeno una di queste domande, sei nel posto giusto!",

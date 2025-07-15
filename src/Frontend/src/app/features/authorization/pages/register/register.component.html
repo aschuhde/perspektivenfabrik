@@ -1,0 +1,49 @@
+<div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="width: 20rem; align-self: center">
+        <fieldset>
+            <div>
+                <mat-form-field style="width: 20rem">
+                    <mat-label>{{ "register.firstname" | translate }}</mat-label>
+                    <input type="text" matInput name="firstName" formControlName="firstName"/>
+                </mat-form-field>
+                <p class="invalid-message" style="margin-top: -20px">{{ firstnameInvalidMessage }}</p>
+            </div>
+            <div>
+                <mat-form-field style="width: 20rem">
+                    <mat-label>{{ "register.lastname" | translate }}</mat-label>
+                    <input type="text" matInput name="lastName" formControlName="lastName"/>
+                </mat-form-field>
+                <p class="invalid-message" style="margin-top: -20px">{{ lastnameInvalidMessage }}</p>
+            </div>
+            <div>
+                <mat-form-field style="width: 20rem">
+                    <mat-label>{{ "register.e-mail" | translate }}</mat-label>
+                    <input type="email" matInput name="email" formControlName="email"/>
+                </mat-form-field>
+                @if(mailAlreadyExists){
+                    <p class="invalid-message" style="margin-top: -20px" [innerHTML]="'register.mail-already-exists' | translate"></p>
+                } @else {
+                    <p class="invalid-message" style="margin-top: -20px">{{ emailInvalidMessage }}</p>
+                }
+            </div>
+            <div>
+                <mat-form-field style="width: 20rem">
+                    <mat-label>{{ "register.password" | translate }}</mat-label>
+                    <input type="password" matInput name="password" formControlName="password"/>
+                </mat-form-field>
+                <p class="invalid-message" style="margin-top: -20px">{{ passwordInvalidMessage }}</p>
+            </div>
+        </fieldset>
+        @if(hasError){
+            <p class="invalid-message" [innerHTML]="errorMessage"></p>
+        }
+        <div class="form-buttons">
+            <button style="width: 20rem" type="submit">{{ "register.register" | translate }}</button>
+        </div>
+    </form>
+    <div style="width: 20rem; align-self: center; margin-top: 2rem">
+        <hr class="hr-white">
+        <h5 class="color-white">{{ "register.already-user" | translate }}</h5>
+        <a href="{{ AuthorizationRouteNames.LoginUrl() }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "register.login-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
+    </div>
+</div>

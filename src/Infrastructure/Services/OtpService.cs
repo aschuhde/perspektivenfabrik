@@ -23,7 +23,7 @@ public sealed class OtpService(IConfiguration configuration, ApplicationDbContex
                                                 (x.Status == OtpStatus.Pending || x.Status == OtpStatus.Replaced)).ToArrayAsync(ct)).Select(x => x.ToOtpDto()).ToArray();
     }
 
-    public async Task CreateOtp(Guid userId, CancellationToken ct)
+    public async Task<OtpDto> CreateOtp(Guid userId, CancellationToken ct)
     {
         var userDto = ThrowIf.Null(await userDataService.GetActiveUserById(userId, ct));
         await dbContext.Otps.Where(x => x.UserId == userId && x.Status == OtpStatus.Pending).ExecuteUpdateAsync(x => x.SetProperty(y => y.Status, OtpStatus.Replaced), ct);
@@ -50,6 +50,7 @@ public sealed class OtpService(IConfiguration configuration, ApplicationDbContex
                 Name = userDto.FirstnameLastname
             }],
         }, ct);
+        return otp.ToOtpDto();
     }
 
     public async Task ConfirmOtp(Guid userId, Guid[] entityIds, CancellationToken ct)

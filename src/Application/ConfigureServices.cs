@@ -1,4 +1,5 @@
 ﻿using Application.PostProject.PostProject;
+using Application.PostRegisterUser.PostRegisterUser;
 using Application.PutProject.PutProject;
 using Application.Services;
 using Application.Validators;
@@ -14,6 +15,7 @@ public static class ConfigureServices
         services.AddSingleton<JwtAuthenticationDataService>();
         services.AddScoped<IValidator<PostProjectRequest>, PostProjectRequestValidator>();
         services.AddScoped<IValidator<PutProjectRequest>, PutProjectRequestValidator>();
+        services.AddScoped<IValidator<PostRegisterUserRequest>, PostRegisterUserRequestValidator>();
         services.AddScoped<IUserAccessService, UserAccessService>();
     }
 }

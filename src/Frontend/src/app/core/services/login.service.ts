@@ -1,6 +1,6 @@
 ﻿import {Injectable} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import { AuthorizationRouteNames } from "../../features/authorization/authorization.routes";
+import {Router} from "@angular/router";
+import { AuthorizationRouteNames } from "../../features/authorization/authorization.routes.names";
 
 @Injectable({
     providedIn: "root"

@@ -6,7 +6,7 @@ namespace Application.PostRequestOtp.PostRequestOtp;
 
 public class PostRequestOtpResponse : JsonResponse
 {
-    
+    public DateTimeOffset? CanRequestNewOtpAtUtc { get; init; }
 }
 
 public sealed class PostRequestOtpPleaseWaitResponse : PostRequestOtpResponse

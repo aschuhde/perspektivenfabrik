@@ -17,5 +17,20 @@
         <div class="form-buttons">
             <button style="width: 20rem" type="submit">{{ "login.login" | translate }}</button>
         </div>
+        @if(hasGeneralError){
+            <p class="invalid-message" [innerHTML]="'login.general-error-message' | translate"></p>
+        }
+        @if(userDoesNotExist){
+            <p class="invalid-message">{{ "login.user-does-not-exist" | translate }}</p>
+        }
+        @if(wrongCredentials){
+            <p class="invalid-message">{{ "login.wrong-credentials" | translate }}</p>
+        }
+        <p class="color-white" style="font-size: .9rem"><a href="{{ AuthorizationRouteNames.ForgotPasswordUrl() }}">{{ "login.forgot-password" | translate }}</a></p>
     </form>
+    <div style="width: 20rem; align-self: center; margin-top: 2rem">
+        <hr class="hr-white">
+        <h5 class="color-white">{{ "login.no-user-yet" | translate }}</h5>
+        <a href="{{ AuthorizationRouteNames.RegisterUrl() }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "login.register-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
+    </div>
 </div>

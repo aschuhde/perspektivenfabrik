@@ -29,7 +29,10 @@ public sealed class PostRequestOtpHandler(IServiceProvider serviceProvider, IOtp
             }
         }
         
-        await otpService.CreateOtp(CurrentUserId, ct);
-        return new PostRequestOtpOkResponse();
+        var otp = await otpService.CreateOtp(CurrentUserId, ct);
+        return new PostRequestOtpOkResponse
+        {
+            CanRequestNewOtpAtUtc = otp.RequestedOnUtc.AddSeconds(options.SecondsToWaitForNewRequest)
+        };
     }
 }

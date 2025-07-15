@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Application.Common;
 using Application.Services;
 using Common;
@@ -13,6 +14,7 @@ public sealed class PostConfirmOtpHandler(IServiceProvider serviceProvider, IUse
         {
             return new PostConfirmOtpNotRequiredResponse();
         }
+        await Task.Delay(RandomNumberGenerator.GetInt32(200, 1001), ct);
         var openOtps = await otpService.GetOpenOtps(CurrentUserId, ct);
         if (openOtps.Length == 0)
         {
