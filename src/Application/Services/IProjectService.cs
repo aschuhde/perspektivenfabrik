@@ -26,4 +26,5 @@ public interface IProjectService
     public Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct);
     public Task<bool> ProjectExists(Guid projectId, CancellationToken ct);
     public Task<ApproveProjectResult> UpdateProjectApprovalStatus(ApprovalStatus approvalStatus, Guid commandEntityId, string displayName, string? dataReason, CancellationToken ct);
+    public Task<ProjectMetadata?> GetProjectMetadataById(Guid projectId, CancellationToken ct);
 }

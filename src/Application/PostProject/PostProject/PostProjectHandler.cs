@@ -54,7 +54,7 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
         if (!result.Success)
             return new PostProjectCreationFailedResponse(result);
         
-        notificationService.ProjectCreated(projectDto, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
+        notificationService.ProjectCreated(projectDto.EntityId, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
         
         return new PostProjectOkResponse()
         {

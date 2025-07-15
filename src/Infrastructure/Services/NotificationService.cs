@@ -1,57 +1,130 @@
 ﻿using Application.Services;
-using Domain.Entities;
+using Domain.Enums;
+using Infrastructure.Models;
 
 namespace Infrastructure.Services;
 
-public class NotificationService : INotificationService
+public class NotificationService(NotificationStorageService storageService) : INotificationService
 {
-  public void ProjectUpdated(ProjectDto project, Guid userId, string userName)
+  public void ProjectUpdated(Guid projectId, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Type = NotificationObjectType.ProjectUpdated
+    });
   }
 
-  public void ProjectCreated(ProjectDto project, Guid userId, string userName)
+  public void ProjectCreated(Guid projectId, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Type = NotificationObjectType.ProjectCreated
+    });
   }
 
   public void ProjectApproved(Guid projectId, string? reason, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Message = reason,
+      Type = NotificationObjectType.ProjectApproved
+    });
   }
 
   public void ProjectApprovalWithdrawn(Guid projectId, string? reason, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Message = reason,
+      Type = NotificationObjectType.ProjectApprovalWithdrawn
+    });
   }
 
   public void ProjectRejected(Guid projectId, string? reason, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Message = reason,
+      Type = NotificationObjectType.ProjectRejected
+    });
   }
 
   public void ProjectReported(Guid projectId, string? reason, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Message = reason,
+      Type = NotificationObjectType.ProjectReported
+    });
   }
 
   public void ProjectDeleted(Guid projectId, Guid userId, string userName)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      RelatedEntityId = projectId,
+      UserId = userId,
+      UserName = userName,
+      Type = NotificationObjectType.ProjectDeleted
+    });
   }
 
   public void ErrorOccured(Guid errorId, string exception, string requestMethod, string requestUrl, Guid? userIdIfExist)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      UserId = userIdIfExist,
+      RelatedEntityId = errorId,
+      Message = exception,
+      RequestMethod = requestMethod,
+      RequestUrl = requestUrl,
+      Type = NotificationObjectType.ErrorOccured
+    });
   }
 
   public void UserRegistered(Guid userId)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      UserId = userId,
+      Type = NotificationObjectType.UserRegistered
+    });
   }
 
   public void OtpConfirmed(Guid userId)
   {
-    throw new NotImplementedException();
+    storageService.StoreNotification(new NotificationObject()
+    {
+      TaskStatus = TaskCompletionStatus.Pending,
+      UserId = userId,
+      Type = NotificationObjectType.OtpConfirmed
+    });
   }
 }

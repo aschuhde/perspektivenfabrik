@@ -65,7 +65,7 @@ public sealed class PutProjectHandler(IServiceProvider serviceProvider, IValidat
         if (!result.Success)
             return new PutProjectUpdateFailedResponse(result);
         
-        notificationService.ProjectUpdated(projectDto, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
+        notificationService.ProjectUpdated(projectDto.EntityId, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
         
         return new PutProjectOkResponse()
         {

@@ -12,4 +12,7 @@ public sealed class ApiUser : ApiPerson
     
     [JsonIgnore]
     public required bool EmailConfirmed { get; init; }
+    
+    [JsonIgnore]
+    public required string PreferredLanguageCode { get; init; }
 }

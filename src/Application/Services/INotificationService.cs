@@ -4,8 +4,8 @@ namespace Application.Services;
 
 public interface INotificationService
 {
-    public void ProjectUpdated(ProjectDto project, Guid userId, string userName);
-    public void ProjectCreated(ProjectDto project, Guid userId, string userName);
+    public void ProjectUpdated(Guid projectId, Guid userId, string userName);
+    public void ProjectCreated(Guid projectId, Guid userId, string userName);
     public void ProjectApproved(Guid projectId, string? reason, Guid userId, string userName);
     public void ProjectApprovalWithdrawn(Guid projectId, string? reason, Guid userId, string userName);
     public void ProjectRejected(Guid projectId, string? reason, Guid userId, string userName);

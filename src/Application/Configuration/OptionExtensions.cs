@@ -10,4 +10,18 @@ public static class OptionExtensions
         configuration.GetSection(OtpOptions.SectionName).Bind(otpOptions);
         return otpOptions;
     }
+    
+    public static SmtpOptions GetSmtpOptions(this IConfiguration configuration)
+    {
+        var smtpOptions = new SmtpOptions();
+        configuration.GetSection(SmtpOptions.SectionName).Bind(smtpOptions);
+        return smtpOptions;
+    }
+    
+    public static NotificationOptions GetNotificationOptions(this IConfiguration configuration)
+    {
+        var notificationOptions = new NotificationOptions();
+        configuration.GetSection(NotificationOptions.SectionName).Bind(notificationOptions);
+        return notificationOptions;
+    }
 }

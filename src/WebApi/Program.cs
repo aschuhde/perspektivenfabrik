@@ -9,6 +9,8 @@ using Serilog;
 using WebApi;
 using WebApi.Common;
 using WebApi.Constants;
+using WebApi.HealthChecks;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,9 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddWebApi(builder.Configuration);
+builder.Services.AddSingleton<StartupHealthCheck>();
+builder.Services.AddHealthChecks().AddCheck<StartupHealthCheck>("Startup", tags: [StartupHealthCheck.ReadyTag]);
+builder.Services.AddHostedService<StartupBackgroundService>();
 
 var app = builder.Build();
 app.UseExceptionHandler();
@@ -47,7 +52,7 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 {
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseHealthChecks("/health");
+    app.MapHealthChecks();
 }
 
 app.UseFastEndpoints();

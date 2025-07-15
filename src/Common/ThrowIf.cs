@@ -36,4 +36,13 @@ public static class ThrowIf
             throw new ArgumentNullException(parameterName, message?.ToString());
         return parameter;
     }
+    
+    public static T NullOrNotEqualTo<T>(T? parameter, Message? message = null, string? parameterName = null, params T[] values)
+    {
+        if(parameter is null)
+            throw new ArgumentNullException(parameterName, message?.ToString());
+        if(!values.Contains(parameter))
+            throw new ArgumentException(parameterName, message?.ToString());
+        return parameter;
+    }
 }

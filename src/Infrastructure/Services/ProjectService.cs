@@ -733,4 +733,14 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         await dbContext.SaveChangesAsync(ct);
         return ApproveProjectResult.Ok;
     }
+
+    public async Task<ProjectMetadata?> GetProjectMetadataById(Guid projectId, CancellationToken ct)
+    {
+        return await dbContext.Projects.Where(x => x.EntityId == projectId).Select(x => new ProjectMetadata()
+        {
+            Title = x.ProjectTitle.RawContentString,
+            Name = x.ProjectName,
+            EntityId = x.EntityId
+        }).FirstOrDefaultAsync(ct);
+    }
 }

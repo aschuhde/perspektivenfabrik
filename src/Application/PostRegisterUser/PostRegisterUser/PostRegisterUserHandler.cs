@@ -29,7 +29,8 @@ public sealed class PostRegisterUserHandler(IServiceProvider serviceProvider, IV
         Active = true,
         Firstname = command.Data.FirstName,
         Lastname = command.Data.LastName,
-        PasswordHash = PasswordHasher.HashPassword(command.Data.Password)
+        PasswordHash = PasswordHasher.HashPassword(command.Data.Password),
+        PreferredLanguageCode = command.Data.LanguageCode
       };
       await userDataService.RegisterUser(user, ct);
       var (jwtToken, expiration) = jwtAuthenticationDataService.GenerateJwtToken(user);

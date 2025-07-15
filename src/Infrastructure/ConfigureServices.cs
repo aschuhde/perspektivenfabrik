@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.Configuration;
+using Application.Services;
 using Common;
 using Infrastructure.Data;
 using Infrastructure.Jobs;
@@ -18,6 +19,9 @@ public static class ConfigureServices
         configuration.GetConnectionString("default");
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
+        configuration.GetSmtpOptions().Validate();
+        configuration.GetNotificationOptions().Validate();
+        
         var connectionString = ThrowIf.NullOrWhitespace(configuration.GetDefaultConnectionString(),
             "No connection string is configured");
         
@@ -27,6 +31,7 @@ public static class ConfigureServices
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IOtpService, OtpService>();
         services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<MailService>();
         services.AddSingleton<NotificationStorageService>();
         services.AddScoped<NotificationSenderService>();
         services.AddHostedService<NotificationJobListenerHostedService>();
@@ -36,6 +41,7 @@ public static class ConfigureServices
             if (environment.IsDevelopment())
                 builder.EnableSensitiveDataLogging();
         });
+        services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
         
         services.AddQuartz(q =>
         {

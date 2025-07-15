@@ -12,6 +12,7 @@ public sealed class PostRegisterUserRequestBody
     public required string Email { get; set; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
+    public required string LanguageCode { get; set; }
     public required string Password { get; set; }
 
     public void Trim()

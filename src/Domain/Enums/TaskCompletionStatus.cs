@@ -2,5 +2,5 @@ namespace Domain.Enums;
 
 public enum TaskCompletionStatus
 {
-  Pending, Completed
+  Pending, Completed, Running, Failed
 }

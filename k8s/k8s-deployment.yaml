@@ -83,7 +83,7 @@ spec:
   template:
     metadata:
       labels:
-        app: perspektivenfabrik-api-pod
+        app: perspektivenfabrik-api-pod      
     spec:
       containers:
         - name: perspektivenfabrik-api-container
@@ -99,6 +99,18 @@ spec:
             - configMapRef:
                 name: perspektivenfabrik-db-config
           imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /healthz/ready
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /healthz/live
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment

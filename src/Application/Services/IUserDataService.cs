@@ -8,4 +8,5 @@ public interface IUserDataService
     public Task<UserDto?> GetActiveUserById(Guid userId, CancellationToken cancellationToken = default);
     Task<bool> CheckIfEmailExists(string dataEmail, CancellationToken ct);
     Task RegisterUser(UserDto userDto, CancellationToken ct);
+    Task<string?> GetUserPreferredLanguageCode(Guid userId, CancellationToken ct);
 }
