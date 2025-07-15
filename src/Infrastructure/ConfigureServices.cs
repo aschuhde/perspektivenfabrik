@@ -30,7 +30,7 @@ public static class ConfigureServices
         services.AddScoped<IRefreshTokenRepositoryService, RefreshTokenRepositoryService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IOtpService, OtpService>();
-        services.AddScoped<INotificationService, NotificationService>();
+        services.AddSingleton<INotificationService, NotificationService>();
         services.AddScoped<MailService>();
         services.AddSingleton<NotificationStorageService>();
         services.AddScoped<NotificationSenderService>();
