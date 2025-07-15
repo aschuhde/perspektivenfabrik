@@ -102,13 +102,13 @@ spec:
           readinessProbe:
             httpGet:
               port: 80
-              path: /healthz/ready
+              path: /api/healthz/ready
             initialDelaySeconds: 15
             timeoutSeconds: 5
           livenessProbe:
             httpGet:
               port: 80
-              path: /healthz/live
+              path: /api/healthz/live
             initialDelaySeconds: 15
             timeoutSeconds: 5
 ---
