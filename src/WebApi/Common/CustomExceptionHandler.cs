@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace WebApi.Common;
 
-public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger, INotificationService notificationService) : IExceptionHandler
+public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger, INotificationService? notificationService = null) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var errorId = Guid.NewGuid();
         logger.LogError(exception, "An internal server error occurred with id {ErrorId}.", errorId);
         var requestUrl = httpContext.Request.GetUri().ToString();
-        notificationService.ErrorOccured(errorId, exception.ToString(), httpContext.Request.Method, requestUrl, httpContext.User.GetUserIdOrNull());
+        notificationService?.ErrorOccured(errorId, exception.ToString(), httpContext.Request.Method, requestUrl, httpContext.User.GetUserIdOrNull());
         var error = new ErrorResponse
         {
             Error = new ErrorResponseData
