@@ -42,6 +42,7 @@ builder.Services.AddWebApi(builder.Configuration);
 builder.Services.AddSingleton<StartupHealthCheck>();
 builder.Services.AddHealthChecks().AddCheck<StartupHealthCheck>("Startup", tags: [StartupHealthCheck.ReadyTag]);
 builder.Services.AddHostedService<StartupBackgroundService>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 app.UseRequestLocalization(options =>
