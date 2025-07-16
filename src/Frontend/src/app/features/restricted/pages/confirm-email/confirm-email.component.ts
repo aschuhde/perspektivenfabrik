@@ -11,6 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import {RefreshTokenService} from "../../../../core/services/refresh-token.service";
 import {JWTTokenService} from "../../../../core/services/jwt-token.service";
 import { TranslatePipe } from '@ngx-translate/core';
+import {LogoutService} from "../../../../core/services/logout.service";
 
 @Component({
   selector: 'app-confirm-email',
@@ -26,6 +27,7 @@ export class ConfirmEmailComponent {
   private refreshTokenService = inject(RefreshTokenService);
   private jwtTokenService = inject(JWTTokenService);
   private newOtpRequestDate: Date | null = null;
+  private logoutService = inject(LogoutService);
   newOtpWaitingSeconds: number | null = null;
   otpWrong = false;
   otpExpired = false;
@@ -215,6 +217,7 @@ export class ConfirmEmailComponent {
   }
   
   requestOtp(){
+    this.errorOccured = false;
     this.apiService.webApiEndpointsPostRequestOtp({
       
     }).pipe(catchError((error) => {
@@ -223,5 +226,9 @@ export class ConfirmEmailComponent {
     })).subscribe(x => {
        this.newOtpRequestDate = x.canRequestNewOtpAtUtc ? new Date(x.canRequestNewOtpAtUtc) : null;
     });
+  }
+
+  async signOut(){
+    await this.logoutService.signOut();
   }
 }

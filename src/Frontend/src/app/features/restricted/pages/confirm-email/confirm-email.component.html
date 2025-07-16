@@ -1,40 +1,45 @@
-<div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
-    <h1 class="color-white" style="margin: 0">{{ "confirm-email.title" | translate }}</h1>
-    <p class="color-white">{{ "confirm-email.we-sent-you-a-code" | translate }}. <br>{{ "confirm-email.please-put-in-the-code" | translate }}!</p>
-    <div class="otp-container">
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" autofocus (keydown)="onOtp1KeyDown($event)" #otp1Input [(ngModel)]="otp1" type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" (keydown)="onOtp2KeyDown($event)" #otp2Input [(ngModel)]="otp2" type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" (keydown)="onOtp3KeyDown($event)" #otp3Input [(ngModel)]="otp3" type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" (keydown)="onOtp4KeyDown($event)" #otp4Input [(ngModel)]="otp4" type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" (keydown)="onOtp5KeyDown($event)" #otp5Input [(ngModel)]="otp5" type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="without-subscript-wrapper">
-            <input (paste)="onPaste($event)" (keydown)="onOtp6KeyDown($event)" #otp6Input [(ngModel)]="otp6" type="text" matInput />
-        </mat-form-field>
-        <button class="secondary" (click)="confirmOtp()" style="height: 100%" [disabled]="otpConfirmationRunning"><mat-icon fontIcon="arrow_right_alt"></mat-icon></button>
+<div style="height: 100%; background-color: #B497E5;display: flex; flex-direction: column; justify-content: stretch">
+    <div class="text-right" style="flex-grow: 0; align-self: end; padding: 1rem 1rem 0 0;">
+        <button class="secondary" (click)="signOut()">{{ "confirm-email.sign-out" | translate }} <mat-icon fontIcon="logout"></mat-icon></button>
     </div>
-    @if(otpWrong){
-        <p class="color-error">{{ "confirm-email.the-code-is-incorrect" | translate }}!<br>{{ "confirm-email.please-check-the-code" | translate }}!</p>
-    }
-    @if(errorOccured){
-        <p class="color-error">{{ "confirm-email.unexpected-error-occured" | translate }}!<br>{{ "confirm-email.please-retry-or-contact" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a>.</p>
-    }
-    @if(otpExpired){
-        <p class="color-error">{{ "confirm-email.the-code-is-expired" | translate }}!<br>{{ "confirm-email.please-put-in-the-last-code" | translate }}</p>
-    }
-    @if(canRequestNewOtp){
-        <p class="color-white"><span class="a" (click)="requestOtp()">{{ "confirm-email.request-new-code" | translate }}</span></p>   
-    }@else{
-        <p class="color-white"><i>{{ "confirm-email.request-new-code-in" | translate }} {{ newOtpWaitingSeconds }} {{ "confirm-email.seconds" | translate }}!</i></p>
-    }
-    <p class="color-white" style="font-size: 0.9rem">{{ "confirm-email.contact-if-there-are-problems" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center;flex-grow: 1">
+        <h1 class="color-white" style="margin: 0">{{ "confirm-email.title" | translate }}</h1>
+        <p class="color-white">{{ "confirm-email.we-sent-you-a-code" | translate }}. <br>{{ "confirm-email.please-put-in-the-code" | translate }}!</p>
+        <div class="otp-container">
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" autofocus (keydown)="onOtp1KeyDown($event)" #otp1Input [(ngModel)]="otp1" type="text" matInput />
+            </mat-form-field>
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" (keydown)="onOtp2KeyDown($event)" #otp2Input [(ngModel)]="otp2" type="text" matInput />
+            </mat-form-field>
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" (keydown)="onOtp3KeyDown($event)" #otp3Input [(ngModel)]="otp3" type="text" matInput />
+            </mat-form-field>
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" (keydown)="onOtp4KeyDown($event)" #otp4Input [(ngModel)]="otp4" type="text" matInput />
+            </mat-form-field>
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" (keydown)="onOtp5KeyDown($event)" #otp5Input [(ngModel)]="otp5" type="text" matInput />
+            </mat-form-field>
+            <mat-form-field class="without-subscript-wrapper">
+                <input (paste)="onPaste($event)" (keydown)="onOtp6KeyDown($event)" #otp6Input [(ngModel)]="otp6" type="text" matInput />
+            </mat-form-field>
+            <button class="secondary" (click)="confirmOtp()" style="height: 100%" [disabled]="otpConfirmationRunning"><mat-icon fontIcon="arrow_right_alt"></mat-icon></button>
+        </div>
+        @if(otpWrong){
+            <p class="color-error">{{ "confirm-email.the-code-is-incorrect" | translate }}!<br>{{ "confirm-email.please-check-the-code" | translate }}!</p>
+        }
+        @if(errorOccured){
+            <p class="color-error">{{ "confirm-email.unexpected-error-occured" | translate }}!<br>{{ "confirm-email.please-retry-or-contact" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a>.</p>
+        }
+        @if(otpExpired){
+            <p class="color-error">{{ "confirm-email.the-code-is-expired" | translate }}!<br>{{ "confirm-email.please-put-in-the-last-code" | translate }}</p>
+        }
+        @if(canRequestNewOtp){
+            <p class="color-white"><span class="a" (click)="requestOtp()">{{ "confirm-email.request-new-code" | translate }}</span></p>   
+        }@else{
+            <p class="color-white"><i>{{ "confirm-email.request-new-code-in" | translate }} {{ newOtpWaitingSeconds }} {{ "confirm-email.seconds" | translate }}!</i></p>
+        }
+        <p class="color-white" style="font-size: 0.9rem">{{ "confirm-email.contact-if-there-are-problems" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+    </div>
 </div>
