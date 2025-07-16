@@ -46,7 +46,14 @@ export class LanguageService {
     getCurrentLanguage(): Language | null{
         if (isPlatformServer(this.platformId)) {
 
+            let parts = this.request?.url.split('?') ?? [];
             let serverLang = this.parseCookies(this.request?.headers.get('cookie') ?? "")?.[LANGUAGE_COOKIE_NAME];
+            if(parts.length > 1){
+                let queryLang = new URLSearchParams(parts[1]).get("hl") ?? "";
+                if(this.isValidLanguage(queryLang)) {
+                    serverLang = queryLang;
+                }
+            }
             if(!serverLang){
                 const acceptLanguage = this.request?.headers.get('accept-language') ?? "";
                 serverLang = this.getPreferredLanguage(acceptLanguage) ?? "";
@@ -69,7 +76,14 @@ export class LanguageService {
             .map(lang => lang.split(';')[0])
             .map(lang => lang.toLowerCase().substring(0, 2));
 
-        for (const lang of languages) {
+        for (const code of languages) {
+            let lang = code;
+            if(code.toLowerCase().includes("de")){
+                lang = "de";
+            }
+            if(code.toLowerCase().includes("it")){
+                lang = "it";
+            }             
             if (this.isValidLanguage(lang)) {
                 return lang;
             }
@@ -88,6 +102,7 @@ export class LanguageService {
             this.setLanguageCookie(languageCode);
             window.localStorage.setItem(LANGUAGE_COOKIE_NAME, languageCode);
         }
+        this.updateHeader();
     }
 
     private parseCookies(cookieHeader: string = ''): { [key: string]: string } {
@@ -98,6 +113,13 @@ export class LanguageService {
         }, {} as { [key: string]: string });
     }
 
+    updateHeader(){
+        this.document.querySelector("html")?.setAttribute("lang", this.currentLanguageCode);
+        this.document.querySelector("meta[name=description]")?.setAttribute("content", this.translateService.instant("meta.description") );
+        this.document.querySelector("meta[property='og:description']")?.setAttribute("content", this.translateService.instant("meta.description"));
+        this.document.querySelector("meta[name=language]")?.setAttribute("content", this.currentLanguageCode);
+    }
+    
     private setLanguageCookie(language: Language) {
         // Set cookie with a 1-year expiry
         const oneYear = 365 * 24 * 60 * 60 * 1000;

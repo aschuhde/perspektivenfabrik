@@ -10,6 +10,8 @@ data:
   ASPNETCORE_HTTPS_PORTS: ""
   JWT-KEY: "replace this key. it should be long enough to have ASCII 512 bits. replace this key. it should be long enough to have ASCII 512 bits"
   CONFIG_AzureMonitor__ConnectionString: "put App Insights Connection String here or disable with CONFIG_AzureMonitor__Enabled: false"
-  CONFIG_Smtp__SmtpPassword: "put your smtp password here"
+  CONFIG_Smtp__ClientId: "smtp app client id"
+  CONFIG_Smtp__ClientSecret: "smtp app client secret"
+  CONFIG_Smtp__AuthorityUrl: "https://login.microsoftonline.com/tenant-id/v2.0"
     
     
