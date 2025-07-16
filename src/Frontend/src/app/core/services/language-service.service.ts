@@ -29,6 +29,9 @@ export class LanguageService {
             if(language) {
                 this.transferState.set(LANGUAGE_KEY, language);
             }
+            if(!this.isValidLanguage(language)) {
+                language = "de";
+            }
         }else{
             const transferredLang = this.transferState.get(LANGUAGE_KEY, null);
             language = transferredLang || language;
@@ -42,8 +45,8 @@ export class LanguageService {
     
     getCurrentLanguage(): Language | null{
         if (isPlatformServer(this.platformId)) {
-            const headers = (this.request?.headers as any) as { [key: string]: string};
-            let serverLang = this.parseCookies(headers["cookie"] ?? "")?.[LANGUAGE_COOKIE_NAME];
+
+            let serverLang = this.parseCookies(this.request?.headers.get('cookie') ?? "")?.[LANGUAGE_COOKIE_NAME];
             if(!serverLang){
                 const acceptLanguage = this.request?.headers.get('accept-language') ?? "";
                 serverLang = this.getPreferredLanguage(acceptLanguage) ?? "";

@@ -41,9 +41,13 @@ public static class ClaimsPrincipalExtensions
         return Guid.TryParse(userIdName, out var userId) ? userId : null;
     }
     
-    private static ClaimsPrincipalUserData ToUserData(this IEnumerable<Claim> claimsEnumerable)
+    private static ClaimsPrincipalUserData? ToUserData(this IEnumerable<Claim> claimsEnumerable)
     {
         var claims = claimsEnumerable.ToList();
+        if (claims.All(x => x.Type != UserIdName))
+        {
+            return null;
+        }
         return new ClaimsPrincipalUserData()
         {
             UserId = Guid.Parse(ThrowIf.NullOrWhitespace(claims.FirstOrDefault(x => x.Type == UserIdName)?.Value,
@@ -52,11 +56,11 @@ public static class ClaimsPrincipalExtensions
             Roles = claims.Where(x => x.Type == RoleName).Select(x => x.Value).ToArray()
         };
     }
-    public static ClaimsPrincipalUserData ToUserData(this ClaimsPrincipal claimsPrincipal)
+    public static ClaimsPrincipalUserData? ToUserData(this ClaimsPrincipal claimsPrincipal)
     {
         return claimsPrincipal.Claims.ToUserData();
     }
-    public static ClaimsPrincipalUserData ToUserData(this ClaimsIdentity claimsIdentity)
+    public static ClaimsPrincipalUserData? ToUserData(this ClaimsIdentity claimsIdentity)
     {
         return claimsIdentity.Claims.ToUserData();
     }

@@ -7,6 +7,7 @@ import {MatFormField} from "@angular/material/form-field";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import {AuthorizationRouteNames} from "../../authorization.routes.names";
+import {LanguageService} from "../../../../core/services/language-service.service";
 
 @Component({
     selector: 'app-login',
@@ -27,17 +28,17 @@ export class LoginComponent implements OnInit{
     hasGeneralError = false;
   constructor(private formBuilder:FormBuilder,
               private authService: AuthorizationService,
-              private translateService: TranslateService,
+              private languageService: LanguageService,
               private route: ActivatedRoute,
               private router: Router) {
-
+      this.languageService.detectLanguage();
   }
 
   ngOnInit(): void {
       this.route.queryParamMap.subscribe(params => {
         this.returnUrl = params.get('returnUrl') ?? this.returnUrl;
-      })
-    }
+      });
+  }
     
   onSubmit(): void{
       this.login();

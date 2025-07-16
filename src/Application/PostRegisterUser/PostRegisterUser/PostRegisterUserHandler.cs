@@ -22,6 +22,11 @@ public sealed class PostRegisterUserHandler(IServiceProvider serviceProvider, IV
         return new PostRegisterUserMailAlreadyExistsResponse();
       }
 
+      if (!string.IsNullOrWhiteSpace(command.Data.DateOfBirth)) // honeypot
+      {
+        return new PostRegisterUserBotDetectedResponse();
+      }
+      
       var user = new UserDto
       {
         Email = command.Data.Email,

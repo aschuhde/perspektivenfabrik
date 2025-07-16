@@ -16,4 +16,5 @@ export interface ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequ
     lastName?: string;
     languageCode?: string;
     password?: string;
+    dateOfBirth?: string;
 }

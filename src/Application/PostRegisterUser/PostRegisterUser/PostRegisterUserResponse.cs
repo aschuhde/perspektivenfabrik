@@ -37,6 +37,15 @@ public sealed class PostRegisterUserOkResponse : PostRegisterUserResponse
   public DateTimeOffset? ExpiresUtc { get; init; }
 }
 
+public sealed class PostRegisterUserBotDetectedResponse : PostRegisterUserResponse
+{
+  public PostRegisterUserBotDetectedResponse()
+  {
+    Status = PostRegisterUserResponseStatus.Ok;
+  }  
+}
+
+
 public sealed class PostRegisterUserMailAlreadyExistsResponse : PostRegisterUserResponse
 {
   public PostRegisterUserMailAlreadyExistsResponse()

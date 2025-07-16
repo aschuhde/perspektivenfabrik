@@ -26,7 +26,8 @@ export class RegisterComponent {
     firstName: ['',Validators.required],
     lastName: ['',Validators.required],
     email: ['',Validators.required],
-    password: ['',Validators.required]
+    password: ['',Validators.required],
+    dateOfBirth: [''],
   });
 
   mailAlreadyExists = false;
@@ -117,7 +118,8 @@ export class RegisterComponent {
         firstName:  val.firstName,
         lastName:  val.lastName,
         password: val.password,
-        languageCode: this.languageService.currentLanguageCode
+        languageCode: this.languageService.currentLanguageCode,
+        dateOfBirth: val.dateOfBirth,
       }
     }).pipe(catchError((error) => {
       this.errorMessage = this.translateService.instant("register.unknown-error-message");
