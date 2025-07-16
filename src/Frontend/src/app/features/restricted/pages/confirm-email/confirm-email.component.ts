@@ -1,10 +1,9 @@
-import {Component, ElementRef, inject, ViewChild, PLATFORM_ID, Inject} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
+import {Component, ElementRef, inject, ViewChild, PLATFORM_ID} from '@angular/core';
 import { ApiService } from '../../../../server/api/api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {RestrictedRouteNames} from "../../restricted-route-names";
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
@@ -15,14 +14,15 @@ import {LogoutService} from "../../../../core/services/logout.service";
 
 @Component({
   selector: 'app-confirm-email',
-  imports: [MatFormField, MatInput, FormsModule, MatLabel, MatIcon, TranslatePipe],
+  imports: [MatFormField, MatInput, FormsModule, MatIcon, TranslatePipe],
   templateUrl: './confirm-email.component.html',
   styleUrl: './confirm-email.component.scss'
 })
 export class ConfirmEmailComponent {
   private apiService = inject(ApiService)
   private platformId = inject(PLATFORM_ID);
-  private route = inject(ActivatedRoute)
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
   returnUrl = stringEmptyPropagate(this.route.snapshot.queryParams['returnUrl'], RestrictedRouteNames.MyProjectsUrl());
   private refreshTokenService = inject(RefreshTokenService);
   private jwtTokenService = inject(JWTTokenService);
@@ -113,7 +113,7 @@ export class ConfirmEmailComponent {
     })).subscribe(x => {
       if(x.status === "Confirmed" || x.status === "NotRequired"){
         this.refreshTokenService.refreshToken(this.jwtTokenService.getJwtToken()!, this.jwtTokenService.getRefreshToken()!).then(() => {
-          window.location.href = this.returnUrl;
+          this.router.navigateByUrl(this.returnUrl).then();
         });
         return;
       }
@@ -187,7 +187,7 @@ export class ConfirmEmailComponent {
       x => {
         if(!x.emailConfirmationRequired){
           this.refreshTokenService.refreshToken(this.jwtTokenService.getJwtToken()!, this.jwtTokenService.getRefreshToken()!).then(() => {
-            window.location.href = this.returnUrl;
+            this.router.navigateByUrl(this.returnUrl).then();
           });
           return;
         }

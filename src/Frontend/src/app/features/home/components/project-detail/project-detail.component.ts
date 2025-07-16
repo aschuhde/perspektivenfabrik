@@ -43,6 +43,9 @@ import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 import {
   ApplicationModelsApiModelsApiContactSpecificationWebsite
 } from "../../../../server/model/applicationModelsApiModelsApiContactSpecificationWebsite";
+import { ReportProjectDialogComponent } from '../../dialogs/report-project-dialog/report-project-dialog.component';
+import {ActivatedRoute} from "@angular/router";
+import {MessageDialogComponent} from "../../../../shared/dialogs/message-dialog/message-dialog.component";
 
 @Component({
   selector: 'app-project-detail',
@@ -51,6 +54,7 @@ import {
   styleUrl: './project-detail.component.scss'
 })
 export class ProjectDetailComponent {
+    
       
     apiProject = model.required<ApplicationModelsApiModelsApiProject | null>();
     localeDataProvider = inject(LocaleDataProvider)
@@ -58,6 +62,7 @@ export class ProjectDetailComponent {
   readonly dialog = inject(MatDialog);
     translateService = inject(TranslateService);
   apiBasePath = inject(BASE_PATH)
+  route = inject(ActivatedRoute)
 
   get project(){
     return this.apiProjectModel.project;
@@ -119,7 +124,10 @@ export class ProjectDetailComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         if(changes["apiProject"]?.currentValue){
-          this.apiProjectModel.loadFromApiProject(changes["apiProject"]?.currentValue, this.localeDataProvider, this.apiBasePath);           
+          this.apiProjectModel.loadFromApiProject(changes["apiProject"]?.currentValue, this.localeDataProvider, this.apiBasePath);
+          if(this.route.snapshot.queryParams["open-report-dialog"] === "true"){
+            this.startReportProject();
+          }
         }
     }
     getLocationSpecificationShortName(locationSpecification: ApplicationModelsApiModelsApiLocationSpecification){
@@ -280,5 +288,24 @@ export class ProjectDetailComponent {
       return urlTranslation.value;
     }
     return website.website?.rawUrl ?? "";
+  }
+
+  startReportProject() {
+    this.dialog.open(ReportProjectDialogComponent, {
+      data: {
+        projectEntityId: this.project?.entityId,
+        projectTitle: this.projectTitle,
+        onSubmitted: () => {
+          this.dialog.open(MessageDialogComponent, {
+            data: {
+              title: this.translateService.instant("report-project.submitted-title"),
+              message: this.translateService.instant("report-project.submitted-message"),
+              isHtmlMessage: false,
+              buttonText: this.translateService.instant("general.close")
+            }
+          });
+        }
+      }
+    });
   }
 }

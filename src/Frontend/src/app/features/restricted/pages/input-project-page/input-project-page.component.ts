@@ -5,13 +5,12 @@ import { InputProjectComponent } from '../../components/input-project/input-proj
 import {ApiService} from "../../../../server/api/api.service";
 import { ProjectSaveContext } from '../../models/project-save-context';
 import { RestrictedRouteNames } from '../../restricted-route-names';
-import {MessageDialogComponent} from "../../../../shared/dialogs/message-dialog/message-dialog.component";
-import {MessageDialogData} from "../../../../shared/models/message-dialog-data";
 import { catchError, of, throwError } from 'rxjs';
 import { MatDialog } from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core"
 import {handleProjectSaveErrorAndGetDialogData} from "../../tools/error-handling";
 import {Language} from "../../../../core/types/general-types";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-input-project-page',
@@ -25,6 +24,7 @@ export class InputProjectPageComponent {
   projectInput: ProjectInput = new ProjectInput(() => this.translateService.currentLang as Language);
   apiService = inject(ApiService)
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
+  router = inject(Router);
   
   constructor() { 
     this.projectSaveContext.hasChanges = true;
@@ -38,7 +38,7 @@ export class InputProjectPageComponent {
     })).subscribe(x => {
       if((x as any).project){
         InputProjectComponent.IgnoreUnloadEvent = true;
-        window.location.href = `${RestrictedRouteNames.UpdateProjectUrl((x as any).project.entityId)}${window.location.search}`;
+        this.router.navigateByUrl(`${RestrictedRouteNames.UpdateProjectUrl((x as any).project.entityId)}${window.location.search}`).then();
       }
     });
   }

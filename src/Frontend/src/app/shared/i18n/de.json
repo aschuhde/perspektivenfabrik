@@ -395,5 +395,15 @@
       "reject-offer": "Eintrag ablehnen",
       "please-add-a-reason": "Bitte gib eine Bergündung an",
       "reject": "Ablehnen"
+    },
+    "report-project": {
+      "title": "Projekt melden",
+      "please-sign-in-to-report-project": "Bitte melde dich an, um das Projekt zu melden!",
+      "to-login": "Zur Anmeldung",
+      "to-registration": "Zur Registrierung",
+      "if-you-dont-have-an-account-register-or-send-mail": "Wenn du noch keinen Account hast, kannst du dich registrieren oder schick uns alternativ eine E-Mail an",
+      "submitted-title": "Danke für deine Hilfe!",
+      "submitted-message": "Wir haben deine Meldung erhalten und werden sie in Kürze prüfen!",
+      "please-let-us-know-why-you-report-the-project": "Bitte teile uns mit, warum du dieses Projekt melden möchtest:"
     }
 }

@@ -395,5 +395,15 @@
     "reject-offer": "Rifiuta voce",
     "please-add-a-reason": "Per favore inserisci una motivazione",
     "reject": "Rifiuta"
+  },
+  "report-project": {
+    "title": "Segnala progetto",
+    "please-sign-in-to-report-project": "Per favore accedi per segnalare il progetto!",
+    "to-login": "Vai al login",
+    "to-registration": "Vai alla registrazione",
+    "if-you-dont-have-an-account-register-or-send-mail": "Se non hai ancora un account, puoi registrarti oppure inviarci una email a",
+    "submitted-title": "Grazie per il tuo aiuto!",
+    "submitted-message": "Abbiamo ricevuto la tua segnalazione e la esamineremo a breve!",
+    "please-let-us-know-why-you-report-the-project": "Per favore, spiegaci perché vuoi segnalare questo progetto:"
   }
 }

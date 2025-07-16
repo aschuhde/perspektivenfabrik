@@ -11,7 +11,7 @@ import {
   ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse
 } from "../../../../server/model/applicationPostRegisterUserPostRegisterUserPostRegisterUserResponse";
 import {AuthorizationService} from "../../services/auth.service";
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router } from '@angular/router';
 import {RestrictedRouteNames} from "../../../restricted/restricted-route-names";
 
 @Component({
@@ -34,6 +34,7 @@ export class RegisterComponent {
   errorMessage = "";
   hasError = false;
   showInvalidations = false;
+  returnUrl = "/";
 
 
   constructor(private formBuilder:FormBuilder,
@@ -41,8 +42,15 @@ export class RegisterComponent {
               private authService: AuthorizationService,
               private translateService: TranslateService,
               private languageService: LanguageService,
+              private route: ActivatedRoute,
               private router: Router) {
 
+  }
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe(params => {
+      this.returnUrl = params.get('returnUrl') ?? this.returnUrl;
+    });
   }
   
   get firstnameInvalidMessage(){
@@ -137,7 +145,7 @@ export class RegisterComponent {
       }
       this.authService.login(val.email, val.password).then(
           (response) => {
-            this.router.navigateByUrl(RestrictedRouteNames.ConfirmMailUrl());
+            this.router.navigateByUrl(RestrictedRouteNames.ConfirmMailUrl(this.returnUrl));
           }
       ).catch(() => {
         this.errorMessage = this.translateService.instant("register.unknown-error-message");

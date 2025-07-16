@@ -8,6 +8,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import {AuthorizationRouteNames} from "../../authorization.routes.names";
 import {LanguageService} from "../../../../core/services/language-service.service";
+import {JWTTokenService} from "../../../../core/services/jwt-token.service";
+import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
 
 @Component({
     selector: 'app-login',
@@ -22,13 +24,14 @@ export class LoginComponent implements OnInit{
     password: ['',Validators.required]
   });
 
-  private returnUrl: string = "/";
+  returnUrl: string = "/";
   wrongCredentials = false;
   userDoesNotExist = false;
     hasGeneralError = false;
   constructor(private formBuilder:FormBuilder,
               private authService: AuthorizationService,
               private languageService: LanguageService,
+              private tokenService: JWTTokenService,
               private route: ActivatedRoute,
               private router: Router) {
       this.languageService.detectLanguage();
@@ -37,6 +40,13 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
       this.route.queryParamMap.subscribe(params => {
         this.returnUrl = params.get('returnUrl') ?? this.returnUrl;
+        if(this.tokenService.hasValidTokenButNeedToConfirmEmail()){
+            this.router.navigateByUrl(RestrictedRouteNames.ConfirmMailUrl(this.returnUrl)).then();
+            return;
+        }
+        if(this.tokenService.hasValidToken()){
+            this.router.navigateByUrl(this.returnUrl).then();
+        }
       });
   }
     

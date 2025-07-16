@@ -20,5 +20,5 @@ export class RestrictedRouteNames{
   public static readonly PendingApprovalsUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.PendingApprovalsName}`;
 
   public static readonly ConfirmMailName = "confirm-email";
-  public static readonly ConfirmMailUrl = () => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.ConfirmMailName}`;
+  public static readonly ConfirmMailUrl = (returnUrl = "") => `${AppRouteNames.RestrictedUrl()}/${RestrictedRouteNames.ConfirmMailName}${(returnUrl ? `?returnUrl=${encodeURIComponent(returnUrl)}` : "")}`;
 }

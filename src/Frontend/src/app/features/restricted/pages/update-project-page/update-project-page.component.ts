@@ -4,7 +4,7 @@ import {
   NavigationBarFullComponent
 } from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
 import {InputProjectComponent} from "../../components/input-project/input-project.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../../../server/api/api.service";
 import {ApplicationModelsApiModelsApiProject} from "../../../../server/model/applicationModelsApiModelsApiProject";
 import {ProjectSaveContext} from "../../models/project-save-context";
@@ -35,6 +35,7 @@ export class UpdateProjectPageComponent {
   isLoading: boolean = true;
   projectSaveContext: ProjectSaveContext = new ProjectSaveContext();
   apiBasePath = inject(BASE_PATH);
+  router = inject(Router);
   
   loadProject(){
     if(isServer()) return;
@@ -83,7 +84,7 @@ export class UpdateProjectPageComponent {
 
   onDelete() {
     this.apiService.webApiEndpointsDeleteProject({}, this.projectIdentifier).subscribe(x => {
-      window.location.href = RestrictedRouteNames.MyProjectsUrl();
+      this.router.navigateByUrl(RestrictedRouteNames.MyProjectsUrl()).then();
     });
   }
 }

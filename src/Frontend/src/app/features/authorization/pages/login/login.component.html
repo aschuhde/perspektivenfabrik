@@ -26,11 +26,11 @@
         @if(wrongCredentials){
             <p class="invalid-message">{{ "login.wrong-credentials" | translate }}</p>
         }
-        <p class="color-white" style="font-size: .9rem"><a href="{{ AuthorizationRouteNames.ForgotPasswordUrl() }}">{{ "login.forgot-password" | translate }}</a></p>
+        <p class="color-white" style="font-size: .9rem"><a href="{{ AuthorizationRouteNames.ForgotPasswordUrl(returnUrl) }}">{{ "login.forgot-password" | translate }}</a></p>
     </form>
     <div style="width: 20rem; align-self: center; margin-top: 2rem">
         <hr class="hr-white">
         <h5 class="color-white">{{ "login.no-user-yet" | translate }}</h5>
-        <a href="{{ AuthorizationRouteNames.RegisterUrl() }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "login.register-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
+        <a href="{{ AuthorizationRouteNames.RegisterUrl(returnUrl) }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "login.register-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
     </div>
 </div>

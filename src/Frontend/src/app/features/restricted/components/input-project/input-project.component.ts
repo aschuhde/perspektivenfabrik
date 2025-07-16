@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, input, model, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, model, output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -48,6 +48,8 @@ import {
 } from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
 import {TranslationValue} from "../../../../shared/models/translation-value";
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
+import { isPlatformBrowser } from '@angular/common';
+import {UrlService} from "../../../../core/services/url-service.service";
 
 @Component({
     selector: 'app-input-project',
@@ -75,6 +77,7 @@ import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
 })
 export class InputProjectComponent {
     
+    urlService = inject(UrlService)
     apiBasePath = inject(BASE_PATH);
     readonly dialog = inject(MatDialog);
     apiService = inject(ApiService);
@@ -98,6 +101,7 @@ export class InputProjectComponent {
     translateService = inject(TranslateService);
     isDescriptionOtherLanguageActive: boolean = false;
     descriptionMainLanguage = this.translateService.currentLang as Language;
+    platformId = inject(PLATFORM_ID);
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
       spellcheck: true,
@@ -173,17 +177,18 @@ export class InputProjectComponent {
     }
   
     constructor() {
-      window.addEventListener("beforeunload", (event) => {
-        if(InputProjectComponent.IgnoreUnloadEvent){
-          return;
-        }
-        if(this.projectSaveContext()?.hasChanges ?? false){
-          event.preventDefault();
-          event.returnValue = true;
-        }
-      });
-      const queryParams = new URLSearchParams(window.location.search);
-      const group = queryParams.get('group');
+      if(isPlatformBrowser(this.platformId)) {
+        window.addEventListener("beforeunload", (event) => {
+          if (InputProjectComponent.IgnoreUnloadEvent) {
+            return;
+          }
+          if (this.projectSaveContext()?.hasChanges ?? false) {
+            event.preventDefault();
+            event.returnValue = true;
+          }
+        });
+      }
+      const group = this.urlService.getQueryParameter("group");
       if (group) {
         this.currentGroup = group;
       }
@@ -759,9 +764,11 @@ get typeNameGenitive(){
     if(groupName === this.currentGroup) return;
     this.currentGroup = groupName;
     
-    const url = new URL(window.location.href);
-    url.searchParams.set("group", groupName);
-    window.history.replaceState({}, '', url.toString());
+    if(isPlatformBrowser(this.platformId)){
+      const url = new URL(window.location.href);
+      url.searchParams.set("group", groupName);
+      window.history.replaceState({}, '', url.toString()); 
+    }
   }
   
   getGroups(){
@@ -921,6 +928,9 @@ get typeNameGenitive(){
   get internalLink(){
       const entityId = this.projectInput().entityId;
       if(!entityId) return "#";
+      if(!isPlatformBrowser(this.platformId)){
+        return "";
+      }
       return window.location.origin + HomeRouteNames.InternalProjectUrl(entityId)
   }
   get previewLink(){

@@ -10,6 +10,6 @@ export class OtpService {
     constructor(private router: Router) {
     }
     confirmEmail(returnUrl? : string): Promise<boolean>{
-        return this.router.navigate([RestrictedRouteNames.ConfirmMailUrl()], {queryParams: {returnUrl: returnUrl ?? this.router.url}});
+        return this.router.navigateByUrl(RestrictedRouteNames.ConfirmMailUrl(returnUrl));
     }
 }

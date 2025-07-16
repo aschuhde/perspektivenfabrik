@@ -29,6 +29,7 @@
     background-color: #B497E5;
     display: flex;
     color: white;
+    position: relative;
 
     .bottom-left{        
         width: 50%;
@@ -43,6 +44,15 @@
         > div{
             padding: 1rem 8rem 1rem 5rem;
         }
+    }
+    .bottom-absolute{
+      position: absolute;
+      top: .3rem;
+      right: .3rem;
+      
+      p {
+        margin: 0;
+      }
     }
 }
 .gallery{

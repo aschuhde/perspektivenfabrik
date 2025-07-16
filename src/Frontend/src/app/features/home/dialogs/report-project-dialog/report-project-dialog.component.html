@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{ "report-project.title" | translate }}</h2>
+<mat-dialog-content>
+    <div class="text-center">
+    @if(canReport){
+        <p>{{ "report-project.please-let-us-know-why-you-report-the-project" | translate }}</p>
+        <mat-form-field class="textarea-container w-100">
+            <textarea rows="10" matInput [(ngModel)]="reason"></textarea>
+        </mat-form-field>
+    } @else {
+        <p>{{ "report-project.please-sign-in-to-report-project" | translate }}</p>
+        <a href="{{ loginUrl }}"><button>{{ "report-project.to-login" | translate }}</button></a>
+        <p>{{ "report-project.if-you-dont-have-an-account-register-or-send-mail" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+        <a href="{{ registerUrl }}"><button class="secondary">{{ "report-project.to-registration" | translate }}</button></a>
+    }
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    @if(canReport){
+        <button [disabled]="!reason" (click)="submit()" mat-dialog-close><mat-icon fontIcon="report"></mat-icon> {{ "report-project.title" | translate }}</button>
+        <button class="secondary" mat-dialog-close>{{ "general.cancel" | translate }}</button>
+    }@else{
+        <button mat-dialog-close>{{ "general.close" | translate }}</button>
+    }
+</mat-dialog-actions>

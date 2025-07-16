@@ -49,19 +49,19 @@ public class NotificationSenderService(NotificationStorageService notificationSt
       switch (notificationObject.Type)
       {
           case NotificationObjectType.ProjectUpdated:
-              return await SendNotificationInner($"Project {projectMetadata.Title} updated", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was updated by {notificationObject.UserName}.", ct);
+              return await SendNotificationInner($"Project {projectMetadata.Title} updated", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was updated by {notificationObject.UserName} ({notificationObject.UserId}).", ct);
           case NotificationObjectType.ProjectCreated:
-              return await SendNotificationInner($"New project created: {projectMetadata.Title}", $"A new project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was created by {notificationObject.UserName}.", ct);
+              return await SendNotificationInner($"New project created: {projectMetadata.Title}", $"A new project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was created by {notificationObject.UserName} ({notificationObject.UserId}).", ct);
           case NotificationObjectType.ProjectApproved:
-              return await SendNotificationInner($"Project approved: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was approved by {notificationObject.UserName}.", ct);
+              return await SendNotificationInner($"Project approved: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was approved by {notificationObject.UserName} ({notificationObject.UserId}).", ct);
           case NotificationObjectType.ProjectApprovalWithdrawn:
-              return await SendNotificationInner($"Project approval withdrawn: {projectMetadata.Title}", $"The approval of the project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was withdrawn by {notificationObject.UserName}. {notificationObject.Message}", ct);
+              return await SendNotificationInner($"Project approval withdrawn: {projectMetadata.Title}", $"The approval of the project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was withdrawn by {notificationObject.UserName} ({notificationObject.UserId}). {notificationObject.Message}", ct);
           case NotificationObjectType.ProjectRejected:
-              return await SendNotificationInner($"Project rejected: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was rejected by {notificationObject.UserName}. {notificationObject.Message}", ct);
+              return await SendNotificationInner($"Project rejected: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was rejected by {notificationObject.UserName} ({notificationObject.UserId}). {notificationObject.Message}", ct);
           case NotificationObjectType.ProjectReported:
-              return await SendNotificationInner($"Project reported: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was reported by {notificationObject.UserName}. {notificationObject.Message}", ct);
+              return await SendNotificationInner($"Project reported: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was reported by {notificationObject.UserName} ({notificationObject.UserId}). {notificationObject.Message}", ct);
           case NotificationObjectType.ProjectDeleted:
-              return await SendNotificationInner($"Project deleted: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was deleted by {notificationObject.UserName}. {notificationObject.Message}", ct);
+              return await SendNotificationInner($"Project deleted: {projectMetadata.Title}", $"The project with title {projectMetadata.Title} ({projectMetadata.EntityId}) was deleted by {notificationObject.UserName} ({notificationObject.UserId}). {notificationObject.Message}", ct);
       }
       return false;
   }
