@@ -60,6 +60,23 @@
     </div>
 </div>
 <div>
+    <a id="insta"></a>
     <h2 class="on-insta">{{ "aboutUs.onInsta" | translate }}</h2>
-    <p style="padding: 10rem; text-align: center">Todo: Insta Feed einblenden</p>
+    <div class="insta-container" [class.hidden]="waitingForInsta">
+        <div class="insta-content">
+            <div #instaContainer>
+                
+            </div>
+            @if(hasInstaConsent){
+                <p style="font-size: 0.8rem; text-align: end"><span (click)="banInsta()" class="a">Diesen Inhalt nicht mehr einblenden</span></p>
+            } @else {
+                <div class="insta-consent">
+                    <div class="text-center">
+                        <p>Mit dem Laden dieses Inhalts werden Cookies von Instagram verwendet. Bitte beachte die <a target="_blank" href="https://privacycenter.instagram.com/policy">Datenschutzrichtlinie</a> und <a target="_blank" href="https://privacycenter.instagram.com/policies/cookies/">Cookie-Richtlinie</a> von Instagram!</p>
+                        <button (click)="consentInsta()">Instagram-Seite laden</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -193,6 +193,45 @@
   top: -8rem;
 }
 
+.insta-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  
+  .insta-content{
+    width: 50rem;
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+}
+
+.insta-consent{
+  width: 50rem;
+  padding: 0 1rem;
+  max-width: 100%;
+  background-image: url('/images/about-us/insta-blur.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  aspect-ratio: 1.56;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+  > div{
+    background-color: vars.$bg-purple;
+    color: white;
+    padding: 2rem 1rem;
+    width: 90%;
+    border-radius: 1rem;
+    p{
+      margin: 0 0 1rem 0;
+      padding: 0;
+    }
+  }
+}
+
 @include responsive.desktop-medium {
   .rainbow {
     left: 4rem;
