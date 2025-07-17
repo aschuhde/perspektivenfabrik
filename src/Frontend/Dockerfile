@@ -15,6 +15,6 @@ COPY --from=node /app/dist /app/dist/
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 WORKDIR /app
-ENTRYPOINT ["npm", "run-script", "serve:ssr:Frontend"]
+ENTRYPOINT ["npm", "run-script", "serve:ssr:frontend"]
 EXPOSE ${ANGULAR_PORT}
 

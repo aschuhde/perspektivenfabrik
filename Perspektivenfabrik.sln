@@ -18,31 +18,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "src\Proxy\Proxy.csproj", "{7E7F717F-427E-483E-8CA1-2706DDE59061}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{E61A3700-7DBA-47FE-B78D-E2AC21299EDA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{E61A3700-7DBA-47FE-B78D-E2AC21299EDA}"
 	ProjectSection(SolutionItems) = preProject
-		src\Frontend\angular.json = src\Frontend\angular.json
-		src\Frontend\Dockerfile = src\Frontend\Dockerfile
-		src\Frontend\package.json = src\Frontend\package.json
-		src\Frontend\tsconfig.json = src\Frontend\tsconfig.json
-		src\Frontend\package-lock.json = src\Frontend\package-lock.json
-		src\Frontend\tsconfig.app.json = src\Frontend\tsconfig.app.json
+		src\frontend\angular.json = src\frontend\angular.json
+		src\frontend\Dockerfile = src\frontend\Dockerfile
+		src\frontend\package.json = src\frontend\package.json
+		src\frontend\tsconfig.json = src\frontend\tsconfig.json
+		src\frontend\package-lock.json = src\frontend\package-lock.json
+		src\frontend\tsconfig.app.json = src\frontend\tsconfig.app.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87580024-7BDF-418D-8459-09AB4CEFEE76}"
 	ProjectSection(SolutionItems) = preProject
-		src\Frontend\src\main.ts = src\Frontend\src\main.ts
-		src\Frontend\src\index.html = src\Frontend\src\index.html
-		src\Frontend\src\favicon.ico = src\Frontend\src\favicon.ico
-		src\Frontend\src\styles.scss = src\Frontend\src\styles.scss
-		src\Frontend\src\main.server.ts = src\Frontend\src\main.server.ts
-		src\Frontend\src\app\app.routes.ts = src\Frontend\src\app\app.routes.ts
-		src\Frontend\src\app\app.config.server.ts = src\Frontend\src\app\app.config.server.ts
-		src\Frontend\src\app\app.config.ts = src\Frontend\src\app\app.config.ts
+		src\frontend\src\main.ts = src\frontend\src\main.ts
+		src\frontend\src\index.html = src\frontend\src\index.html
+		src\frontend\src\favicon.ico = src\frontend\src\favicon.ico
+		src\frontend\src\styles.scss = src\frontend\src\styles.scss
+		src\frontend\src\main.server.ts = src\frontend\src\main.server.ts
+		src\frontend\src\app\app.routes.ts = src\frontend\src\app\app.routes.ts
+		src\frontend\src\app\app.config.server.ts = src\frontend\src\app\app.config.server.ts
+		src\frontend\src\app\app.config.ts = src\frontend\src\app\app.config.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{5B416A86-37AD-4B37-9FD6-FD863ACDB172}"
 	ProjectSection(SolutionItems) = preProject
-		src\Frontend\src\app\app.config.ts = src\Frontend\src\app\app.config.ts
+		src\frontend\src\app\app.config.ts = src\frontend\src\app\app.config.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{141947EC-ED31-4E50-8D56-D13D9AFB9FA4}"
