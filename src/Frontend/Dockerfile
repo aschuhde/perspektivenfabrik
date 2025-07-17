@@ -5,7 +5,6 @@ COPY package-lock.json package-lock.json
 RUN npm install
 COPY ./src ./src
 COPY angular.json angular.json
-COPY server.ts server.ts
 COPY tsconfig.json tsconfig.json
 COPY tsconfig.app.json tsconfig.app.json
 COPY ./public ./public
