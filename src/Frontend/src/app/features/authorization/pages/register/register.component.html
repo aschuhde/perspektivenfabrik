@@ -1,6 +1,6 @@
 <div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="width: 20rem; align-self: center">
-        <fieldset>
+        <fieldset style="padding: 0">
             <div>
                 <mat-form-field style="width: 20rem">
                     <mat-label>{{ "register.firstname" | translate }}</mat-label>
@@ -38,6 +38,10 @@
                     <input type="password" matInput name="password" formControlName="password"/>
                 </mat-form-field>
                 <p class="invalid-message" style="margin-top: -20px">{{ passwordInvalidMessage }}</p>
+            </div>
+            <div>
+                <mat-checkbox style="color: white;" name="consentPrivacy" formControlName="consentPrivacy"><span class="color-white" [innerHTML]="'register.consent-privacy-policy' | translate"></span></mat-checkbox>
+                <p class="invalid-message">{{ privacyInvalidMessage }}</p>
             </div>
         </fieldset>
         @if(hasError){

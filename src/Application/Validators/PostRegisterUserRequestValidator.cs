@@ -8,6 +8,7 @@ public class PostRegisterUserRequestValidator : AbstractValidator<PostRegisterUs
 {
   public PostRegisterUserRequestValidator()
   {
+      RuleFor(model => model.Data.ConsentPrivacy).Must(x => x);
       RuleFor(model => model.Data.Email).EmailAddress().Length(4, 100);
       RuleFor(model => model.Data.FirstName).NotEmpty().Length(1, 100);
       RuleFor(model => model.Data.LastName).NotEmpty().Length(1, 100);

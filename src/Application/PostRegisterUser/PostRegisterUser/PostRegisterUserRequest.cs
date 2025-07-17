@@ -15,6 +15,7 @@ public sealed class PostRegisterUserRequestBody
     public required string LanguageCode { get; set; }
     public required string Password { get; set; }
     public required string DateOfBirth { get; set; } //Honeypot
+    public required bool ConsentPrivacy { get; set; } //Honeypot
 
     public void Trim()
     {
