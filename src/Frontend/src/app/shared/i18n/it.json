@@ -309,7 +309,10 @@
     "humor": "Umorismo",
     "insteadOf": "invece di",
     "ecoPessimism": "Ecopessimismo",
-    "onInsta": "La Perspektivenfabrik su Instagram"
+    "onInsta": "La Perspektivenfabrik su Instagram",
+    "do-not-show-this-anymore": "Non mostrare più questo contenuto",
+    "insta-privacy-warning": "Caricando questo contenuto verranno utilizzati i cookie di Instagram. Si prega di consultare la <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policy\">privacy policy</a> e la <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policies/cookies/\">policy dei cookie</a> di Instagram!",
+    "load-insta": "Carica pagina Instagram"
   },
   "messages": {
     "imageUploadFailedMessage": "Il caricamento dell'immagine non è riuscito. Per favore riprova o contatta info@perspektivenfabrik.it",
