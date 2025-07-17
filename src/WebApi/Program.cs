@@ -9,6 +9,8 @@ using Serilog;
 using WebApi;
 using WebApi.Common;
 using WebApi.Constants;
+using WebApi.HealthChecks;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +31,28 @@ if (!builder.Configuration.IsInCodeGenerationMode())
     builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
 }
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    
+});
+
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddWebApi(builder.Configuration);
+builder.Services.AddSingleton<StartupHealthCheck>();
+builder.Services.AddHealthChecks().AddCheck<StartupHealthCheck>("Startup", tags: [StartupHealthCheck.ReadyTag]);
+builder.Services.AddHostedService<StartupBackgroundService>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
+app.UseRequestLocalization(options =>
+{
+    var supportedCultures = new[] { "en-US", "de-DE", "it-IT" };
+    options.SetDefaultCulture("en-US")
+        .AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures);
+    options.ApplyCurrentCultureToResponseHeaders = true;
+});
 app.UseExceptionHandler();
 if (!builder.Configuration.IsInCodeGenerationMode())
 {
@@ -47,7 +66,7 @@ if (!builder.Configuration.IsInCodeGenerationMode())
 {
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseHealthChecks("/health");
+    app.MapHealthChecks();
 }
 
 app.UseFastEndpoints();

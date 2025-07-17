@@ -20,4 +20,11 @@ public static class Routes
     public const string GetAutocompleteEntries = $"{ApiRoute}/autocomplete-entries";
     public const string PostProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images";
     public const string GetProjectImage = $"{ApiRoute}/projects/{{ProjectIdentifier}}/project-images/{{ImageIdentifier}}";
+    public const string PutProjectApprovalStatus = $"{ApiRoute}/projects/{{EntityId:Guid}}/approval-status";
+    public const string GetPendingApprovalProjects = $"{ApiRoute}/approval-projects";
+    public const string PostProjectReport = $"{ApiRoute}/projects/{{EntityId:Guid}}/report";
+    public const string PostRegisterUser = $"{ApiRoute}/users";
+    public const string PostRequestOtp = $"{ApiRoute}/users/me/otp-request";
+    public const string PostConfirmOtp = $"{ApiRoute}/users/me/otp-confirm";
+    public const string GetOtpStatus = $"{ApiRoute}/users/me/otp";
 }

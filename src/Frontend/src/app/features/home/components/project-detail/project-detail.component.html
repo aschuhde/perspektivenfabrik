@@ -72,6 +72,11 @@
     </div>
 </div>
 <div class="bottom">
+    <div class="bottom-absolute">
+        @if(project?.entityId){
+            <p (click)="startReportProject()" style="font-size: .8rem; cursor: pointer"><mat-icon style="font-size: 1.2rem;height: 1.3rem; width: 1.3rem" class="outline" fontIcon="report"></mat-icon> <span>Projekt melden</span></p>
+        }
+    </div>
     <div class="bottom-left">
         <div>
             <h3>{{ "project-detail.contact" | translate }}</h3>

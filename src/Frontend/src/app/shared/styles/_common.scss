@@ -6,6 +6,10 @@ hr{
   border-top: none;
   border-right: none;
   border-left: none;
+  
+  &.hr-white{
+    border-bottom-color: white;
+  }
 }
 
 .text-center{
@@ -65,6 +69,26 @@ hr{
 }
 .d-inline-block{
     display: inline-block;
+}
+.color-orange{
+  color: vars.$bg-orange;
+}
+.color-green{
+  color: vars.$bg-color-alt;
+}
+.color-white{
+  color: white;
+}
+
+.a{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.without-subscript-wrapper{
+  .mat-mdc-form-field-subscript-wrapper{
+    display: none;
+  }
 }
 @mixin prefix-suffix-container {
   display: flex;

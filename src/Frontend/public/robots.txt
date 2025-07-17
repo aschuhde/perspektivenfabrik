@@ -1,0 +1,14 @@
+# Allow all crawlers by default
+User-agent: *
+Allow: /
+
+# Main navigation paths
+Allow: /about-us
+Allow: /privacy
+Allow: /legal
+
+# Crawl-delay to prevent server overload
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://perspektivenfabrik.it/sitemap.xml

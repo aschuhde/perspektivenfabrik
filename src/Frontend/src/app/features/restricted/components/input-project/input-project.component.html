@@ -325,6 +325,16 @@
                             <button class="middle w-100-mobile" [class.secondary]="projectVisibility !== 'internal'" (click)="projectVisibility = 'internal'">{{ "input-project.only-with-link" | translate }} <mat-icon [class.hidden]="projectVisibility !== 'internal'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
                             <button class="suffix w-100-mobile" [class.secondary]="projectVisibility !== 'public'" (click)="projectVisibility = 'public'">{{ "input-project.public" | translate }} <mat-icon [class.hidden]="projectVisibility !== 'public'" style="font-size: 1.2rem;" fontIcon="check"></mat-icon></button>
                         </p>
+                        @if(projectVisibility === "public"){
+                            @if (projectIsApproved){
+                                <p><mat-icon fontIcon="verified"></mat-icon> {{ "input-project.is-approved-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}</p>
+                            }@else if (projectIsRejected){
+                                <p><mat-icon fontIcon="unpublished"></mat-icon> <span [innerHTML]="'input-project.is-rejected-message' | translate:{typeName: typeName, yourDeclination: yourDeclination}"></span><br> {{ projectLastChangeReason }}
+                                </p>
+                            } @else {
+                                <p><mat-icon fontIcon="schedule"></mat-icon> {{ "input-project.is-approval-pending-message" | translate:{typeName: typeName, yourDeclination: yourDeclination} }}</p>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -366,10 +376,19 @@
                                     </span>
                                 }
                             </button>
-                            @if(projectVisibility === "internal"){
+                            @if(projectVisibility === "internal" || projectVisibility === "public"){
                                 <button style="margin-top: 1rem" (click)="openShareLinkDialog()" class="w-100"><mat-icon fontIcon="share"></mat-icon><span class="only-desktop"> {{ "input-project.internal-link-for-sharing" | translate }}</span></button>
                             }
                             <a href="{{ previewLink }}" target="_blank"><button style="margin-top: 1rem" class="w-100"><mat-icon fontIcon="visibility"></mat-icon><span class="only-desktop"> {{ "input-project.open-preview-in-new-tab" | translate }}</span></button></a>
+                            @if(projectVisibility === "public"){
+                                @if (projectIsApproved){
+                                    <p><mat-icon fontIcon="verified"></mat-icon> {{ "input-project.is-approved-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerificationApproved)"></mat-icon></p>
+                                }@else if (projectIsRejected){
+                                    <p><mat-icon fontIcon="unpublished"></mat-icon> {{ "input-project.is-rejected-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialogRejected()"></mat-icon></p>
+                                } @else {
+                                    <p><mat-icon fontIcon="schedule"></mat-icon> {{ "input-project.is-approval-pending-info" | translate }} <mat-icon class="help-icon color-white" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpVerificationPending)"></mat-icon></p>
+                                }
+                            }
                         }
                     </div>
                     <div>

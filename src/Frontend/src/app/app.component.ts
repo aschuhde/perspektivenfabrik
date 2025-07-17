@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import {TranslateModule} from "@ngx-translate/core";
 import {TranslateService} from "@ngx-translate/core";
@@ -7,7 +7,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, TranslateModule],
+    imports: [RouterOutlet, TranslateModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

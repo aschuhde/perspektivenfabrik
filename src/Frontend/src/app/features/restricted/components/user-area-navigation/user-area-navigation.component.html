@@ -1,0 +1,13 @@
+<section>
+    <div></div>
+    <div>
+        <a href="{{ RestrictedRouteNames.MyProjectsUrl() }}">{{ "user-area.my-projects" | translate }}</a>
+        @if (canApproveProjects()){
+            <a href="{{ RestrictedRouteNames.PendingApprovalsUrl() }}">{{ "user-area.pending-approvals" | translate }}</a>
+        }
+        <span><u>{{ "user-area.my-account" | translate }}</u> <i> ({{ "general.available-soon" | translate }})</i></span>
+    </div>
+    <div>
+        <button (click)="signOut()">{{ "user-area.sign-out" | translate }}</button>
+    </div>
+</section>

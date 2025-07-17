@@ -1,0 +1,16 @@
+fieldset{
+  border: none;
+}
+.invalid-message{
+  padding: 0;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: .9rem;
+}
+.date-of-birth{
+  opacity: 0;
+  position: relative;
+  > * {
+    position: absolute;
+  }
+}

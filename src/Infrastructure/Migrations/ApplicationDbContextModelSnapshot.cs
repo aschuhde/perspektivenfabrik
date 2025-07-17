@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -442,6 +442,34 @@ namespace Infrastructure.Migrations
                     b.ToTable("OrganizationProjectConnections");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbOtp", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("AbsoluteExpirationUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Otp")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTimeOffset>("RequestedOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("Otp");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbPerson", b =>
                 {
                     b.Property<Guid>("EntityId")
@@ -531,6 +559,15 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int>("ApprovalStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ApprovalStatusLastChangeReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ApprovalStatusLastChangedByName")
+                        .HasColumnType("text");
 
                     b.Property<bool>("ConnectedOrganizationsSameAsOwner")
                         .HasColumnType("boolean");
@@ -793,6 +830,33 @@ namespace Infrastructure.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Tag");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTask", b =>
+                {
+                    b.Property<Guid>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TaskData")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("character varying(50000)");
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("TaskStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TaskType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.DbEntities.DbTimeSpecification", b =>
@@ -1092,10 +1156,18 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
+
+                    b.Property<string>("PreferredLanguageCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.ToTable("Persons");
 

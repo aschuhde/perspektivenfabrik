@@ -33,6 +33,8 @@ import {
 import {ApplicationModelsApiModelsApiProjectTag} from "../../../server/model/applicationModelsApiModelsApiProjectTag";
 import { TranslationValue } from "../../../shared/models/translation-value";
 import { Language } from "../../../core/types/general-types";
+import { ApplicationModelsApiModelsApiProject } from "../../../server/model/applicationModelsApiModelsApiProject";
+import {DomainEnumsApprovalStatus} from "../../../server/model/domainEnumsApprovalStatus";
 
 export declare type ProjectType = "project" | "idea" | "inspiration" | "none";
 
@@ -72,6 +74,9 @@ export class ProjectInput{
     projectVisibility: "draft" | "public" | "internal" = "draft"
     projectTitleTranslations: TranslationValue[] = [];
     onGetCurrentLanguage: () => Language;
+    approvalStatus: DomainEnumsApprovalStatus = "Unknown";
+    approvalStatusLastChangeBy: string = "";
+    approvalStatusLastChangeReason: string = "";
     
     constructor(onGetCurrentLanguage: () => Language) {
       this.onGetCurrentLanguage = onGetCurrentLanguage;
@@ -102,7 +107,7 @@ export class ProjectInput{
         .substring(0, 50);
   }
     
-    loadFromProject(project: ApplicationModelsApiModelsApiProjectBody, mainLanguage: Language, apiBasePath: string){
+    loadFromProject(project: ApplicationModelsApiModelsApiProject, mainLanguage: Language, apiBasePath: string){
       if (!project) {
         return;
       }
@@ -114,6 +119,9 @@ export class ProjectInput{
       
       this.projectTitleTranslations = TranslationValue.arrayFromApiTranslationValues(project.projectTitle?.contentTranslations ?? []);
       this.projectTitle = TranslationValue.getTranslationIfExist(project.projectTitle?.rawContentString ?? "", this.projectTitleTranslations, mainLanguage);
+      this.approvalStatus = project.approvalStatus ?? "Unknown";
+      this.approvalStatusLastChangeReason = project.approvalStatusLastChangeReason ?? "";
+      this.approvalStatusLastChangeBy = project.approvalStatusLastChangedByName ?? "";
       this.loadProjectPhaseFromApi(project.phase ?? "Unkown");
 
       this.locations = (project.locationSpecifications ?? []).map(

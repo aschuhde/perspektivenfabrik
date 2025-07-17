@@ -1,0 +1,22 @@
+@use 'vars';
+:host {
+  > section {
+    background-color: vars.$bg-color-alt;
+    padding: 1rem 1rem; 
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    color: white;
+    
+    > div{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-grow: 1;
+      
+      &:last-child{
+        justify-content: flex-end;
+      }
+    }
+  }
+}

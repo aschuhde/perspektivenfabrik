@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Application.Filter;
+using Application.Messages;
 using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
@@ -244,7 +245,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     {
         return await GetProjects(query =>
             (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
-                x.Visibility == ProjectVisibility.Public)), query => 
+                x.Visibility == ProjectVisibility.Public && (x.ApprovalStatus == ApprovalStatus.Approved || x.ApprovalStatus == ApprovalStatus.AutoApproved))), query => 
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
     public async Task<ProjectDto[]> GetUsersProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
@@ -256,6 +257,24 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         return await GetProjects(query =>
             (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
                 currentUser.IsAdmin | projectOwnerIds.Contains(x.EntityId) || projectContributerIds.Contains(x.EntityId))), query => 
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
+    }
+    
+    public async Task<ProjectDto[]> GetPendingApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
+    {
+        var currentUser = serviceProvider.GetRequiredService<ICurrentUserService>();
+        return await GetProjects(query =>
+            (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
+                x.Visibility == ProjectVisibility.Public && x.ApprovalStatus == ApprovalStatus.Pending)), query => 
+            (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
+    }
+    
+    public async Task<ProjectDto[]> GetAllApprovalProjects(ProjectFilter? projectFilter, ProjectSelector? projectSelector, CancellationToken ct)
+    {
+        var currentUser = serviceProvider.GetRequiredService<ICurrentUserService>();
+        return await GetProjects(query =>
+            (projectFilter ?? EmptyFilterCreator.CreateEmptyProjectFilter()).Filter(query.Where(x =>
+                x.Visibility == ProjectVisibility.Public)), query => 
             (projectSelector ?? DefaultSelectorCreator.CreateDefaultProjectSelector()).Select(query), false, false, false, ct);
     }
 
@@ -652,5 +671,76 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     public async Task<bool> ProjectExists(Guid projectId, CancellationToken ct)
     {
         return await dbContext.Projects.AnyAsync(x => x.EntityId == projectId, ct);
+    }
+
+    public async Task<ApproveProjectResult> UpdateProjectApprovalStatus(ApprovalStatus approvalStatus, Guid commandEntityId, string approvedByName,
+        string? reason, CancellationToken ct)
+    {
+        var entity = await dbContext.Projects.FindAsync(commandEntityId, ct);
+
+        if (entity == null)
+        {
+            return ApproveProjectResult.ProjectNotFound;
+        }
+
+        if (entity.ApprovalStatus is ApprovalStatus.AutoApproved or ApprovalStatus.Approved
+            && approvalStatus == ApprovalStatus.Approved)
+        {
+            return ApproveProjectResult.NotModified;
+        }
+
+        if (entity.ApprovalStatus == approvalStatus)
+        {
+            return ApproveProjectResult.NotModified;
+        }
+
+        entity.ApprovalStatus = approvalStatus;
+        entity.ApprovalStatusLastChangedByName = approvedByName;
+        entity.ApprovalStatusLastChangeReason = reason;
+        if (entity.History?.HistoryId == null)
+        {
+            var history = new ModificationHistoryDto()
+            {
+                HistoryItems = []
+            }.ToDbHistory();
+            entity.History = new DbModificationHistoryConnection()
+            {
+                History = history,
+                HistoryId = history.EntityId
+            };
+            dbContext.Histories.Add(history);
+        }
+
+        var historyItem = new ModificationHistoryItemDto()
+        {
+            HistoryEntryType = HistoryEntryType.Approval,
+            Message = approvalStatus switch
+            {
+                ApprovalStatus.Pending => $"Reset approval status {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.AutoApproved => $"Approved by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.Approved => $"Approved by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                ApprovalStatus.Rejected => $"Rejected by {approvedByName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}",
+                _ => throw new ArgumentOutOfRangeException(nameof(approvalStatus), approvalStatus, null)
+            }
+        };
+
+        dbContext.HistoryItems.Add(historyItem.ToDbHistoryItem(new ModificationHistoryDto()
+        {
+            EntityId = entity.History.HistoryId.Value,
+            HistoryItems = []
+        }));
+        
+        await dbContext.SaveChangesAsync(ct);
+        return ApproveProjectResult.Ok;
+    }
+
+    public async Task<ProjectMetadata?> GetProjectMetadataById(Guid projectId, CancellationToken ct)
+    {
+        return await dbContext.Projects.Where(x => x.EntityId == projectId).Select(x => new ProjectMetadata()
+        {
+            Title = x.ProjectTitle.RawContentString,
+            Name = x.ProjectName,
+            EntityId = x.EntityId
+        }).FirstOrDefaultAsync(ct);
     }
 }

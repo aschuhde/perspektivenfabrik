@@ -23,7 +23,7 @@ public sealed class JwtRefreshTokenHandler(IServiceProvider serviceProvider, Jwt
         var result = await tokenHandler.ValidateTokenAsync(command.Token, tokenValidationParameters);
         if (!result.IsValid)
             return new JwtRefreshTokenInvalidTokenResponse();
-        var userData = result.ClaimsIdentity.ToUserData();
+        var userData = ThrowIf.Null(result.ClaimsIdentity.ToUserData());
 
         var storedRefreshTokens = await refreshTokenRepositoryService.GetSavedRefreshTokens(userData.UserId, ct);
         if (storedRefreshTokens.Length == 0)

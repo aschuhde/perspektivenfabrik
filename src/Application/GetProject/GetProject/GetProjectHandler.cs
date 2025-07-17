@@ -5,7 +5,7 @@ using Domain.Enums;
 
 namespace Application.GetProject.GetProject;
 
-public class GetProjectHandler(IServiceProvider serviceProvider, IProjectService projectService) : BaseHandler<GetProjectRequest, GetProjectResponse>(serviceProvider)
+public class GetProjectHandler(IServiceProvider serviceProvider, IUserAccessService userAccessService, IProjectService projectService) : BaseHandler<GetProjectRequest, GetProjectResponse>(serviceProvider)
 {
     public override async Task<GetProjectResponse> ExecuteAsync(GetProjectRequest command, CancellationToken ct)
     {
@@ -16,7 +16,10 @@ public class GetProjectHandler(IServiceProvider serviceProvider, IProjectService
             return new GetProjectResponseNotFound();
         }
 
-        if (project.Visibility != ProjectVisibility.Public)
+        if (project.Visibility != ProjectVisibility.Public
+            || (!userAccessService.CanApproveProject() &&
+                project.ApprovalStatus != ApprovalStatus.Approved
+                && project.ApprovalStatus != ApprovalStatus.AutoApproved))
         {
             return new GetProjectResponseForbidden();
         }

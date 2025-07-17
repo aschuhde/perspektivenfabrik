@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, input, model, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, model, output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -20,7 +20,7 @@ import {RequirementMoneyInput} from '../../models/requirement-money-input';
 import {InputRequirementMaterialComponent} from '../input-requirement-material/input-requirement-material.component';
 import {InputRequirementMoneyComponent} from '../input-requirement-money/input-requirement-money.component';
 import {InputRequirementPersonComponent} from '../input-requirement-person/input-requirement-person.component';
-import {AngularEditorConfig, AngularEditorModule} from '@kolkov/angular-editor';
+import {AngularEditorConfig, AngularEditorModule, UploadResponse} from '@kolkov/angular-editor';
 import {UploadedImage} from '../../../../shared/models/uploaded-image';
 import {ProjectInput, ProjectType} from '../../models/project-input';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
@@ -39,8 +39,7 @@ import { ShareLinkDialogComponent } from '../../dialogs/share-link-dialog/share-
 import {AutocompleteDataService} from "../../../../shared/services/autocomplete-data.service";
 import {ApiService} from "../../../../server/api/api.service";
 import {Observable} from "rxjs";
-import {HttpEvent, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
-import {UploadResponse} from "@kolkov/angular-editor/lib/angular-editor.service";
+import {HttpEvent, HttpResponse} from "@angular/common/http";
 import {BASE_PATH} from "../../../../server/variables";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {Language} from "../../../../core/types/general-types";
@@ -49,6 +48,8 @@ import {
 } from "../../../../shared/components/mat-input-translations/mat-input-translations.component";
 import {TranslationValue} from "../../../../shared/models/translation-value";
 import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
+import { isPlatformBrowser } from '@angular/common';
+import {UrlService} from "../../../../core/services/url-service.service";
 
 @Component({
     selector: 'app-input-project',
@@ -75,6 +76,8 @@ import {stringEmptyPropagate} from "../../../../shared/tools/null-tools";
     styleUrl: './input-project.component.scss'
 })
 export class InputProjectComponent {
+    
+    urlService = inject(UrlService)
     apiBasePath = inject(BASE_PATH);
     readonly dialog = inject(MatDialog);
     apiService = inject(ApiService);
@@ -98,6 +101,7 @@ export class InputProjectComponent {
     translateService = inject(TranslateService);
     isDescriptionOtherLanguageActive: boolean = false;
     descriptionMainLanguage = this.translateService.currentLang as Language;
+    platformId = inject(PLATFORM_ID);
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
       spellcheck: true,
@@ -161,6 +165,7 @@ export class InputProjectComponent {
         'insertVideo',
         'insertHorizontalRule']]
     }
+    
     ngOnInit(){
       this.autoCompleteDataService.getTags().then(x => {
         this.tagOptions = x?.filter(y => !!y).map(y => {
@@ -172,17 +177,18 @@ export class InputProjectComponent {
     }
   
     constructor() {
-      window.addEventListener("beforeunload", (event) => {
-        if(InputProjectComponent.IgnoreUnloadEvent){
-          return;
-        }
-        if(this.projectSaveContext()?.hasChanges ?? false){
-          event.preventDefault();
-          event.returnValue = true;
-        }
-      });
-      const queryParams = new URLSearchParams(window.location.search);
-      const group = queryParams.get('group');
+      if(isPlatformBrowser(this.platformId)) {
+        window.addEventListener("beforeunload", (event) => {
+          if (InputProjectComponent.IgnoreUnloadEvent) {
+            return;
+          }
+          if (this.projectSaveContext()?.hasChanges ?? false) {
+            event.preventDefault();
+            event.returnValue = true;
+          }
+        });
+      }
+      const group = this.urlService.getQueryParameter("group");
       if (group) {
         this.currentGroup = group;
       }
@@ -566,7 +572,7 @@ get typeNameGenitive(){
         title: this.translateService.instant("messages.helpProjectTypeTitle")
       }),
       helpProjectTitle: new MessageDialogData({
-        message: this.translateService.instant("messages.helpProjectTitleMessage", {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
+        message: this.translateService.instant("messages.helpProjectTitleMessage", {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive}),
         title: this.translateService.instant("messages.helpProjectTitleTitle")
       }),
       helpProjectPhase: new MessageDialogData({
@@ -575,36 +581,50 @@ get typeNameGenitive(){
       }),
       helpProjectLocation: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectLocationMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectLocationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectLocationTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpProjectTime: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectTimeMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectTimeTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectTimeTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpRequirements: new MessageDialogData({
         message: this.translateService.instant(`messages.helpRequirementsMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
         title: this.translateService.instant(`messages.helpRequirementsTitle`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName})
       }),
       helpContact: new MessageDialogData({
-        message: this.translateService.instant(`messages.helpContactMessage`, {"yourDeclination": this.yourDeclination, "yoursDeclination": this.yoursDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpContactTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        message: this.translateService.instant(`messages.helpContactMessage`, {"yourDeclination": this.yourDeclination, "yoursDeclination": this.yoursDeclination, "typeName": this.typeName, "typeNameGenitive": this.typeNameGenitive}),
+        title: this.translateService.instant(`messages.helpContactTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpDescription: new MessageDialogData({
         message: this.translateService.instant(`messages.helpDescriptionMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpDescriptionTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpDescriptionTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpImageUpload: new MessageDialogData({
         message: this.translateService.instant(`messages.helpImageUploadMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpImageUploadTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpImageUploadTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }),
       helpProjectVisibility: new MessageDialogData({
         message: this.translateService.instant(`messages.helpProjectVisibilityMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
-        title: this.translateService.instant(`messages.helpProjectVisibilityTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
+        title: this.translateService.instant(`messages.helpProjectVisibilityTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
       }), 
-        helpTags: new MessageDialogData({
-            message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
-            title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeName})
-        })
+      helpTags: new MessageDialogData({
+          message: this.translateService.instant(`messages.helpTagsMessage`, {"yoursDeclinationDativeTo": this.yoursDeclinationDativeTo, "typeName": this.typeName}),
+          title: this.translateService.instant(`messages.helpTagsTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerificationPending: new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationPendingMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpVerificationPendingTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerificationApproved: new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationApprovedMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName}),
+        title: this.translateService.instant(`messages.helpVerificationApprovedTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      }),
+      helpVerificationRejected: (reason: string) => new MessageDialogData({
+        message: this.translateService.instant(`messages.helpVerificationRejectedMessage`, {"yourDeclination": this.yourDeclination, "typeName": this.typeName, 
+          "ReasonText": reason ? `<br>${reason}<br>`: ""}),
+        isHtmlMessage: true,
+        title: this.translateService.instant(`messages.helpVerificationRejectedTitle`, {"yoursDeclination": this.yoursDeclination, "typeName": this.typeNameGenitive})
+      })
     };
   }
 
@@ -744,9 +764,11 @@ get typeNameGenitive(){
     if(groupName === this.currentGroup) return;
     this.currentGroup = groupName;
     
-    const url = new URL(window.location.href);
-    url.searchParams.set("group", groupName);
-    window.history.replaceState({}, '', url.toString());
+    if(isPlatformBrowser(this.platformId)){
+      const url = new URL(window.location.href);
+      url.searchParams.set("group", groupName);
+      window.history.replaceState({}, '', url.toString()); 
+    }
   }
   
   getGroups(){
@@ -906,6 +928,9 @@ get typeNameGenitive(){
   get internalLink(){
       const entityId = this.projectInput().entityId;
       if(!entityId) return "#";
+      if(!isPlatformBrowser(this.platformId)){
+        return "";
+      }
       return window.location.origin + HomeRouteNames.InternalProjectUrl(entityId)
   }
   get previewLink(){
@@ -937,5 +962,27 @@ get typeNameGenitive(){
   
   get canUploadImages(){
       return !!this.projectInput().entityId;
+  }
+  
+  get projectIsApproved(){
+      const status = this.projectInput().approvalStatus;
+      return status === "Approved" || status === "AutoApproved";
+  }
+  
+  get projectIsRejected(){
+      const status = this.projectInput().approvalStatus;
+      return status === "Rejected";
+  }
+
+  showMessageDialogRejected() {
+    this.showMessageDialog(this.messageDialogs.helpVerificationRejected(this.projectLastChangeReason));
+  }
+
+  get projectLastChangeReason(){
+      const reason = this.projectInput().approvalStatusLastChangeReason;
+      if(!reason){
+        return "";
+      }
+      return this.translateService.instant("input-project.reason") + ": " + reason;
   }
 }

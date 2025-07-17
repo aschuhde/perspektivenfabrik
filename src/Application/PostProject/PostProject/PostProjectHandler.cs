@@ -5,11 +5,12 @@ using Application.Messages;
 using Application.Models.ApiModels;
 using Application.Services;
 using Application.Updaters;
+using Domain.Enums;
 using FluentValidation;
 
 namespace Application.PostProject.PostProject;
 
-public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<PostProjectRequest> validator, IProjectService projectService) : BaseHandler<PostProjectRequest, PostProjectResponse>(serviceProvider)
+public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<PostProjectRequest> validator, IProjectService projectService, INotificationService notificationService) : BaseHandler<PostProjectRequest, PostProjectResponse>(serviceProvider)
 {
     public override async Task<PostProjectResponse> ExecuteAsync(PostProjectRequest command, CancellationToken ct)
     {
@@ -46,11 +47,14 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
         };
         
         command.Project.PrepareEntityForNewProject(creationContext);
-        var projectDto = command.Project.ToProject();
+        var approvalStatus = UserAccessService.UserProjectsNeedApproval() ? ApprovalStatus.Pending : ApprovalStatus.AutoApproved;
+        var projectDto = command.Project.ToProject(approvalStatus);
         
         var result = await projectService.CreateOrUpdateProject(projectDto, creationContext, ct);
         if (!result.Success)
             return new PostProjectCreationFailedResponse(result);
+        
+        notificationService.ProjectCreated(projectDto.EntityId, CurrentUserService.CurrentUserId, CurrentUserService.DisplayName);
         
         return new PostProjectOkResponse()
         {

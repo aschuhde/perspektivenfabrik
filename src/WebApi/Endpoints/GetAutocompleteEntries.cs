@@ -1,5 +1,4 @@
 using Application.GetAutocompleteEntries.GetAutocompleteEntries;
-using Application.Example.GetExample;
 using WebApi.Attributes;
 using WebApi.Attributes.Authorization;
 using WebApi.Common;

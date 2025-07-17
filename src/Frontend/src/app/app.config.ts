@@ -16,6 +16,7 @@ import localeDe from '@angular/common/locales/de';
 import localeEn from '@angular/common/locales/en';
 import localeIt from '@angular/common/locales/it';
 import {TranslateJsonLoader} from "./shared/loaders/translate-json.loader";
+import {LanguageAppInterceptor} from "./core/interceptors/language-http.interceptor";
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
       scrollPositionRestoration: 'enabled'
   })), provideClientHydration(),
       { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },    
+      { provide: HTTP_INTERCEPTORS, useClass: LanguageAppInterceptor, multi: true },    
       provideApiService(), provideHttpClient(withFetch(), withInterceptorsFromDi()),
       {provide: BASE_PATH, useFactory: () => {
         if(typeof window === 'undefined')

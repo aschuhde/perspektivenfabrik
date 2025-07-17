@@ -17,7 +17,8 @@
     "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
     "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto",
     "legalNotice": "Informazioni Legali",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "available-soon": "disponibile presto!"
   },
   "nav": {
     "about us": "chi siamo",
@@ -89,7 +90,14 @@
     "internal-link-for-sharing": "Link interno per la condivisione",
     "open-preview-in-new-tab": "Apri anteprima in una nuova scheda",
     "delete": "Elimina",
-    "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!"
+    "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!",
+    "is-approved-message": "Abbiamo esaminato e verificato {{ yourDeclination }} {{ typeName }}.",
+    "is-rejected-message": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo considerato non idoneo per la piattaforma. Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "is-approval-pending-message": "Stiamo esaminando {{ yourDeclination }} {{ typeName }}. Non appena avremo verificato {{ yourDeclination }} {{ typeName }}, sarà visualizzato sulla piattaforma.",
+    "is-approved-info": "verificato",
+    "is-rejected-info": "rifiutato",
+    "is-approval-pending-info": "in revisione",
+    "reason": "Motivazione"
   },
   "map": {
     "map": "Mappa",
@@ -198,7 +206,43 @@
   "login": {
     "login": "Accedi",
     "e-mail": "E-mail",
-    "password": "Password"
+    "password": "Password",
+    "no-user-yet": "Non hai ancora un account?",
+    "register-here": "Registrati qui",
+    "general-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "user-does-not-exist": "Non esiste alcun utente con l'indirizzo e-mail specificato!",
+    "wrong-credentials": "La password non è corretta!",
+    "forgot-password": "Password dimenticata?"
+  },
+  "register": {
+    "register": "Registrati",
+    "e-mail": "E-mail",
+    "password": "Password",
+    "firstname": "Nome",
+    "lastname": "Cognome",
+    "already-user": "Hai già un account?",
+    "login-here": "Accedi qui",
+    "unknown-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "must-not-be-empty": "Per favore compila il campo {{parameter}}!",
+    "must-not-be-over-n-chars": "Il campo {{parameter}} non può contenere più di {{n}} caratteri!",
+    "password-policy": "La password deve essere compresa tra 8 e 50 caratteri e deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~).",
+    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!"
+  },
+  "confirm-email": {
+    "title": "Conferma indirizzo e-mail",
+    "we-sent-you-a-code": "Ti abbiamo inviato un codice via e-mail",
+    "please-put-in-the-code": "Per favore inserisci questo codice qui per confermare il tuo indirizzo e-mail",
+    "the-code-is-incorrect": "Il codice non corrisponde all'ultimo codice che ti abbiamo inviato",
+    "please-check-the-code": "Per favore verifica il codice o richiedine uno nuovo",
+    "unexpected-error-occured": "Si è verificato un errore imprevisto",
+    "please-retry-or-contact": "Per favore riprova più tardi o contatta",
+    "the-code-is-expired": "Questo codice è scaduto",
+    "please-put-in-the-last-code": "Per favore inserisci l'ultimo codice che ti abbiamo inviato oppure richiedine uno nuovo!",
+    "request-new-code": "Richiedi nuovo codice!",
+    "request-new-code-in": "Richiedi nuovo codice tra",
+    "seconds": "secondi",
+    "contact-if-there-are-problems": "In caso di problemi, contatta",
+    "sign-out": "Scollega"
   },
   "home": {
     "motivation-text": "Vuoi dare una mano ma non sai da dove cominciare? Hai un progetto e cerchi qualcuno che ti aiuti? Hai un'idea che vuoi condividere e far crescere insieme ad altri? Se hai risposto \"sì\" ad almeno una di queste domande, sei nel posto giusto!",
@@ -280,7 +324,7 @@
     "helpProjectTimeTitle": "Tempi {{yoursDeclination}} {{typeName}}",
     "helpRequirementsMessage": "Puoi richiedere volontari, materiali e supporto finanziario per {{yourDeclination}} {{typeName}}.",
     "helpRequirementsTitle": "Supporto per {{yourDeclination}} {{typeName}}",
-    "helpContactMessage": "Puoi inserire diversi dati di contatto per {{yourDeclination}} {{typeName}}. Questi dati verranno visualizzati sulla pagina {{yoursDeclination}} {{typeName}}.",
+    "helpContactMessage": "Puoi inserire diversi dati di contatto per {{yourDeclination}} {{typeName}}. Questi dati verranno visualizzati sulla pagina {{yoursDeclination}} {{typeNameGenitive}}.",
     "helpContactTitle": "Dati di contatto {{yoursDeclination}} {{typeName}}",
     "helpDescriptionMessage": "Per favore inserisci una descrizione per {{yourDeclination}} {{typeName}}. La breve descrizione sarà mostrata nell'elenco generale e nel riepilogo della pagina dettagliata. La descrizione dettagliata sarà visibile solo nella pagina dei dettagli.",
     "helpDescriptionTitle": "Descrizione {{yoursDeclination}} {{typeName}}",
@@ -303,7 +347,15 @@
     "fileValidationTooLargeTitle": "Dimensione del file superata",
     "fileValidationTooLargeMessage": "L'immagine è troppo grande. Seleziona solo immagini con dimensioni inferiori a 5MB.",
     "fileValidationNotSavedTitle": "Salvare prima",
-    "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento."
+    "fileValidationNotSavedMessage": "Salva prima il progetto. Dopo sarà possibile effettuare il caricamento.",
+    "helpVerificationPendingTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationPendingMessage": "Prima della prima pubblicazione, esamineremo {{ yourDeclination }} {{ typeName }}. Una volta verificato, {{ yourDeclination }} {{ typeName }} apparirà sulla piattaforma. Potrai apportare modifiche successive senza necessità di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente.",
+    "helpVerificationApprovedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationApprovedMessage": "Abbiamo verificato {{ yourDeclination }} {{ typeName }}. Potrai apportare modifiche successive senza necessità di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente.",
+    "helpVerificationRejectedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
+    "helpVerificationRejectedMessage": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo valutato come non idoneo per la piattaforma.{{ ReasonText }} Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "error-message-on-rejecting-project": "Si è verificato un errore durante il rifiuto della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
+    "error-message-on-approving-project": "Si è verificato un errore durante l'approvazione della voce. Per favore riprova o contatta info@perspektivenfabrik.it"
   },
   "saveProjectErrorDialog": {
     "copyToClipboard": "Copia messaggio negli appunti",
@@ -329,5 +381,32 @@
     "web": "Web",
     "taxNumber": "Codice Fiscale",
     "address": "<strong>Climate Action South Tyrol EO</strong><br><strong>Via Caproni 9</strong><br><strong>39100 Bolzano</strong>"
+  },
+  "user-area": {
+    "my-projects": "I miei progetti",
+    "pending-approvals": "Verifiche in sospeso",
+    "my-account": "Il mio account",
+    "sign-out": "Scollega",
+    "change-approval": "Modifica verifica",
+    "approve": "Approva",
+    "reject": "Rifiuta"
+  },
+  "reject-offer-dialog": {
+    "reject-offer": "Rifiuta voce",
+    "please-add-a-reason": "Per favore inserisci una motivazione",
+    "reject": "Rifiuta"
+  },
+  "report-project": {
+    "title": "Segnala progetto",
+    "please-sign-in-to-report-project": "Per favore accedi per segnalare il progetto!",
+    "to-login": "Vai al login",
+    "to-registration": "Vai alla registrazione",
+    "if-you-dont-have-an-account-register-or-send-mail": "Se non hai ancora un account, puoi registrarti oppure inviarci una email a",
+    "submitted-title": "Grazie per il tuo aiuto!",
+    "submitted-message": "Abbiamo ricevuto la tua segnalazione e la esamineremo a breve!",
+    "please-let-us-know-why-you-report-the-project": "Per favore, spiegaci perché vuoi segnalare questo progetto:"
+  },
+  "meta": {
+    "description": "La Perspektivenfabrik raccoglie, valorizza e connette soluzioni sostenibili, personalità visionarie e iniziative lungimiranti in Alto Adige."
   }
 }

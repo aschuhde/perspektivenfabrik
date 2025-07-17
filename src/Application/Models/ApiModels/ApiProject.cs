@@ -8,6 +8,9 @@ public sealed class ApiProject : ApiBaseEntity
     public required ProjectPhase Phase { get; init; }
     public required ProjectType Type { get; init; }
     public required ProjectVisibility Visibility  { get; init; }
+    public required ApprovalStatus ApprovalStatus  { get; set; }
+    public required string? ApprovalStatusLastChangedByName  { get; set; }
+    public required string? ApprovalStatusLastChangeReason  { get; set; }
     public required ApiLocationSpecification[] LocationSpecifications { get; init; }
     public required ApiTimeSpecification[] TimeSpecifications { get; init; }
     public required ApiRequirementSpecification[] RequirementSpecifications { get; init; }

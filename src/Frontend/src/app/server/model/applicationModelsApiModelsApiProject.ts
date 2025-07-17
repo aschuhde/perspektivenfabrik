@@ -23,6 +23,7 @@ import { ApplicationModelsApiModelsApiRequirementSpecification } from './applica
 import { ApplicationModelsApiModelsApiTimeSpecification } from './applicationModelsApiModelsApiTimeSpecification';
 import { DomainDataTypesFormattedTitle } from './domainDataTypesFormattedTitle';
 import { DomainDataTypesTranslationValue } from './domainDataTypesTranslationValue';
+import { DomainEnumsApprovalStatus } from './domainEnumsApprovalStatus';
 import { DomainEnumsProjectPhase } from './domainEnumsProjectPhase';
 import { DomainEnumsProjectType } from './domainEnumsProjectType';
 import { DomainEnumsProjectVisibility } from './domainEnumsProjectVisibility';
@@ -31,6 +32,9 @@ export interface ApplicationModelsApiModelsApiProject extends ApplicationModelsA
     phase?: DomainEnumsProjectPhase;
     type?: DomainEnumsProjectType;
     visibility?: DomainEnumsProjectVisibility;
+    approvalStatus?: DomainEnumsApprovalStatus;
+    approvalStatusLastChangedByName?: string;
+    approvalStatusLastChangeReason?: string;
     locationSpecifications?: Array<ApplicationModelsApiModelsApiLocationSpecification>;
     timeSpecifications?: Array<ApplicationModelsApiModelsApiTimeSpecification>;
     requirementSpecifications?: Array<ApplicationModelsApiModelsApiRequirementSpecification>;

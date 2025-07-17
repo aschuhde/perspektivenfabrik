@@ -22,7 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{E6
 	ProjectSection(SolutionItems) = preProject
 		src\Frontend\angular.json = src\Frontend\angular.json
 		src\Frontend\Dockerfile = src\Frontend\Dockerfile
-		src\Frontend\server.ts = src\Frontend\server.ts
 		src\Frontend\package.json = src\Frontend\package.json
 		src\Frontend\tsconfig.json = src\Frontend\tsconfig.json
 		src\Frontend\package-lock.json = src\Frontend\package-lock.json

@@ -82,8 +82,19 @@ public abstract class BaseEndpoint<TRequest, TResponse> : Endpoint<TRequest, TRe
     private void HandleAllowAttribute(AllowAttribute[] allowAttributes)
     {
         AcceptNotMoreThanOneAttribute(allowAttributes);
-        if(allowAttributes.First().AuthorizationObjects.Contains(AuthorizationObject.Anonymous))
-            AllowAnonymous();
+        var attr = allowAttributes.First();
+        if (attr.AuthorizationObjects.Contains(AuthorizationObject.Anonymous))
+        {
+          AllowAnonymous();
+        }
+        else if (attr.AuthorizationObjects.Contains(AuthorizationObject.AuthenticatedWithUnconfirmedEmail))
+        {
+          
+        }
+        else
+        {
+          Policy(x => x.RequireClaim(ClaimsPrincipalUserData.EMailIsConfirmed, "true"));
+        }
     }
     
     private void HandleTagsAttribute(TagsAttribute[] tagsAttributes)

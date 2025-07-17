@@ -40,6 +40,10 @@ public sealed class DbUser : DbPerson
     
     public required bool Active { get; set; }
     
+    public required bool EmailConfirmed { get; set; }
+    [MaxLength(Constants.StringLengths.Small)]
+    public required string PreferredLanguageCode { get; set; }
+    
     public override void UpdateToTarget(DbEntityWithId target)
     {
       if(target is not DbUser user) return;
@@ -51,6 +55,16 @@ public sealed class DbUser : DbPerson
       if (this.Active != user.Active)
       {
         this.Active = user.Active;
+      }
+      
+      if (this.EmailConfirmed != user.EmailConfirmed)
+      {
+        this.EmailConfirmed = user.EmailConfirmed;
+      }
+      
+      if (this.PreferredLanguageCode != user.PreferredLanguageCode)
+      {
+        this.PreferredLanguageCode = user.PreferredLanguageCode;
       }
       base.UpdateToTarget(target);
     }
