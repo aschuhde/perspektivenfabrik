@@ -68,12 +68,12 @@
                 
             </div>
             @if(hasInstaConsent){
-                <p style="font-size: 0.8rem; text-align: end"><span (click)="banInsta()" class="a">Diesen Inhalt nicht mehr einblenden</span></p>
+                <p style="font-size: 0.8rem; text-align: end"><span (click)="banInsta()" class="a">{{ "aboutUs.do-not-show-this-anymore" | translate }}</span></p>
             } @else {
                 <div class="insta-consent">
                     <div class="text-center">
-                        <p>Mit dem Laden dieses Inhalts werden Cookies von Instagram verwendet. Bitte beachte die <a target="_blank" href="https://privacycenter.instagram.com/policy">Datenschutzrichtlinie</a> und <a target="_blank" href="https://privacycenter.instagram.com/policies/cookies/">Cookie-Richtlinie</a> von Instagram!</p>
-                        <button (click)="consentInsta()">Instagram-Seite laden</button>
+                        <p [innerHTML]="'aboutUs.insta-privacy-warning' | translate"></p>
+                        <button (click)="consentInsta()">{{ "aboutUs.load-insta" | translate }}</button>
                     </div>
                 </div>
             }
