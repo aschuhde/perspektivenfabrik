@@ -9,6 +9,16 @@
     "test": "ng test",
     "serve:ssr:Frontend": "node dist/frontend/server/server.mjs"
   },
+  "prettier": {
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.1.1",
