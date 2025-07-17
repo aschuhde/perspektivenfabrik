@@ -2,6 +2,6 @@
 
 public class TranslationValue
 {
-    public required string Value { get; init; }
+    public required string Value { get; set; }
     public required string LanguageCode { get; init; }
 }

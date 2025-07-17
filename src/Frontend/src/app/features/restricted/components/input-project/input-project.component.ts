@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, input, model, output, PLATFORM_ID, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, model, output, PLATFORM_ID, SimpleChanges, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -101,6 +101,10 @@ export class InputProjectComponent {
     translateService = inject(TranslateService);
     isDescriptionOtherLanguageActive: boolean = false;
     descriptionMainLanguage = this.translateService.currentLang as Language;
+    hasPastedToAngularEditorShortDescription = false;
+    hasPastedToAngularEditorLongDescription = false;
+    hasPastedToAngularEditorShortDescriptionOtherLanguage = false;
+    hasPastedToAngularEditorLongDescriptionOtherLanguage = false;
     platformId = inject(PLATFORM_ID);
     angularEditorConfig: AngularEditorConfig = {
       editable: true,
@@ -158,6 +162,8 @@ export class InputProjectComponent {
       sanitize: true,
       fonts: [{class: "DM Sans", name: "DM Sans"}],
       toolbarHiddenButtons: [[
+          "indent",
+          "outdent",
         'fontName',
         'textColor',
         'backgroundColor',
@@ -317,6 +323,10 @@ export class InputProjectComponent {
   }
 
   set longDescription(value: string) {
+    if(this.hasPastedToAngularEditorLongDescription){
+      this.hasPastedToAngularEditorLongDescription = false;
+      value = this.sanitizeHtml(value);
+    }
     const projectInput = this.projectInput();
     projectInput.longDescription = value;
     if(!projectInput.longDescriptionTranslations){
@@ -336,6 +346,11 @@ export class InputProjectComponent {
   }
 
   set shortDescription(value: string) {
+    if(this.hasPastedToAngularEditorShortDescription){
+      this.hasPastedToAngularEditorShortDescription = false;
+      value = this.sanitizeHtml(value);
+    }
+      
     const projectInput = this.projectInput();
     projectInput.shortDescription = value;
     if(!projectInput.shortDescriptionTranslations){
@@ -358,6 +373,12 @@ export class InputProjectComponent {
   }
 
   set shortDescriptionOtherLanguage(value: string) {
+      
+      if(this.hasPastedToAngularEditorShortDescriptionOtherLanguage){
+        this.hasPastedToAngularEditorShortDescriptionOtherLanguage = false;
+        value = this.sanitizeHtml(value);
+      }
+      
     const projectInput = this.projectInput();
     if(!projectInput.shortDescriptionTranslations){
       projectInput.shortDescriptionTranslations = [];
@@ -372,6 +393,10 @@ export class InputProjectComponent {
   }
 
   set longDescriptionOtherLanguage(value: string) {
+    if(this.hasPastedToAngularEditorLongDescriptionOtherLanguage){
+      this.hasPastedToAngularEditorLongDescriptionOtherLanguage = false;
+      value = this.sanitizeHtml(value);
+    }
     const projectInput = this.projectInput();
     if(!projectInput.longDescriptionTranslations){
       projectInput.longDescriptionTranslations = [];
@@ -984,5 +1009,67 @@ get typeNameGenitive(){
         return "";
       }
       return this.translateService.instant("input-project.reason") + ": " + reason;
+  }
+  
+  pasteAngularEditorShortDescription(){
+    this.hasPastedToAngularEditorShortDescription = true;
+  }
+  pasteAngularEditorLongDescription(){
+    this.hasPastedToAngularEditorLongDescription = true;
+  }
+  pasteAngularEditorShortDescriptionOtherLanguage(){
+    this.hasPastedToAngularEditorShortDescriptionOtherLanguage = true;
+  }
+  pasteAngularEditorLongDescriptionOtherLanguage(){
+    this.hasPastedToAngularEditorLongDescriptionOtherLanguage = true;
+  }
+  
+  sanitizeHtml(html: string){
+      if(!html){
+        return "";
+      }
+      let hasImage = false;
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const elements = doc.querySelector("body")!.querySelectorAll('*');
+      const forbiddenTags = ["object", "script", "input", "iframe", "embed", "video", "audio", "source", "style", "link", "meta", "title", "html", "base", "head", "body", "svg"]
+      elements.forEach(element => {
+        const attributes = Array.from(element.attributes);
+        if(element.tagName.toLowerCase() === "img"){
+          hasImage = true;
+          element.remove();
+          return;
+        }
+        if(forbiddenTags.includes(element.tagName.toLowerCase())){
+          element.remove();
+          return;
+        }
+        attributes.forEach(attr => {
+          if (element.tagName.toLowerCase() === 'a' && attr.name === 'href') {
+            return;
+          }
+
+          if (attr.name === 'style') {
+            const styles = attr.value.split(';').filter(x => !!x);
+            const textAlign = styles.find(x => x.trim().toLowerCase().startsWith('text-align'));
+            if (textAlign) {
+              element.setAttribute('style', textAlign);
+            } else {
+              element.removeAttribute(attr.name);
+            }
+          } else {
+            element.removeAttribute(attr.name);
+          }
+        });
+      });
+      if(hasImage) {
+        this.dialog.open(MessageDialogComponent, {
+          data: new MessageDialogData({
+            message: this.translateService.instant("messages.htmlImgPasteMessage"),
+            title: this.translateService.instant("messages.htmlImgPasteTitle"),
+            buttonText: "Ok"
+          })
+        });
+      }
+      return doc.body.innerHTML;
   }
 }

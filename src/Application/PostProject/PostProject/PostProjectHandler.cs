@@ -49,7 +49,6 @@ public class PostProjectHandler(IServiceProvider serviceProvider, IValidator<Pos
         command.Project.PrepareEntityForNewProject(creationContext);
         var approvalStatus = UserAccessService.UserProjectsNeedApproval() ? ApprovalStatus.Pending : ApprovalStatus.AutoApproved;
         var projectDto = command.Project.ToProject(approvalStatus);
-        
         var result = await projectService.CreateOrUpdateProject(projectDto, creationContext, ct);
         if (!result.Success)
             return new PostProjectCreationFailedResponse(result);

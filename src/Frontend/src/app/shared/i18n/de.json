@@ -360,7 +360,9 @@
       "helpVerificationRejectedTitle": "Verifizierung {{ yoursDeclination }} {{ typeName }}",
       "helpVerificationRejectedMessage": "Wir haben {{ yourDeclination }} {{ typeName }} geprüft und als für die Platform nicht geeignet eingestuft.{{ ReasonText }} Bitte wende dich bei weiteren Fragen an <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
       "error-message-on-rejecting-project": "Es ist ein Fehler beim Ablehnen des Eintrags aufgetreten. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it",
-      "error-message-on-approving-project": "Es ist ein Fehler beim Freigeben des Eintrags aufgetreten. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it"
+      "error-message-on-approving-project": "Es ist ein Fehler beim Freigeben des Eintrags aufgetreten. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it",
+      "htmlImgPasteTitle": "Bilder bitte über die Toolbar einfügen",
+      "htmlImgPasteMessage": "Bitte füge die Bilder einzeln über das Bild-Icon oberhalb in der Toolbar ein"
     },
     "saveProjectErrorDialog": {
       "copyToClipboard": "Nachricht in Zwischenablage kopieren",
