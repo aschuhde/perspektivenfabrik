@@ -226,7 +226,9 @@
     "must-not-be-empty": "Per favore compila il campo {{parameter}}!",
     "must-not-be-over-n-chars": "Il campo {{parameter}} non può contenere più di {{n}} caratteri!",
     "password-policy": "La password deve essere compresa tra 8 e 50 caratteri e deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~).",
-    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!"
+    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "consent-privacy-policy": "Ho letto e accetto la <a target='_blank' href='/privacy'>privacy policy</a>.",
+    "must-consent-privacy": "Per favore accetta la privacy policy per completare la registrazione."
   },
   "confirm-email": {
     "title": "Conferma indirizzo e-mail",

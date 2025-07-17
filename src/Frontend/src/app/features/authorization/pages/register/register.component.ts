@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {AuthorizationRouteNames} from "../../authorization.routes.names";
 import { ApiService } from '../../../../server/api/api.service';
@@ -16,7 +17,7 @@ import {RestrictedRouteNames} from "../../../restricted/restricted-route-names";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon, MatCheckbox],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [AuthorizationService]
@@ -28,6 +29,7 @@ export class RegisterComponent {
     email: ['',Validators.required],
     password: ['',Validators.required],
     dateOfBirth: [''],
+    consentPrivacy: ['']
   });
 
   mailAlreadyExists = false;
@@ -94,6 +96,17 @@ export class RegisterComponent {
     }
     return "";
   }
+  
+  get privacyInvalidMessage(){
+    if(!this.showInvalidations){
+      return "";
+    }
+    const consentPrivacy = this.registerForm.value.consentPrivacy;
+    if(!consentPrivacy){
+      return this.translateService.instant("register.must-consent-privacy");
+    }
+    return "";
+  }
 
   get passwordInvalidMessage(){
     if(!this.showInvalidations){
@@ -116,7 +129,7 @@ export class RegisterComponent {
     this.hasError = false;
     this.errorMessage = "";
     this.showInvalidations = true;
-    if(this.firstnameInvalidMessage || this.lastnameInvalidMessage || this.emailInvalidMessage || this.passwordInvalidMessage){
+    if(this.firstnameInvalidMessage || this.lastnameInvalidMessage || this.emailInvalidMessage || this.passwordInvalidMessage || this.privacyInvalidMessage){
       return;
     }
     const val = this.registerForm.value;
@@ -128,6 +141,7 @@ export class RegisterComponent {
         password: val.password,
         languageCode: this.languageService.currentLanguageCode,
         dateOfBirth: val.dateOfBirth,
+        consentPrivacy: val.consentPrivacy,
       }
     }).pipe(catchError((error) => {
       this.errorMessage = this.translateService.instant("register.unknown-error-message");
