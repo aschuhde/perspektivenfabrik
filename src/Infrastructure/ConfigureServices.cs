@@ -34,6 +34,7 @@ public static class ConfigureServices
         services.AddScoped<MailService>();
         services.AddSingleton<NotificationStorageService>();
         services.AddScoped<NotificationSenderService>();
+        services.AddScoped<IImageService, ImageService>();
         services.AddHostedService<NotificationJobListenerHostedService>();
         services.AddDbContext<ApplicationDbContext>((_, builder) =>
         {

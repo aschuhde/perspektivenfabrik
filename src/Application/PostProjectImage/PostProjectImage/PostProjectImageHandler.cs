@@ -3,8 +3,9 @@ using Application.Services;
 
 namespace Application.PostProjectImage.PostProjectImage;
 
-public class PostProjectImageHandler(IServiceProvider serviceProvider, IProjectService projectService, ICurrentUserService currentUserService) : BaseHandler<PostProjectImageRequest, PostProjectImageResponse>(serviceProvider)
+public class PostProjectImageHandler(IServiceProvider serviceProvider, IProjectService projectService, ICurrentUserService currentUserService, IImageService imageService) : BaseHandler<PostProjectImageRequest, PostProjectImageResponse>(serviceProvider)
 {
+    private const uint MaxImageWidth = 1920;
     public override async Task<PostProjectImageResponse> ExecuteAsync(PostProjectImageRequest command, CancellationToken ct)
     {
         var projectId = Guid.Parse(command.ProjectIdentifier);
@@ -19,7 +20,7 @@ public class PostProjectImageHandler(IServiceProvider serviceProvider, IProjectS
             return new PostDescriptionNotFoundResponse();
         }
 
-        var imageId = await projectService.AddProjectImage(projectId, command.Image.Content, ct);
+        var imageId = await projectService.AddProjectImage(projectId, imageService.ResizeImageIfExceedsThreshold(command.Image.Content, MaxImageWidth), ct);
         return new PostProjectImageResponse()
         {
             ImageIdentifier = imageId.ToString()
