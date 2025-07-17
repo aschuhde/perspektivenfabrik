@@ -25,17 +25,17 @@ export class AboutUsComponent {
     {
       name: "Anton Schuh",
       title: "aboutUs.anton-software-developer",
-      imagePath: "/images/about-us/anton.png"
+      imagePath: "/images/about-us/anton.jpg"
     },
     {
       name: "Anna Schuierer",
       title: "aboutUs.anna-designer",
-      imagePath: "/images/about-us/anna.png"
+      imagePath: "/images/about-us/anna.jpg"
     },
     {
       name: "Dominik Pazeller",
       title: "aboutUs.dominik-social-media",
-      imagePath: "/images/about-us/dominik.png"
+      imagePath: "/images/about-us/dominik.jpg"
     },
     {
       name: "Fabian Oberhofer",
