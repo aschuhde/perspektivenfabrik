@@ -2,4 +2,13 @@
 <app-motivation-section></app-motivation-section>
 <app-project-section></app-project-section>
 <app-footer></app-footer>
+<div class="feedback-div" [class.show]="showFeedbackDiv" [class.can-show]="canShowFeedbackDiv">
+    <div>
+        <div class="text-center">
+            <p [innerHTML]="'home.give-feedback-banner' | translate"></p>
+            <mat-icon class="close-icon" fontIcon="close" (click)="hideFeedbackDiv()"></mat-icon>
+        </div>
+    </div>
+</div>
+
     

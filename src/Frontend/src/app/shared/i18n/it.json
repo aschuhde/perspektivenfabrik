@@ -260,7 +260,8 @@
     "we-search": "Cerchiamo",
     "projects": "Progetti",
     "ideas": "Idee",
-    "inspirations": "Ispirazioni"
+    "inspirations": "Ispirazioni",
+    "give-feedback-banner": "Ciao! Il nostro sito web è appena stato lanciato.<br> Condividi il tuo feedback con noi e supportaci: <a href=\"mailto: info@perspektivenfabrik.it\">info&commat;perspektivenfabrik.it</a>"
   },
   "project-detail": {
     "location": "Luogo",
