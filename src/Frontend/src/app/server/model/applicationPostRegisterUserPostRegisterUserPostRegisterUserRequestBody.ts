@@ -17,4 +17,5 @@ export interface ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequ
     languageCode?: string;
     password?: string;
     dateOfBirth?: string;
+    consentPrivacy?: boolean;
 }

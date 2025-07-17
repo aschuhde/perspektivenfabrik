@@ -226,7 +226,9 @@
       "must-not-be-empty": "Bitte fülle das Feld {{parameter}} aus!",
       "must-not-be-over-n-chars": "Das Feld {{parameter}} darf nicht mehr als {{n}} Zeichen enthalten!",
       "password-policy": "Das Passwort muss zwischen 8 und 50 Zeichen lang sein und muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~) enthalten.",
-      "mail-already-exists": "Es existiert bereits ein Account mit dieser E-Mail Adresse. Bitte verwende eine andere E-Mail Adresse oder melde dich mit deinem bestehendem Account an. Bei Problemen, wende dich bitte an <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!"
+      "mail-already-exists": "Es existiert bereits ein Account mit dieser E-Mail Adresse. Bitte verwende eine andere E-Mail Adresse oder melde dich mit deinem bestehendem Account an. Bei Problemen, wende dich bitte an <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+      "consent-privacy-policy": "Ich habe die <a target='_blank' href='/privacy'>Datenschutzbestimmungen</a> gelesen und akzeptiere diese.",
+      "must-consent-privacy": "Bitte akzeptiere die Datenschutzbestimmungen, um die Registrieren zu können."
     },
     "confirm-email": {
       "title": "E-Mail Adresse bestätigen",
