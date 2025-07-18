@@ -27,4 +27,7 @@ public static class Routes
     public const string PostRequestOtp = $"{ApiRoute}/users/me/otp-request";
     public const string PostConfirmOtp = $"{ApiRoute}/users/me/otp-confirm";
     public const string GetOtpStatus = $"{ApiRoute}/users/me/otp";
+    public const string PutTags = $"{ApiRoute}/tags";
+    public const string PutMaterials = $"{ApiRoute}/materials";
+    public const string PutSkills = $"{ApiRoute}/skills";
 }

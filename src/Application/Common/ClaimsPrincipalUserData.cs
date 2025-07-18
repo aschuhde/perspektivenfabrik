@@ -11,6 +11,10 @@ public sealed class ClaimsPrincipalUserData
      public required Guid UserId { get; init; }
      public required string[] Roles { get; init; } = [];
      public required string DisplayName { get; init; }
+     
+     public bool IsAdmin => Roles.Any(x => string.Equals(x, UserRoles.Admin, StringComparison.OrdinalIgnoreCase));
+     public bool IsTrustedUser => Roles.Any(x => string.Equals(x, UserRoles.TrustedUser, StringComparison.OrdinalIgnoreCase));
+     public bool IsApprovalUser => Roles.Any(x => string.Equals(x, UserRoles.ApprovalUser, StringComparison.OrdinalIgnoreCase));
 }
 
 public static class UserRoles
