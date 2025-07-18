@@ -1,18 +1,15 @@
 ﻿using System.Diagnostics;
 using Application.Filter;
-using Application.Messages;
 using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
 using Application.Updaters;
-using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 using HtmlAgilityPack;
 using Infrastructure.Data;
 using Infrastructure.Data.DbDataTypes;
 using Infrastructure.Data.DbEntities;
-using Infrastructure.Data.DbLoading;
 using Infrastructure.Data.Mapping;
 using Infrastructure.FilterExtensions;
 using Infrastructure.ResultExtensions;
@@ -725,28 +722,6 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
     public async Task SoftDeleteProject(Guid entityId, CancellationToken ct)
     {
         await dbContext.Projects.Where(x => x.EntityId == entityId).ExecuteUpdateAsync(x => x.SetProperty(y => y.IsSoftDeleted, true), ct);
-    }
-
-    public async Task<TagDto[]> GetTags(CancellationToken ct)
-    {
-        var dbTags = await dbContext.Tags.AsNoTracking().ToArrayAsync(ct);
-        var dbTagIds = dbTags.Select(x => x.EntityId).ToArray();
-        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbTagIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
-        return dbTags.Select(x => x.ToTag().ApplyTranslations(fieldTranslations)).ToArray();
-    }
-    public async Task<MaterialDto[]> GetMaterials(CancellationToken ct)
-    {
-        var dbMaterials = await dbContext.Materials.AsNoTracking().ToArrayAsync(ct);
-        var dbMaterialIds = dbMaterials.Select(x => x.EntityId).ToArray();
-        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbMaterialIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
-        return dbMaterials.Select(x => x.ToMaterial().ApplyTranslations(fieldTranslations)).ToArray();
-    }
-    public async Task<SkillDto[]> GetSkills(CancellationToken ct)
-    {
-        var dbSkills = await dbContext.Skills.AsNoTracking().ToArrayAsync(ct);
-        var dbSkillIds = dbSkills.Select(x => x.EntityId).ToArray();
-        var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbSkillIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
-        return dbSkills.Select(x => x.ToSkill().ApplyTranslations(fieldTranslations)).ToArray(); 
     }
 
     public async Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct)

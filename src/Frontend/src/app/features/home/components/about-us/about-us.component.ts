@@ -40,7 +40,7 @@ export class AboutUsComponent {
     {
       name: "Fabian Oberhofer",
       title: "aboutUs.fabian-social-media",
-      imagePath: "/images/about-us/fabian.png"
+      imagePath: "/images/about-us/fabian.jpg"
     }
   ];
   platformId = inject(PLATFORM_ID)

@@ -39,6 +39,7 @@ export class EditRequirementPersonComponent {
   
   skillAutocompleteValue = model("");
   skillOptions: SelectOption[] = [];
+  skillOptionsFiltered: SelectOption[] = [];
   requirementIndex: number = this.data?.requirementIndex;
   onChanged: () => void = this.data?.onChanged;
   languageService = inject(LanguageService);
@@ -49,7 +50,16 @@ export class EditRequirementPersonComponent {
         const valueTranslations = TranslationValue.arrayFromApiTranslationValues(y.nameTranslations ?? []);
         return new SelectOption(TranslationValue.getTranslationIfExist(y.name ?? "", valueTranslations, this.languageService.currentLanguageCode), null, null, valueTranslations)
       }) ?? [];
-    })  
+      this.skillOptions.sort((a, b) => a.value?.toLowerCase()?.localeCompare(b.value?.toLowerCase() ?? "") ?? 0);
+      this.skillOptionsFiltered = this.skillOptions;
+    });
+    this.skillAutocompleteValue.subscribe(x => {
+      if(!x){
+        this.skillOptionsFiltered = this.skillOptions;
+      }else {
+        this.skillOptionsFiltered = this.skillOptions.filter(y => y.value?.toLowerCase().includes(x))
+      }
+    });
   }
   
   get requirementNumber(){

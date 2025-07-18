@@ -91,6 +91,10 @@ public abstract class BaseEndpoint<TRequest, TResponse> : Endpoint<TRequest, TRe
         {
           
         }
+        else if (attr.AuthorizationObjects.Contains(AuthorizationObject.Administrator))
+        {
+            Policy(x => x.RequireAssertion(y => y.User.ToUserData()?.IsAdmin ?? false));
+        }
         else
         {
           Policy(x => x.RequireClaim(ClaimsPrincipalUserData.EMailIsConfirmed, "true"));

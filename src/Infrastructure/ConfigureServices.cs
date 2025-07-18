@@ -27,6 +27,7 @@ public static class ConfigureServices
         
         services.AddScoped<ApplicationDbContextInitializer>();
         services.AddScoped<IUserDataService, UserDataService>();
+        services.AddScoped<ICommonDataService, CommonDataService>();
         services.AddScoped<IRefreshTokenRepositoryService, RefreshTokenRepositoryService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IOtpService, OtpService>();
