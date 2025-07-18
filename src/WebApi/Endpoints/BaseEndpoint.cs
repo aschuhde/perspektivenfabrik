@@ -127,6 +127,12 @@ public abstract class BaseEndpoint<TRequest, TResponse> : Endpoint<TRequest, TRe
             await HandleError(response, ct);
             return;
         }
+
+        response.ApplyHeaders((key, value) =>
+        {
+            this.HttpContext.Response.Headers[key] = value;
+        });
+        
         await HandleResult(response, ct);
     }
 }
@@ -169,7 +175,7 @@ public class FileBytesResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequ
     {
         if (response.IsInline)
         {
-            this.HttpContext.Response.Headers.Append("Content-Disposition", $"inline; filename=\"{response.FileName}\"");
+            this.HttpContext.Response.Headers["Content-Disposition"] = $"inline; filename=\"{response.FileName}\"";
         }
 
         return SendBytesAsync(response.Content ?? [], response.IsInline ? null : response.FileName, response.ContentType ?? "application/octet-stream", response.LastModified, cancellation: ct);

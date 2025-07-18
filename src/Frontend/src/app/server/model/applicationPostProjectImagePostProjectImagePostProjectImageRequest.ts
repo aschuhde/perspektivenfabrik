@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 import { ApplicationCommonBaseRequestOfPostProjectImageResponse } from './applicationCommonBaseRequestOfPostProjectImageResponse';
-import { DomainDataTypesGraphicsContent } from './domainDataTypesGraphicsContent';
+import { ApplicationPostProjectImagePostProjectImageGraphicsContentBytes } from './applicationPostProjectImagePostProjectImageGraphicsContentBytes';
 
 export interface ApplicationPostProjectImagePostProjectImagePostProjectImageRequest extends ApplicationCommonBaseRequestOfPostProjectImageResponse { 
-    image?: DomainDataTypesGraphicsContent;
+    image?: ApplicationPostProjectImagePostProjectImageGraphicsContentBytes;
 }

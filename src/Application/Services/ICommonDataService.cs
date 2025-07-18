@@ -10,4 +10,5 @@ public interface ICommonDataService
     public Task<TagDto[]> GetTags(CancellationToken ct);
     public Task<MaterialDto[]> GetMaterials(CancellationToken ct);
     public Task<SkillDto[]> GetSkills(CancellationToken ct);
+    Task<string[]> CleanupDatabase(CancellationToken ct);
 }

@@ -1,13 +1,15 @@
 ﻿using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Data.DbDataTypes;
 using Infrastructure.Data.DbEntities;
 using Infrastructure.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Services;
 
-public class CommonDataService(ApplicationDbContext dbContext) : ICommonDataService
+public class CommonDataService(ApplicationDbContext dbContext, IServiceProvider serviceProvider) : ICommonDataService
 {
     public async Task<int> UpdateTags(ImportValueDto[] importValueDtos, CancellationToken ct)
     {
@@ -344,5 +346,55 @@ public class CommonDataService(ApplicationDbContext dbContext) : ICommonDataServ
         var dbSkillIds = dbSkills.Select(x => x.EntityId).ToArray();
         var fieldTranslations = (await dbContext.DbFieldTranslations.Where(x => dbSkillIds.Contains(x.CorrelatedEntityId)).AsNoTracking().ToArrayAsync(ct)).Select(x => x.ToFieldTranslation()).ToArray();
         return dbSkills.Select(x => x.ToSkill().ApplyTranslations(fieldTranslations)).ToArray(); 
+    }
+
+    public async Task<string[]> CleanupDatabase(CancellationToken ct)
+    {
+        return await CleanupImages(ct);
+    }
+
+    private async Task<string[]> CleanupImages(CancellationToken ct)
+    {
+        var images = await dbContext.DbProjectImages.Where(x => x.Content.MimeType == null).ToArrayAsync(ct);
+        var messages = new List<string>();
+        var imageService = serviceProvider.GetRequiredService<IImageService>();
+        var hasChanges = false;
+        foreach (var image in images)
+        {
+            if (image.Content.Content.Length == 0)
+            {
+                messages.Add($"Skipped {image.EntityId} due to empty content");
+                continue;
+            }
+
+            var result = imageService.ProcessImage(image.Content.Content);
+
+            image.Thumbnail = result.ThumbnailImage != null
+                ? new DbGraphicsContent
+                {
+                    Content = result.ThumbnailImage.Content,
+                    Width = result.ThumbnailImage.Width,
+                    Height = result.ThumbnailImage.Height,
+                    MimeType = result.ThumbnailImage.MimeType,
+                    FileExtension = result.ThumbnailImage.FileExtension
+                }
+                : null;
+            image.Content = new DbGraphicsContent
+            {
+                Content = result.LargeImage.Content,
+                Width = result.LargeImage.Width,
+                Height = result.LargeImage.Height,
+                MimeType = result.LargeImage.MimeType,
+                FileExtension = result.LargeImage.FileExtension
+            };
+            hasChanges = true;
+            messages.Add($"Updated {image.EntityId}");
+        }
+
+        if (hasChanges)
+        {
+            await dbContext.SaveChangesAsync(ct);
+        }
+        return messages.ToArray();
     }
 }

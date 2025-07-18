@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface DomainDataTypesGraphicsContent { 
-    content?: string;
+export interface ApplicationModelsApiModelsApiImportValue { 
+    germanName?: string;
+    italianName?: string;
+    entityId?: string;
+    toDelete?: boolean;
 }
