@@ -47,10 +47,16 @@ import { ApplicationPostRegisterUserPostRegisterUserPostRegisterUserRequest } fr
 import { ApplicationPostRegisterUserPostRegisterUserPostRegisterUserResponse } from '../model/applicationPostRegisterUserPostRegisterUserPostRegisterUserResponse';
 import { ApplicationPostRequestOtpPostRequestOtpPostRequestOtpRequest } from '../model/applicationPostRequestOtpPostRequestOtpPostRequestOtpRequest';
 import { ApplicationPostRequestOtpPostRequestOtpPostRequestOtpResponse } from '../model/applicationPostRequestOtpPostRequestOtpPostRequestOtpResponse';
+import { ApplicationPutMaterialsPutMaterialsPutMaterialsRequest } from '../model/applicationPutMaterialsPutMaterialsPutMaterialsRequest';
+import { ApplicationPutMaterialsPutMaterialsPutMaterialsResponse } from '../model/applicationPutMaterialsPutMaterialsPutMaterialsResponse';
 import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusRequest';
 import { ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse } from '../model/applicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse';
 import { ApplicationPutProjectPutProjectPutProjectRequest } from '../model/applicationPutProjectPutProjectPutProjectRequest';
 import { ApplicationPutProjectPutProjectPutProjectResponse } from '../model/applicationPutProjectPutProjectPutProjectResponse';
+import { ApplicationPutSkillsPutSkillsPutSkillsRequest } from '../model/applicationPutSkillsPutSkillsPutSkillsRequest';
+import { ApplicationPutSkillsPutSkillsPutSkillsResponse } from '../model/applicationPutSkillsPutSkillsPutSkillsResponse';
+import { ApplicationPutTagsPutTagsPutTagsRequest } from '../model/applicationPutTagsPutTagsPutTagsRequest';
+import { ApplicationPutTagsPutTagsPutTagsResponse } from '../model/applicationPutTagsPutTagsPutTagsResponse';
 import { Filter } from '../model/filter';
 import { Filter1 } from '../model/filter1';
 import { Filter2 } from '../model/filter2';
@@ -577,14 +583,15 @@ export class ApiService {
      * 
      * @param projectIdentifier 
      * @param imageIdentifier 
+     * @param thumbnail 
      * @param u 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>;
-    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>>;
-    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>>;
-    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, thumbnail: boolean, u?: boolean, observe?: 'body', reportProgress?: boolean): Observable<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>;
+    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, thumbnail: boolean, u?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>>;
+    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, thumbnail: boolean, u?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationGetProjectImageGetProjectImageGetProjectImageResponse>>;
+    public webApiEndpointsGetProjectImage(projectIdentifier: string, imageIdentifier: string, thumbnail: boolean, u?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (projectIdentifier === null || projectIdentifier === undefined) {
             throw new Error('Required parameter projectIdentifier was null or undefined when calling webApiEndpointsGetProjectImage.');
@@ -594,8 +601,15 @@ export class ApiService {
             throw new Error('Required parameter imageIdentifier was null or undefined when calling webApiEndpointsGetProjectImage.');
         }
 
+        if (thumbnail === null || thumbnail === undefined) {
+            throw new Error('Required parameter thumbnail was null or undefined when calling webApiEndpointsGetProjectImage.');
+        }
+
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (thumbnail !== undefined && thumbnail !== null) {
+            queryParameters = queryParameters.set('thumbnail', <any>thumbnail);
+        }
         if (u !== undefined && u !== null) {
             queryParameters = queryParameters.set('_', <any>u);
         }
@@ -1222,6 +1236,60 @@ export class ApiService {
      * 
      * 
      * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPutMaterials(body: ApplicationPutMaterialsPutMaterialsPutMaterialsRequest, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPutMaterialsPutMaterialsPutMaterialsResponse>;
+    public webApiEndpointsPutMaterials(body: ApplicationPutMaterialsPutMaterialsPutMaterialsRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPutMaterialsPutMaterialsPutMaterialsResponse>>;
+    public webApiEndpointsPutMaterials(body: ApplicationPutMaterialsPutMaterialsPutMaterialsRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPutMaterialsPutMaterialsPutMaterialsResponse>>;
+    public webApiEndpointsPutMaterials(body: ApplicationPutMaterialsPutMaterialsPutMaterialsRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPutMaterials.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPutMaterialsPutMaterialsPutMaterialsResponse>('put',`${this.basePath}/api/materials`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
      * @param entityId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1326,6 +1394,114 @@ export class ApiService {
         }
 
         return this.httpClient.request<ApplicationPutProjectApprovalStatusPutProjectApprovalStatusPutProjectApprovalStatusResponse>('post',`${this.basePath}/api/projects/${encodeURIComponent(String(entityId))}/approval-status`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPutSkills(body: ApplicationPutSkillsPutSkillsPutSkillsRequest, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPutSkillsPutSkillsPutSkillsResponse>;
+    public webApiEndpointsPutSkills(body: ApplicationPutSkillsPutSkillsPutSkillsRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPutSkillsPutSkillsPutSkillsResponse>>;
+    public webApiEndpointsPutSkills(body: ApplicationPutSkillsPutSkillsPutSkillsRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPutSkillsPutSkillsPutSkillsResponse>>;
+    public webApiEndpointsPutSkills(body: ApplicationPutSkillsPutSkillsPutSkillsRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPutSkills.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPutSkillsPutSkillsPutSkillsResponse>('put',`${this.basePath}/api/skills`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public webApiEndpointsPutTags(body: ApplicationPutTagsPutTagsPutTagsRequest, observe?: 'body', reportProgress?: boolean): Observable<ApplicationPutTagsPutTagsPutTagsResponse>;
+    public webApiEndpointsPutTags(body: ApplicationPutTagsPutTagsPutTagsRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationPutTagsPutTagsPutTagsResponse>>;
+    public webApiEndpointsPutTags(body: ApplicationPutTagsPutTagsPutTagsRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationPutTagsPutTagsPutTagsResponse>>;
+    public webApiEndpointsPutTags(body: ApplicationPutTagsPutTagsPutTagsRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling webApiEndpointsPutTags.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (JWTBearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ApplicationPutTagsPutTagsPutTagsResponse>('put',`${this.basePath}/api/tags`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

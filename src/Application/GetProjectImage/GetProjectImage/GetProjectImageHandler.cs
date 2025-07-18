@@ -1,4 +1,5 @@
 using Application.Common;
+using Application.Common.Response;
 using Application.Services;
 
 namespace Application.GetProjectImage.GetProjectImage;
@@ -9,17 +10,19 @@ public class GetProjectImageHandler(IServiceProvider serviceProvider, IProjectSe
     {
         var projectId = Guid.Parse(command.ProjectIdentifier);
         var imageId = Guid.Parse(command.ImageIdentifier);
-        var image = await projectService.GetProjectImage(projectId, imageId, ct);
-        if (image?.Content == null)
+        var content = await projectService.GetProjectImage(projectId, imageId, command.OnlyThumbnail, ct);
+        
+        if (content == null)
         {
             return new GetProjectImageNotFoundResponse();
         }
+        
         return new GetProjectImageOkResponse()
         {
-            ContentType = "image/jpeg",
-            Content = image.Content?.Content,
-            FileName = imageId.ToString() + ".jpg",
+            ContentType = content.MimeType ?? "image/jpeg",
+            Content = content.Content,
+            FileName = imageId + "." + (content.FileExtension.TrimStart('.') ?? "jpg"),
             IsInline = true
-        };
+        }.WithHeader("Cache-Control", "public,max-age=31536000,immutable");
     }
 }

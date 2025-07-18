@@ -2,6 +2,7 @@
 using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Updaters;
+using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 
@@ -18,7 +19,7 @@ public interface IProjectService
     public Task<ProjectDto?> GetProjectWithHistoryByIdAndCacheDbProject(Guid entityId, CancellationToken ct);
     public Task SoftDeleteProject(Guid entityId, CancellationToken ct);
     public Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct);
-    public Task<ProjectImageDto?> GetProjectImage(Guid projectId, Guid imageId, CancellationToken ct);
+    public Task<GraphicsContent?> GetProjectImage(Guid projectId, Guid imageId, bool useThumbnailIfExist, CancellationToken ct);
     public Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct);
     public Task<Guid[]?> GetContributorIds(Guid projectId, CancellationToken ct);
     public Task<bool> ProjectExists(Guid projectId, CancellationToken ct);

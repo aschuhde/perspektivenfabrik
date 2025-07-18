@@ -4,6 +4,7 @@ using Application.Models.ProjectService;
 using Application.Selectors;
 using Application.Services;
 using Application.Updaters;
+using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
 using HtmlAgilityPack;
@@ -724,25 +725,79 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         await dbContext.Projects.Where(x => x.EntityId == entityId).ExecuteUpdateAsync(x => x.SetProperty(y => y.IsSoftDeleted, true), ct);
     }
 
+    
     public async Task<Guid> AddProjectImage(Guid projectId, byte[] image, CancellationToken ct)
     {
+        var imageService = serviceProvider.GetRequiredService<IImageService>();
+        var processedImageResult = imageService.ProcessImage(image);
         var guid = Guid.NewGuid();
         dbContext.DbProjectImages.Add(new DbProjectImage()
         {
             Content = new DbGraphicsContent()
             {
-                Content = image
+                Content = processedImageResult.LargeImage.Content,
+                MimeType = processedImageResult.LargeImage.MimeType,
+                Width = processedImageResult.LargeImage.Width,
+                Height = processedImageResult.LargeImage.Height,
+                FileExtension = processedImageResult.LargeImage.FileExtension,
             },
+            Thumbnail = processedImageResult.ThumbnailImage != null ? new DbGraphicsContent()
+            {
+                Content = processedImageResult.ThumbnailImage.Content,
+                MimeType = processedImageResult.ThumbnailImage.MimeType,
+                Width = processedImageResult.ThumbnailImage.Width,
+                Height = processedImageResult.ThumbnailImage.Height,
+                FileExtension = processedImageResult.ThumbnailImage.FileExtension,
+            } : null,
             ProjectId = projectId,
             EntityId = guid
         });
+        
         await dbContext.SaveChangesAsync(ct);
         return guid;
     }
     
-    public async Task<ProjectImageDto?> GetProjectImage(Guid projectId, Guid imageId, CancellationToken ct)
+    public async Task<GraphicsContent?> GetProjectImage(Guid projectId, Guid imageId, bool useThumbnailIfExists, CancellationToken ct)
     {
-        return (await dbContext.DbProjectImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).FirstOrDefaultAsync(ct))?.ToProjectImage();
+        DbGraphicsContent? result = null;
+        if (useThumbnailIfExists)
+        {
+            result = await dbContext.DbProjectImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId && x.Thumbnail != null).Select(x =>
+                new DbGraphicsContent()
+                {
+                    Content = x.Thumbnail!.Content,
+                    FileExtension = x.Thumbnail!.FileExtension,
+                    MimeType = x.Thumbnail!.MimeType,
+                    Width = x.Thumbnail!.Width,
+                    Height = x.Thumbnail!.Height
+                }).FirstOrDefaultAsync(ct);
+        }
+
+        if (result == null)
+        {
+            result = await dbContext.DbProjectImages.Where(x => x.EntityId == imageId && x.ProjectId == projectId).Select(x =>
+                new DbGraphicsContent()
+                {
+                    Content = x.Content.Content,
+                    FileExtension = x.Content.FileExtension,
+                    MimeType = x.Content.MimeType,
+                    Width = x.Content.Width,
+                    Height = x.Content.Height
+                }).FirstOrDefaultAsync(ct);
+        }
+
+        if (result == null)
+        {
+            return null;
+        }
+        return new GraphicsContent()
+        {
+            Content = result.Content,
+            FileExtension = result.FileExtension ?? "jpg",
+            MimeType = result.MimeType ?? "image/jpeg",
+            Width = result.Width ?? 0,
+            Height = result.Height ?? 0
+        };
     }
     
     public async Task<Guid?> GetOwnerId(Guid projectId, CancellationToken ct)

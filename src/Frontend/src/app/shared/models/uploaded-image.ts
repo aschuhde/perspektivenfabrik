@@ -20,8 +20,8 @@ export class UploadedImage{
     getType(): DomainEnumsGraphicsType{
         return this.isLogo ? "Logo" : (this.isMainImage ? "Header" : "Additional")
     }
-    static buildUrl(apiBasePath: string, projectEntityId: string | null, imageId: string | null){
-        return `${apiBasePath}/api/projects/${projectEntityId}/project-images/${imageId}`
+    static buildUrl(apiBasePath: string, projectEntityId: string | null, imageId: string | null, loadThumbnail: boolean = false){
+        return `${apiBasePath}/api/projects/${projectEntityId}/project-images/${imageId}${loadThumbnail ? "?thumbnail=true" : ""}`
     }   
     static fromApi(graphicsSpecification: ApplicationModelsApiModelsApiGraphicsSpecification, apiBasePath: string, projectId: string): UploadedImage{
         const result = new UploadedImage(null);

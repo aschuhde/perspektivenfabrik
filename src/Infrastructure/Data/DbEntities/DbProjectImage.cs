@@ -15,6 +15,7 @@ public class DbProjectImage : DbEntityWithId
     public DbProject? Project { get; set; }
     
     public required DbGraphicsContent Content { get; set; }
+    public DbGraphicsContent? Thumbnail { get; set; }
     
     public override void UpdateToTarget(DbEntityWithId target)
     {
@@ -24,5 +25,15 @@ public class DbProjectImage : DbEntityWithId
             this.ProjectId = projectImage.ProjectId;
         }
         this.Content.Update(projectImage.Content);
+        if (projectImage.Thumbnail != null && this.Thumbnail != null)
+        {
+            this.Thumbnail?.Update(projectImage.Thumbnail);
+        }else if(this.Thumbnail != null)
+        {
+            this.Thumbnail = null;
+        }else if (this.Thumbnail == null)
+        {
+            this.Thumbnail = projectImage.Thumbnail;
+        }
     }
 }

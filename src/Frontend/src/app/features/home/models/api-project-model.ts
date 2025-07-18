@@ -335,7 +335,7 @@ export class ApiProjectModel {
     if(!graphicSpecification){
       return "";
     }
-    return UploadedImage.buildUrl(apiBasePath, this.project?.entityId ?? null, graphicSpecification.imageId ?? null);
+    return UploadedImage.buildUrl(apiBasePath, this.project?.entityId ?? null, graphicSpecification.imageId ?? null, true);
   }
 
   needsMoney() {

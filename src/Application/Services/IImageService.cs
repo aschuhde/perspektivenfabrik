@@ -1,6 +1,8 @@
-﻿namespace Application.Services;
+﻿using Application.Models.ServiceModels;
+
+namespace Application.Services;
 
 public interface IImageService
 {
-    public byte[] ResizeImageIfExceedsThreshold(byte[] imageData, uint thresholdWidth);
+    public ProcessedImageResult ProcessImage(byte[] imageData);
 }
