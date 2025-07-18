@@ -270,17 +270,17 @@
                         </div>
                         <h4>{{ "input-project.short-description" | translate }}: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
                         <div [class.hidden]="isDescriptionOtherLanguageActive">
-                            <angular-editor [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescription" [config]="angularEditorConfig"></angular-editor>
+                            <angular-editor (paste)="pasteAngularEditorShortDescription()" [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div [class.hidden]="!isDescriptionOtherLanguageActive">
-                            <angular-editor [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
+                            <angular-editor (paste)="pasteAngularEditorShortDescriptionOtherLanguage()" [placeholder]="'input-project.short-description' | translate" [(ngModel)]="shortDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <h4>{{ "input-project.long-description" | translate }}: <mat-icon class="help-icon" aria-hidden="false" aria-label="Help icon" fontIcon="help" (click)="showMessageDialog(messageDialogs.helpDescription)"></mat-icon></h4>
                         <div [class.hidden]="isDescriptionOtherLanguageActive">
-                            <angular-editor [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescription" [config]="angularEditorConfig"></angular-editor>
+                            <angular-editor (paste)="pasteAngularEditorLongDescription()" [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescription" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div [class.hidden]="!isDescriptionOtherLanguageActive">
-                            <angular-editor [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
+                            <angular-editor (paste)="pasteAngularEditorLongDescriptionOtherLanguage()" [placeholder]="'input-project.long-description' | translate" [(ngModel)]="longDescriptionOtherLanguage" [config]="angularEditorConfig"></angular-editor>
                         </div>
                         <div>
                             <button (click)="selectNext()" class="btn-next w-100-mobile" >{{ "general.Continue" | translate}}</button>

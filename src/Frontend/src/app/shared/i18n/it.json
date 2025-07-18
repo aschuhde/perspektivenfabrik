@@ -260,7 +260,8 @@
     "we-search": "Cerchiamo",
     "projects": "Progetti",
     "ideas": "Idee",
-    "inspirations": "Ispirazioni"
+    "inspirations": "Ispirazioni",
+    "give-feedback-banner": "Ciao! Il nostro sito web è appena stato lanciato.<br> Condividi il tuo feedback con noi e supportaci: <a href=\"mailto: info@perspektivenfabrik.it\">info&commat;perspektivenfabrik.it</a>"
   },
   "project-detail": {
     "location": "Luogo",
@@ -360,7 +361,9 @@
     "helpVerificationRejectedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
     "helpVerificationRejectedMessage": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo valutato come non idoneo per la piattaforma.{{ ReasonText }} Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
     "error-message-on-rejecting-project": "Si è verificato un errore durante il rifiuto della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
-    "error-message-on-approving-project": "Si è verificato un errore durante l'approvazione della voce. Per favore riprova o contatta info@perspektivenfabrik.it"
+    "error-message-on-approving-project": "Si è verificato un errore durante l'approvazione della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
+    "htmlImgPasteTitle": "Inserire le immagini tramite la barra degli strumenti",
+    "htmlImgPasteMessage": "Per favore inserisci le immagini una alla volta usando l'icona dell'immagine nella barra degli strumenti superiore"
   },
   "saveProjectErrorDialog": {
     "copyToClipboard": "Copia messaggio negli appunti",

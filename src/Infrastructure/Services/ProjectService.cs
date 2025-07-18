@@ -8,6 +8,7 @@ using Application.Updaters;
 using Domain.DataTypes;
 using Domain.Entities;
 using Domain.Enums;
+using HtmlAgilityPack;
 using Infrastructure.Data;
 using Infrastructure.Data.DbDataTypes;
 using Infrastructure.Data.DbEntities;
@@ -379,8 +380,119 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
 
         existingHistoryConnection.History.UpdateToTarget(history.ToDbHistory());
     }
+
+    private void SanitizeHtmlDescriptions(ProjectDto project)
+    {
+        foreach (var projectDescriptionSpecification in project.DescriptionSpecifications)
+        {
+            projectDescriptionSpecification.Content.RawContentString =
+                SanitizeHtml(projectDescriptionSpecification.Content.RawContentString);
+
+            foreach (var contentTranslation in projectDescriptionSpecification.Content.ContentTranslations)
+            {
+                contentTranslation.Value = SanitizeHtml(contentTranslation.Value);
+            }
+        }
+    }
+
+    private string SanitizeHtml(string html)
+    {
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+        
+        string[] tagsToRemove = [
+            "object", "script", "input", "iframe", "embed", "video", 
+            "audio", "source", "style", "link", "meta", "title", 
+            "html", "base", "head", "body", "svg" 
+        ];
+        
+        var nodesToRemove = doc.DocumentNode
+            .SelectNodes("//*")
+            ?.Where(node => tagsToRemove.Contains(node.Name.ToLower()))
+            .ToList();
+
+        if (nodesToRemove != null)
+        {
+            foreach (var node in nodesToRemove)
+            {
+                try
+                {
+                    node.Remove();
+                }
+                catch
+                {
+                    //possibly already removed
+                }
+            }
+        }
+        
+        var allNodes = doc.DocumentNode.SelectNodes("//*");
+        if (allNodes != null)
+        {
+            foreach (var node in allNodes)
+            {
+                var style = node.GetAttributeValue("style", "");
+                var textAlign = "";
+                var hasTextAlign = false;
+                if (!string.IsNullOrEmpty(style))
+                {
+                    var styleProperties = style
+                        .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                        .FirstOrDefault(s => s.Replace(" ", "").StartsWith("text-align:", StringComparison.OrdinalIgnoreCase));
+
+                    if (styleProperties != null)
+                    {
+                        textAlign = styleProperties;
+                        hasTextAlign = true;
+                    }
+                }
+
+                if (node.Name.ToLower() == "a")
+                {
+                    var hasHrefAttribute = node.Attributes.Contains("href");
+                    var href = node.GetAttributeValue("href", "");
+                    node.Attributes.RemoveAll();
+                    if (hasHrefAttribute)
+                    {
+                        node.SetAttributeValue("href", href);
+                        node.SetAttributeValue("target", "_blank");
+                    }
+                }
+                else if (node.Name.ToLower() == "img")
+                {
+                    var hasSrcAttribute = node.Attributes.Contains("src");
+                    var hasAltAttribute = node.Attributes.Contains("alt");
+                    var src = node.GetAttributeValue("src", "");
+                    var alt = node.GetAttributeValue("alt", "");
+                    node.Attributes.RemoveAll();
+                    if (hasSrcAttribute)
+                    {
+                        node.SetAttributeValue("src", src);
+                    }
+                    if (hasAltAttribute)
+                    {
+                        node.SetAttributeValue("alt", alt);
+                    }
+                }
+                else
+                {
+                    node.Attributes.RemoveAll();
+                }
+                
+                if(hasTextAlign && !string.IsNullOrEmpty(textAlign))
+                {
+                    node.SetAttributeValue("style", textAlign);
+                }
+            }
+        }
+
+        return doc.DocumentNode.OuterHtml;
+    }
+    
     public async Task<CreateorUpdateProjectResult> CreateOrUpdateProject(ProjectDto project, EntityUpdatingContext changeContext, CancellationToken ct)
     {
+        
+        SanitizeHtmlDescriptions(project);
         var existingProject = changeContext.IsCreating
             ? null
             : (await GetDbProjects(query => query.Where(x => x.EntityId == project.EntityId), query => query, true, true, true, ct))

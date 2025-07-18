@@ -1,15 +1,65 @@
 <app-navigation-bar-full></app-navigation-bar-full>
 <div style="padding: 2rem">
-<h1>{{ "legalNotice.title" | translate }}</h1>
-<p>{{ "legalNotice.info" | translate }}</p>
-<p [innerHTML]="'legalNotice.address' | translate"></p>
-<p>{{ "legalNotice.mail" | translate }}: <a href="mailto: info@climateaction.bz">info&commat;climateaction.bz</a><br>
-{{ "legalNotice.pec" | translate }}: <a href="mailto: cast@pec-legal.it">cast&commat;pec-legal.it</a><br>
-{{ "legalNotice.web" | translate }}: <a href="mailto: https://climateaction.bz/">https://climateaction.bz/</a></p>
-<p>
-    {{ "legalNotice.taxNumber" | translate }}: 94140540215
-</p>
-
-<p><a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+@if(currentLanguage == "it"){
+    <h1>Informazioni legali / Impressum</h1>
+    <p>
+        <strong>Sede legale</strong><br>
+        Climate Action South Tyrol EO<br>
+        Via Caproni 9<br>
+        39100 Bolzano<br>
+    </p>
+    <p>
+        <strong>Sede operativa</strong><br>
+        Climate Action South Tyrol EO<br>
+        Via Johann Wolfgang von Goethe 20a<br>
+        39100 Bolzano<br>
+    </p>
+    <ul>
+        <li>E-Mail: info&commat;climateaction.bz</li>
+        <li>PEC: cast&commat;pec-legal.it</li>
+        <li>Sito Web: climateaction.bz</li>
+    </ul>
+    <p>
+        Codice fiscale: 94140540215<br>
+        Partita IVA: 03246750214<br>
+        Coordinate bancarie: Cassa Raiffeisen di Bolzano<br>
+        IBAN: IT15 T08081 11610 0003 0600 5942
+    </p>
+    <p>Iscrizione al Registro RUNTS: 104048 / 08.03.2023</p>
+    <p><strong>Amministrazione trasparente</strong></p>
+    <p>Obbligo di pubblicazione dei contributi pubblici ricevuti – Ai sensi della Legge 04.08.2017, n. 124, le associazioni, le fondazioni e le organizzazioni ONLUS sono tenute a pubblicare sul proprio sito web o su portali digitali le informazioni relative a contributi pubblici, incarichi pubblici o altri vantaggi economici ricevuti dalla pubblica amministrazione per un importo superiore a € 10.000 nell’anno precedente.</p>
+    <p><strong>Disclaimer email</strong></p>
+    <p>Tutte le informazioni contenute in questa comunicazione sono destinate esclusivamente alla persona e/o organizzazione a cui sono rivolte e possono contenere documenti e/o materiali riservati. Qualsiasi modifica, divulgazione, diffusione o altro utilizzo delle informazioni trasmesse da parte di persone e/o aziende diverse dai destinatari designati può costituire una violazione del Regolamento (UE) 2016/679 e un’infrazione della riservatezza. Se avete ricevuto questa email per errore, vi chiediamo di contattare il mittente e cancellare le informazioni da tutti i dispositivi, senza conservarne copia, in tutto o in parte, in nessuna forma. I diritti di proprietà intellettuale relativi ai contenuti presenti, comprese le immagini, sono di proprietà di Climate Action South Tyrol e qualsiasi uso diverso da quello per cui sono stati trasmessi è vietato.</p>
+}@else{
+    <h1>Rechtliche Informationen/ Impressum</h1>
+    <p>
+        <strong>Rechtliche Anschrift</strong><br>
+        Climate Action South Tyrol EO<br>
+        Capronistraße 9<br>
+        39100 Bozen<br>
+    </p>
+    <p>
+        <strong>Büro Anschrift</strong><br>
+        Climate Action South Tyrol EO<br>
+        Johann-Wolfgang-von-Goethe-Straße 20a<br>
+        39100 Bozen<br>
+    </p>
+    <ul>
+        <li>Mail: info&commat;climateaction.bz</li>
+        <li>PEC: cast&commat;pec-legal.it</li>
+        <li>Web: climateaction.bz</li>
+    </ul>
+    <p>
+        Steuernummer: 94140540215<br>
+        MwSt. Nr.: 03246750214<br>
+        Bankverbindung: Raiffeisenkasse Bozen<br>
+        IBAN: IT15 T08081 11610 0003 0600 5942
+    </p>
+    <p>Eintragung im RUNTS-Register: 104048 / 08.03.2023</p>
+    <p><strong>Transparente Verwaltung</strong></p>
+    <p>Veröffentlichungspflichten in Bezug auf erhaltene öffentliche Beiträge- Durch das Gesetz vom 04.08.2017, Nr. 124 wurde für Vereine, Stiftungen und ONLUS-Organisationen die Verpflichtung zur Veröffentlichung der Informationen zu öffentlichen Beiträgen, öffentlichen Aufträgen oder sonstigen von der öffentlichen Hand gewährten wirtschaftlichen Vorteilen, deren Höhe im Vorjahr über 10.000 € betragen hat, auf der Internetseite bzw. auf digitalen Portalen eingeführt.</p>
+    <p><strong>E-Mail Disclaimer</strong></p>
+    <p>Alle hierin übermittelten Informationen sind nur für die Person und/oder Organisation bestimmt, an die sie gerichtet sind, und können vertrauliche Dokumente und/oder vertrauliches Material enthalten. Jede Änderung, Weitergabe, Verbreitung oder sonstige Nutzung der übermittelten Informationen durch andere Personen und/oder Unternehmen als die angegebenen Adressaten kann eine Verletzung der Verordnung (EU) 2016/679 und eine Verletzung der Vertraulichkeit der Informationen darstellen. Sollten sie eine E-Mail irrtümlich erhalten haben, bitten wir Sie, sich mit dem Absender in Verbindung zu setzen und diese Informationen von allen Medien zu löschen, ohne eine Kopie, weder ganz noch teilweise, in irgendeiner Form anzufertigen. Die geistigen Eigentumsrechte an den hierin enthaltenen Inhalten, einschließlich der Bilder, sind Eigentum von Climate Action South Tyrol, und jede andere Verwendung als die, für die sie übermittelt wurden, ist verboten.</p>
+}
 </div>
 <app-footer></app-footer>
