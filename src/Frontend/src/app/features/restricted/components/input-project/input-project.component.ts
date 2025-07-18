@@ -93,6 +93,7 @@ export class InputProjectComponent {
     currentRequirementGroup: "person" | "material" | "money" = "person";
     tagAutocompleteValue = model("");
     tagOptions: SelectOption[] = [];
+    tagOptionsFiltered: SelectOption[] = [];
     isSaving: boolean = false
     projectSaveContext = input<ProjectSaveContext | null>(null);
     localeDataProvider = inject(LocaleDataProvider);
@@ -178,8 +179,17 @@ export class InputProjectComponent {
           const valueTranslations = TranslationValue.arrayFromApiTranslationValues(y.nameTranslations ?? []);
           return new SelectOption(TranslationValue.getTranslationIfExist(y.name ?? "", valueTranslations, this.translateService.currentLang as Language), null, null, valueTranslations);
         }) ?? [];
+        this.tagOptions.sort((a, b) => a.value?.toLowerCase()?.localeCompare(b.value?.toLowerCase() ?? "") ?? 0);
+        this.tagOptionsFiltered = this.tagOptions;
       })
       this.descriptionMainLanguage = this.translateService.currentLang as Language;
+      this.tagAutocompleteValue.subscribe(x => {
+        if(!x){
+          this.tagOptionsFiltered = this.tagOptions;
+        }else {
+          this.tagOptionsFiltered = this.tagOptions.filter(y => y.value?.toLowerCase().includes(x))
+        }
+      });
     }
   
     constructor() {

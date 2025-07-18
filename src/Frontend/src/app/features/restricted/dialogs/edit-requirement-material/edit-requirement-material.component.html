@@ -15,7 +15,7 @@
                    [matAutocomplete]="autoMaterial"
                    [(ngModel)]="materialAutocompleteValue"/>
             <mat-autocomplete (optionSelected)="materialSelected($event)" #autoMaterial="matAutocomplete">
-              @for (option of materialOptions; track option) {
+              @for (option of materialOptionsFiltered; track option) {
                 <mat-option [value]="option.value">{{option.text}}</mat-option>
               }
             </mat-autocomplete>

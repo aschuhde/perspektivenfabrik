@@ -15,7 +15,7 @@
                     [matAutocomplete]="autoSkill"
                     [(ngModel)]="skillAutocompleteValue"/>
             <mat-autocomplete (optionSelected)="skillSelected($event)" #autoSkill="matAutocomplete">
-            @for (option of skillOptions; track option) {
+            @for (option of skillOptionsFiltered; track option) {
                 <mat-option [value]="option.value">{{option.text}}</mat-option>
             }
             </mat-autocomplete>

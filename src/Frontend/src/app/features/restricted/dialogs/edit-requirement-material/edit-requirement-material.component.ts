@@ -39,6 +39,7 @@ export class EditRequirementMaterialComponent {
 
   materialAutocompleteValue = model("");
   materialOptions: SelectOptionMaterial[] = [];
+  materialOptionsFiltered: SelectOptionMaterial[] = [];
   requirementIndex: number = this.data?.requirementIndex;
     onChanged: () => void = this.data?.onChanged;
     languageService = inject(LanguageService);
@@ -52,7 +53,16 @@ export class EditRequirementMaterialComponent {
           valueTranslations: valueTranslations
         });
       }) ?? [];
-    })
+      this.materialOptions.sort((a, b) => a.value?.toLowerCase()?.localeCompare(b.value?.toLowerCase() ?? "") ?? 0);
+      this.materialOptionsFiltered = this.materialOptions;
+    });
+    this.materialAutocompleteValue.subscribe(x => {
+      if(!x){
+        this.materialOptionsFiltered = this.materialOptions;
+      }else {
+        this.materialOptionsFiltered = this.materialOptions.filter(y => y.value?.toLowerCase().includes(x))
+      }
+    });
   }
   
   get requirementNumber(){

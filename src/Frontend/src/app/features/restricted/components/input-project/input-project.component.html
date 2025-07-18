@@ -229,7 +229,7 @@
                                        [matAutocomplete]="autoTag"
                                        [(ngModel)]="tagAutocompleteValue"/>
                                 <mat-autocomplete (optionSelected)="tagSelected($event)" #autoTag="matAutocomplete">
-                                    @for (option of tagOptions; track option) {
+                                    @for (option of tagOptionsFiltered; track option) {
                                         <mat-option [value]="option.value">{{option.text}}</mat-option>
                                     }
                                 </mat-autocomplete>
