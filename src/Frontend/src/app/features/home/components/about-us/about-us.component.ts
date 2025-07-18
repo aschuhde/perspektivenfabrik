@@ -34,7 +34,7 @@ export class AboutUsComponent {
     },
     {
       name: "Dominik Pazeller",
-      title: "aboutUs.dominik-social-media",
+      title: "aboutUs.dominik-idea-concetto",
       imagePath: "/images/about-us/dominik.jpg"
     },
     {
