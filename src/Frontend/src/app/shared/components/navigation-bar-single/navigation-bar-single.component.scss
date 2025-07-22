@@ -1,4 +1,5 @@
 @use "responsive";
+@use "vars";
 
 :host{
   display: flex;
@@ -13,5 +14,10 @@
     width: 100vw;
     background-color: white;
     z-index: 1;
+    
+    &.purpleStyle{
+      background-color: vars.$bg-purple;
+      color: white;
+    }
   }
 }

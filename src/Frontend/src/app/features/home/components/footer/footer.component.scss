@@ -1,4 +1,5 @@
 @use "responsive";
+@use "vars";
 
 footer{
   background-color: #175153;
@@ -18,9 +19,27 @@ app-insta-icon, app-github-icon{
   height: 3rem
 }
 
+:host.purpleStyle{
+  footer {
+    background-color: vars.$bg-purple;
+  }
+}
+
 @include responsive.mobile{
   footer{
     font-size: 1rem;
+    display: block;
+    
+    > div{
+      display: flex;
+      justify-content: space-evenly;
+      &:first-child{
+        border-bottom: 1px solid white;
+      }
+      > a{
+        margin-right: 0 !important;
+      }
+    }
   }
 
   app-insta-icon, app-github-icon{

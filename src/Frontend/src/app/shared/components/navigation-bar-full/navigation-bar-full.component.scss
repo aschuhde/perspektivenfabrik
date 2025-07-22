@@ -27,6 +27,17 @@
   margin-top: .8rem;
 }
 
+:host.purpleStyle{
+  background-color: vars.$bg-purple;
+  color: white;
+  .logo-text {
+    color: white; 
+  }
+  .logo-image {
+    color: white;
+  }
+}
+
 @include responsive.mobile {
   .logo-image{
     margin-left: 1rem;

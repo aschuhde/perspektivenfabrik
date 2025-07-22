@@ -1,59 +1,63 @@
-<div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="width: 20rem; align-self: center">
-        <fieldset style="padding: 0">
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "register.firstname" | translate }}</mat-label>
-                    <input type="text" matInput name="firstName" formControlName="firstName"/>
-                </mat-form-field>
-                <p class="invalid-message" style="margin-top: -20px">{{ firstnameInvalidMessage }}</p>
+<div style="display: flex; justify-content: stretch; flex-direction: column; height: 100%">
+    <app-navigation-bar-full [purple]="true" style="flex-grow: 0"></app-navigation-bar-full>
+    <div style="padding: 1rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="width: 20rem; align-self: center">
+            <fieldset style="padding: 0">
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "register.firstname" | translate }}</mat-label>
+                        <input type="text" matInput name="firstName" formControlName="firstName"/>
+                    </mat-form-field>
+                    <p class="invalid-message" style="margin-top: -20px">{{ firstnameInvalidMessage }}</p>
+                </div>
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "register.lastname" | translate }}</mat-label>
+                        <input type="text" matInput name="lastName" formControlName="lastName"/>
+                    </mat-form-field>
+                    <p class="invalid-message" style="margin-top: -20px">{{ lastnameInvalidMessage }}</p>
+                </div>
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "register.e-mail" | translate }}</mat-label>
+                        <input type="email" matInput name="email" formControlName="email"/>
+                    </mat-form-field>
+                    @if(mailAlreadyExists){
+                        <p class="invalid-message" style="margin-top: -20px" [innerHTML]="'register.mail-already-exists' | translate"></p>
+                    } @else {
+                        <p class="invalid-message" style="margin-top: -20px">{{ emailInvalidMessage }}</p>
+                    }
+                </div>
+                <div class="date-of-birth">
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>Date of Birth</mat-label>
+                        <input type="date" matInput name="dateOfBirth" formControlName="dateOfBirth"/>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "register.password" | translate }}</mat-label>
+                        <input type="password" matInput name="password" formControlName="password"/>
+                    </mat-form-field>
+                    <p class="invalid-message" style="margin-top: -20px">{{ passwordInvalidMessage }}</p>
+                </div>
+                <div>
+                    <mat-checkbox style="color: white;" name="consentPrivacy" formControlName="consentPrivacy"><span class="color-white" [innerHTML]="'register.consent-privacy-policy' | translate"></span></mat-checkbox>
+                    <p class="invalid-message">{{ privacyInvalidMessage }}</p>
+                </div>
+            </fieldset>
+            @if(hasError){
+                <p class="invalid-message" [innerHTML]="errorMessage"></p>
+            }
+            <div class="form-buttons">
+                <button style="width: 20rem" type="submit">{{ "register.register" | translate }}</button>
             </div>
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "register.lastname" | translate }}</mat-label>
-                    <input type="text" matInput name="lastName" formControlName="lastName"/>
-                </mat-form-field>
-                <p class="invalid-message" style="margin-top: -20px">{{ lastnameInvalidMessage }}</p>
-            </div>
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "register.e-mail" | translate }}</mat-label>
-                    <input type="email" matInput name="email" formControlName="email"/>
-                </mat-form-field>
-                @if(mailAlreadyExists){
-                    <p class="invalid-message" style="margin-top: -20px" [innerHTML]="'register.mail-already-exists' | translate"></p>
-                } @else {
-                    <p class="invalid-message" style="margin-top: -20px">{{ emailInvalidMessage }}</p>
-                }
-            </div>
-            <div class="date-of-birth">
-                <mat-form-field style="width: 20rem">
-                    <mat-label>Date of Birth</mat-label>
-                    <input type="date" matInput name="dateOfBirth" formControlName="dateOfBirth"/>
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "register.password" | translate }}</mat-label>
-                    <input type="password" matInput name="password" formControlName="password"/>
-                </mat-form-field>
-                <p class="invalid-message" style="margin-top: -20px">{{ passwordInvalidMessage }}</p>
-            </div>
-            <div>
-                <mat-checkbox style="color: white;" name="consentPrivacy" formControlName="consentPrivacy"><span class="color-white" [innerHTML]="'register.consent-privacy-policy' | translate"></span></mat-checkbox>
-                <p class="invalid-message">{{ privacyInvalidMessage }}</p>
-            </div>
-        </fieldset>
-        @if(hasError){
-            <p class="invalid-message" [innerHTML]="errorMessage"></p>
-        }
-        <div class="form-buttons">
-            <button style="width: 20rem" type="submit">{{ "register.register" | translate }}</button>
+        </form>
+        <div style="width: 20rem; align-self: center; margin-top: 2rem">
+            <hr class="hr-white">
+            <h5 class="color-white">{{ "register.already-user" | translate }}</h5>
+            <a href="{{ AuthorizationRouteNames.LoginUrl(returnUrl) }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "register.login-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
         </div>
-    </form>
-    <div style="width: 20rem; align-self: center; margin-top: 2rem">
-        <hr class="hr-white">
-        <h5 class="color-white">{{ "register.already-user" | translate }}</h5>
-        <a href="{{ AuthorizationRouteNames.LoginUrl(returnUrl) }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "register.login-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
     </div>
+    <app-footer [purple]="true" style="flex-grow: 0"></app-footer>
 </div>

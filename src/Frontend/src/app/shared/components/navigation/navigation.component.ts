@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 import { LanguageSwitchComponent } from '../language-switch/language-switch.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserAreaComponent } from '../user-area/user-area.component';
@@ -14,5 +14,10 @@ export class NavigationComponent {
   aboutUsUrl = HomeRouteNames.AboutUsUrl();
   constructor() {
     
+  }
+  purple = input(false);
+
+  @HostBinding('class') get class() {
+    return this.purple() ? "purpleStyle" : "";
   }
 }

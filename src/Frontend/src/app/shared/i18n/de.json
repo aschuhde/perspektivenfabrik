@@ -16,9 +16,10 @@
       "end-date": "Enddatum",
       "inTheSameTimeOfTheProject": "Im gleichen Zeitraum des Projekts",
       "atTheSameLocationOfTheProject": "Am gleichen Ort wie das Projekt",
-      "legalNotice": "Rechtliche Informationen",
+      "legalNotice": "Impressum",
       "privacyPolicy": "Privacy Policy",
-      "available-soon": "bald verfügbar!"
+      "available-soon": "bald verfügbar!",
+      "cookie-policy": "Cookie Policy"
     },
     "nav": {
         "about us": "über uns",
@@ -416,5 +417,8 @@
     },
     "meta": {
       "description": "Die Perspektivenfabrik sammelt, präsentiert und vernetzt nachhaltige Lösungen, visionäre Persönlichkeiten und zukunftsweisende Initiativen in Südtirol."
+    },
+    "forgot-password": {
+      "hint": "Diese Funktion steht bald zur Verfügung! Bitte wende dich in der Zwischenzeit an <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
     }
 }

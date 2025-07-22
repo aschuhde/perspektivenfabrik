@@ -240,14 +240,19 @@
 }
 
 @include responsive.mobile{
+  .on-insta{
+    font-size: 1.5rem;
+    word-break: break-word;
+  }
   .top {
     .left{
       width: 100%;
       display: block;
       
       > .left-content {
+        width: 100%;
         .title{
-          font-size: 2.5rem;
+          font-size: 1.8rem;
         }
       }
     }

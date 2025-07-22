@@ -1,8 +1,12 @@
 <div class="split-left-right w-100-mobile navigation-bar-full">
     <a href="{{homeUrl}}"><div class="logo-container">
-        <img class="logo-image" src="/logo.svg" />
+        @if(purple()){
+            <img class="logo-image" src="/logo-white.svg" />
+        }@else{
+            <img class="logo-image" src="/logo.svg" />
+        }
         <span class="logo-text only-desktop">Perspektivenfabrik</span>
     </div>
     </a>
-    <div class="w-100-mobile"><app-navigation></app-navigation></div>
+    <div class="w-100-mobile"><app-navigation [purple]="purple()"></app-navigation></div>
 </div>

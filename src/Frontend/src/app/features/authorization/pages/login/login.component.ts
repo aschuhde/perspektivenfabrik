@@ -10,10 +10,14 @@ import {AuthorizationRouteNames} from "../../authorization.routes.names";
 import {LanguageService} from "../../../../core/services/language-service.service";
 import {JWTTokenService} from "../../../../core/services/jwt-token.service";
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
+import {FooterComponent} from "../../../home/components/footer/footer.component";
+import {
+    NavigationBarFullComponent
+} from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
 
 @Component({
     selector: 'app-login',
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon],
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon, FooterComponent, NavigationBarFullComponent],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     providers: [AuthorizationService]

@@ -14,10 +14,14 @@ import {
 import {AuthorizationService} from "../../services/auth.service";
 import {ActivatedRoute, Router } from '@angular/router';
 import {RestrictedRouteNames} from "../../../restricted/restricted-route-names";
+import {FooterComponent} from "../../../home/components/footer/footer.component";
+import {
+  NavigationBarFullComponent
+} from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon, MatCheckbox],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslateModule, MatIcon, MatCheckbox, FooterComponent, NavigationBarFullComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [AuthorizationService]

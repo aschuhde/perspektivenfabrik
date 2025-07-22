@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
@@ -8,5 +8,9 @@ import { NavigationComponent } from '../navigation/navigation.component';
   styleUrl: './navigation-bar-single.component.scss'
 })
 export class NavigationBarSingleComponent {
+  purple = input(false);
 
+  @HostBinding('class') get class() {
+    return this.purple() ? "purpleStyle" : "";
+  }
 }

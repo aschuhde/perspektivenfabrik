@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
@@ -15,4 +15,10 @@ import {GithubIconComponent} from "../../../../shared/components/github-icon/git
 export class FooterComponent {
 
     protected readonly HomeRouteNames = HomeRouteNames;
+
+    purple = input(false);
+
+    @HostBinding('class') get class() {
+        return this.purple() ? "purpleStyle" : "";
+    }
 }

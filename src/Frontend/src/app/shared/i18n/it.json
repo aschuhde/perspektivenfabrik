@@ -16,9 +16,10 @@
     "end-date": "Data di fine",
     "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
     "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto",
-    "legalNotice": "Informazioni Legali",
+    "legalNotice": "Impressum",
     "privacyPolicy": "Privacy Policy",
-    "available-soon": "disponibile presto!"
+    "available-soon": "disponibile presto!",
+    "cookie-policy": "Cookie Policy"
   },
   "nav": {
     "about us": "chi siamo",
@@ -416,5 +417,8 @@
   },
   "meta": {
     "description": "La Perspektivenfabrik raccoglie, valorizza e connette soluzioni sostenibili, personalità visionarie e iniziative lungimiranti in Alto Adige."
+  },
+  "forgot-password": {
+    "hint": "Questa funzione sarà presto disponibile! Nel frattempo, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
   }
 }

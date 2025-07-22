@@ -11,10 +11,14 @@ import {RefreshTokenService} from "../../../../core/services/refresh-token.servi
 import {JWTTokenService} from "../../../../core/services/jwt-token.service";
 import { TranslatePipe } from '@ngx-translate/core';
 import {LogoutService} from "../../../../core/services/logout.service";
+import {FooterComponent} from "../../../home/components/footer/footer.component";
+import {
+    NavigationBarFullComponent
+} from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
 
 @Component({
   selector: 'app-confirm-email',
-  imports: [MatFormField, MatInput, FormsModule, MatIcon, TranslatePipe],
+    imports: [MatFormField, MatInput, FormsModule, MatIcon, TranslatePipe, FooterComponent, NavigationBarFullComponent],
   templateUrl: './confirm-email.component.html',
   styleUrl: './confirm-email.component.scss'
 })

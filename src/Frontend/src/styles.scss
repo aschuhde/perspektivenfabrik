@@ -58,6 +58,11 @@ app-navigation-bar-full{
   .full-height-minus-nav-viewport{
     min-height: calc(100vh - 3rem);
   }
+  .one-number-text-input {
+    .mdc-text-field {
+      padding: 0 12px !important;
+    }
+  }
 }
 
 @include responsive.desktop{
