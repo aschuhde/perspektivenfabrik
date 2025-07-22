@@ -417,5 +417,8 @@
   },
   "meta": {
     "description": "La Perspektivenfabrik raccoglie, valorizza e connette soluzioni sostenibili, personalità visionarie e iniziative lungimiranti in Alto Adige."
+  },
+  "forgot-password": {
+    "hint": "Questa funzione sarà presto disponibile! Nel frattempo, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
   }
 }

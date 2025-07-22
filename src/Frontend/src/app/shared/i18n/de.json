@@ -417,5 +417,8 @@
     },
     "meta": {
       "description": "Die Perspektivenfabrik sammelt, präsentiert und vernetzt nachhaltige Lösungen, visionäre Persönlichkeiten und zukunftsweisende Initiativen in Südtirol."
+    },
+    "forgot-password": {
+      "hint": "Diese Funktion steht bald zur Verfügung! Bitte wende dich in der Zwischenzeit an <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
     }
 }

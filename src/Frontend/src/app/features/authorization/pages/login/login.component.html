@@ -1,36 +1,40 @@
-<div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <fieldset>
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "login.e-mail" | translate }}</mat-label>
-                    <input type="email" matInput name="email" formControlName="email"/>
-                </mat-form-field>
+<div style="display: flex; justify-content: stretch; flex-direction: column; height: 100%">
+    <app-navigation-bar-full [purple]="true" style="flex-grow: 0"></app-navigation-bar-full>
+    <div style="padding: 1rem; flex-grow: 1; text-align: center; display: flex; flex-direction: column; justify-content: center; background-color: #B497E5;">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <fieldset>
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "login.e-mail" | translate }}</mat-label>
+                        <input type="email" matInput name="email" formControlName="email"/>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field style="width: 20rem">
+                        <mat-label>{{ "login.password" | translate }}</mat-label>
+                        <input type="password" matInput name="password" formControlName="password"/>
+                    </mat-form-field>
+                </div>
+            </fieldset>
+            <div class="form-buttons">
+                <button style="width: 20rem" type="submit">{{ "login.login" | translate }}</button>
             </div>
-            <div>
-                <mat-form-field style="width: 20rem">
-                    <mat-label>{{ "login.password" | translate }}</mat-label>
-                    <input type="password" matInput name="password" formControlName="password"/>
-                </mat-form-field>
-            </div>
-        </fieldset>
-        <div class="form-buttons">
-            <button style="width: 20rem" type="submit">{{ "login.login" | translate }}</button>
+            @if(hasGeneralError){
+                <p class="invalid-message" [innerHTML]="'login.general-error-message' | translate"></p>
+            }
+            @if(userDoesNotExist){
+                <p class="invalid-message">{{ "login.user-does-not-exist" | translate }}</p>
+            }
+            @if(wrongCredentials){
+                <p class="invalid-message">{{ "login.wrong-credentials" | translate }}</p>
+            }
+            <p class="color-white" style="font-size: .9rem"><a href="{{ AuthorizationRouteNames.ForgotPasswordUrl(returnUrl) }}">{{ "login.forgot-password" | translate }}</a></p>
+        </form>
+        <div style="width: 20rem; align-self: center; margin-top: 2rem">
+            <hr class="hr-white">
+            <h5 class="color-white">{{ "login.no-user-yet" | translate }}</h5>
+            <a href="{{ AuthorizationRouteNames.RegisterUrl(returnUrl) }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "login.register-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
         </div>
-        @if(hasGeneralError){
-            <p class="invalid-message" [innerHTML]="'login.general-error-message' | translate"></p>
-        }
-        @if(userDoesNotExist){
-            <p class="invalid-message">{{ "login.user-does-not-exist" | translate }}</p>
-        }
-        @if(wrongCredentials){
-            <p class="invalid-message">{{ "login.wrong-credentials" | translate }}</p>
-        }
-        <p class="color-white" style="font-size: .9rem"><a href="{{ AuthorizationRouteNames.ForgotPasswordUrl(returnUrl) }}">{{ "login.forgot-password" | translate }}</a></p>
-    </form>
-    <div style="width: 20rem; align-self: center; margin-top: 2rem">
-        <hr class="hr-white">
-        <h5 class="color-white">{{ "login.no-user-yet" | translate }}</h5>
-        <a href="{{ AuthorizationRouteNames.RegisterUrl(returnUrl) }}"><button class="btn-green" style="width: 20rem" type="submit">{{ "login.register-here" | translate }} <mat-icon fontIcon="arrow_right_alt"></mat-icon></button></a>
     </div>
+    <app-footer [purple]="true" style="flex-grow: 0"></app-footer>
 </div>

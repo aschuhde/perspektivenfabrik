@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import {ApiService} from "../../../../server/api/api.service";
-import {AuthorizationService} from "../../services/auth.service";
-import {LanguageService} from "../../../../core/services/language-service.service";
 import { ActivatedRoute } from '@angular/router';
+import {FooterComponent} from "../../../home/components/footer/footer.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {
+  NavigationBarFullComponent
+} from "../../../../shared/components/navigation-bar-full/navigation-bar-full.component";
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [],
+  imports: [
+    FooterComponent, TranslatePipe, NavigationBarFullComponent
+  ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })

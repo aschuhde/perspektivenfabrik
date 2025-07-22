@@ -1,4 +1,5 @@
 @use "responsive";
+@use "vars";
 
 :host{
     width: 30rem;
@@ -17,5 +18,10 @@
     padding-top: .2rem;
     padding-bottom: .2rem;
     background-color: white;
+    &.purpleStyle{
+      background-color: vars.$bg-purple;
+      color: white;
+    }
   }
+  
 }
