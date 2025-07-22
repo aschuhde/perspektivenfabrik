@@ -8,22 +8,22 @@
             <h1 class="color-white" style="margin: 0">{{ "confirm-email.title" | translate }}</h1>
             <p class="color-white">{{ "confirm-email.we-sent-you-a-code" | translate }}. <br>{{ "confirm-email.please-put-in-the-code" | translate }}!</p>
             <div class="otp-container">
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" autofocus (keydown)="onOtp1KeyDown($event)" #otp1Input [(ngModel)]="otp1" type="text" matInput />
                 </mat-form-field>
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" (keydown)="onOtp2KeyDown($event)" #otp2Input [(ngModel)]="otp2" type="text" matInput />
                 </mat-form-field>
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" (keydown)="onOtp3KeyDown($event)" #otp3Input [(ngModel)]="otp3" type="text" matInput />
                 </mat-form-field>
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" (keydown)="onOtp4KeyDown($event)" #otp4Input [(ngModel)]="otp4" type="text" matInput />
                 </mat-form-field>
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" (keydown)="onOtp5KeyDown($event)" #otp5Input [(ngModel)]="otp5" type="text" matInput />
                 </mat-form-field>
-                <mat-form-field class="without-subscript-wrapper">
+                <mat-form-field class="without-subscript-wrapper one-number-text-input">
                     <input (paste)="onPaste($event)" (keydown)="onOtp6KeyDown($event)" #otp6Input [(ngModel)]="otp6" type="text" matInput />
                 </mat-form-field>
                 <button class="secondary" (click)="confirmOtp()" style="height: 100%" [disabled]="otpConfirmationRunning"><mat-icon fontIcon="arrow_right_alt"></mat-icon></button>
