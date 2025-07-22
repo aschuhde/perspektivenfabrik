@@ -16,9 +16,10 @@
     "end-date": "Data di fine",
     "inTheSameTimeOfTheProject": "Nello stesso periodo del progetto",
     "atTheSameLocationOfTheProject": "Nello stesso luogo del progetto",
-    "legalNotice": "Informazioni Legali",
+    "legalNotice": "Impressum",
     "privacyPolicy": "Privacy Policy",
-    "available-soon": "disponibile presto!"
+    "available-soon": "disponibile presto!",
+    "cookies": "Cookies"
   },
   "nav": {
     "about us": "chi siamo",
