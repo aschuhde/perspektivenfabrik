@@ -5,7 +5,8 @@ Allow: /
 # Main navigation paths
 Allow: /about-us
 Allow: /privacy
-Allow: /legal
+Allow: /legal-notice
+Allow: /cookies
 
 # Crawl-delay to prevent server overload
 Crawl-delay: 10

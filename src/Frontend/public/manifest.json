@@ -48,5 +48,5 @@
     }],
   "theme_color":"#ea6a31",
   "background_color":"#ffffff",
-  "display":"standalone"
+  "display":"browser"
 }
