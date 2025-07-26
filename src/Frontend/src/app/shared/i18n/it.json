@@ -98,7 +98,8 @@
     "is-approved-info": "verificato",
     "is-rejected-info": "rifiutato",
     "is-approval-pending-info": "in revisione",
-    "reason": "Motivazione"
+    "reason": "Motivazione",
+    "organisation": "Organizzazione"
   },
   "map": {
     "map": "Mappa",
