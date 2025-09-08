@@ -143,7 +143,7 @@ public class EmptyResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequest,
 {
     protected override Task HandleResult(TResponse response, CancellationToken ct)
     {
-        return SendStringAsync("", (int)response.StatusCode, cancellation:ct);
+        return Send.StringAsync("", (int)response.StatusCode, cancellation:ct);
     }
 }
 
@@ -153,7 +153,7 @@ public class StringResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequest
 {
     protected override Task HandleResult(TResponse response, CancellationToken ct)
     {
-        return SendStringAsync(response.Content, (int)response.StatusCode, response.ContentType, cancellation:ct);
+        return Send.StringAsync(response.Content, (int)response.StatusCode, response.ContentType, cancellation:ct);
     }
 }
 
@@ -163,7 +163,7 @@ public class FileInfoResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TReque
 {
     protected override Task HandleResult(TResponse response, CancellationToken ct)
     {
-        return SendFileAsync(response.FileInfo, response.ContentType, response.LastModified, cancellation: ct);
+        return Send.FileAsync(response.FileInfo, response.ContentType, response.LastModified, cancellation: ct);
     }
 }
 
@@ -178,7 +178,7 @@ public class FileBytesResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequ
             this.HttpContext.Response.Headers["Content-Disposition"] = $"inline; filename=\"{response.FileName}\"";
         }
 
-        return SendBytesAsync(response.Content ?? [], response.IsInline ? null : response.FileName, response.ContentType ?? "application/octet-stream", response.LastModified, cancellation: ct);
+        return Send.BytesAsync(response.Content ?? [], response.IsInline ? null : response.FileName, response.ContentType ?? "application/octet-stream", response.LastModified, cancellation: ct);
     }
 }
 
@@ -188,6 +188,6 @@ public class JsonResponseEndpoint<TRequest, TResponse> : BaseEndpoint<TRequest, 
 {
     protected override Task HandleResult(TResponse response, CancellationToken ct)
     {
-        return SendAsync(response, (int)response.StatusCode, cancellation: ct);
+        return Send.ResponseAsync(response, (int)response.StatusCode, cancellation: ct);
     }
 }
