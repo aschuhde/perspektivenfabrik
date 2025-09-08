@@ -366,11 +366,16 @@ export class ApiProjectModel {
 
     const contentTranslation = this.thumbnailDescription.contentTranslations?.find(x => x.languageCode == language);
     if(contentTranslation && contentTranslation.value){
-      return contentTranslation.value;
+      return this.cleanupThumbnailDescriptionContent(contentTranslation.value);
     }
-    return this.thumbnailDescription.rawContentString ?? "";
+    return this.cleanupThumbnailDescriptionContent(this.thumbnailDescription.rawContentString ?? "");
   }
 
+  cleanupThumbnailDescriptionContent(content: string) {
+    return content
+        .replace(/<\/?p>/g, '')
+        .replace(/<\/?h[1-6]>/g, '');
+  }
   getContactPersonalNameContent(language: Language){
     if(!this.contactPersonalName) return "";
 
