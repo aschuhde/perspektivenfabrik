@@ -50,7 +50,7 @@
       padding: 2rem 2rem 2rem 2rem;
       
       img{
-        width: 10rem;
+        width: 15rem;
       }
       
       .person-name {
@@ -197,11 +197,12 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  overflow: hidden;
   
   .insta-content{
     width: 50rem;
     padding: 0 1rem;
-    max-width: 100%;
+    max-width: calc(100% - 2rem);
   }
 }
 
@@ -250,7 +251,8 @@
       display: block;
       
       > .left-content {
-        width: 100%;
+        width: 25rem;
+        max-width: calc(100% - 4rem);
         .title{
           font-size: 1.8rem;
         }
@@ -279,6 +281,7 @@
       display: block;
       
       .left-content{
+        overflow: hidden;
         
         .graphic{
           font-size: 1rem;
