@@ -200,19 +200,19 @@
   
         .materials {
           transform: rotate(7deg);
-          left: 16rem;
+          left: 16.5rem;
           top: 1rem;
         }
   
         .time {
           transform: rotate(7deg);
-          left: 10rem;
+          left: 9.5rem;
           top: 3.5rem;
         }
   
         .knowledge {
           transform: rotate(-7deg);
-          left: 16rem;
+          left: 16.5rem;
           top: 4rem;
         }
       }
@@ -363,7 +363,7 @@
                 height: 3rem;
                 right: 0;
                 bottom: 0;
-                background-color: vars.$bg-orange;
+                background-color: vars.$bg-yellow;
                 z-index: 0;
               }
             }
@@ -405,17 +405,17 @@
             }
 
             .financial-resources {
-              left: .2rem;
+              left: 0;
               top: 1rem;
             }
 
             .materials {
-              left: 10.5rem;
+              left: 11rem;
               top: 1rem;
             }
 
             .time {
-              left: 8.2rem;
+              left: 6rem;
               top: 2.6rem;
             }
 
@@ -455,7 +455,7 @@
             .inspirations {
               right: initial;
               bottom: 5.5rem; 
-              left: 9rem;
+              left: 10rem;
             }
           }
         }
