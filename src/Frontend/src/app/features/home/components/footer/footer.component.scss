@@ -40,6 +40,10 @@ app-insta-icon, app-github-icon{
         margin-right: 0 !important;
       }
     }
+    .mail-address{
+      font-size: .8rem;
+      display: inline-block;
+    }
   }
 
   app-insta-icon, app-github-icon{
@@ -50,6 +54,7 @@ app-insta-icon, app-github-icon{
   .icon-mail{
     font-size:2.5rem; 
     width: 2.5rem; 
-    height: 2.5rem
+    height: 2.5rem;
+    margin-top: -.2rem;
   }
 }
