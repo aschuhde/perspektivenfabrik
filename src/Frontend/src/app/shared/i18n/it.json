@@ -252,12 +252,14 @@
   },
   "home": {
     "motivation-text": "Vuoi dare una mano ma non sai da dove cominciare? Hai un progetto e cerchi qualcuno che ti aiuti? Hai un'idea che vuoi condividere e far crescere insieme ad altri? Se hai risposto \"sì\" ad almeno una di queste domande, sei nel posto giusto!",
+    "motiviation-references": "Vuoi saperne di più su chi siamo e cosa facciamo? <a href=\"{{teamUrl}}\">Qui</a> trovi il <a href=\"{{teamUrl}}\">team di Perspektivenfabrik</a> e <a href=\"{{missionUrl}}\">qui</a> scopri <a href=\"{{missionUrl}}\">cosa ci motiva!</a>",
+    "we-just-need-to-show-initiatives": "Non mancano iniziative grandiose: dobbiamo solo renderle visibili e collegarle tra loro",
     "explore": "esplora",
     "add": "aggiungi",
     "to-project": "al progetto",
     "edit": "modifica",
     "my-projects": "I miei progetti",
-    "welcome-text": "La Perspektivenfabrik raccoglie, valorizza e connette <span class=\"with-border\">soluzioni sostenibili</span>, <span class=\"with-border\">personalità visionarie</span> e <span class=\"with-border\">iniziative lungimiranti</span> in <span class=\"with-border\">Alto Adige.</span>",
+    "welcome-text": "La Perspektivenfabrik raccoglie e connette soluzioni <span class=\"with-border\">sostenibili</span>, iniziative <span class=\"with-border\">lungimiranti</span> e persone <span class=\"with-border\">motivate</span> in <span class=\"with-border\">Alto Adige.</span>",
     "do-you-wanna-help": "Vuoi dare una mano anche tu?",
     "lets-go": "Cominciamo!",
     "we-need": "Abbiamo bisogno",
@@ -317,7 +319,11 @@
     "onInsta": "La Perspektivenfabrik su Instagram",
     "do-not-show-this-anymore": "Non mostrare più questo contenuto",
     "insta-privacy-warning": "Caricando questo contenuto verranno utilizzati i cookie di Instagram. Si prega di consultare la <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policy\">privacy policy</a> e la <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policies/cookies/\">policy dei cookie</a> di Instagram!",
-    "load-insta": "Carica pagina Instagram"
+    "load-insta": "Carica pagina Instagram",
+    "we-are-looking-for-feedback": "Siamo felici di ricevere feedback o di scambiare idee!",
+    "thank-you": "Grazie",
+    "to-our-partners": "Ai nostri complici",
+    "thank-you-text": "Grazie a tutte le persone che hanno contribuito a dare forma al progetto e hanno sostenuto la Perspektivenfabrik!"
   },
   "messages": {
     "imageUploadFailedMessage": "Il caricamento dell'immagine non è riuscito. Per favore riprova o contatta info@perspektivenfabrik.it",
@@ -419,9 +425,26 @@
     "please-let-us-know-why-you-report-the-project": "Per favore, spiegaci perché vuoi segnalare questo progetto:"
   },
   "meta": {
-    "description": "La Perspektivenfabrik raccoglie, valorizza e connette soluzioni sostenibili, personalità visionarie e iniziative lungimiranti in Alto Adige."
+    "description": "La Perspektivenfabrik raccoglie e connette soluzioni sostenibili, iniziative lungimiranti e persone motivate in Alto Adige."
   },
   "forgot-password": {
     "hint": "Questa funzione sarà presto disponibile! Nel frattempo, contatta <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>"
+  },
+  "ourMission": {
+    "perspektivesForSouthTyrol": "Prospettive per l'Alto Adige",
+    "title-quote": "Non mancano iniziative grandiose - dobbiamo solo &nbsp;<span class=\"with-border nowrap\">renderle visibili</span>&nbsp; e &nbsp;<span class=\"with-border\">collegarle</span> tra loro",
+    "title-quote-mobile": "Non mancano iniziative grandiose - dobbiamo solo &nbsp;<span class=\"with-border with-border-white nowrap\">renderle visibili</span>&nbsp; e &nbsp;<span class=\"with-border with-border-white\">collegarle</span> &nbsp;tra loro",
+    "introText": "Il cambiamento climatico è una questione seria, ma crediamo che la rassegnazione non ci porti avanti. Ci guida la forza del positivo: progetti che danno <strong>coraggio</strong>. Persone che <strong>si mettono all'opera</strong>. Soluzioni concrete che <strong>funzionano</strong>. La Perspektivenfabrik vuole dimostrare che sostenibilità non significa rinuncia, ma <strong>gioia di vivere, creatività e comunità</strong>.",
+    "what-is-perspektivenfabrik-title": "Che cosa &nbsp;<span class=\"with-border with-border-white\">è</span>&nbsp; esattamente la Perspektivenfabrik?",
+    "what-is-perspektivenfabrik-first-part": "In Alto Adige esistono molte iniziative e progetti che si impegnano per un futuro sostenibile e vivibile. Persone che percorrono nuove strade e dimostrano che il cambiamento è possibile.",
+    "what-is-perspektivenfabrik-second-part": "La Perspektivenfabrik rende visibili questi progetti – raccolti su una piattaforma digitale. In questo modo nasce una panoramica di ciò che è già in corso.",
+    "what-is-perspektivenfabrik-last-part": "Il nostro obiettivo è mettere in contatto persone impegnate con progetti esistenti. Chi desidera mettere a disposizione tempo, conoscenze, materiali o risorse finanziarie trova qui le opportunità giuste. Allo stesso tempo, i progetti possono utilizzare la piattaforma per trovare proprio questo tipo di supporto.",
+    "what-are-we-looking-for-title": "Che cosa &nbsp;<span class=\"with-border with-border-white\">cerca</span>&nbsp; esattamente la Perspektivenfabrik?",
+    "what-are-we-looking-for-first-part": "Raccogliamo iniziative, progetti, ma anche idee che rafforzano il bene comune — quindi soluzioni e percorsi che non perseguono soltanto interessi individuali, ma che servono il benessere delle persone e del pianeta.",
+    "what-are-we-looking-for-second-part": "Per noi è importante che i progetti presentati abbiano un impatto sociale, ambientale o culturale chiaro. Per valutarlo meglio, ci orientiamo alla <a target=\"_blank\" href=\"https://www.economia-del-bene-comune.it/wp-content/uploads/2020/02/MatriceEBC_5_0_IT_02.pdf\">Matrice dell'Economia del Bene Comune</a>. Questo modello offre un quadro strutturato per valutare in che misura un progetto o un'organizzazione contribuisce a una convivenza equa, sostenibile e solidale.",
+    "financialResources": "risorse finanziarie",
+    "materials": "materiali",
+    "time": "tempo",
+    "knowledge": "conoscenze"
   }
 }

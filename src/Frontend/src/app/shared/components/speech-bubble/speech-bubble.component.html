@@ -16,15 +16,23 @@
                 y="64.778374"
                 id="text1"
                 transform="rotate(23.485482)">
-            <tspan
-                    id="tspan1"
-                    style="text-align:start;text-anchor:start;"
-                    x="118.20884"
-                    y="64.778374">meld di </tspan><tspan
-                style="text-align:start;text-anchor:start;"
-                x="118.20884"
-                y="72.715874"
-                id="tspan2">bei uns!</tspan>
+            @if(language == "it"){
+                <tspan
+                        id="tspan1"
+                        style="text-align:start;text-anchor:start;"
+                        x="116"
+                        y="68">contattaci</tspan>
+            }@else{
+                <tspan
+                        id="tspan1"
+                        style="text-align:start;text-anchor:start;"
+                        x="118.20884"
+                        y="64.778374">meld di </tspan><tspan
+                        style="text-align:start;text-anchor:start;"
+                        x="118.20884"
+                        y="72.715874"
+                        id="tspan2">bei uns!</tspan>
+            }
         </text>
     </g>
 </svg>
