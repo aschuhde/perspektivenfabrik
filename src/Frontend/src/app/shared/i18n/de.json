@@ -252,13 +252,14 @@
     },
     "home": {
       "motivation-text": "Du würdest gerne anpacken, aber weißt nicht wie und wo? Du hast ein Projekt und brauchst helfende Hände? Du hast eine Idee, die du gerne mit anderen teilen möchtest? Dann bist du hier genau richtig!",
+      "motiviation-references": "Willst du mehr darüber wissen, wer wir sind und was wir machen? <a href=\"{{teamUrl}}\">Hier</a> geht's zum <a href=\"{{teamUrl}}\">Team der Perspektivenfabrik</a> und <a href=\"{{missionUrl}}\">hier</a> erfährst du, <a href=\"{{missionUrl}}\">was uns antreibt!</a>",
       "explore": "entdecken",
       "add": "hinzufügen",
       "to-project": "zum Projekt",
       "edit": "bearbeiten",
       "my-projects": "Meine Projekte",
-      "welcome-text": "Die Perspektivenfabrik sammelt, präsentiert und vernetzt <span class=\"with-border\">nachhaltige</span> Lösungen, <span class=\"with-border\">visionäre</span> Persönlichkeiten und <span class=\"with-border\">zukunftsweisende</span> Initiativen in <span class=\"with-border\">Südtirol.</span>",
-      "do-you-wanna-help": "Willst du auch anpacken?",
+      "welcome-text": "Die Perspektivenfabrik sammelt und vernetzt <span class=\"with-border\">nachhaltige</span> Lösungen, <span class=\"with-border\">zukunftsweisene</span> Initiativen und <span class=\"with-border\">motivierte</span> Menschen in <span class=\"with-border\">Südtirol.</span>",
+      "we-just-need-to-show-initiatives": "Es mangelt nicht an großartigen Initiativen - wir müssen sie nur sichtbar machen und miteinander verbinden",
       "lets-go": "Pack mrs!",
       "we-need": "Wir benötigen",
       "we-search": "Wir suchen",
@@ -317,7 +318,11 @@
       "onInsta": "Die Perspektivenfabrik auf Instagram",
       "do-not-show-this-anymore": "Diesen Inhalt nicht mehr einblenden",
       "insta-privacy-warning": "Mit dem Laden dieses Inhalts werden Cookies von Instagram verwendet. Bitte beachte die <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policy\">Datenschutzrichtlinie</a> und <a target=\"_blank\" href=\"https://privacycenter.instagram.com/policies/cookies/\">Cookie-Richtlinie</a> von Instagram!",
-      "load-insta": "Instagram-Seite laden"
+      "load-insta": "Instagram-Seite laden",
+      "we-are-looking-for-feedback": "Wir freuen uns über Feedback oder einen Austausch!",
+      "thank-you": "Danke",
+      "to-our-partners": "An unsere Partner in Crime",
+      "thank-you-text": "Dank an alle Menschen, die das Projekt mitgeformt und die Perspektivenfabrik unterstützt haben!"
     },
     "messages": {
       "imageUploadFailedMessage": "Das Hochladen des Bildes ist fehlgeschlagen. Bitte versuche es erneut oder wende dich an info@perspektivenfabrik.it",
@@ -419,7 +424,7 @@
       "please-let-us-know-why-you-report-the-project": "Bitte teile uns mit, warum du dieses Projekt melden möchtest:"
     },
     "meta": {
-      "description": "Die Perspektivenfabrik sammelt, präsentiert und vernetzt nachhaltige Lösungen, visionäre Persönlichkeiten und zukunftsweisende Initiativen in Südtirol."
+      "description": "Die Perspektivenfabrik sammelt und vernetzt nachhaltige Lösungen, zukunftsweisende Initiativen und motivierte Menschen in Südtirol."
     },
     "forgot-password": {
       "hint": "Diese Funktion steht bald zur Verfügung! Bitte wende dich in der Zwischenzeit an <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>"

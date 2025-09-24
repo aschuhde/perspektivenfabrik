@@ -10,13 +10,26 @@ import {
 import {IconStarComponent} from "../../../../shared/components/icon-star/icon-star.component";
 import {IconRainbowComponent} from "../../../../shared/components/icon-rainbow/icon-rainbow.component";
 import {IconMountainComponent} from "../../../../shared/components/icon-mountain/icon-mountain.component";
+import {SpeechBubbleComponent} from "../../../../shared/components/speech-bubble/speech-bubble.component";
+import {InstaIconComponent} from "../../../../shared/components/insta-icon/insta-icon.component";
 
 const SHUFFLED_PEOPLE_KEY = makeStateKey<any[]>('shuffledPeople');
+const SHUFFLED_PARTNERS_KEY = makeStateKey<any[]>('shuffledPartners');
+const SHUFFLED_PARTNER_POSITIONS_KEY = makeStateKey<any[]>('shuffledPartnerPositions');
 
+interface Partner{
+  left: string,
+  right: string,
+  top: string,
+  bottom: string,
+  name: string,
+  verticalAlign: "flex-start" | "center" | "flex-end"
+  horizontalAlign: "flex-start" | "center" | "flex-end"
+}
 
 @Component({
   selector: 'app-about-us',
-  imports: [TranslateModule, MatIcon, RouterLink, IconThreeHatsTiltedComponent, IconStarComponent, IconRainbowComponent, IconMountainComponent],
+  imports: [TranslateModule, MatIcon, RouterLink, IconThreeHatsTiltedComponent, IconStarComponent, IconRainbowComponent, IconMountainComponent, SpeechBubbleComponent, InstaIconComponent],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })
@@ -43,6 +56,19 @@ export class AboutUsComponent {
       imagePath: "/images/about-us/fabian.jpg"
     }
   ];
+  partnersSorted = [
+      "Ghali Egger",
+      "Marinus Heindl",
+      "Patrizia Raffeiner",
+      "Lisa Tappeiner",
+      "Marina Pazeller",
+      "Marion Gurschler",
+      "Gabriel Höllrigl",
+      "Valentjna Juric",
+      "Daria Habicher",
+      "Hannes Götsch"
+  ];
+  partnerPositions: Partner[] = [];
   platformId = inject(PLATFORM_ID)
   transferState = inject(TransferState)
   translateService = inject(TranslateService)
@@ -51,6 +77,7 @@ export class AboutUsComponent {
     title: string
     imagePath: string
   }[] = [];
+  partners: Partner[] = [];
   hasInstaConsent = false;
   isInstaLoaded = false;
   instaWasLoaded = false;
@@ -62,12 +89,65 @@ export class AboutUsComponent {
   constructor() {
     if(isPlatformServer(this.platformId)){
       const shuffledPeople = shuffle(this.peopleSorted);
+      const shuffledPartners = shuffle(this.partnersSorted);
+      const shuffledPartnerPositions = shuffle(this.getPartnerPositions(this.partnersSorted.length));
       this.transferState.set(SHUFFLED_PEOPLE_KEY, shuffledPeople);
+      this.transferState.set(SHUFFLED_PARTNERS_KEY, shuffledPartners);
+      this.transferState.set(SHUFFLED_PARTNER_POSITIONS_KEY, shuffledPartnerPositions);
       this.people = shuffledPeople;
+      this.partners = this.getPartners(shuffledPartners, shuffledPartnerPositions);
+      for(let i = 0; i < this.partners.length; i++){
+        
+      }
     }else{
       this.people = this.transferState.get(SHUFFLED_PEOPLE_KEY, this.peopleSorted);
+      const partners = this.transferState.get(SHUFFLED_PARTNERS_KEY, this.partnersSorted);
+      const partnerPositions = this.transferState.get(SHUFFLED_PARTNER_POSITIONS_KEY, this.getPartnerPositions(this.partnersSorted.length));
       this.transferState.remove(SHUFFLED_PEOPLE_KEY);
+      this.transferState.remove(SHUFFLED_PARTNERS_KEY);
+      this.transferState.remove(SHUFFLED_PARTNER_POSITIONS_KEY);
+      this.partners = this.getPartners(partners, partnerPositions);
     }
+  }
+  getRandomAlign(){
+    const random = Math.random();
+    if(random < 0.33){
+      return "flex-start";
+    }else if(random < 0.66){
+      return "center";
+    }else{
+      return "flex-end";
+    }
+  }
+  getPartnerPositions(length: number): Partner[]{
+    const positions: Partner[] = [];
+    for(let i = 0; i < length; i++){
+      positions.push({
+        left: Math.random() * 3 + .2 + "rem",
+        right: Math.random() * 3 + .2 + "rem",
+        top: Math.random() * 3 + .2 + "rem",
+        bottom: Math.random() * 3 + .2 + "rem",
+        horizontalAlign: this.getRandomAlign(),
+        verticalAlign: this.getRandomAlign(),
+        name: i.toString()
+      });
+    }
+    return positions;
+  }
+  getPartners(partners: string[], partnerPositions:Partner[]){
+    const result: Partner[] = [];
+    for(let i = 0; i < partners.length; i++){
+      result.push({
+        left: partnerPositions[i].left,
+        top: partnerPositions[i].top,
+        right: partnerPositions[i].right,
+        bottom: partnerPositions[i].bottom,
+        name: partners[i],
+        horizontalAlign: partnerPositions[i].horizontalAlign,
+        verticalAlign: partnerPositions[i].verticalAlign
+      });
+    }
+    return result;
   }
   
   ngOnInit(){
@@ -125,5 +205,9 @@ export class AboutUsComponent {
     this.hasInstaConsent = false;
     this.isInstaLoaded = false;
     this.instaContainer.nativeElement.innerHTML = "";
+  }
+  
+  reshuffle(){
+    this.partners = this.getPartners(shuffle(this.partnersSorted), this.getPartnerPositions(this.partnersSorted.length));
   }
 }

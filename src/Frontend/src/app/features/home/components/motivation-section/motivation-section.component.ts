@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RestrictedRouteNames } from '../../../restricted/restricted-route-names';
 import { TranslateModule } from '@ngx-translate/core';
+import {HomeRouteNames} from "../../home-route-names";
 
 @Component({
   selector: 'app-motivation-section',
@@ -10,5 +11,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class MotivationSectionComponent {
   newProjectUrl = RestrictedRouteNames.CreateProjectUrl();
-
+  teamUrl = HomeRouteNames.AboutUsUrl();
+  missionUrl = HomeRouteNames.OurMissionUrl();
 }

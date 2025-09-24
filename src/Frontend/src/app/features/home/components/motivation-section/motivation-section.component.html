@@ -15,6 +15,8 @@
 <div id="motivation-section-right" class="text-center">
     <div>
         <p class="motivation-text">{{ "home.motivation-text" | translate }}</p>
+        <br>
+        <p class="motivation-text" [innerHTML]="'home.motiviation-references' | translate:{teamUrl: teamUrl, missionUrl: missionUrl}"></p>
         <p><a href="/#projects"><button style="margin-right: 2rem" class="secondary">{{ "home.explore" | translate }}</button></a><a href="{{ newProjectUrl }}"><button class="secondary">{{ "home.add" | translate }}</button></a></p>
     </div>
 </div>

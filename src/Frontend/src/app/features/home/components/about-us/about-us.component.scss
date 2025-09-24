@@ -41,6 +41,7 @@
   justify-content: space-around;
   align-items: flex-start;
   padding: 2rem 0;
+  overflow: hidden;
   
   .person-container {
     width: 50%;
@@ -80,86 +81,27 @@
 .middle {
   background-color: vars.$bg-orange;
   color: white;
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0 2rem 0;
+  align-items: stretch;
+  display: flex;
+  justify-content: stretch;
   
   .left{
     width: 50%;
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     .left-content{
-      text-align: center;
-      padding-top: 2rem;
+      width: 30rem;
+      max-width: 100%;
+      display: inline-block;
+      text-align: left;
+      padding: 0 2rem;
       
-      .graphic {
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 2rem;
-        letter-spacing: 4px;
-        font-weight: bold;
-        position: relative;
-        text-align: left;
-
-        > p{
-          margin: 0;
-        }
-
-        .simplicity, .humor {
-          border: 1px solid white;
-          display: inline-block;
-          border-radius: 2rem;
-          padding: .6rem 2rem;
-        }
-        
-        .simplicity {
-          transform: rotate(-15deg);
-          
-        }
-        .humor {
-          transform: rotate(5deg);
-          margin-left: -9.8rem;
-        }
-        .humor-container, .simplicity-container {
-          display: inline-block;
-          vertical-align: top;
-        }
-        .simplicity-container {
-          padding-top: 1.5rem;
-        }
-        
-        .humor-container{
-          padding-top: 4.5rem;
-        }
-        .line {
-          position: absolute;
-          left: 19.5rem;
-          top: 0;
-        }
-        
-        &.italian{
-          .simplicity {
-            margin-left: 1rem;
-          }
-          .humor {
-            margin-left: -9rem;
-          }
-          .humor-container{
-            position: relative;
-            z-index: 1;
-            padding-top: 5rem;
-            
-            &:before{
-              content: "";
-              position: absolute;
-              width: 7rem;
-              height: 5rem;
-              right: 0;
-              bottom: 0;
-              background-color: vars.$bg-orange;
-              z-index: 0;
-            }
-          }
-        }
+      p{
+        font-size: 3rem;
+        margin: 0;
       }
     }
   }
@@ -169,10 +111,31 @@
     vertical-align: top;
     text-align: center;
     > .right-content {
-      display: inline-block;
       text-align: left;
-      width: 25rem;
       padding: 2rem 2rem 2rem 2rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      
+      .speech-bubble-container{
+        width: 17rem;
+      }
+      .contact-container{
+        font-size: 1.5rem;
+        margin-right: 2rem;
+        
+        app-insta-icon{
+          width: 2rem;
+          height: 2rem;
+        }
+        
+        mat-icon{
+          width: 2rem;
+          height: 2rem;
+          font-size: 2rem;
+        }
+      }
     }
   }
 }
@@ -233,6 +196,67 @@
   }
 }
 
+.partner-section{
+  background-color: vars.$bg-orange;
+  color: white;
+  text-align: center;
+  position: relative;
+  
+  .text-container {
+    padding: 2rem;
+    max-width: 100%;
+    display: inline-block;
+    width: 35rem;
+    
+    .thank-you {
+      font-size: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 20px;
+      margin: 0 0 .5rem 0;
+      font-weight: bold;
+    }
+
+    .to-our-partners {
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 0 0 1rem 0;
+    }
+
+    .thank-you-text {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+  }
+  .partners {
+    padding: 1rem 4rem;
+    display: flex;
+    .partner-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: stretch;
+      align-items: stretch;
+
+      .partner-box {
+        flex-basis: 25%;
+        flex-grow: 1;
+        
+        .partner-container {
+          display: flex;
+          padding: .3rem;
+
+          .partner {
+            padding: .2rem 1rem;
+            border: 1px solid white;
+            border-radius: 1rem;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
 @include responsive.desktop-medium {
   .rainbow {
     left: 4rem;
@@ -276,64 +300,13 @@
     }
   }
   .middle {
+    display: block;
     .left{
       width: 100%;
-      display: block;
       
       .left-content{
-        overflow: hidden;
-        
-        .graphic{
-          font-size: 1rem;
-
-          .humor {
-            margin-left: -6.5rem;
-          }
-          .simplicity{
-            margin-left: -4rem;
-          }
-          .humor-container, .simplicity-container {
-            display: inline-block;
-            vertical-align: top;
-          }
-          .simplicity-container {
-            padding-top: 1.5rem;
-          }
-
-          .humor-container{
-            padding-top: 3.7rem;
-          }
-          .line {
-            position: absolute;
-            left: 9.7rem;
-            top: -1.4rem;
-            width: 9rem;
-          }
-
-          &.italian{
-            .simplicity {
-              margin-left: -3rem;
-            }
-            .humor {
-              margin-left: -6.5rem;
-            }
-            .humor-container{
-              position: relative;
-              z-index: 1;
-              padding-top: 4rem;
-
-              &:before{
-                content: "";
-                position: absolute;
-                width: 5rem;
-                height: 3rem;
-                right: 0;
-                bottom: 0;
-                background-color: vars.$bg-orange;
-                z-index: 0;
-              }
-            }
-          }
+        p{
+          font-size: 2rem;
         }
       }
     }
@@ -343,6 +316,26 @@
 
       .right-content {
         width: auto;
+
+        .speech-bubble-container{
+          width: 12rem;
+          max-width: 80%;
+        }
+        .contact-container{
+          font-size: 1.1rem;
+          margin-right: 0;
+
+          app-insta-icon{
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+
+          mat-icon{
+            width: 1.5rem;
+            height: 1.5rem;
+            font-size: 1.5rem;
+          }
+        }
       }
     }
   }
@@ -351,5 +344,56 @@
   }
   .mountain {
     display: none;
+  }
+  .partner-section{
+    app-icon-star{
+      display: none;
+    }
+    app-icon-three-hats-tilted{
+      display: none;
+    }
+    .text-container {
+      padding: 1rem;
+      max-width: calc(100% - 2rem);
+
+      .thank-you {
+        font-size: 2rem;
+        letter-spacing: 10px;
+      }
+
+      .to-our-partners {
+        font-size: 1.4rem;
+      }
+
+      .thank-you-text {
+        margin: 0;
+        font-size: 1rem;
+      }
+    }
+    .partners {
+      padding: 1rem 1rem;
+      .partner-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        align-items: stretch;
+
+        .partner-box {
+          flex-basis: 25%;
+          flex-grow: 1;
+
+          .partner-container {
+            padding: .3rem !important;
+            justify-content: center !important;
+            align-items: center !important;
+
+            .partner {
+              display: inline-block;
+              font-size: .9rem;
+            }
+          }
+        }
+      }
+    }
   }
 }
