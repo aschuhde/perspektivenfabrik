@@ -2,28 +2,37 @@
 @use "responsive";
 
 .top {
-  
   display: flex;
   justify-content: stretch;
   align-items: stretch;
-  
+  .mobile-top-intro{
+    > div {
+      padding: 1rem 2rem;
+    }
+  }
   .left{
     color: white;
     background-color: vars.$bg-orange;
     width: 50%;
     vertical-align: top;
-    text-align: center;
-    position: relative;
-    min-height: 20rem;
-    > .left-content {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, 0);
-      height: 80%;
+    .mobile-top-intro{
+      display: none;
+    }
+    .logo-container {
+      text-align: center;
+      position: relative;
+      min-height: 22.5rem;
       
-      *{
-        height: 100%;
+      > .left-content {
+        position: absolute;
+        bottom: -.2rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 80%;
+
+        * {
+          height: 100%;
+        }
       }
     }
   }
@@ -42,6 +51,7 @@
 }
 .after-top {
   display: flex;
+  overflow: hidden;
   justify-content: stretch;
   align-items: stretch;
   background-color: vars.$bg-yellow;
@@ -80,7 +90,7 @@
         }
         .humor {
           transform: rotate(5deg);
-          margin-left: -9.8rem;
+          margin-left: -9.5rem;
         }
         .humor-container, .simplicity-container {
           display: inline-block;
@@ -95,7 +105,7 @@
         }
         .line {
           position: absolute;
-          left: 17.2rem;
+          left: 17.9rem;
           top: 0;
         }
 
@@ -134,7 +144,7 @@
       display: inline-block;
       text-align: left;
       width: 30rem;
-      max-width: 100%;
+      max-width: calc(100% - 4rem);
       padding: 2rem 2rem 2rem 2rem;
     }
   }
@@ -155,54 +165,56 @@
       padding: 2rem 2rem 2rem 2rem;
       text-align: left;
       width: 30rem;
-      max-width: 100%;
+      max-width: calc(100% - 4rem);
     }
 
     .graphic {
-      display: inline-block;
-      font-size: 1.4rem;
-      letter-spacing: 4px;
-      font-weight: bold;
-      text-align: left;
-      position: relative;
-      height: 10rem;
-      width: 100%;
-
-      > p {
-        margin: 0;
-      }
-
-      .financial-resources, .materials, .time, .knowledge {
-        border: 1px solid white;
+      > div{
         display: inline-block;
-        border-radius: 2rem;
-        padding: .6rem 2rem;
-        position: absolute;
-      }
-
-      .financial-resources {
-        transform: rotate(-7deg);
-        left: -1rem;
-        top: 1rem;
-        white-space: nowrap;
-      }
-
-      .materials {
-        transform: rotate(7deg);
-        left: 17rem;
-        top: 1rem;
-      }
-
-      .time {
-        transform: rotate(7deg);
-        left: 10rem;
-        top: 4rem;
-      }
-
-      .knowledge {
-        transform: rotate(-7deg);
-        left: 17rem;
-        top: 4.3rem;
+        font-size: 1.3rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        text-align: left;
+        position: relative;
+        height: 10rem;
+        width: 100%;
+  
+        > p {
+          margin: 0;
+        }
+  
+        .financial-resources, .materials, .time, .knowledge {
+          border: 1px solid white;
+          display: inline-block;
+          border-radius: 2rem;
+          padding: .6rem 1.5rem;
+          position: absolute;
+        }
+  
+        .financial-resources {
+          transform: rotate(-7deg);
+          left: -1rem;
+          top: 1rem;
+          white-space: nowrap;
+        }
+  
+        .materials {
+          transform: rotate(7deg);
+          left: 16rem;
+          top: 1rem;
+        }
+  
+        .time {
+          transform: rotate(7deg);
+          left: 10rem;
+          top: 3.5rem;
+        }
+  
+        .knowledge {
+          transform: rotate(-7deg);
+          left: 16rem;
+          top: 4rem;
+        }
       }
     }
   }
@@ -212,140 +224,99 @@
     background-color: vars.$bg-orange;
     > .right-content {
       display: inline-block;
-      padding: 2rem 2rem 2rem 2rem;
+      padding: 2rem 2rem 6rem 2rem;
       text-align: left;
       width: 30rem;
-      max-width: 100%;
+      max-width: calc(100% - 4rem);
 
       .graphic{
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 2rem;
-        letter-spacing: 4px;
-        font-weight: bold;
-        position: relative;
-        text-align: left;
+        > div {
+          width: 100%;
+          display: inline-block;
+          text-transform: uppercase;
+          font-size: 1.6rem;
+          letter-spacing: 4px;
+          font-weight: bold;
+          position: relative;
+          text-align: left;
 
-        .projects{
-          position: absolute;
-          left: 1rem;
-          top: 0;
-          margin: 0;
-          padding: 0;
-        }
-        .ideas{
-          position: absolute;
-          bottom: 0;
-          left: 3rem;
-          margin: 0;
-          padding: 0;
-        }
-        .inspirations{
-          position: absolute;
-          bottom: 6.7rem;
-          right: -8rem;
-          margin: 0;
-          padding: 0;
-        }
+          .projects {
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            margin: 0;
+            padding: 0;
+          }
 
+          .ideas {
+            position: absolute;
+            bottom: 0;
+            left: 3rem;
+            margin: 0;
+            padding: 0;
+          }
+
+          .inspirations {
+            position: absolute;
+            bottom: 6rem;
+            right: 1rem;
+            margin: 0;
+            padding: 0;
+          }
+        }
       }
     }
-  }
-}
-.rainbow {
-  position: absolute;
-  right: 8rem;
-  top: 20rem;
-}
-.mountain {
-  position: absolute;
-  left: 50%;
-  top: -8rem;
-}
-
-.insta-container{
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  .insta-content{
-    width: 50rem;
-    padding: 0 1rem;
-    max-width: 100%;
-  }
-}
-
-.insta-consent{
-  width: 50rem;
-  padding: 0 1rem;
-  max-width: 100%;
-  background-image: url('/images/about-us/insta-blur.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  aspect-ratio: 1.56;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  > div{
-    background-color: vars.$bg-purple;
-    color: white;
-    padding: 2rem 1rem;
-    width: 90%;
-    border-radius: 1rem;
-    p{
-      margin: 0 0 1rem 0;
-      padding: 0;
-    }
-  }
-}
-
-@include responsive.desktop-medium {
-  .rainbow {
-    left: 4rem;
-    top: 30rem;
   }
 }
 
 @include responsive.mobile{
   .top {
+    display: block;
     .left{
       width: 100%;
       display: block;
 
-      > .left-content {
-        width: 100%;
-        .title{
-          font-size: 1.8rem;
+      .mobile-top-intro{
+        display: block;
+        padding: 1rem 2rem 0 2rem;
+        text-align: center;
+
+        > div {
+          display: inline-block;
+          max-width: 30rem;
+          text-align: left;
+          .title {
+            margin: 0;
+          }
+
+          p {
+            margin: 1rem 0 0 0;
+          }
+        }
+      }
+      
+      > .logo-container{
+        min-height: 15rem;
+        
+        .left-content{
+          height: 100%;
+          width: 15rem;
         }
       }
     }
     .right{
-      width: 100%;
-      display: block;
+      display: none;
+    }
+  }
 
-      .right-content {
-        width: auto;
-      }
-    }
-  }
-  .people-container {
-    .person-container {
-      width: 100%;
-      .person-inner {
-        padding: 2rem 2rem 2rem 2rem !important;
-      }
-    }
-  }
-  .middle {
+  .after-top {
+    display: block;
     .left{
       width: 100%;
       display: block;
 
       .left-content{
-
+        padding: 2rem 0 0 0;
         .graphic{
           font-size: 1rem;
 
@@ -403,16 +374,96 @@
     .right{
       width: 100%;
       display: block;
-
-      .right-content {
-        width: auto;
+      
+      .right-content{
+        padding: 2rem 2rem;
       }
     }
   }
-  .rainbow {
-    display: none;
-  }
-  .mountain {
-    display: none;
+
+  .bottom {
+    display: block;
+    .left{
+      width: 100%;
+      display: block;
+      
+
+      .left-content{
+        .graphic {
+          text-align: center;
+          > div {
+            position: relative;
+            font-size: .9rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            display: inline-block;
+            width: 19rem;
+            max-width: 100%;
+
+            .financial-resources, .materials, .time, .knowledge {
+              padding: .3rem 1rem;
+            }
+
+            .financial-resources {
+              left: .2rem;
+              top: 1rem;
+            }
+
+            .materials {
+              left: 10.5rem;
+              top: 1rem;
+            }
+
+            .time {
+              left: 8.2rem;
+              top: 2.6rem;
+            }
+
+            .knowledge {
+              left: 11.5rem;
+              top: 3.1rem;
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        .graphic{
+          text-align: center;
+          > div{
+            display: inline-block;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            width: auto;
+            svg{
+              width: 18rem;
+            }
+            .projects {
+              left: 2rem;
+              top: 0;
+            }
+
+            .ideas {
+              bottom: 0;
+              left: 3.5rem;
+            }
+
+            .inspirations {
+              right: initial;
+              bottom: 5.5rem; 
+              left: 9rem;
+            }
+          }
+        }
+      }
+      app-icon-three-hats-tilted{
+        transform: rotate(90deg) !important;
+        bottom: .2rem !important;
+      }
+    }
   }
 }
