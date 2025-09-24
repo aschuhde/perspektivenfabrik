@@ -95,7 +95,7 @@
     "delete": "Elimina",
     "pleaseSaveBeforeImageUpload": "Il caricamento delle immagini è possibile solo dopo il primo salvataggio. Per favore, salva prima!",
     "is-approved-message": "Abbiamo esaminato e verificato {{ yourDeclination }} {{ typeName }}.",
-    "is-rejected-message": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo considerato non idoneo per la piattaforma. Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "is-rejected-message": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo considerato non idoneo per la piattaforma. Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\" target=\"_blank\">info@perspektivenfabrik.it</a>.",
     "is-approval-pending-message": "Stiamo esaminando {{ yourDeclination }} {{ typeName }}. Non appena avremo verificato {{ yourDeclination }} {{ typeName }}, sarà visualizzato sulla piattaforma.",
     "is-approved-info": "verificato",
     "is-rejected-info": "rifiutato",
@@ -213,7 +213,7 @@
     "password": "Password",
     "no-user-yet": "Non hai ancora un account?",
     "register-here": "Registrati qui",
-    "general-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "general-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>!",
     "user-does-not-exist": "Non esiste alcun utente con l'indirizzo e-mail specificato!",
     "wrong-credentials": "La password non è corretta!",
     "forgot-password": "Password dimenticata?"
@@ -226,11 +226,11 @@
     "lastname": "Cognome",
     "already-user": "Hai già un account?",
     "login-here": "Accedi qui",
-    "unknown-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "unknown-error-message": "Si è verificato un errore imprevisto. Per favore riprova più tardi o contatta <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>!",
     "must-not-be-empty": "Per favore compila il campo {{parameter}}!",
     "must-not-be-over-n-chars": "Il campo {{parameter}} non può contenere più di {{n}} caratteri!",
     "password-policy": "La password deve essere compresa tra 8 e 50 caratteri e deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~).",
-    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>!",
+    "mail-already-exists": "Esiste già un account con questo indirizzo e-mail. Per favore usa un altro indirizzo e-mail oppure accedi con il tuo account esistente. In caso di problemi, contatta <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>!",
     "consent-privacy-policy": "Ho letto e accetto la <a target='_blank' href='/privacy'>privacy policy</a>.",
     "must-consent-privacy": "Per favore accetta la privacy policy per completare la registrazione."
   },
@@ -265,7 +265,7 @@
     "projects": "Progetti",
     "ideas": "Idee",
     "inspirations": "Ispirazioni",
-    "give-feedback-banner": "Ciao! Il nostro sito web è appena stato lanciato.<br> Condividi il tuo feedback con noi e supportaci: <a href=\"mailto: info@perspektivenfabrik.it\">info&commat;perspektivenfabrik.it</a>"
+    "give-feedback-banner": "Ciao! Il nostro sito web è appena stato lanciato.<br> Condividi il tuo feedback con noi e supportaci: <a href=\"mailto: info@perspektivenfabrik.it\" target=\"_blank\">info&commat;perspektivenfabrik.it</a>"
   },
   "project-detail": {
     "location": "Luogo",
@@ -363,7 +363,7 @@
     "helpVerificationApprovedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
     "helpVerificationApprovedMessage": "Abbiamo verificato {{ yourDeclination }} {{ typeName }}. Potrai apportare modifiche successive senza necessità di una nuova verifica. Tuttavia, saremo notificati di ogni modifica e la riesamineremo successivamente.",
     "helpVerificationRejectedTitle": "Verifica {{ yoursDeclination }} {{ typeName }}",
-    "helpVerificationRejectedMessage": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo valutato come non idoneo per la piattaforma.{{ ReasonText }} Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\">info@perspektivenfabrik.it</a>.",
+    "helpVerificationRejectedMessage": "Abbiamo esaminato {{ yourDeclination }} {{ typeName }} e lo abbiamo valutato come non idoneo per la piattaforma.{{ ReasonText }} Per ulteriori domande, contatta <a href=\"mailto:info@perspektivenfabrik.it\" target=\"_blank\">info@perspektivenfabrik.it</a>.",
     "error-message-on-rejecting-project": "Si è verificato un errore durante il rifiuto della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
     "error-message-on-approving-project": "Si è verificato un errore durante l'approvazione della voce. Per favore riprova o contatta info@perspektivenfabrik.it",
     "htmlImgPasteTitle": "Inserire le immagini tramite la barra degli strumenti",
@@ -373,7 +373,7 @@
     "copyToClipboard": "Copia messaggio negli appunti",
     "copiedToClipboard": "Messaggio copiato negli appunti",
     "savingFailed": "Il salvataggio non è riuscito.",
-    "whatToDo": "<a target='blank' href='mailto:info@perspektivenfabrik.it?subject={{titleEncoded}}'>info@perspektivenfabrik.it</a> o crea un issue su Github: <a target='_blank' href='https://github.com/aschuhde/perspektivenfabrik/issues/new?title={{titleEncoded}}'>https://github.com/aschuhde/perspektivenfabrik/issues/new</a></p>",
+    "whatToDo": "<a target='blank' href='mailto:info@perspektivenfabrik.it?subject={{titleEncoded}}' target=\"_blank\">info@perspektivenfabrik.it</a> o crea un issue su Github: <a target='_blank' href='https://github.com/aschuhde/perspektivenfabrik/issues/new?title={{titleEncoded}}'>https://github.com/aschuhde/perspektivenfabrik/issues/new</a></p>",
     "pleaseAddMessage": "Per favore aggiungi il seguente contenuto al tuo messaggio",
     "personalDataInfo": "Ti preghiamo di notare che il messaggio contiene i dati personali della tua richiesta al server. Questi dati ci aiutano a identificare il problema. Se non desideri condividere questi dati con noi, puoi semplicemente eliminarli dal messaggio.",
     "projectFailedTitle": "Errore interno - Salvataggio non riuscito!",
@@ -422,6 +422,6 @@
     "description": "La Perspektivenfabrik raccoglie, valorizza e connette soluzioni sostenibili, personalità visionarie e iniziative lungimiranti in Alto Adige."
   },
   "forgot-password": {
-    "hint": "Questa funzione sarà presto disponibile! Nel frattempo, contatta <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
+    "hint": "Questa funzione sarà presto disponibile! Nel frattempo, contatta <a href='mailto: info@perspektivenfabrik.it' target=\"_blank\">info@perspektivenfabrik.it</a>"
   }
 }

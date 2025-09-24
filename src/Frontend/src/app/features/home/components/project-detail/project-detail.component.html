@@ -96,7 +96,7 @@
                 <p class="contact-text"><mat-icon fontIcon="phone"></mat-icon><span>&nbsp;</span><a href="tel: {{ contactPhone }}">{{ contactPhone }}</a></p>
             }
             @if(contactMailAddress){
-                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
+                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}" target="_blank">{{ contactMailAddress }}</a></p>
             }
             @for(website of contactWebsites; track website){
                 @let websiteUrl = getWebsiteUrl(website);

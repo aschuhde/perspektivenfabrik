@@ -32,7 +32,7 @@
                 <p class="color-error">{{ "confirm-email.the-code-is-incorrect" | translate }}!<br>{{ "confirm-email.please-check-the-code" | translate }}!</p>
             }
             @if(errorOccured){
-                <p class="color-error">{{ "confirm-email.unexpected-error-occured" | translate }}!<br>{{ "confirm-email.please-retry-or-contact" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a>.</p>
+                <p class="color-error">{{ "confirm-email.unexpected-error-occured" | translate }}!<br>{{ "confirm-email.please-retry-or-contact" | translate }} <a href="mailto: info@perspektivenfabrik.it" target="_blank">info&commat;perspektivenfabrik.it</a>.</p>
             }
             @if(otpExpired){
                 <p class="color-error">{{ "confirm-email.the-code-is-expired" | translate }}!<br>{{ "confirm-email.please-put-in-the-last-code" | translate }}</p>
@@ -42,7 +42,7 @@
             }@else{
                 <p class="color-white"><i>{{ "confirm-email.request-new-code-in" | translate }} {{ newOtpWaitingSeconds }} {{ "confirm-email.seconds" | translate }}!</i></p>
             }
-            <p class="color-white" style="font-size: 0.9rem">{{ "confirm-email.contact-if-there-are-problems" | translate }} <a href="mailto: info@perspektivenfabrik.it">info&commat;perspektivenfabrik.it</a></p>
+            <p class="color-white" style="font-size: 0.9rem">{{ "confirm-email.contact-if-there-are-problems" | translate }} <a href="mailto: info@perspektivenfabrik.it" target="_blank">info&commat;perspektivenfabrik.it</a></p>
         </div>
     </div>
 
