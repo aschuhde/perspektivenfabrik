@@ -1,9 +1,11 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, model, effect} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, model, effect, PLATFORM_ID, inject} from '@angular/core';
 import { GalleryImage } from '../../models/gallery-image';
+import { isPlatformBrowser } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-image-gallery',
-  imports: [],
+  imports: [MatIcon],
   templateUrl: './image-gallery.component.html',
   styleUrl: './image-gallery.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -13,6 +15,8 @@ export class ImageGalleryComponent {
   swiperContainer!: ElementRef;
   
   images = model.required<GalleryImage[]>();
+  isPreviewShown = false;
+  platformId = inject(PLATFORM_ID)
   
   constructor() {
     effect(() => {
@@ -26,9 +30,29 @@ export class ImageGalleryComponent {
         this.swiperContainer.nativeElement.loop = this.images().length > 1;
       }, 100);
     });
+    
+    if(isPlatformBrowser(this.platformId)){
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
+          this.hidePreview();
+        }
+      });
+    }
   }
   
   get imagesArray(){
     return this.images();
+  }
+  
+  imageClicked(){
+    this.showPreview();
+  }
+  
+  showPreview(){
+    this.isPreviewShown = true;
+  }
+  
+  hidePreview(){
+    this.isPreviewShown = false;
   }
 }
