@@ -5,6 +5,8 @@
     display: block;
     background-color: vars.$bg-color-alt;
     color: white;
+    position: relative;
+    z-index: 2;
 }
 
 #motivation-section-left{
