@@ -2,7 +2,7 @@
 <a class="only-desktop" href="{{ aboutUsUrl }}"><button>{{ 'nav.team' | translate }}</button></a>
 <a class="only-desktop" href="{{ missionUrl }}"><button>{{ 'nav.mission' | translate }}</button></a>
 <div class="about-us-button-container">
-    <button class="only-mobile about-us-button" (click)="toggleAboutUs()">
+    <button style="white-space: nowrap" class="only-mobile about-us-button" (click)="toggleAboutUs()">
         <span>{{ 'nav.about us' | translate }}</span>
     </button>
     <div [class.shown]="aboutUsIsExpanded">

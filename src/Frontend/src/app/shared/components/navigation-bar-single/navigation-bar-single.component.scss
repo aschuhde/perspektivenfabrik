@@ -4,6 +4,9 @@
 :host{
   display: flex;
   justify-content: center;
+  > * {
+    width: 40rem;
+  }
 }
 
 @include responsive.mobile {
