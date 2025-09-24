@@ -206,8 +206,4 @@ export class AboutUsComponent {
     this.isInstaLoaded = false;
     this.instaContainer.nativeElement.innerHTML = "";
   }
-  
-  reshuffle(){
-    this.partners = this.getPartners(shuffle(this.partnersSorted), this.getPartnerPositions(this.partnersSorted.length));
-  }
 }
