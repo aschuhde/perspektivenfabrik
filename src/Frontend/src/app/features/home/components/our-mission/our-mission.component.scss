@@ -1,0 +1,418 @@
+@use "vars";
+@use "responsive";
+
+.top {
+  
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  
+  .left{
+    color: white;
+    background-color: vars.$bg-orange;
+    width: 50%;
+    vertical-align: top;
+    text-align: center;
+    position: relative;
+    min-height: 20rem;
+    > .left-content {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+      height: 80%;
+      
+      *{
+        height: 100%;
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 20rem;
+      padding: 3rem 2rem 2rem 2rem;
+    }
+  }
+}
+.after-top {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  background-color: vars.$bg-yellow;
+
+  .left{
+    width: 50%;
+    text-align: center;
+
+    .left-content{
+      text-align: center;
+      padding: 2rem 0;
+
+      .graphic {
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        position: relative;
+        text-align: left;
+
+        > p{
+          margin: 0;
+        }
+
+        .simplicity, .humor {
+          border: 1px solid vars.$fg-color;
+          display: inline-block;
+          border-radius: 2rem;
+          padding: .6rem 2rem;
+        }
+
+        .simplicity {
+          transform: rotate(-15deg);
+
+        }
+        .humor {
+          transform: rotate(5deg);
+          margin-left: -9.8rem;
+        }
+        .humor-container, .simplicity-container {
+          display: inline-block;
+          vertical-align: top;
+        }
+        .simplicity-container {
+          padding-top: 1.5rem;
+        }
+
+        .humor-container{
+          padding-top: 4.5rem;
+        }
+        .line {
+          position: absolute;
+          left: 17.2rem;
+          top: 0;
+        }
+
+        &.italian{
+          .simplicity {
+            margin-left: 1rem;
+          }
+          .humor {
+            margin-left: -9rem;
+          }
+          .humor-container{
+            position: relative;
+            z-index: 1;
+            padding-top: 5rem;
+
+            &:before{
+              content: "";
+              position: absolute;
+              width: 7rem;
+              height: 5rem;
+              right: 0;
+              bottom: 0;
+              background-color: vars.$bg-yellow;
+              z-index: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    text-align: center;
+
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 30rem;
+      max-width: 100%;
+      padding: 2rem 2rem 2rem 2rem;
+    }
+  }
+}
+.bottom {
+  color: white;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+
+  .left{
+    width: 50%;
+    text-align: center;
+    background-color: vars.$bg-purple;
+
+    .left-content{
+      display: inline-block;
+      padding: 2rem 2rem 2rem 2rem;
+      text-align: left;
+      width: 30rem;
+      max-width: 100%;
+    }
+
+    .graphic {
+      display: inline-block;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
+      font-weight: bold;
+      text-align: left;
+      position: relative;
+      height: 10rem;
+      width: 100%;
+
+      > p {
+        margin: 0;
+      }
+
+      .financial-resources, .materials, .time, .knowledge {
+        border: 1px solid white;
+        display: inline-block;
+        border-radius: 2rem;
+        padding: .6rem 2rem;
+        position: absolute;
+      }
+
+      .financial-resources {
+        transform: rotate(-7deg);
+        left: -1rem;
+        top: 1rem;
+        white-space: nowrap;
+      }
+
+      .materials {
+        transform: rotate(7deg);
+        left: 17rem;
+        top: 1rem;
+      }
+
+      .time {
+        transform: rotate(7deg);
+        left: 10rem;
+        top: 4rem;
+      }
+
+      .knowledge {
+        transform: rotate(-7deg);
+        left: 17rem;
+        top: 4.3rem;
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    text-align: center;
+    background-color: vars.$bg-orange;
+    > .right-content {
+      display: inline-block;
+      padding: 2rem 2rem 2rem 2rem;
+      text-align: left;
+      width: 30rem;
+      max-width: 100%;
+
+      .graphic{
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 2rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        position: relative;
+        text-align: left;
+
+        .projects{
+          position: absolute;
+          left: 1rem;
+          top: 0;
+          margin: 0;
+          padding: 0;
+        }
+        .ideas{
+          position: absolute;
+          bottom: 0;
+          left: 3rem;
+          margin: 0;
+          padding: 0;
+        }
+        .inspirations{
+          position: absolute;
+          bottom: 6.7rem;
+          right: -8rem;
+          margin: 0;
+          padding: 0;
+        }
+
+      }
+    }
+  }
+}
+.rainbow {
+  position: absolute;
+  right: 8rem;
+  top: 20rem;
+}
+.mountain {
+  position: absolute;
+  left: 50%;
+  top: -8rem;
+}
+
+.insta-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .insta-content{
+    width: 50rem;
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+}
+
+.insta-consent{
+  width: 50rem;
+  padding: 0 1rem;
+  max-width: 100%;
+  background-image: url('/images/about-us/insta-blur.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  aspect-ratio: 1.56;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  > div{
+    background-color: vars.$bg-purple;
+    color: white;
+    padding: 2rem 1rem;
+    width: 90%;
+    border-radius: 1rem;
+    p{
+      margin: 0 0 1rem 0;
+      padding: 0;
+    }
+  }
+}
+
+@include responsive.desktop-medium {
+  .rainbow {
+    left: 4rem;
+    top: 30rem;
+  }
+}
+
+@include responsive.mobile{
+  .top {
+    .left{
+      width: 100%;
+      display: block;
+
+      > .left-content {
+        width: 100%;
+        .title{
+          font-size: 1.8rem;
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        width: auto;
+      }
+    }
+  }
+  .people-container {
+    .person-container {
+      width: 100%;
+      .person-inner {
+        padding: 2rem 2rem 2rem 2rem !important;
+      }
+    }
+  }
+  .middle {
+    .left{
+      width: 100%;
+      display: block;
+
+      .left-content{
+
+        .graphic{
+          font-size: 1rem;
+
+          .humor {
+            margin-left: -6.5rem;
+          }
+          .simplicity{
+            margin-left: -4rem;
+          }
+          .humor-container, .simplicity-container {
+            display: inline-block;
+            vertical-align: top;
+          }
+          .simplicity-container {
+            padding-top: 1.5rem;
+          }
+
+          .humor-container{
+            padding-top: 3.7rem;
+          }
+          .line {
+            position: absolute;
+            left: 9.7rem;
+            top: -1.4rem;
+            width: 9rem;
+          }
+
+          &.italian{
+            .simplicity {
+              margin-left: -3rem;
+            }
+            .humor {
+              margin-left: -6.5rem;
+            }
+            .humor-container{
+              position: relative;
+              z-index: 1;
+              padding-top: 4rem;
+
+              &:before{
+                content: "";
+                position: absolute;
+                width: 5rem;
+                height: 3rem;
+                right: 0;
+                bottom: 0;
+                background-color: vars.$bg-orange;
+                z-index: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        width: auto;
+      }
+    }
+  }
+  .rainbow {
+    display: none;
+  }
+  .mountain {
+    display: none;
+  }
+}

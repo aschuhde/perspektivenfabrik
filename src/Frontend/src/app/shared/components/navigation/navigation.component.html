@@ -1,4 +1,15 @@
 <a href="/#projects"><button>{{ 'nav.projects' | translate }}</button></a>
-<a href="{{ aboutUsUrl }}"><button>{{ 'nav.about us' | translate }}</button></a>
+<a class="only-desktop" href="{{ aboutUsUrl }}"><button>{{ 'nav.team' | translate }}</button></a>
+<a class="only-desktop" href="{{ missionUrl }}"><button>{{ 'nav.mission' | translate }}</button></a>
+<div class="about-us-button-container">
+    <button class="only-mobile about-us-button" (click)="toggleAboutUs()">
+        <span>{{ 'nav.about us' | translate }}</span>
+    </button>
+    <div [class.shown]="aboutUsIsExpanded">
+        <a href="{{ aboutUsUrl }}">{{ 'nav.team' | translate }}</a>
+        <a href="{{ missionUrl }}">{{ 'nav.mission' | translate }}</a>
+    </div>
+</div>
+
 <app-language-switch></app-language-switch>
 <app-user-area></app-user-area>

@@ -24,7 +24,9 @@
   "nav": {
     "about us": "chi siamo",
     "donate": "dona",
-    "projects": "Progetti"
+    "projects": "Progetti",
+    "team": "Team",
+    "mission": "Missione"
   },
   "input-project": {
     "what-is-it-about": "Di cosa si tratta?",

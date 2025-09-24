@@ -24,7 +24,9 @@
     "nav": {
         "about us": "über uns",
         "donate": "spenden",
-        "projects": "Projekte"
+        "projects": "Projekte",
+        "team": "Team",
+        "mission": "Mission"
     },
     "input-project": {
       "what-is-it-about": "Um was geht es?",
@@ -421,5 +423,21 @@
     },
     "forgot-password": {
       "hint": "Diese Funktion steht bald zur Verfügung! Bitte wende dich in der Zwischenzeit an <a href='mailto: info@perspektivenfabrik.it'>info@perspektivenfabrik.it</a>"
+    },
+    "ourMission": {
+      "perspektivesForSouthTyrol": "Perspektiven für Südtirol",
+      "title-quote": "Es mangelt nicht an großartigen Initiativen - wir müssen sie nur &nbsp;<span class=\"with-border nowrap\">sichtbar machen</span>&nbsp; und miteinander &nbsp;<span class=\"with-border\">verbinden</span>",
+      "introText": "Der Klimawandel ist eine ernste Sache, doch wir glauben, dass Resignation uns nicht weiterbringt. Was uns antreibt, ist die Kraft des Positiven: Projekte, die <strong>Mut</strong> machen. Menschen, die <strong>loslegen</strong>. Konkrete Lösungen, die <strong>funktionieren</strong>.Die Perspektivenfabrik will zeigen, dass Nachhaltigkeit nicht Verzicht heißt, sondern <strong>Lebensfreude, Kreativität und Gemeinschaft</strong>.",
+      "what-is-perspektivenfabrik-title": "Was genau &nbsp;<span class=\"with-border with-border-white\">ist</span>&nbsp; die Perspektivenfabrik?",
+      "what-is-perspektivenfabrik-first-part": "In Südtirol gibt es viele Initiativen und Projekte, die sich für eine nachhaltige, lebenswerte Zukunft einsetzen. Menschen, die neue Wege gehen und zeigen, dass Veränderung möglich ist.",
+      "what-is-perspektivenfabrik-second-part": "Die Perspektivenfabrik macht diese Projekte sichtbar – gesammelt auf einer digitalen Plattform. So entsteht ein Überblick über das, was bereits passiert.",
+      "what-is-perspektivenfabrik-last-part": "Unser Ziel ist es, engagierte Menschen mit bestehenden Projekten zu verbinden. Wer Zeit, Wissen, Materialien oder finanzielle Mittel einbringen möchte, findet hier passende Möglichkeiten. Gleichzeitig können Projekte die Plattform nutzen, um genau solche Unterstützung zu finden.",
+      "what-are-we-looking-for-title": "Was genau &nbsp;<span class=\"with-border with-border-white\">sucht</span>&nbsp; die Perspektivenfabrik?",
+      "what-are-we-looking-for-first-part": "Wir sammeln Initiativen, Projekte, aber auch Ideen, die das Gemeinwohl stärken – also  Lösungen und Wege, die nicht nur Einzelinteressen verfolgen, sondern dem Wohl von  Mensch und Planet dienen.",
+      "what-are-we-looking-for-second-part": "Dabei ist uns wichtig, dass die vorgestellten Projekte eine klare soziale, ökologische oder kulturelle Wirkung haben. Um das besser einschätzen zu können, orientieren wir uns  an der <a target=\"_blank\" href=\"https://germany.econgood.org/tools/gemeinwohl-matrix/\">Gemeinwohl-Matrix der Gemeinwohl-Ökonomie</a>. Dieses Modell bietet einen  strukturierten Rahmen, um zu beurteilen, inwiefern ein Projekt oder eine Organisation zu einem fairen, nachhaltigen und solidarischen Miteinander beiträgt.",
+      "financialResources": "finanzielle Mittel",
+      "materials": "Materialien",
+      "time": "Zeit",
+      "knowledge": "Wissen"
     }
 }
