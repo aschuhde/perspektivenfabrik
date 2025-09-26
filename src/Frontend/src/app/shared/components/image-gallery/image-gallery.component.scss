@@ -6,10 +6,23 @@
     height: 100%;
     position: relative;
     background-color: vars.$bg-orange;
+    cursor: pointer;
 }
 swiper-container{
     --swiper-navigation-color: #B497E5; 
     --swiper-pagination-color: #B497E5;
+    
+    &.previewMode{
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        width: calc(100vw - 4rem);
+        height: calc(100vh - 4rem);
+        z-index: 9102;
+        &.show{
+            display: block;
+        }
+    }
 }
 img{
     height: 100%;
@@ -35,5 +48,26 @@ img{
         background-repeat: no-repeat;
         filter: blur(20px);
         z-index: 1;
+    }
+}
+.previewBackdrop{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.8);
+    z-index: 9101;
+    &.show{
+        display: block;
+    }
+    
+    .previewClose{
+        z-index: 9103;
+        position: absolute;
+        top: .5rem;
+        right: 2rem;
+        color: white;
     }
 }

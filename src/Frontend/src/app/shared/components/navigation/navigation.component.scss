@@ -2,11 +2,45 @@
 @use "vars";
 
 :host{
-    width: 30rem;
+    width: 100%;   
     display: flex;
-    justify-content: space-between;
-    padding-right: 10rem;
+    justify-content: space-around;
     align-items: center;
+}
+
+.about-us-button-container{
+  position: relative;
+  
+  > div{
+    position: absolute;
+    display: none;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    border-radius: .25rem;
+    box-shadow: 0 1px 12px 2px rgba(0,0,0,.2);
+    z-index: 9;
+    left: 0;
+    top: 3rem;
+    color: white;
+    background-color: vars.$bg-orange;
+    cursor: pointer;
+    font-weight: bold;
+    a {
+      text-decoration: none;
+      margin-bottom: 1rem;
+      display: block;
+      white-space: nowrap;
+      text-align: center;
+      
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+    
+    &.shown{
+      display: block;
+    }
+  }
 }
 
 @include responsive.mobile {
@@ -23,5 +57,4 @@
       color: white;
     }
   }
-  
 }

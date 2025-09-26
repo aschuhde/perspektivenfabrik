@@ -1,0 +1,469 @@
+@use "vars";
+@use "responsive";
+
+.top {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  .mobile-top-intro{
+    > div {
+      padding: 1rem 2rem;
+    }
+  }
+  .left{
+    color: white;
+    background-color: vars.$bg-orange;
+    width: 50%;
+    vertical-align: top;
+    .mobile-top-intro{
+      display: none;
+    }
+    .logo-container {
+      text-align: center;
+      position: relative;
+      min-height: 22.5rem;
+      
+      > .left-content {
+        position: absolute;
+        bottom: -.2rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 80%;
+
+        * {
+          height: 100%;
+        }
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 20rem;
+      padding: 3rem 2rem 2rem 2rem;
+    }
+  }
+}
+.after-top {
+  display: flex;
+  overflow: hidden;
+  justify-content: stretch;
+  align-items: stretch;
+  background-color: vars.$bg-yellow;
+
+  .left{
+    width: 50%;
+    text-align: center;
+
+    .left-content{
+      text-align: center;
+      padding: 2rem 0;
+
+      .graphic {
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        position: relative;
+        text-align: left;
+
+        > p{
+          margin: 0;
+        }
+
+        .simplicity, .humor {
+          border: 1px solid vars.$fg-color;
+          display: inline-block;
+          border-radius: 2rem;
+          padding: .6rem 2rem;
+        }
+
+        .simplicity {
+          transform: rotate(-15deg);
+
+        }
+        .humor {
+          transform: rotate(5deg);
+          margin-left: -9.5rem;
+        }
+        .humor-container, .simplicity-container {
+          display: inline-block;
+          vertical-align: top;
+        }
+        .simplicity-container {
+          padding-top: 1.5rem;
+        }
+
+        .humor-container{
+          padding-top: 4.5rem;
+        }
+        .line {
+          position: absolute;
+          left: 17.9rem;
+          top: 0;
+        }
+
+        &.italian{
+          .simplicity {
+            margin-left: 1rem;
+          }
+          .humor {
+            margin-left: -9rem;
+          }
+          .humor-container{
+            position: relative;
+            z-index: 1;
+            padding-top: 5rem;
+
+            &:before{
+              content: "";
+              position: absolute;
+              width: 7rem;
+              height: 5rem;
+              right: 0;
+              bottom: 0;
+              background-color: vars.$bg-yellow;
+              z-index: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    text-align: center;
+
+    > .right-content {
+      display: inline-block;
+      text-align: left;
+      width: 30rem;
+      max-width: calc(100% - 4rem);
+      padding: 2rem 2rem 2rem 2rem;
+    }
+  }
+}
+.bottom {
+  color: white;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+
+  .left{
+    width: 50%;
+    text-align: center;
+    background-color: vars.$bg-purple;
+
+    .left-content{
+      display: inline-block;
+      padding: 2rem 2rem 2rem 2rem;
+      text-align: left;
+      width: 30rem;
+      max-width: calc(100% - 4rem);
+    }
+
+    .graphic {
+      > div{
+        display: inline-block;
+        font-size: 1.3rem;
+        letter-spacing: 4px;
+        font-weight: bold;
+        text-align: left;
+        position: relative;
+        height: 10rem;
+        width: 100%;
+  
+        > p {
+          margin: 0;
+        }
+  
+        .financial-resources, .materials, .time, .knowledge {
+          border: 1px solid white;
+          display: inline-block;
+          border-radius: 2rem;
+          padding: .6rem 1.5rem;
+          position: absolute;
+        }
+  
+        .financial-resources {
+          transform: rotate(-7deg);
+          left: -1rem;
+          top: 1rem;
+          white-space: nowrap;
+        }
+  
+        .materials {
+          transform: rotate(7deg);
+          left: 16.5rem;
+          top: 1rem;
+        }
+  
+        .time {
+          transform: rotate(7deg);
+          left: 9.5rem;
+          top: 3.5rem;
+        }
+  
+        .knowledge {
+          transform: rotate(-7deg);
+          left: 16.5rem;
+          top: 4rem;
+        }
+      }
+    }
+  }
+  .right{
+    width: 50%;
+    text-align: center;
+    background-color: vars.$bg-orange;
+    > .right-content {
+      display: inline-block;
+      padding: 2rem 2rem 6rem 2rem;
+      text-align: left;
+      width: 30rem;
+      max-width: calc(100% - 4rem);
+
+      .graphic{
+        > div {
+          width: 100%;
+          display: inline-block;
+          text-transform: uppercase;
+          font-size: 1.6rem;
+          letter-spacing: 4px;
+          font-weight: bold;
+          position: relative;
+          text-align: left;
+
+          .projects {
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            margin: 0;
+            padding: 0;
+          }
+
+          .ideas {
+            position: absolute;
+            bottom: 0;
+            left: 3rem;
+            margin: 0;
+            padding: 0;
+          }
+
+          .inspirations {
+            position: absolute;
+            bottom: 6rem;
+            right: 1rem;
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include responsive.mobile{
+  .top {
+    display: block;
+    .left{
+      width: 100%;
+      display: block;
+
+      .mobile-top-intro{
+        display: block;
+        padding: 1rem 2rem 0 2rem;
+        text-align: center;
+
+        > div {
+          display: inline-block;
+          max-width: 30rem;
+          text-align: left;
+          .title {
+            margin: 0;
+          }
+
+          p {
+            margin: 1rem 0 0 0;
+          }
+        }
+      }
+      
+      > .logo-container{
+        min-height: 15rem;
+        
+        .left-content{
+          height: 100%;
+          width: 15rem;
+        }
+      }
+    }
+    .right{
+      display: none;
+    }
+  }
+
+  .after-top {
+    display: block;
+    .left{
+      width: 100%;
+      display: block;
+
+      .left-content{
+        padding: 2rem 0 0 0;
+        .graphic{
+          font-size: 1rem;
+
+          .humor {
+            margin-left: -6.5rem;
+          }
+          .simplicity{
+            margin-left: -4rem;
+          }
+          .humor-container, .simplicity-container {
+            display: inline-block;
+            vertical-align: top;
+          }
+          .simplicity-container {
+            padding-top: 1.5rem;
+          }
+
+          .humor-container{
+            padding-top: 3.7rem;
+          }
+          .line {
+            position: absolute;
+            left: 9.7rem;
+            top: -1.4rem;
+            width: 9rem;
+          }
+
+          &.italian{
+            .simplicity {
+              margin-left: -3rem;
+            }
+            .humor {
+              margin-left: -6.5rem;
+            }
+            .humor-container{
+              position: relative;
+              z-index: 1;
+              padding-top: 4rem;
+
+              &:before{
+                content: "";
+                position: absolute;
+                width: 5rem;
+                height: 3rem;
+                right: 0;
+                bottom: 0;
+                background-color: vars.$bg-yellow;
+                z-index: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+      
+      .right-content{
+        padding: 2rem 2rem;
+      }
+    }
+  }
+
+  .bottom {
+    display: block;
+    .left{
+      width: 100%;
+      display: block;
+      
+
+      .left-content{
+        .graphic {
+          text-align: center;
+          > div {
+            position: relative;
+            font-size: .9rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            display: inline-block;
+            width: 19rem;
+            max-width: 100%;
+
+            .financial-resources, .materials, .time, .knowledge {
+              padding: .3rem 1rem;
+            }
+
+            .financial-resources {
+              left: 0;
+              top: 1rem;
+            }
+
+            .materials {
+              left: 11rem;
+              top: 1rem;
+            }
+
+            .time {
+              left: 6rem;
+              top: 2.6rem;
+            }
+
+            .knowledge {
+              left: 11.5rem;
+              top: 3.1rem;
+            }
+          }
+        }
+      }
+    }
+    .right{
+      width: 100%;
+      display: block;
+
+      .right-content {
+        .graphic{
+          text-align: center;
+          > div{
+            display: inline-block;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            width: auto;
+            svg{
+              width: 18rem;
+            }
+            .projects {
+              left: 2rem;
+              top: 0;
+            }
+
+            .ideas {
+              bottom: 0;
+              left: 3.5rem;
+            }
+
+            .inspirations {
+              right: initial;
+              bottom: 5.5rem; 
+              left: 10rem;
+            }
+          }
+        }
+      }
+      app-icon-three-hats-tilted{
+        transform: rotate(90deg) !important;
+        bottom: .2rem !important;
+      }
+    }
+  }
+}

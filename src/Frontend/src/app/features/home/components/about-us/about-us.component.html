@@ -36,26 +36,19 @@
 <div class="middle">
     <div class="left">
         <div class="left-content">
-            <div class="graphic" [class.italian]="language === 'it'">
-                <div class="simplicity-container">
-                    <p class="simplicity">{{ "aboutUs.simplicity" | translate }}</p>
-                </div>
-                <div class="humor-container">
-                    <p class="humor">&{{ "aboutUs.humor" | translate }}</p>
-                </div>
-                <p class="insteadOf">{{ "aboutUs.insteadOf" | translate }}</p>
-                <p class="ecoPessimism">{{ "aboutUs.ecoPessimism" | translate }}</p>
-                <svg class="line" width="12rem" height="10.287rem" version="1.1" viewBox="0 0 61.264 52.521" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="translate(-52.917 -92.869)">
-                        <path class="cls-3" d="m52.965 108.07c4.9556 1.9394 17.698 6.0378 31.245 3.265 11.097-2.2701 20.108-16.404 12.7-18.256-5.4875-1.3732-16.177 15.15-8.8265 26.024 5.1223 7.5777 12.859 3.5084 20.468 7.3131 11.642 5.8208 2.9104 24.871-8.7312 16.933-11.708-7.9825-19.783-5.6118-22.847-4.1275" fill="none" stroke="#ffffff" stroke-dasharray="1.57427, 1.57427" stroke-miterlimit="10" stroke-width=".5"/>
-                    </g>
-                </svg>
-            </div>
+            <p>{{ "aboutUs.we-are-looking-for-feedback" | translate }}</p>
         </div>
     </div>
     <div class="right">
         <div class="right-content">
-            <p>{{ "aboutUs.aboutOurGoals" | translate }}</p>
+            <p class="contact-container">
+                <span style="white-space: nowrap"><a href="mailto: info@perspektivenfabrik.it" target="_blank" style="text-decoration: none"><mat-icon fontIcon="mail" class="icon-mail"></mat-icon>&nbsp;<span class="mail-address">info&commat;perspektivenfabrik.it</span></a></span>
+                <br>
+                <span style="white-space: nowrap"><a href="https://www.instagram.com/perspektivenfabrik/" target="_blank" style="text-decoration: none"><app-insta-icon></app-insta-icon>&nbsp;<span class="mail-address">&commat;perspektivenfabrik.it</span></a></span>
+            </p>
+            <div class="speech-bubble-container">
+                <app-speech-bubble></app-speech-bubble>
+            </div>
         </div>
     </div>
 </div>
@@ -76,6 +69,30 @@
                         <button (click)="consentInsta()">{{ "aboutUs.load-insta" | translate }}</button>
                     </div>
                 </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="partner-section">
+    <div class="text-container">
+        <p class="thank-you">{{"aboutUs.thank-you" | translate}}</p>
+        <p class="to-our-partners">{{"aboutUs.to-our-partners" | translate}}!</p>
+        <p class="thank-you-text">{{"aboutUs.thank-you-text" | translate}}</p>
+    </div>
+    <app-icon-three-hats-tilted style="position: absolute; left: 3rem; top: 5rem; color: #fedf74; transform: rotate(60deg)"></app-icon-three-hats-tilted>
+    <app-icon-star style="position: absolute; right: 5rem; top: 2rem; color: #fedf74;"></app-icon-star>
+    <div class="partners">
+        <div class="partner-grid">
+            @for(partner of partners; track partner){
+                <span class="partner-box">
+                    <span class="partner-container" [style.align-items]="partner.verticalAlign" [style.justify-content]="partner.horizontalAlign"
+                          [style.padding-top]="partner.top"
+                          [style.padding-right]="partner.right"
+                          [style.padding-bottom]="partner.bottom"
+                          [style.padding-left]="partner.left">
+                        <span  class="partner">{{partner.name}}</span>
+                    </span>
+                </span>
             }
         </div>
     </div>

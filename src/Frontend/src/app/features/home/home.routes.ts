@@ -7,6 +7,7 @@ import {AboutUsPageComponent} from "./pages/about-us-page/about-us-page.componen
 import {PrivacyPolicyComponent} from "./pages/privacy-policy/privacy-policy.component";
 import {LegalNoticeComponent} from "./pages/legal-notice/legal-notice.component";
 import { CookiesComponent } from "./pages/cookies/cookies.component";
+import { OurMissionPageComponent } from "./pages/our-mission-page/our-mission-page.component";
 
 
 export const HomeRoutes: Routes = [
@@ -14,6 +15,7 @@ export const HomeRoutes: Routes = [
     {path: HomeRouteNames.ProjectName, component: ProjectDetailPageComponent},
     {path: HomeRouteNames.InternalProjectName, component: InternalProjectPageComponent},
     {path: HomeRouteNames.AboutUsName, component: AboutUsPageComponent},
+    {path: HomeRouteNames.OurMissionName, component: OurMissionPageComponent},
     {path: HomeRouteNames.PrivacyPolicyName, component: PrivacyPolicyComponent},
     {path: HomeRouteNames.LegalNoticeName, component: LegalNoticeComponent},
     {path: HomeRouteNames.CookiesName, component: CookiesComponent},

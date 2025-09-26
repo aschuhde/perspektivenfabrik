@@ -59,6 +59,7 @@ public class ProjectService(ApplicationDbContext dbContext, ILogger<ProjectServi
         }
         var projectsQuery = selectFunction(filterFunction(innerProjectsQuery)).WithAsNoTrackingIfEnabled(withTracking);
         var projects = await projectsQuery.ToArrayAsync(ct);
+        projects = projects.OrderByDescending(x => x.LastModifiedOn).ToArray();
         
         var projectIds = projects.Select(x => x.EntityId).ToArray();
         

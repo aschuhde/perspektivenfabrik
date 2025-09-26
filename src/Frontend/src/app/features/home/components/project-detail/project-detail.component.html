@@ -84,7 +84,7 @@
     </div>
     <div class="bottom-right">
         <div>
-            <p class="contact-text">{{ "project-detail.send-us-a-message" | translate }}</p>
+            <p class="contact-text"><strong>{{ "project-detail.send-us-a-message" | translate }}</strong></p>
             <div style="display: flex; justify-content: space-between;flex-wrap: wrap;">
             @if(contactPersonalName){
                 <p class="contact-text"><mat-icon fontIcon="person"></mat-icon> {{ contactPersonalName }}</p>
@@ -96,7 +96,7 @@
                 <p class="contact-text"><mat-icon fontIcon="phone"></mat-icon><span>&nbsp;</span><a href="tel: {{ contactPhone }}">{{ contactPhone }}</a></p>
             }
             @if(contactMailAddress){
-                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}">{{ contactMailAddress }}</a></p>
+                <p class="contact-text"><mat-icon fontIcon="mail"></mat-icon><span>&nbsp;</span><a href="mailto: {{ contactMailAddress }}" target="_blank">{{ contactMailAddress }}</a></p>
             }
             @for(website of contactWebsites; track website){
                 @let websiteUrl = getWebsiteUrl(website);

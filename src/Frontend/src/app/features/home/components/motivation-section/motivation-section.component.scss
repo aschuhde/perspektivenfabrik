@@ -5,6 +5,8 @@
     display: block;
     background-color: vars.$bg-color-alt;
     color: white;
+    position: relative;
+    z-index: 2;
 }
 
 #motivation-section-left{
@@ -12,7 +14,7 @@
     width: 50%;
     vertical-align: top;
     text-align: center;
-    padding: 2rem 0;
+    padding: 5rem 0 2rem 0;
   
   .graphic{
     display: inline-block;
@@ -51,7 +53,7 @@
     display: inline-block;
     width: 50%;
     vertical-align: top;
-    padding-top: 5rem;
+    padding-top: 1rem;
 }
 
 .temp-motivation-image{
@@ -60,8 +62,8 @@
 }
 .motivation-text {
   text-align: left; 
-  width: 50%; 
-  display: inline-block
+  width: 50%;
+  display: inline-block;
 }
 
 @include responsive.mobile {

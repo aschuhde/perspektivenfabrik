@@ -1,0 +1,101 @@
+<div class="top">
+    <div class="left" style="position: relative">
+        <div class="mobile-top-intro">
+            <div>
+                <h1 class="title">{{ "ourMission.perspektivesForSouthTyrol" | translate }}</h1>
+                <p [innerHTML]="'ourMission.title-quote-mobile' | translate"></p>
+            </div>
+        </div>
+        <div class="logo-container">
+            <div class="left-content">
+                <app-logo [backgroundColor]="'#fedf74'" [elementColor]="'white'"></app-logo>
+            </div>
+            <app-icon-cloud class="mountain" style="position: absolute; top: 2rem; left: 3rem; color: #fedf74;transform: rotate(-15deg);"></app-icon-cloud>
+        </div>
+    </div>
+    <div class="right only-desktop" style="position: relative">
+        <div class="right-content">
+            <h1 class="title">{{ "ourMission.perspektivesForSouthTyrol" | translate }}</h1>
+            <p [innerHTML]="'ourMission.title-quote' | translate"></p>
+        </div>
+    </div>
+</div>
+<div class="after-top">
+    <div class="left" style="position: relative">
+        <div class="left-content">
+            <div class="graphic" [class.italian]="language === 'it'">
+                <div class="simplicity-container">
+                    <p class="simplicity">{{ "aboutUs.simplicity" | translate }}</p>
+                </div>
+                <div class="humor-container">
+                    <p class="humor">&{{ "aboutUs.humor" | translate }}</p>
+                </div>
+                <p class="insteadOf">{{ "aboutUs.insteadOf" | translate }}</p>
+                <p class="ecoPessimism">{{ "aboutUs.ecoPessimism" | translate }}</p>
+                <svg class="line" width="10rem" height="10rem" version="1.1" viewBox="0 0 61.264 52.521" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(-52.917 -92.869)">
+                        <path class="cls-3" d="m52.965 108.07c4.9556 1.9394 17.698 6.0378 31.245 3.265 11.097-2.2701 20.108-16.404 12.7-18.256-5.4875-1.3732-16.177 15.15-8.8265 26.024 5.1223 7.5777 12.859 3.5084 20.468 7.3131 11.642 5.8208 2.9104 24.871-8.7312 16.933-11.708-7.9825-19.783-5.6118-22.847-4.1275" fill="none" stroke="currentColor" stroke-dasharray="1.57427, 1.57427" stroke-miterlimit="10" stroke-width=".5"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="right" style="position: relative">
+        <div class="right-content">
+            <p [innerHTML]=" 'ourMission.introText' | translate"></p>
+        </div>
+
+    </div>
+</div>
+<div class="bottom">
+    <div class="left" style="position: relative">
+        <div class="left-content">
+            <h2 class="title" [innerHTML]="'ourMission.what-is-perspektivenfabrik-title' | translate"></h2>
+            <p [innerHTML]="'ourMission.what-is-perspektivenfabrik-first-part' | translate"></p>
+            <p [innerHTML]="'ourMission.what-is-perspektivenfabrik-second-part' | translate"></p>
+            <p [innerHTML]="'ourMission.what-is-perspektivenfabrik-last-part' | translate"></p>
+            <div class="graphic" [class.italian]="language === 'it'">
+                <div>
+                    <div class="financial-resources-container">
+                        <p class="financial-resources">{{ "ourMission.financialResources" | translate }}</p>
+                    </div>
+                    <div class="materials-container">
+                        <p class="materials">{{ "ourMission.materials" | translate }}</p>
+                    </div>
+                    <div class="time-container">
+                        <p class="time">{{ "ourMission.time" | translate }}</p>
+                    </div>
+                    <div class="knowledge-container">
+                        <p class="knowledge">{{ "ourMission.knowledge" | translate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-icon-star style="position: absolute; right: 5rem; top: 1rem; color: #fedf74;"></app-icon-star>
+    </div>
+    <div class="right" style="position: relative">
+        <div class="right-content">
+            <h2 class="title" [innerHTML]="'ourMission.what-are-we-looking-for-title' | translate"></h2>
+            <p [innerHTML]="'ourMission.what-are-we-looking-for-first-part' | translate"></p>
+            <p [innerHTML]="'ourMission.what-are-we-looking-for-second-part' | translate"></p>
+
+            <div class="graphic">
+                <div>
+                    <p class="projects">{{ "home.projects" | translate }}</p>
+                    <p class="inspirations">{{ "home.inspirations" | translate }}</p>
+                    <p class="ideas">{{ "home.ideas" | translate }}</p>
+                    <svg class="lines" width="20rem" version="1.1" viewBox="0 0 112.04 73.81" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(-55.034 -88.635)" fill="none" stroke="#fff" stroke-miterlimit="10">
+                            <path class="cls-3" d="m76.939 101.76s2.1722 12.152-2.8998 17.859c-6.35 7.1438-19.775 6.7575-18.804 0.28046s19.111 4.8578 14.576 12.957c-4.535 8.0989-13.928 7.7735-14.253 13.928-0.32544 6.1542 9.4827 11.464 9.4827 11.464" stroke-dasharray="1.94469" stroke-width=".5px"/>
+                            <path class="cls-2" d="m123.26 92.944s23.024-9.9669 34.904 0.95779c9.6441 8.8688 8.7392 22.281 8.7392 22.281" stroke-dasharray="1.80975" stroke-width=".5px"/>
+                            <path class="cls-1" d="m112.54 161.87s9.4694 1.8309 11.647-2.3283c3.2041-6.1145 3.3946-15.6 9.0276-18.053 11.356-4.9504 11.647 12.52 21.257 11.647 11.557-1.0504 11.647-18.635 11.647-18.635" stroke-dasharray="2.13783" stroke-width=".5px"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <app-icon-three-hats-tilted style="position: absolute; right: 3rem; bottom: 1rem; color: #fedf74;"></app-icon-three-hats-tilted>
+
+    </div>
+</div>
+
