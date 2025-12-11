@@ -27,7 +27,7 @@ app.use(
 
 
 
-app.use('/**', (req, res, next) => {
+app.use('/{*all}', (req, res, next) => {
     angularApp
         .handle(req)
         .then((response) =>
