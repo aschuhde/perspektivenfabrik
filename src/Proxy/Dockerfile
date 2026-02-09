@@ -19,10 +19,8 @@ RUN dotnet publish "Proxy.csproj" -c Release -o /app/publish
 
 FROM base as final
 WORKDIR /app
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path /var/ssl/certificate.user.pfx
 COPY ./src/Proxy/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 COPY --from=publish /app/publish .
 ENTRYPOINT ["sh", "entrypoint.sh"]
-EXPOSE ${PROXY_PORT_HTTPS}
 EXPOSE $PROXY_PORT_HTTP
