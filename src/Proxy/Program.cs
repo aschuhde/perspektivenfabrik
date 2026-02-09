@@ -33,10 +33,14 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("Proxy"));
 var app = builder.Build();
 app.MapReverseProxy();
-app.UseHttpsRedirection();
-if (!app.Environment.IsDevelopment())
+if (builder.Configuration.GetValue<bool?>("USE_HTTPS") != false)
 {
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseHttpsRedirection();
+    if (!app.Environment.IsDevelopment())
+    {
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
 }
+
 app.Run();

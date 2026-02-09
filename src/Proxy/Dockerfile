@@ -24,5 +24,5 @@ COPY ./src/Proxy/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 COPY --from=publish /app/publish .
 ENTRYPOINT ["sh", "entrypoint.sh"]
-EXPOSE $PROXY_PORT_HTTPS
+EXPOSE ${PROXY_PORT_HTTPS}
 EXPOSE $PROXY_PORT_HTTP
